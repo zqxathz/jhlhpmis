@@ -27,8 +27,6 @@ object bplCustomerFrame: TbplCustomerFrame
     Height = 317
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1042
-    ExplicitHeight = 416
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = customerDataModule.customerDataSource
@@ -349,6 +347,36 @@ object bplCustomerFrame: TbplCustomerFrame
     Top = 325
     object IDcxEditRepository1Label: TcxEditRepositoryLabel
       Properties.Alignment.Horz = taCenter
+    end
+    object cxEditRepository1DateItem: TcxEditRepositoryDateItem
+      Properties.Alignment.Horz = taCenter
+      Properties.DateButtons = [btnClear, btnToday]
+      Properties.DisplayFormat = 'yyyy'#24180'm'#26376'd'#26085
+      Properties.EditFormat = 'yyyy'#24180'm'#26376'd'#26085
+      Properties.Nullstring = #26080
+      Properties.SaveTime = False
+      Properties.UseNullString = True
+      Properties.WeekNumbers = True
+    end
+    object paytypecxEditRepository1LookupComboBoxItem: TcxEditRepositoryLookupComboBoxItem
+      Properties.DropDownListStyle = lsFixedList
+      Properties.ImmediatePost = True
+      Properties.KeyFieldNames = 'id'
+      Properties.ListColumns = <
+        item
+          Caption = #25903#20184#31867#22411
+          FieldName = 'payname'
+        end>
+      Properties.ListOptions.ShowHeader = False
+      Properties.ListSource = customerDataModule.paytypeDataSource
+    end
+    object customertypecxEditRepository1ComboBoxItem1: TcxEditRepositoryComboBoxItem
+      Properties.Items.Strings = (
+        'a'
+        'd'
+        'a'
+        'd')
+      Properties.OnInitPopup = customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
     end
   end
   object cxPropertiesStore1: TcxPropertiesStore

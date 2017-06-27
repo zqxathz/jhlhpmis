@@ -9,7 +9,8 @@ uses
   cxNavigator, Data.DB, cxDBData, Vcl.ExtCtrls, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, customerdm, cxContainer,
   Vcl.StdCtrls, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
-  cxDBLookupComboBox, cxExtEditRepositoryItems, cxCurrencyEdit, cxPropertiesStore;
+  cxDBLookupComboBox, cxExtEditRepositoryItems, cxCurrencyEdit, cxPropertiesStore,
+  cxEditRepositoryItems, cxDBEditRepository;
 
 type
   TbplCustomerFrame = class(TFrame)
@@ -58,7 +59,12 @@ type
     cxStyle1: TcxStyle;
     cxStyle2: TcxStyle;
     cxMaskEdit1: TcxMaskEdit;
+    cxEditRepository1DateItem: TcxEditRepositoryDateItem;
+    paytypecxEditRepository1LookupComboBoxItem: TcxEditRepositoryLookupComboBoxItem;
+    customertypecxEditRepository1ComboBoxItem1: TcxEditRepositoryComboBoxItem;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
+    procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(
+      Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,6 +87,17 @@ begin
   expocxLookupComboBox.ItemIndex:=0;
 end;
 
+procedure TbplCustomerFrame.customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(
+  Sender: TObject);
+begin
+ //showmessage('abc');
+ with customertypecxEditRepository1ComboBoxItem1 do
+  begin
+    //Properties.Items.Clear;
+    Properties.Items.Text:=customerDataModule.getCustomerType.Text;
+  end;
+end;
+
 destructor TbplCustomerFrame.Destroy;
 begin
   FreeAndNil(customerDataModule);
@@ -94,6 +111,7 @@ var
 begin
   s:='and eid='+customerDataModule.expoFDQuery.FieldByName('id').AsString;
   customerDataModule.customerOpen(s);
+  customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(nil);
   if cxGrid1DBTableView1.ColumnCount=0 then
   begin
     cxGrid1DBTableView1.DataController.CreateAllItems(True);
@@ -137,6 +155,7 @@ begin
     with cxGrid1DBTableView1.GetColumnByFieldName('customertype') do
     begin
       //Visible:=false;
+      RepositoryItem:=customertypecxEditRepository1ComboBoxItem1;
       Caption:='客户类型';
       index:=2;
     end;
@@ -163,6 +182,7 @@ begin
       //Visible:=false;
       Caption:='支付类型';
       index:=6;
+      RepositoryItem:=paytypecxEditRepository1LookupComboBoxItem;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('allpay') do
     begin
@@ -211,6 +231,16 @@ begin
     begin
       Visible:=false;
     end;
+    with cxGrid1DBTableView1.GetColumnByFieldName('createtime') do
+    begin
+      //Visible:=false;
+      RepositoryItem:=cxEditRepository1DateItem;
+    end;
+    with cxGrid1DBTableView1.GetColumnByFieldName('updatetime') do
+    begin
+      //Visible:=false;
+      RepositoryItem:=cxEditRepository1DateItem;
+    end;
     with cxGrid1DBTableView1.GetColumnByFieldName('status') do
     begin
       Visible:=false;
@@ -233,7 +263,7 @@ begin
 //      RepositoryItem:=IDcxEditRepository1Label;
 //    end;
   end;
-  cxGrid1DBTableView1.ApplyBestFit;
+  cxGrid1DBTableView1.ApplyBestFit(nil,true);
 end;
 
 end.

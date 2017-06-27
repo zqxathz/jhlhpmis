@@ -6,6 +6,7 @@ object customerDataModule: TcustomerDataModule
   object customerFDQuery: TFDQuery
     FieldOptions.AutoCreateMode = acCombineAlways
     FieldOptions.PositionMode = poFirst
+    AfterGetRecord = customerFDQueryAfterGetRecord
     SQL.Strings = (
       
         'select * from jhlh_pmis_customers where status=1 and trash=0 !ei' +
@@ -21,20 +22,29 @@ object customerDataModule: TcustomerDataModule
       DisplayLabel = #30331#35760#26085#26399
       FieldKind = fkInternalCalc
       FieldName = 'createtime'
-      ReadOnly = True
+      ProviderFlags = [pfInWhere]
+      OnChange = customerFDQuerycreatetimeChange
     end
     object customerFDQueryupdatetime: TDateField
       DisplayLabel = #20462#25913#26085#26399
       FieldKind = fkInternalCalc
       FieldName = 'updatetime'
-      ReadOnly = True
+      ProviderFlags = [pfInWhere]
+      OnChange = customerFDQueryupdatetimeChange
     end
   end
   object customertypeFDQuery: TFDQuery
     SQL.Strings = (
-      'select * from jhlh_crm_customerstype where status=1 and trash=0')
+      
+        'select * from jhlh_crm_customerstype where status=1 and trash=0 ' +
+        'and expotypeid=:eid')
     Left = 352
     Top = 80
+    ParamData = <
+      item
+        Name = 'EID'
+        ParamType = ptInput
+      end>
   end
   object customerDataSource: TDataSource
     DataSet = customerFDQuery
@@ -69,5 +79,16 @@ object customerDataModule: TcustomerDataModule
     DataSet = expoFDQuery
     Left = 104
     Top = 192
+  end
+  object paytypeFDQuery: TFDQuery
+    SQL.Strings = (
+      'select * from jhlh_pmis_paytype where status=1 and trash=0')
+    Left = 544
+    Top = 88
+  end
+  object paytypeDataSource: TDataSource
+    DataSet = paytypeFDQuery
+    Left = 544
+    Top = 184
   end
 end
