@@ -16,46 +16,63 @@ File_13=TSourceModule,'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\dat
 File_14=TSourceModule,'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Stan.StorageJSON.pas',0,1,1,1,1,0,0,,
 
 [Modules]
-Module0=D:\Develop\jhql\shopper\shopper.pas
-Module1=D:\Develop\jhql\start\start.dproj
-Module2=D:\Develop\jhql\shopper\shopper.dproj
-Module3=D:\Develop\jhql\customer\customer.dproj
-Module4=D:\Develop\jhql\shopper\shopperdm.pas
-Module5=D:\Develop\jhql\customer\customerdm.pas
-Module6=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.DApt.pas
-Module7=D:\Develop\jhql\connection\connectiondm.pas
-Module8=D:\Develop\jhql\common\staticstr.pas
-Module9=D:\Develop\jhql\customer\customer.pas
-Module10=D:\Develop\jhql\start\main.pas
-Module11=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Comp.DataSet.pas
-Module12=D:\Tools\DevExpress VCL_15.2.2_full_source\Library\Sources\cxMaskEdit.pas
-Module13=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Stan.Intf.pas
-Module14=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLite.pas
-Module15=D:\Tools\DevExpress VCL_15.2.2_full_source\Library\Sources\cxGridCustomTableView.pas
-Module16=D:\Tools\RaizeComponentsFullSource\Source\RzTabs.pas
-Module17=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.DatS.pas
-Module18=D:\Develop\jhql\start\logindm.pas
-Module19=default.htm
-Count=20
+Module0=D:\Develop\jhql\customer\customer.pas
+Module1=D:\Develop\jhql\customer\customerdm.pas
+Module2=D:\Develop\jhql\start\main.pas
+Module3=D:\Develop\jhql\shopper\shopperdm.pas
+Module4=D:\Develop\jhql\shopper\shopper.pas
+Module5=D:\Develop\jhql\customer\customer.dproj
+Module6=D:\Develop\jhql\connection\connection.dproj
+Module7=c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Forms.pas
+Module8=default.htm
+Module9=D:\Develop\jhql\start\start.dproj
+Module10=D:\Develop\jhql\shopper\shopper.dproj
+Module11=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.DApt.pas
+Module12=D:\Develop\jhql\connection\connectiondm.pas
+Module13=D:\Develop\jhql\common\staticstr.pas
+Module14=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Comp.DataSet.pas
+Module15=D:\Tools\DevExpress VCL_15.2.2_full_source\Library\Sources\cxMaskEdit.pas
+Module16=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Stan.Intf.pas
+Module17=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLite.pas
+Module18=D:\Tools\DevExpress VCL_15.2.2_full_source\Library\Sources\cxGridCustomTableView.pas
+Module19=D:\Tools\RaizeComponentsFullSource\Source\RzTabs.pas
+Module20=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.DatS.pas
+Module21=D:\Develop\jhql\start\logindm.pas
+Count=22
 EditWindowCount=1
+
+[D:\Develop\jhql\customer\customer.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\customer\customerdm.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\start\main.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\shopper\shopperdm.pas]
+ModuleType=TSourceModule
 
 [D:\Develop\jhql\shopper\shopper.pas]
 ModuleType=TSourceModule
+
+[D:\Develop\jhql\customer\customer.dproj]
+ModuleType=TBaseProject
+
+[D:\Develop\jhql\connection\connection.dproj]
+ModuleType=TBaseProject
+
+[c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Forms.pas]
+ModuleType=TSourceModule
+
+[default.htm]
+ModuleType=TURLModule
 
 [D:\Develop\jhql\start\start.dproj]
 ModuleType=TBaseProject
 
 [D:\Develop\jhql\shopper\shopper.dproj]
 ModuleType=TBaseProject
-
-[D:\Develop\jhql\customer\customer.dproj]
-ModuleType=TBaseProject
-
-[D:\Develop\jhql\shopper\shopperdm.pas]
-ModuleType=TSourceModule
-
-[D:\Develop\jhql\customer\customerdm.pas]
-ModuleType=TSourceModule
 
 [c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.DApt.pas]
 ModuleType=TSourceModule
@@ -64,12 +81,6 @@ ModuleType=TSourceModule
 ModuleType=TSourceModule
 
 [D:\Develop\jhql\common\staticstr.pas]
-ModuleType=TSourceModule
-
-[D:\Develop\jhql\customer\customer.pas]
-ModuleType=TSourceModule
-
-[D:\Develop\jhql\start\main.pas]
 ModuleType=TSourceModule
 
 [c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Comp.DataSet.pas]
@@ -96,12 +107,9 @@ ModuleType=TSourceModule
 [D:\Develop\jhql\start\logindm.pas]
 ModuleType=TSourceModule
 
-[default.htm]
-ModuleType=TURLModule
-
 [EditWindow0]
-ViewCount=20
-CurrentEditView=D:\Develop\jhql\shopper\shopper.pas
+ViewCount=22
+CurrentEditView=D:\Develop\jhql\customer\customer.pas
 View0=0
 View1=1
 View2=2
@@ -122,6 +130,8 @@ View16=16
 View17=17
 View18=18
 View19=19
+View20=20
+View21=21
 PercentageSizes=1
 Create=1
 Visible=1
@@ -138,18 +148,18 @@ ClientHeight=8346
 DockedToMainForm=1
 BorlandEditorCodeExplorer=BorlandEditorCodeExplorer@EditWindow0
 TopPanelSize=0
-LeftPanelSize=1895
+LeftPanelSize=1848
 LeftPanelClients=PropertyInspector,DockSite3
-LeftPanelData=000008000101000000003F0D00000000000001670700000000000001000000005C0E000009000000446F636B53697465330100000000651F00001100000050726F7065727479496E73706563746F72FFFFFFFF
+LeftPanelData=000008000101000000003F0D00000000000001380700000000000001000000005C0E000009000000446F636B53697465330100000000651F00001100000050726F7065727479496E73706563746F72FFFFFFFF
 RightPanelSize=1996
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=000008000101000000003F0D00000000000001CC0700000000000001000000004412000009000000446F636B53697465320100000000651F000009000000446F636B5369746534FFFFFFFF
+RightPanelData=000008000101000000003F0D00000000000001CC070000000000000100000000DC16000009000000446F636B53697465320100000000651F000009000000446F636B5369746534FFFFFFFF
 BottomPanelSize=0
 BottomPanelClients=DockSite1
 BottomPanelData=0000080001000100000009000000446F636B53697465311B5200000000000000EF05000000000000FFFFFFFF
 BottomMiddlePanelSize=1352
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel,MessageView
-BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E6756696577A52D0000000000000248050000000000000100000000A52D00000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E6756696577142E0000000000000248050000000000000100000000142E00000F0000004D65737361676556696577466F726DFFFFFFFF
 
 [View0]
 CustomEditViewType=TWelcomePageView
@@ -158,9 +168,9 @@ WelcomePageURL=bds:/default.htm
 [View1]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\start\main.pas
-CursorX=1
-CursorY=133
-TopLine=89
+CursorX=24
+CursorY=149
+TopLine=122
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -213,37 +223,48 @@ EditViewName=D:\Develop\jhql\shopper\shopper.dpk
 [View6]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\shopper\shopperdm.pas
-CursorX=28
-CursorY=117
-TopLine=94
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=D:\Develop\jhql\shopper\shopperdm.pas
-
-[View7]
-CustomEditViewType=TEditView
-Module=D:\Develop\jhql\customer\customer.pas
-CursorX=1
-CursorY=25
-TopLine=1
+CursorX=19
+CursorY=227
+TopLine=202
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
+[View7]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\customer\customer.pas
+CursorX=18
+CursorY=191
+TopLine=179
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\customer\customer.pas
+
 [View8]
 CustomEditViewType=TEditView
+Module=c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Forms.pas
+CursorX=3
+CursorY=295
+TopLine=276
+LeftCol=1
+Elisions={{1747,4},{1763,15},{'TScrollWindow'}}{{1850,4},{1950,15},{'TMainMenuBarStyleHook'}}
+Bookmarks=
+EditViewName=c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Forms.pas
+
+[View9]
+CustomEditViewType=TEditView
 Module=D:\Develop\jhql\customer\customerdm.pas
-CursorX=13
-CursorY=8
-TopLine=1
+CursorX=5
+CursorY=58
+TopLine=17
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\customer\customerdm.pas
 
-[View9]
+[View10]
 CustomEditViewType=TEditView
 Module=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.DApt.pas
 CursorX=18
@@ -254,18 +275,29 @@ Elisions=
 Bookmarks=
 EditViewName=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.DApt.pas
 
-[View10]
+[View11]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\customer\customer.dpk
-CursorX=1
-CursorY=1
+CursorX=10
+CursorY=44
 TopLine=22
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\customer\customer.dpk
 
-[View11]
+[View12]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\connection\connection.dpk
+CursorX=5
+CursorY=43
+TopLine=24
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\connection\connection.dpk
+
+[View13]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\connection\connectiondm.pas
 CursorX=24
@@ -276,7 +308,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\connection\connectiondm.pas
 
-[View12]
+[View14]
 CustomEditViewType=TEditView
 Module=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Stan.Intf.pas
 CursorX=35
@@ -287,7 +319,7 @@ Elisions=
 Bookmarks=
 EditViewName=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Stan.Intf.pas
 
-[View13]
+[View15]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\start\logindm.pas
 CursorX=3
@@ -298,18 +330,18 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\start\logindm.pas
 
-[View14]
+[View16]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\shopper\shopper.pas
-CursorX=40
-CursorY=222
-TopLine=197
+CursorX=1
+CursorY=399
+TopLine=377
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=D:\Develop\jhql\shopper\shopper.pas
+EditViewName=Borland.FormDesignerView
 
-[View15]
+[View17]
 CustomEditViewType=TEditView
 Module=D:\Tools\DevExpress VCL_15.2.2_full_source\Library\Sources\cxGridCustomTableView.pas
 CursorX=15
@@ -320,7 +352,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Tools\DevExpress VCL_15.2.2_full_source\Library\Sources\cxGridCustomTableView.pas
 
-[View16]
+[View18]
 CustomEditViewType=TEditView
 Module=D:\Tools\DevExpress VCL_15.2.2_full_source\Library\Sources\cxMaskEdit.pas
 CursorX=1
@@ -331,7 +363,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Tools\DevExpress VCL_15.2.2_full_source\Library\Sources\cxMaskEdit.pas
 
-[View17]
+[View19]
 CustomEditViewType=TEditView
 Module=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.DatS.pas
 CursorX=3
@@ -342,7 +374,7 @@ Elisions=
 Bookmarks=
 EditViewName=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.DatS.pas
 
-[View18]
+[View20]
 CustomEditViewType=TEditView
 Module=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Comp.DataSet.pas
 CursorX=10
@@ -353,7 +385,7 @@ Elisions=
 Bookmarks=
 EditViewName=c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Comp.DataSet.pas
 
-[View19]
+[View21]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\common\staticstr.pas
 CursorX=27
@@ -424,7 +456,7 @@ Visible=1
 Docked=0
 State=0
 Left=1070
-Top=385
+Top=327
 Width=8930
 Height=9298
 MaxLeft=-4
@@ -444,11 +476,11 @@ State=0
 Left=0
 Top=0
 Width=1996
-Height=4404
+Height=5625
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=4404
+ClientHeight=5625
 TBDockHeight=5904
 LRDockWidth=2348
 Dockable=1
@@ -462,11 +494,11 @@ Docked=1
 State=0
 Left=0
 Top=18
-Width=4930
+Width=4977
 Height=1231
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=4930
+ClientWidth=4977
 ClientHeight=1231
 TBDockHeight=1231
 LRDockWidth=2770
@@ -482,11 +514,11 @@ State=0
 Left=0
 Top=0
 Width=1996
-Height=3317
+Height=2096
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=3317
+ClientHeight=2096
 TBDockHeight=7154
 LRDockWidth=1996
 Dockable=1
@@ -538,17 +570,17 @@ Docked=1
 State=0
 Left=0
 Top=415
-Width=1895
+Width=1848
 Height=4356
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1895
+ClientWidth=1848
 ClientHeight=4356
-TBDockHeight=8173
-LRDockWidth=1895
+TBDockHeight=6125
+LRDockWidth=1848
 Dockable=1
 StayOnTop=0
-SplitPos=111
+SplitPos=108
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -616,11 +648,11 @@ State=0
 Left=0
 Top=0
 Width=1996
-Height=7933
+Height=5885
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=7933
+ClientHeight=5885
 TBDockHeight=5962
 LRDockWidth=2512
 Dockable=1
@@ -632,8 +664,8 @@ Create=1
 Visible=0
 Docked=1
 State=0
-Left=-2041
-Top=-149
+Left=-1885
+Top=-62
 Width=2848
 Height=6202
 MaxLeft=-1
@@ -652,7 +684,7 @@ Visible=0
 Docked=1
 State=0
 Left=-2296
-Top=-149
+Top=220
 Width=273
 Height=365
 MaxLeft=-1
@@ -775,11 +807,11 @@ State=0
 Left=0
 Top=0
 Width=2340
-Height=1240
+Height=1000
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2340
-ClientHeight=1240
+ClientHeight=1000
 TBDockHeight=2317
 LRDockWidth=2824
 Dockable=1
@@ -840,11 +872,11 @@ State=0
 Left=0
 Top=0
 Width=1996
-Height=7933
+Height=5885
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=7933
+ClientHeight=5885
 TBDockHeight=4885
 LRDockWidth=7148
 Dockable=1
@@ -856,8 +888,8 @@ Create=1
 Visible=0
 Docked=1
 State=0
-Left=0
-Top=0
+Left=491
+Top=827
 Width=2855
 Height=3212
 MaxLeft=-1
@@ -903,14 +935,33 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1895
+Width=1848
 Height=3606
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1895
+ClientWidth=1848
 ClientHeight=3606
 TBDockHeight=3683
 LRDockWidth=1895
+Dockable=1
+StayOnTop=0
+
+[Memory1]
+PercentageSizes=1
+Create=1
+Visible=0
+Docked=0
+State=0
+Left=5617
+Top=2808
+Width=1742
+Height=4288
+MaxLeft=-4
+MaxTop=-10
+ClientWidth=1680
+ClientHeight=3913
+TBDockHeight=3904
+LRDockWidth=1285
 Dockable=1
 StayOnTop=0
 
@@ -923,11 +974,11 @@ State=0
 Left=0
 Top=0
 Width=1996
-Height=7933
+Height=5885
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=7933
+ClientHeight=5885
 TBDockHeight=4885
 LRDockWidth=5309
 Dockable=1
@@ -988,7 +1039,7 @@ Visible=0
 Docked=1
 State=0
 Left=0
-Top=0
+Top=18
 Width=3824
 Height=1423
 MaxLeft=-1
@@ -1014,12 +1065,12 @@ State=0
 Left=0
 Top=18
 Width=1996
-Height=4644
+Height=5865
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=4644
-TBDockHeight=8173
+ClientHeight=5865
+TBDockHeight=6125
 LRDockWidth=1996
 Dockable=1
 StayOnTop=0
@@ -1037,14 +1088,14 @@ Docked=1
 State=0
 Left=0
 Top=18
-Width=1895
+Width=1848
 Height=3606
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1895
+ClientWidth=1848
 ClientHeight=3606
-TBDockHeight=8173
-LRDockWidth=1895
+TBDockHeight=6125
+LRDockWidth=1848
 Dockable=1
 StayOnTop=0
 TabPosition=1
@@ -1060,14 +1111,14 @@ Visible=1
 Docked=1
 State=0
 Left=0
-Top=523
+Top=650
 Width=1996
-Height=3317
+Height=2096
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=3317
-TBDockHeight=8173
+ClientHeight=2096
+TBDockHeight=6125
 LRDockWidth=1996
 Dockable=1
 StayOnTop=0
