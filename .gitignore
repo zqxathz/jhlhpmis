@@ -1,4 +1,5 @@
 *.nouse
+*.~*
 
 start/Win32/
 start/Win64/
@@ -9,3 +10,4 @@ customer/Win32/
 customer/Win64/
 connection/Win32/
 connection/Win64/
+
