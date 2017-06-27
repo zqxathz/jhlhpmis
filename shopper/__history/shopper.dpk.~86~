@@ -1,0 +1,63 @@
+package shopper;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  dbrtl,
+  vcl,
+  dxCoreRS25,
+  vcldb,
+  vclimg,
+  dxThemeRS25,
+  dxGDIPlusRS25,
+  cxLibraryRS25,
+  cxDataRS25,
+  cxEditorsRS25,
+  cxPageControlRS25,
+  dxLayoutControlRS25,
+  cxGridRS25,
+  dxSkinsCoreRS25,
+  dxSkinscxPCPainterRS25,
+  XLSReadWriteIID10_2,
+  cxExportRS25,
+  RaizeComponentsVclDb,
+  FireDACCommon;
+
+contains
+  shopper in 'shopper.pas' {bplshopperframe: TFrame},
+  shopperdm in 'shopperdm.pas' {shopperdatamod: TDataModule},
+  staticstr in '..\common\staticstr.pas',
+  FireDAC.Phys.SQLite in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLite.pas',
+  FireDAC.Phys.SQLiteCli in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteCli.pas',
+  FireDAC.Phys.SQLiteDef in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteDef.pas',
+  FireDAC.Phys.SQLiteMeta in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteMeta.pas',
+  FireDAC.Phys.SQLiteWrapper in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteWrapper.pas',
+  FireDAC.Phys.SQLPreprocessor in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLPreprocessor.pas';
+
+end.

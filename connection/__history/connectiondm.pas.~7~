@@ -1,0 +1,50 @@
+unit connectiondm;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.ConsoleUI.Wait,
+  FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef, FireDAC.Phys.SQLite, Data.DB,
+  FireDAC.Comp.Client;
+
+type
+  TconnectionDataModule = class(TDataModule)
+    mainFDConnection: TFDConnection;
+    mainFDPhysSQLiteDriverLink: TFDPhysSQLiteDriverLink;
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  connectionDataModule: TconnectionDataModule;
+
+implementation
+
+{%CLASSGROUP 'System.Classes.TPersistent'}
+
+uses connectionconfig,VCL.Forms;
+
+{$R *.dfm}
+
+procedure TconnectionDataModule.DataModuleCreate(Sender: TObject);
+var
+ apppath:string;
+begin
+  apppath:=ExtractFilePath(Application.Exename);
+  mainFDConnection.Params.Password:=sqlite3password;
+  mainFDConnection.Params.Database:=apppath+databasename;
+  mainFDPhysSQLiteDriverLink.VendorLib:=apppath+sqlite3DLL;
+end;
+
+procedure TconnectionDataModule.DataModuleDestroy(Sender: TObject);
+begin
+  mainFDConnection.Close;
+end;
+
+end.

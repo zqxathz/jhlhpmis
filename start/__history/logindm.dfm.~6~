@@ -1,0 +1,28 @@
+object logindatamod: Tlogindatamod
+  OldCreateOrder = False
+  Height = 264
+  Width = 375
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=H:\Develop\Database\database2.db'
+      'DriverID=navicatSQLite'
+      'LockingMode=Normal'
+      'StringFormat=Unicode')
+    LoginPrompt = False
+    Left = 288
+    Top = 88
+  end
+  object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
+    DriverID = 'navicatSQLite'
+    VendorLib = 'C:\Program Files\PremiumSoft\Navicat Premium\sqlite31.dll'
+    Left = 184
+    Top = 88
+  end
+  object loginfdquery: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select * from jhlh_admin_member')
+    Left = 264
+    Top = 168
+  end
+end

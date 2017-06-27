@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{32393883-F4C3-44AC-A060-28055D624677}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="start\start.dproj">
+            <Dependencies>customer\customer.dproj;shopper\shopper.dproj</Dependencies>
+        </Projects>
+        <Projects Include="shopper\shopper.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="connection\connection.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="customer\customer.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="start" DependsOnTargets="customer;shopper">
+        <MSBuild Projects="start\start.dproj"/>
+    </Target>
+    <Target Name="start:Clean" DependsOnTargets="customer:Clean;shopper:Clean">
+        <MSBuild Projects="start\start.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="start:Make" DependsOnTargets="customer:Make;shopper:Make">
+        <MSBuild Projects="start\start.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="shopper">
+        <MSBuild Projects="shopper\shopper.dproj"/>
+    </Target>
+    <Target Name="shopper:Clean">
+        <MSBuild Projects="shopper\shopper.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="shopper:Make">
+        <MSBuild Projects="shopper\shopper.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="connection">
+        <MSBuild Projects="connection\connection.dproj"/>
+    </Target>
+    <Target Name="connection:Clean">
+        <MSBuild Projects="connection\connection.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="connection:Make">
+        <MSBuild Projects="connection\connection.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="customer">
+        <MSBuild Projects="customer\customer.dproj"/>
+    </Target>
+    <Target Name="customer:Clean">
+        <MSBuild Projects="customer\customer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="customer:Make">
+        <MSBuild Projects="customer\customer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="start;shopper;connection;customer"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="start:Clean;shopper:Clean;connection:Clean;customer:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="start:Make;shopper:Make;connection:Make;customer:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,0 +1,305 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Condition="Exists('$(BDS)\bin\CodeGear.Deployment.targets')" Project="$(BDS)\bin\CodeGear.Deployment.targets"/>
+    <ProjectExtensions>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <PropertyGroup/>
+    <ItemGroup Condition="'$(Platform)'=='iOSDevice64'"/>
+    <ItemGroup Condition="'$(Platform)'=='Win64'">
+        <DeployFile Include="$(BDS)\Redist\Win64\vclimg250.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>vclimg250.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxSpreadSheetRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dxSpreadSheetRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxGDIPlusRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dxGDIPlusRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\Redist\Win64\dbrtl250.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dbrtl250.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxSkinsCoreRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dxSkinsCoreRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxDataRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>cxDataRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\RaizeComponentsVclDb250.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>RaizeComponentsVclDb250.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="Win64\Debug\start.exe" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>start.exe</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\RaizeComponentsVcl250.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>RaizeComponentsVcl250.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\Redist\Win64\vclx250.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>vclx250.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxCoreRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dxCoreRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\shopper.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>shopper.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxLayoutControlRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dxLayoutControlRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxLibraryRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>cxLibraryRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxGridRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>cxGridRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxComnRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dxComnRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\Redist\Win64\rtl250.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>rtl250.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\Redist\Win64\vcldb250.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>vcldb250.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxThemeRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dxThemeRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxServerModeRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dxServerModeRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxSkinscxPCPainterRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>dxSkinscxPCPainterRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\shopper.rsm" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>shopper.rsm</RemoteName>
+            <DeployClass>DependencyPackageDebugSymbols</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxPageControlRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>cxPageControlRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\Redist\Win64\xmlrtl250.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>xmlrtl250.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\Redist\Win64\vcl250.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>vcl250.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxEditorsRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>cxEditorsRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxExportRS25.bpl" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>cxExportRS25.bpl</RemoteName>
+            <DeployClass>DependencyPackage</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="Win64\Debug\start.rsm" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>start.rsm</RemoteName>
+            <DeployClass>DebugSymbols</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='iOSDevice32'"/>
+    <ItemGroup Condition="'$(Platform)'=='Win32'">
+        <DeployFile Include="Win32\Debug\start.exe" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>start\</RemoteDir>
+            <RemoteName>start.exe</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='Linux64'"/>
+    <ItemGroup Condition="'$(Platform)'=='OSX32'"/>
+    <ItemGroup Condition="'$(Platform)'=='Android'"/>
+    <ItemGroup Condition="'$(Platform)'=='iOSSimulator'"/>
+</Project>
