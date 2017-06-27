@@ -200,8 +200,8 @@ object bplCustomerFrame: TbplCustomerFrame
       TabOrder = 14
     end
     object StaticText13: TStaticText
-      Left = 431
-      Top = 127
+      Left = 397
+      Top = 132
       Width = 49
       Height = 31
       Caption = #37038#31665':'
@@ -289,9 +289,9 @@ object bplCustomerFrame: TbplCustomerFrame
       Text = 'Edit1'
     end
     object Edit6: TEdit
-      Left = 486
-      Top = 125
-      Width = 396
+      Left = 452
+      Top = 126
+      Width = 430
       Height = 35
       TabOrder = 26
       Text = 'Edit1'
@@ -305,7 +305,7 @@ object bplCustomerFrame: TbplCustomerFrame
     object Edit7: TEdit
       Left = 255
       Top = 125
-      Width = 170
+      Width = 138
       Height = 35
       TabOrder = 28
       Text = 'Edit1'
@@ -335,13 +335,6 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.ListColumns = <>
       TabOrder = 32
       Width = 145
-    end
-    object cxMaskEdit1: TcxMaskEdit
-      Left = 64
-      Top = 126
-      TabOrder = 33
-      Text = 'cxMaskEdit1'
-      Width = 146
     end
   end
   object cxEditRepository1: TcxEditRepository

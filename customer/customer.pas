@@ -57,6 +57,7 @@ type
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     cxStyle2: TcxStyle;
+    cxMaskEdit1: TcxMaskEdit;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
   private
     { Private declarations }
