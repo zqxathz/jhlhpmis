@@ -102,6 +102,7 @@ begin
       HeaderAlignmentHorz:=taCenter;
       RepositoryItem:=IDcxEditRepository1Label;
       Caption:='编号';
+      Index:=1;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('eid') do
     begin
@@ -137,46 +138,55 @@ begin
     begin
       //Visible:=false;
       Caption:='客户类型';
+      index:=2;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('standnumber') do
     begin
       //Visible:=false;
       Caption:='展位号';
+      index:=3;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('name') do
     begin
       //Visible:=false;
       Caption:='姓名';
+      index:=4;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('mobilephone') do
     begin
       //Visible:=false;
       Caption:='手机';
+      index:=5;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('paytype') do
     begin
       //Visible:=false;
       Caption:='支付类型';
+      index:=6;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('allpay') do
     begin
       //Visible:=false;
       Caption:='总金额';
+      index:=7;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('firstpay') do
     begin
       //Visible:=false;
       Caption:='定金';
+      index:=8;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('nowpay') do
     begin
       //Visible:=false;
       Caption:='现场支付';
+      index:=9;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('customerinfo') do
     begin
       //Visible:=false;
-      Caption:='客户信息';
+      Caption:='客户备注';
+      index:=13;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('groupid') do
     begin
@@ -186,6 +196,7 @@ begin
     begin
       //Visible:=false;
       Caption:='招展人员';
+      index:=10;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('salesid') do
     begin
