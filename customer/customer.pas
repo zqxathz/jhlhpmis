@@ -73,7 +73,7 @@ type
     salesnamecxEditRepository1ComboBoxItem: TcxEditRepositoryComboBoxItem;
     salescxComboBox: TcxComboBox;
     otherpaycxStyle: TcxStyle;
-    cxEditRepository1MemoItem1: TcxEditRepositoryMemoItem;
+    cxEditRepository1PopupItem1: TcxEditRepositoryPopupItem;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
       (Sender: TObject);
@@ -85,8 +85,11 @@ type
     procedure cxGrid1DBTableView1StylesGetContentStyle
       (Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord;
       AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
+    procedure cxEditRepository1PopupItem1PropertiesInitPopup(Sender: TObject);
+    procedure cxEditRepository1PopupItem1PropertiesCloseUp(Sender: TObject);
   private
     { Private declarations }
+     columninfoMemo:TMemo;
   public
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -126,7 +129,18 @@ begin
     end;
   end;
   cxPropertiesStore1.RestoreFrom;
-
+  if not Assigned(columninfoMemo) then
+    begin
+      columninfoMemo:=TMemo.Create(Self);
+      columninfoMemo.ScrollBars:=ssVertical;
+      columninfoMemo.Width:=300;
+      columninfoMemo.Height:=200;
+      columninfoMemo.Visible:=false;
+      columninfoMemo.Parent:=Panel1;
+      columninfoMemo.Font.Name:='微软雅黑';
+      columninfoMemo.Font.Size:=16;
+      cxEditRepository1PopupItem1.Properties.PopupControl:=columninfoMemo;
+    end;
 end;
 
 procedure TbplCustomerFrame.
@@ -138,6 +152,28 @@ begin
   begin
     // Properties.Items.Clear;
     Properties.Items.Text := customerDataModule.getCustomerType.Text;
+  end;
+end;
+
+//客户备注弹出菜单关闭,将MEMO的值写入表
+procedure TbplCustomerFrame.cxEditRepository1PopupItem1PropertiesCloseUp(
+  Sender: TObject);
+begin
+  with customerDataModule.customerFDQuery do
+  begin
+    Edit;
+    FieldByName('customerinfo').Value:=columninfoMemo.Lines.Text.Trim;
+    Post;
+  end;
+end;
+
+//客户备注弹出菜单初始化,将字段值放入MEMO
+procedure TbplCustomerFrame.cxEditRepository1PopupItem1PropertiesInitPopup(
+  Sender: TObject);
+begin
+  if Assigned(columninfoMemo) then
+  begin
+    columninfoMemo.Lines.Text:=customerDataModule.customerFDQuery.FieldByName('customerinfo').AsString;
   end;
 end;
 
@@ -176,6 +212,8 @@ begin
   if cxGrid1DBTableView1.ColumnCount = 0 then
   begin
     cxGrid1DBTableView1.DataController.CreateAllItems(True);
+
+
 
     with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
@@ -324,7 +362,7 @@ begin
       // Visible:=false;
       Caption := '客户备注';
       index := 13;
-      RepositoryItem:=cxEditRepository1MemoItem1;
+      RepositoryItem:=cxEditRepository1PopupItem1;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('groupid') do
     begin
@@ -356,11 +394,13 @@ begin
     begin
       // Visible:=false;
       RepositoryItem := cxEditRepository1DateItem;
+      Options.Editing:=false;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('updatetime') do
     begin
       // Visible:=false;
       RepositoryItem := cxEditRepository1DateItem;
+      Options.Editing:=false;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('status') do
     begin

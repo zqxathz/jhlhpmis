@@ -369,6 +369,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.DisplayFormat = 'yyyy'#24180'm'#26376'd'#26085
       Properties.EditFormat = 'yyyy'#24180'm'#26376'd'#26085
       Properties.Nullstring = #26080
+      Properties.ReadOnly = False
       Properties.SaveTime = False
       Properties.UseNullString = True
       Properties.WeekNumbers = True
@@ -403,7 +404,10 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.OnEditValueChanged = salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged
       Properties.OnInitPopup = salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup
     end
-    object cxEditRepository1MemoItem1: TcxEditRepositoryMemoItem
+    object cxEditRepository1PopupItem1: TcxEditRepositoryPopupItem
+      Properties.PopupSysPanelStyle = True
+      Properties.OnCloseUp = cxEditRepository1PopupItem1PropertiesCloseUp
+      Properties.OnInitPopup = cxEditRepository1PopupItem1PropertiesInitPopup
     end
   end
   object cxPropertiesStore1: TcxPropertiesStore
