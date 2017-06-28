@@ -33,6 +33,7 @@ object bplCustomerFrame: TbplCustomerFrame
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
+      OptionsBehavior.ImmediateEditor = False
       OptionsView.Indicator = True
       Styles.ContentEven = cxStyle1
       Styles.ContentOdd = cxStyle2
@@ -118,7 +119,7 @@ object bplCustomerFrame: TbplCustomerFrame
       TabOrder = 4
     end
     object StaticText3: TStaticText
-      Left = 388
+      Left = 400
       Top = 51
       Width = 49
       Height = 31
@@ -134,7 +135,7 @@ object bplCustomerFrame: TbplCustomerFrame
       TabOrder = 6
     end
     object StaticText5: TStaticText
-      Left = 787
+      Left = 822
       Top = 51
       Width = 49
       Height = 31
@@ -159,7 +160,7 @@ object bplCustomerFrame: TbplCustomerFrame
     end
     object StaticText8: TStaticText
       Left = 9
-      Top = 89
+      Top = 90
       Width = 69
       Height = 31
       Caption = #24635#37329#39069':'
@@ -167,7 +168,7 @@ object bplCustomerFrame: TbplCustomerFrame
     end
     object StaticText9: TStaticText
       Left = 216
-      Top = 89
+      Top = 90
       Width = 49
       Height = 31
       Caption = #35746#37329':'
@@ -175,7 +176,7 @@ object bplCustomerFrame: TbplCustomerFrame
     end
     object StaticText10: TStaticText
       Left = 397
-      Top = 89
+      Top = 90
       Width = 89
       Height = 31
       Caption = #29616#22330#20132#27454':'
@@ -183,7 +184,7 @@ object bplCustomerFrame: TbplCustomerFrame
     end
     object StaticText11: TStaticText
       Left = 642
-      Top = 88
+      Top = 89
       Width = 89
       Height = 31
       Caption = #25903#20184#31867#22411':'
@@ -199,15 +200,15 @@ object bplCustomerFrame: TbplCustomerFrame
     end
     object StaticText13: TStaticText
       Left = 431
-      Top = 127
+      Top = 131
       Width = 49
       Height = 31
       Caption = #37038#31665':'
       TabOrder = 15
     end
     object StaticText14: TStaticText
-      Left = 887
-      Top = 88
+      Left = 888
+      Top = 89
       Width = 89
       Height = 31
       Caption = #25307#23637#20154#21592':'
@@ -229,19 +230,17 @@ object bplCustomerFrame: TbplCustomerFrame
       Caption = #22791#27880':'
       TabOrder = 18
     end
-    object Memo1: TMemo
+    object infoMemo: TMemo
       Left = 64
       Top = 205
       Width = 818
       Height = 62
       Anchors = [akLeft, akTop, akBottom]
-      Lines.Strings = (
-        'Memo1')
       TabOrder = 19
     end
     object Edit1: TEdit
       Left = 64
-      Top = 164
+      Top = 165
       Width = 818
       Height = 35
       TabOrder = 20
@@ -254,97 +253,98 @@ object bplCustomerFrame: TbplCustomerFrame
       TabOrder = 21
       Width = 145
     end
-    object Edit2: TEdit
+    object standnumberEdit: TEdit
       Left = 285
       Top = 47
-      Width = 98
+      Width = 108
       Height = 35
       TabOrder = 22
-      Text = 'Edit1'
     end
-    object Edit3: TEdit
-      Left = 438
+    object nameEdit: TEdit
+      Left = 450
       Top = 47
-      Width = 125
+      Width = 114
       Height = 35
       TabOrder = 23
-      Text = 'Edit1'
     end
-    object Edit4: TEdit
-      Left = 620
+    object companyEdit: TEdit
+      Left = 872
       Top = 47
-      Width = 161
+      Width = 254
       Height = 35
       TabOrder = 24
-      Text = 'Edit1'
     end
-    object Edit5: TEdit
-      Left = 842
-      Top = 47
-      Width = 284
-      Height = 35
-      TabOrder = 25
-      Text = 'Edit1'
-    end
-    object Edit6: TEdit
+    object emailEdit: TEdit
       Left = 486
       Top = 125
       Width = 396
       Height = 35
-      TabOrder = 26
-      Text = 'Edit1'
+      TabOrder = 25
     end
-    object cxCurrencyEdit1: TcxCurrencyEdit
-      Left = 83
-      Top = 85
-      TabOrder = 27
+    object allpaycxCurrencyEdit: TcxCurrencyEdit
+      Left = 84
+      Top = 88
+      EditValue = 0.000000000000000000
+      TabOrder = 26
       Width = 127
     end
-    object Edit7: TEdit
+    object qqEdit: TEdit
       Left = 255
       Top = 125
       Width = 170
       Height = 35
-      TabOrder = 28
-      Text = 'Edit1'
+      TabOrder = 27
     end
-    object cxCurrencyEdit2: TcxCurrencyEdit
+    object firstpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 266
       Top = 85
-      TabOrder = 29
+      EditValue = 0.000000000000000000
+      TabOrder = 28
       Width = 127
     end
-    object cxCurrencyEdit3: TcxCurrencyEdit
+    object nowpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 486
-      Top = 85
-      TabOrder = 30
+      Top = 87
+      EditValue = 0.000000000000000000
+      TabOrder = 29
       Width = 150
     end
-    object cxLookupComboBox2: TcxLookupComboBox
+    object paytypecxLookupComboBox: TcxLookupComboBox
       Left = 737
-      Top = 84
+      Top = 86
+      RepositoryItem = paytypecxEditRepository1LookupComboBoxItem
+      Properties.ListColumns = <>
+      TabOrder = 30
+      Width = 145
+    end
+    object salescxLookupComboBox: TcxLookupComboBox
+      Left = 981
+      Top = 86
       Properties.ListColumns = <>
       TabOrder = 31
       Width = 145
     end
-    object cxLookupComboBox3: TcxLookupComboBox
-      Left = 981
-      Top = 84
-      Properties.ListColumns = <>
-      TabOrder = 32
-      Width = 145
-    end
-    object cxMaskEdit1: TcxMaskEdit
+    object telphonecxMaskEdit: TcxMaskEdit
       Left = 64
       Top = 126
-      TabOrder = 33
-      Text = 'cxMaskEdit1'
+      Properties.MaskKind = emkRegExpr
+      Properties.EditMask = '\d{0,11}$'
+      Properties.MaxLength = 0
+      TabOrder = 32
       Width = 146
+    end
+    object phonecxMaskEdit: TcxMaskEdit
+      Left = 621
+      Top = 47
+      Properties.MaskKind = emkRegExprEx
+      Properties.EditMask = '([1])[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
+      TabOrder = 33
+      Width = 196
     end
   end
   object cxEditRepository1: TcxEditRepository
-    Left = 632
-    Top = 325
+    Left = 640
+    Top = 221
     object IDcxEditRepository1Label: TcxEditRepositoryLabel
       Properties.Alignment.Horz = taCenter
     end
@@ -359,6 +359,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.WeekNumbers = True
     end
     object paytypecxEditRepository1LookupComboBoxItem: TcxEditRepositoryLookupComboBoxItem
+      Properties.Alignment.Horz = taCenter
       Properties.DropDownListStyle = lsFixedList
       Properties.ImmediatePost = True
       Properties.KeyFieldNames = 'id'
@@ -371,6 +372,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.ListSource = customerDataModule.paytypeDataSource
     end
     object customertypecxEditRepository1ComboBoxItem1: TcxEditRepositoryComboBoxItem
+      Properties.Alignment.Horz = taCenter
       Properties.Items.Strings = (
         'a'
         'd'
@@ -378,16 +380,19 @@ object bplCustomerFrame: TbplCustomerFrame
         'd')
       Properties.OnInitPopup = customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
     end
+    object cxEditRepository1CurrencyItem1: TcxEditRepositoryCurrencyItem
+      Properties.EditFormat = '0.00'
+    end
   end
   object cxPropertiesStore1: TcxPropertiesStore
     Components = <>
     StorageName = 'customer.ini'
     Left = 720
-    Top = 320
+    Top = 224
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 864
-    Top = 328
+    Left = 784
+    Top = 232
     PixelsPerInch = 96
     object cxStyle1: TcxStyle
       AssignedValues = [svColor]

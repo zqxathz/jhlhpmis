@@ -1,4 +1,4 @@
-unit customerdm;
+﻿unit customerdm;
 
 interface
 
@@ -28,12 +28,12 @@ type
     procedure customerFDQueryAfterGetRecord(DataSet: TFDDataSet);
     procedure customerFDQuerycreatetimeChange(Sender: TField);
     procedure customerFDQueryupdatetimeChange(Sender: TField);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
-    procedure customerOpen(s: string);
-    function getCustomerType:TStringList;
+    private
+      { Private declarations }
+    public
+      { Public declarations }
+      procedure customerOpen(s: string);
+      function getCustomerType: TStringList;
   end;
 
 var
@@ -61,17 +61,17 @@ begin
     customertypeFDQuery.Connection := connectionDataModule.mainFDConnection;
     salesFDQuery.Connection := connectionDataModule.mainFDConnection;
     expoFDQuery.Connection := connectionDataModule.mainFDConnection;
-    paytypeFDQuery.Connection:=connectionDataModule.mainFDConnection;
+    paytypeFDQuery.Connection := connectionDataModule.mainFDConnection;
   end;
   expoFDQuery.open;
-  //customertypeFDQuery.open;
+  // customertypeFDQuery.open;
   salesFDQuery.open;
   paytypeFDQuery.open;
 end;
 
 function TcustomerDataModule.getCustomerType: TStringList;
 begin
-  Result:=TStringList.Create;
+  Result := TStringList.Create;
   customertypeFDQuery.First;
   while not customertypeFDQuery.Eof do
   begin
@@ -81,22 +81,19 @@ begin
 
 end;
 
-procedure TcustomerDataModule.customerFDQueryAfterGetRecord
-  (DataSet: TFDDataSet);
+procedure TcustomerDataModule.customerFDQueryAfterGetRecord(DataSet: TFDDataSet);
 begin
   with customerFDQuery do
   begin
     if (FieldValues['create_datetime'] = 0) then
       FieldValues['createtime'] := null
     else
-      FieldValues['createtime'] :=
-        UnixDateToDateTime(FieldValues['create_datetime']);
+      FieldValues['createtime'] := UnixDateToDateTime(FieldValues['create_datetime']);
 
     if (FieldValues['update_datetime'] = 0) then
       FieldValues['updatetime'] := null
     else
-      FieldValues['updatetime'] :=
-        UnixDateToDateTime(FieldValues['update_datetime']);
+      FieldValues['updatetime'] := UnixDateToDateTime(FieldValues['update_datetime']);
   end;
 end;
 
@@ -105,8 +102,7 @@ begin
   if (Sender.Value = null) then
     customerFDQuery.FieldValues['create_datetime'] := 0
   else
-    customerFDQuery.FieldValues['create_datetime'] :=
-      DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
+    customerFDQuery.FieldValues['create_datetime'] := DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
 end;
 
 procedure TcustomerDataModule.customerFDQueryupdatetimeChange(Sender: TField);
@@ -114,19 +110,19 @@ begin
   if (Sender.Value = null) then
     customerFDQuery.FieldValues['update_datetime'] := 0
   else
-    customerFDQuery.FieldValues['update_datetime'] :=
-      DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
+    customerFDQuery.FieldValues['update_datetime'] := DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
 end;
 
 procedure TcustomerDataModule.customerOpen(s: string);
 begin
+  // 通过宏打开customer表
   customerFDQuery.Close;
   customerFDQuery.Macros.Items[0].Value := s;
-  // customerFDQuery.Prepare;
   customerFDQuery.open;
 
+  // 通过参数打开customer类型表
   customertypeFDQuery.Close;
-  customertypeFDQuery.Params.Items[0].Value:=expoFDQuery.FieldValues['expotypeid'];
+  customertypeFDQuery.Params.Items[0].Value := expoFDQuery.FieldValues['expotypeid'];
   customertypeFDQuery.open;
 end;
 

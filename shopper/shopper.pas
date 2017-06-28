@@ -62,8 +62,7 @@ uses
   XLSSheetData5,
   XLSReadWriteII5,
   Clipbrd,
-  FireDAC.Phys.SQLiteWrapper, dxSkinMetropolis, dxSkinMoneyTwins,
-  dxSkinOffice2007Black, dxSkinscxPCPainter;
+  FireDAC.Phys.SQLiteWrapper;
 
 type
   Tbplshopperframe = class(TFrame)
@@ -178,6 +177,8 @@ type
     procedure cxGrid1DBTableView1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure restButtonClick(Sender: TObject);
+    procedure cxGrid1DBTableView1phonePropertiesValidate(Sender: TObject; var DisplayValue: Variant;
+      var ErrorText: TCaption; var Error: Boolean);
   private
     { Private declarations }
     procedure CxGridToExcel(AcxGrid: TcxGrid);
@@ -532,6 +533,19 @@ procedure Tbplshopperframe.cxGrid1DBTableView1KeyDown(Sender: TObject;
 begin
   if (ssCtrl in Shift) and (Key = 67) then
     copyitemmenuClick(nil);
+end;
+
+procedure Tbplshopperframe.cxGrid1DBTableView1phonePropertiesValidate(Sender: TObject;
+  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+begin
+   if VarIsStr(DisplayValue) then
+     if (Length(DisplayValue)>11) or (String(DisplayValue)[1]<>'1') then
+     begin
+       Error:=true;
+       ErrorText:='手机号码格式错误,请重新输入';
+     end;
+
+
 end;
 
 //Frame释放时执行的一些操作,保存当前FRAME里一些组件的属性

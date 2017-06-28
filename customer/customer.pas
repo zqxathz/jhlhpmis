@@ -41,27 +41,28 @@ type
     StaticText14: TStaticText;
     StaticText15: TStaticText;
     StaticText16: TStaticText;
-    Memo1: TMemo;
+    infoMemo: TMemo;
     Edit1: TEdit;
     cxLookupComboBox1: TcxLookupComboBox;
-    Edit2: TEdit;
-    Edit3: TEdit;
-    Edit4: TEdit;
-    Edit5: TEdit;
-    Edit6: TEdit;
-    cxCurrencyEdit1: TcxCurrencyEdit;
-    Edit7: TEdit;
-    cxCurrencyEdit2: TcxCurrencyEdit;
-    cxCurrencyEdit3: TcxCurrencyEdit;
-    cxLookupComboBox2: TcxLookupComboBox;
-    cxLookupComboBox3: TcxLookupComboBox;
+    standnumberEdit: TEdit;
+    nameEdit: TEdit;
+    companyEdit: TEdit;
+    emailEdit: TEdit;
+    allpaycxCurrencyEdit: TcxCurrencyEdit;
+    qqEdit: TEdit;
+    firstpaycxCurrencyEdit: TcxCurrencyEdit;
+    nowpaycxCurrencyEdit: TcxCurrencyEdit;
+    paytypecxLookupComboBox: TcxLookupComboBox;
+    salescxLookupComboBox: TcxLookupComboBox;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     cxStyle2: TcxStyle;
-    cxMaskEdit1: TcxMaskEdit;
+    telphonecxMaskEdit: TcxMaskEdit;
     cxEditRepository1DateItem: TcxEditRepositoryDateItem;
     paytypecxEditRepository1LookupComboBoxItem: TcxEditRepositoryLookupComboBoxItem;
     customertypecxEditRepository1ComboBoxItem1: TcxEditRepositoryComboBoxItem;
+    cxEditRepository1CurrencyItem1: TcxEditRepositoryCurrencyItem;
+    phonecxMaskEdit: TcxMaskEdit;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(
       Sender: TObject);
@@ -156,6 +157,7 @@ begin
     begin
       //Visible:=false;
       RepositoryItem:=customertypecxEditRepository1ComboBoxItem1;
+      HeaderAlignmentHorz:=taCenter;
       Caption:='客户类型';
       index:=2;
     end;
@@ -183,24 +185,31 @@ begin
       Caption:='支付类型';
       index:=6;
       RepositoryItem:=paytypecxEditRepository1LookupComboBoxItem;
+      HeaderAlignmentHorz:=taCenter;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('allpay') do
     begin
       //Visible:=false;
       Caption:='总金额';
       index:=7;
+      HeaderAlignmentHorz:=taRightJustify;
+      RepositoryItem:=cxEditRepository1CurrencyItem1;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('firstpay') do
     begin
       //Visible:=false;
       Caption:='定金';
       index:=8;
+      HeaderAlignmentHorz:=taRightJustify;
+      RepositoryItem:=cxEditRepository1CurrencyItem1;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('nowpay') do
     begin
       //Visible:=false;
       Caption:='现场支付';
       index:=9;
+      HeaderAlignmentHorz:=taRightJustify;
+      RepositoryItem:=cxEditRepository1CurrencyItem1;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('customerinfo') do
     begin
@@ -217,6 +226,9 @@ begin
       //Visible:=false;
       Caption:='招展人员';
       index:=10;
+      PropertiesClass:=TcxTextEditProperties;
+      Properties.Alignment.Horz:=taCenter;
+      HeaderAlignmentHorz:=taCenter;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('salesid') do
     begin
@@ -250,18 +262,6 @@ begin
       Visible:=false;
     end;
 
-
-
-    //cxGrid1DBTableView1.FindItemByName('id').RepositoryItem:=IDcxEditRepository1Label
-
-//    with cxGrid1DBTableView1.CreateColumn do
-//    begin
-//      DataBinding.FieldName:='id';
-//      Options.Editing:=false;
-//      HeaderAlignmentHorz:=taCenter;
-//      Caption:='编号';
-//      RepositoryItem:=IDcxEditRepository1Label;
-//    end;
   end;
   cxGrid1DBTableView1.ApplyBestFit(nil,true);
 end;
