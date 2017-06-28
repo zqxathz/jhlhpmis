@@ -24,16 +24,21 @@ type
     customerFDQueryupdatetime: TDateField;
     paytypeFDQuery: TFDQuery;
     paytypeDataSource: TDataSource;
+    customerFDQueryotherpay: TCurrencyField;
     procedure DataModuleCreate(Sender: TObject);
     procedure customerFDQueryAfterGetRecord(DataSet: TFDDataSet);
     procedure customerFDQuerycreatetimeChange(Sender: TField);
     procedure customerFDQueryupdatetimeChange(Sender: TField);
+    procedure customerFDQueryCalcFields(DataSet: TDataSet);
+    procedure salesFDQueryBeforePost(DataSet: TDataSet);
     private
       { Private declarations }
     public
       { Public declarations }
       procedure customerOpen(s: string);
       function getCustomerType: TStringList;
+      function getSalesName: TStringList;
+      procedure addSales(salesname:string);
   end;
 
 var
@@ -78,7 +83,41 @@ begin
     Result.Add(customertypeFDQuery.FieldByName('title').AsString);
     customertypeFDQuery.Next;
   end;
+end;
 
+procedure TcustomerDataModule.addSales(salesname:string);
+begin
+ if salesname.Trim='' then exit;
+ if not salesFDQuery.Locate('name',Trim(salesname)) then
+ begin
+   with salesFDQuery do
+   begin
+     Append;
+     FieldValues['id']:=NUll;
+     FieldValues['did']:=NUll;
+     FieldValues['name']:=Trim(salesname);
+     FieldValues['status']:=1;
+     FieldValues['trash']:=0;
+     Post;
+   end;
+ end;
+end;
+
+function TcustomerDataModule.getSalesName: TStringList;
+begin
+  Result := TStringList.Create;
+  salesFDQuery.First;
+  while not salesFDQuery.Eof do
+  begin
+    Result.Add(salesFDQuery.FieldByName('name').AsString);
+    salesFDQuery.Next;
+  end;
+end;
+
+procedure TcustomerDataModule.salesFDQueryBeforePost(DataSet: TDataSet);
+begin
+ DataSet.FieldByName('id').Required:=false;
+ Dataset.FieldByName('did').Required:=False;
 end;
 
 procedure TcustomerDataModule.customerFDQueryAfterGetRecord(DataSet: TFDDataSet);
@@ -95,6 +134,21 @@ begin
     else
       FieldValues['updatetime'] := UnixDateToDateTime(FieldValues['update_datetime']);
   end;
+end;
+
+procedure TcustomerDataModule.customerFDQueryCalcFields(DataSet: TDataSet);
+begin
+
+  if DataSet.FieldByName('allpay').AsCurrency > 0 then
+  begin
+    DataSet.FieldByName('otherpay').AsCurrency := DataSet.FieldByName('allpay').AsCurrency -
+      DataSet.FieldByName('firstpay').AsCurrency - DataSet.FieldByName('nowpay').AsCurrency;
+  end
+  else
+  begin
+    DataSet.FieldByName('otherpay').AsCurrency :=0;
+  end;
+
 end;
 
 procedure TcustomerDataModule.customerFDQuerycreatetimeChange(Sender: TField);

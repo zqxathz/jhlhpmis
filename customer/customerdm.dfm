@@ -4,6 +4,7 @@ object customerDataModule: TcustomerDataModule
   Height = 430
   Width = 615
   object customerFDQuery: TFDQuery
+    OnCalcFields = customerFDQueryCalcFields
     FieldOptions.AutoCreateMode = acCombineAlways
     FieldOptions.PositionMode = poFirst
     AfterGetRecord = customerFDQueryAfterGetRecord
@@ -32,6 +33,13 @@ object customerDataModule: TcustomerDataModule
       ProviderFlags = [pfInWhere]
       OnChange = customerFDQueryupdatetimeChange
     end
+    object customerFDQueryotherpay: TCurrencyField
+      FieldKind = fkCalculated
+      FieldName = 'otherpay'
+      ProviderFlags = [pfInWhere]
+      ReadOnly = True
+      Calculated = True
+    end
   end
   object customertypeFDQuery: TFDQuery
     SQL.Strings = (
@@ -57,6 +65,7 @@ object customerDataModule: TcustomerDataModule
     Top = 192
   end
   object salesFDQuery: TFDQuery
+    BeforePost = salesFDQueryBeforePost
     SQL.Strings = (
       'select * from jhlh_hrms_sales where status=1 and trash=0')
     Left = 456

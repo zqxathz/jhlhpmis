@@ -42,8 +42,7 @@ type
     StaticText15: TStaticText;
     StaticText16: TStaticText;
     infoMemo: TMemo;
-    Edit1: TEdit;
-    cxLookupComboBox1: TcxLookupComboBox;
+    addrEdit: TEdit;
     standnumberEdit: TEdit;
     nameEdit: TEdit;
     companyEdit: TEdit;
@@ -53,7 +52,6 @@ type
     firstpaycxCurrencyEdit: TcxCurrencyEdit;
     nowpaycxCurrencyEdit: TcxCurrencyEdit;
     paytypecxLookupComboBox: TcxLookupComboBox;
-    salescxLookupComboBox: TcxLookupComboBox;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     cxStyle2: TcxStyle;
@@ -63,9 +61,14 @@ type
     customertypecxEditRepository1ComboBoxItem1: TcxEditRepositoryComboBoxItem;
     cxEditRepository1CurrencyItem1: TcxEditRepositoryCurrencyItem;
     phonecxMaskEdit: TcxMaskEdit;
+    customertypecxComboBox: TcxComboBox;
+    salesnamecxEditRepository1ComboBoxItem: TcxEditRepositoryComboBoxItem;
+    salescxComboBox: TcxComboBox;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(
       Sender: TObject);
+    procedure salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(Sender: TObject);
+    procedure salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged(Sender: TObject);
   private
     { Private declarations }
   public
@@ -86,6 +89,7 @@ begin
     customerDataModule:=TcustomerDataModule.Create(nil);
   end;
   expocxLookupComboBox.ItemIndex:=0;
+  paytypecxLookupComboBox.ItemIndex:=0;
 end;
 
 procedure TbplCustomerFrame.customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(
@@ -113,6 +117,9 @@ begin
   s:='and eid='+customerDataModule.expoFDQuery.FieldByName('id').AsString;
   customerDataModule.customerOpen(s);
   customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(nil);
+  salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(nil);
+  customertypecxComboBox.Properties.Items.text:=customerDataModule.getCustomerType.Text;
+  customertypecxComboBox.ItemIndex:=0;
   if cxGrid1DBTableView1.ColumnCount=0 then
   begin
     cxGrid1DBTableView1.DataController.CreateAllItems(True);
@@ -211,6 +218,15 @@ begin
       HeaderAlignmentHorz:=taRightJustify;
       RepositoryItem:=cxEditRepository1CurrencyItem1;
     end;
+    with cxGrid1DBTableView1.GetColumnByFieldName('otherpay') do
+    begin
+      //Visible:=false;
+      Caption:='剩余金额';
+      index:=10;
+      HeaderAlignmentHorz:=taRightJustify;
+      RepositoryItem:=cxEditRepository1CurrencyItem1;
+      Editing:=false;
+    end;
     with cxGrid1DBTableView1.GetColumnByFieldName('customerinfo') do
     begin
       //Visible:=false;
@@ -225,9 +241,9 @@ begin
     begin
       //Visible:=false;
       Caption:='招展人员';
-      index:=10;
-      PropertiesClass:=TcxTextEditProperties;
-      Properties.Alignment.Horz:=taCenter;
+      index:=11;
+      RepositoryItem:=salesnamecxEditRepository1ComboBoxItem;
+      //Properties.Alignment.Horz:=taCenter;
       HeaderAlignmentHorz:=taCenter;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('salesid') do
@@ -264,6 +280,19 @@ begin
 
   end;
   cxGrid1DBTableView1.ApplyBestFit(nil,true);
+end;
+
+procedure TbplCustomerFrame.salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged(
+  Sender: TObject);
+begin
+  customerDataModule.addSales(TcxComboBox(Sender).Text);
+  //showmessage(TcxComboBox(Sender).Text);
+end;
+
+procedure TbplCustomerFrame.salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(
+  Sender: TObject);
+begin
+  salesnamecxEditRepository1ComboBoxItem.Properties.Items.Text:=customerDataModule.getSalesName.Text;
 end;
 
 end.

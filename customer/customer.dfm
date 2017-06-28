@@ -238,54 +238,50 @@ object bplCustomerFrame: TbplCustomerFrame
       Anchors = [akLeft, akTop, akBottom]
       TabOrder = 19
     end
-    object Edit1: TEdit
+    object addrEdit: TEdit
       Left = 64
       Top = 165
       Width = 818
       Height = 35
       TabOrder = 20
-      Text = 'Edit1'
-    end
-    object cxLookupComboBox1: TcxLookupComboBox
-      Left = 65
-      Top = 47
-      Properties.ListColumns = <>
-      TabOrder = 21
-      Width = 145
     end
     object standnumberEdit: TEdit
       Left = 285
       Top = 47
       Width = 108
       Height = 35
-      TabOrder = 22
+      TabOrder = 21
     end
     object nameEdit: TEdit
       Left = 450
       Top = 47
       Width = 114
       Height = 35
-      TabOrder = 23
+      TabOrder = 22
     end
     object companyEdit: TEdit
       Left = 872
       Top = 47
       Width = 254
       Height = 35
-      TabOrder = 24
+      TabOrder = 23
     end
     object emailEdit: TEdit
       Left = 486
       Top = 125
       Width = 396
       Height = 35
-      TabOrder = 25
+      TabOrder = 24
     end
     object allpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 84
       Top = 88
       EditValue = 0.000000000000000000
-      TabOrder = 26
+      Properties.EditFormat = '0.00;-0.00'
+      Properties.Nullable = False
+      Properties.Nullstring = '0'
+      Properties.UseNullString = True
+      TabOrder = 25
       Width = 127
     end
     object qqEdit: TEdit
@@ -293,20 +289,23 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 125
       Width = 170
       Height = 35
-      TabOrder = 27
+      TabOrder = 26
     end
     object firstpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 266
       Top = 85
       EditValue = 0.000000000000000000
-      TabOrder = 28
+      Properties.EditFormat = '0.00;-0.00'
+      Properties.Nullable = False
+      TabOrder = 27
       Width = 127
     end
     object nowpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 486
       Top = 87
       EditValue = 0.000000000000000000
-      TabOrder = 29
+      Properties.EditFormat = '0.00;-0.00'
+      TabOrder = 28
       Width = 150
     end
     object paytypecxLookupComboBox: TcxLookupComboBox
@@ -314,14 +313,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 86
       RepositoryItem = paytypecxEditRepository1LookupComboBoxItem
       Properties.ListColumns = <>
-      TabOrder = 30
-      Width = 145
-    end
-    object salescxLookupComboBox: TcxLookupComboBox
-      Left = 981
-      Top = 86
-      Properties.ListColumns = <>
-      TabOrder = 31
+      TabOrder = 29
       Width = 145
     end
     object telphonecxMaskEdit: TcxMaskEdit
@@ -330,21 +322,34 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.MaskKind = emkRegExpr
       Properties.EditMask = '\d{0,11}$'
       Properties.MaxLength = 0
-      TabOrder = 32
-      Width = 146
+      TabOrder = 30
+      Width = 147
     end
     object phonecxMaskEdit: TcxMaskEdit
       Left = 621
       Top = 47
       Properties.MaskKind = emkRegExprEx
       Properties.EditMask = '([1])[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
-      TabOrder = 33
+      TabOrder = 31
       Width = 196
+    end
+    object customertypecxComboBox: TcxComboBox
+      Left = 64
+      Top = 49
+      TabOrder = 32
+      Width = 147
+    end
+    object salescxComboBox: TcxComboBox
+      Left = 983
+      Top = 86
+      RepositoryItem = salesnamecxEditRepository1ComboBoxItem
+      TabOrder = 33
+      Width = 143
     end
   end
   object cxEditRepository1: TcxEditRepository
     Left = 640
-    Top = 221
+    Top = 213
     object IDcxEditRepository1Label: TcxEditRepositoryLabel
       Properties.Alignment.Horz = taCenter
     end
@@ -383,16 +388,20 @@ object bplCustomerFrame: TbplCustomerFrame
     object cxEditRepository1CurrencyItem1: TcxEditRepositoryCurrencyItem
       Properties.EditFormat = '0.00'
     end
+    object salesnamecxEditRepository1ComboBoxItem: TcxEditRepositoryComboBoxItem
+      Properties.OnEditValueChanged = salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged
+      Properties.OnInitPopup = salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup
+    end
   end
   object cxPropertiesStore1: TcxPropertiesStore
     Components = <>
     StorageName = 'customer.ini'
     Left = 720
-    Top = 224
+    Top = 208
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 784
-    Top = 232
+    Left = 720
+    Top = 264
     PixelsPerInch = 96
     object cxStyle1: TcxStyle
       AssignedValues = [svColor]
