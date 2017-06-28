@@ -160,6 +160,7 @@ begin
   // bplshopperframe.Parent := nil;
   bplcustomerframe.Parent := RzPageControl1.ActivePage;
   //bplshopperframe.List;
+  bplcustomerframe.customertypecxComboBox.SetFocus;
 
 end;
 

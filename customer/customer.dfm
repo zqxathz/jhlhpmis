@@ -27,6 +27,7 @@ object bplCustomerFrame: TbplCustomerFrame
     Height = 317
     Align = alClient
     TabOrder = 0
+    TabStop = False
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = customerDataModule.customerDataSource
@@ -34,9 +35,12 @@ object bplCustomerFrame: TbplCustomerFrame
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
       OptionsBehavior.ImmediateEditor = False
+      OptionsData.Deleting = False
+      OptionsView.Footer = True
       OptionsView.Indicator = True
       Styles.ContentEven = cxStyle1
       Styles.ContentOdd = cxStyle2
+      Styles.OnGetContentStyle = cxGrid1DBTableView1StylesGetContentStyle
     end
     object cxGrid1Level1: TcxGridLevel
       GridView = cxGrid1DBTableView1
@@ -49,6 +53,7 @@ object bplCustomerFrame: TbplCustomerFrame
     Height = 283
     Align = alBottom
     BevelOuter = bvNone
+    Constraints.MinHeight = 283
     TabOrder = 1
     DesignSize = (
       1219
@@ -90,7 +95,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #36873#25321#23637#20250':'
-      TabOrder = 1
+      TabOrder = 17
     end
     object Button1: TButton
       Left = 968
@@ -99,7 +104,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Height = 25
       Anchors = [akLeft, akBottom]
       Caption = #22686#21152
-      TabOrder = 2
+      TabOrder = 15
     end
     object Button2: TButton
       Left = 1049
@@ -108,7 +113,8 @@ object bplCustomerFrame: TbplCustomerFrame
       Height = 25
       Anchors = [akLeft, akBottom]
       Caption = #37325#32622
-      TabOrder = 3
+      TabOrder = 18
+      TabStop = False
     end
     object StaticText2: TStaticText
       Left = 216
@@ -116,7 +122,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 69
       Height = 31
       Caption = #23637#20301#21495':'
-      TabOrder = 4
+      TabOrder = 19
     end
     object StaticText3: TStaticText
       Left = 400
@@ -124,7 +130,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #22995#21517':'
-      TabOrder = 5
+      TabOrder = 20
     end
     object StaticText4: TStaticText
       Left = 569
@@ -132,7 +138,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #25163#26426':'
-      TabOrder = 6
+      TabOrder = 21
     end
     object StaticText5: TStaticText
       Left = 822
@@ -140,7 +146,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #20844#21496':'
-      TabOrder = 7
+      TabOrder = 22
     end
     object StaticText6: TStaticText
       Left = 9
@@ -148,7 +154,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #30005#35805':'
-      TabOrder = 8
+      TabOrder = 23
     end
     object StaticText7: TStaticText
       Left = 9
@@ -156,7 +162,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #31867#22411':'
-      TabOrder = 9
+      TabOrder = 24
     end
     object StaticText8: TStaticText
       Left = 9
@@ -164,7 +170,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 69
       Height = 31
       Caption = #24635#37329#39069':'
-      TabOrder = 10
+      TabOrder = 25
     end
     object StaticText9: TStaticText
       Left = 216
@@ -172,7 +178,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #35746#37329':'
-      TabOrder = 11
+      TabOrder = 26
     end
     object StaticText10: TStaticText
       Left = 397
@@ -180,7 +186,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #29616#22330#20132#27454':'
-      TabOrder = 12
+      TabOrder = 27
     end
     object StaticText11: TStaticText
       Left = 642
@@ -188,7 +194,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #25903#20184#31867#22411':'
-      TabOrder = 13
+      TabOrder = 28
     end
     object StaticText12: TStaticText
       Left = 216
@@ -196,7 +202,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 41
       Height = 31
       Caption = 'QQ:'
-      TabOrder = 14
+      TabOrder = 29
     end
     object StaticText13: TStaticText
       Left = 431
@@ -204,7 +210,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #37038#31665':'
-      TabOrder = 15
+      TabOrder = 30
     end
     object StaticText14: TStaticText
       Left = 888
@@ -212,7 +218,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #25307#23637#20154#21592':'
-      TabOrder = 16
+      TabOrder = 31
     end
     object StaticText15: TStaticText
       Left = 9
@@ -220,7 +226,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #22320#22336':'
-      TabOrder = 17
+      TabOrder = 32
     end
     object StaticText16: TStaticText
       Left = 9
@@ -228,7 +234,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #22791#27880':'
-      TabOrder = 18
+      TabOrder = 33
     end
     object infoMemo: TMemo
       Left = 64
@@ -236,42 +242,42 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 818
       Height = 62
       Anchors = [akLeft, akTop, akBottom]
-      TabOrder = 19
+      TabOrder = 14
     end
     object addrEdit: TEdit
       Left = 64
-      Top = 165
+      Top = 164
       Width = 818
       Height = 35
-      TabOrder = 20
+      TabOrder = 13
     end
     object standnumberEdit: TEdit
       Left = 285
       Top = 47
       Width = 108
       Height = 35
-      TabOrder = 21
+      TabOrder = 2
     end
     object nameEdit: TEdit
       Left = 450
       Top = 47
       Width = 114
       Height = 35
-      TabOrder = 22
+      TabOrder = 3
     end
     object companyEdit: TEdit
-      Left = 872
-      Top = 47
+      Left = 877
+      Top = 48
       Width = 254
       Height = 35
-      TabOrder = 23
+      TabOrder = 16
     end
     object emailEdit: TEdit
       Left = 486
       Top = 125
       Width = 396
       Height = 35
-      TabOrder = 24
+      TabOrder = 12
     end
     object allpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 84
@@ -281,15 +287,17 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.Nullable = False
       Properties.Nullstring = '0'
       Properties.UseNullString = True
-      TabOrder = 25
+      TabOrder = 5
+      OnClick = allpaycxCurrencyEditClick
       Width = 127
     end
     object qqEdit: TEdit
       Left = 255
-      Top = 125
+      Top = 126
       Width = 170
       Height = 35
-      TabOrder = 26
+      NumbersOnly = True
+      TabOrder = 11
     end
     object firstpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 266
@@ -297,7 +305,8 @@ object bplCustomerFrame: TbplCustomerFrame
       EditValue = 0.000000000000000000
       Properties.EditFormat = '0.00;-0.00'
       Properties.Nullable = False
-      TabOrder = 27
+      TabOrder = 6
+      OnClick = allpaycxCurrencyEditClick
       Width = 127
     end
     object nowpaycxCurrencyEdit: TcxCurrencyEdit
@@ -305,7 +314,8 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 87
       EditValue = 0.000000000000000000
       Properties.EditFormat = '0.00;-0.00'
-      TabOrder = 28
+      TabOrder = 7
+      OnClick = allpaycxCurrencyEditClick
       Width = 150
     end
     object paytypecxLookupComboBox: TcxLookupComboBox
@@ -313,7 +323,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 86
       RepositoryItem = paytypecxEditRepository1LookupComboBoxItem
       Properties.ListColumns = <>
-      TabOrder = 29
+      TabOrder = 8
       Width = 145
     end
     object telphonecxMaskEdit: TcxMaskEdit
@@ -322,28 +332,28 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.MaskKind = emkRegExpr
       Properties.EditMask = '\d{0,11}$'
       Properties.MaxLength = 0
-      TabOrder = 30
+      TabOrder = 10
       Width = 147
     end
     object phonecxMaskEdit: TcxMaskEdit
       Left = 621
       Top = 47
       Properties.MaskKind = emkRegExprEx
-      Properties.EditMask = '([1])[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
-      TabOrder = 31
+      Properties.EditMask = '([1])\d{10}'
+      TabOrder = 4
       Width = 196
     end
     object customertypecxComboBox: TcxComboBox
       Left = 64
       Top = 49
-      TabOrder = 32
+      TabOrder = 1
       Width = 147
     end
     object salescxComboBox: TcxComboBox
       Left = 983
       Top = 86
       RepositoryItem = salesnamecxEditRepository1ComboBoxItem
-      TabOrder = 33
+      TabOrder = 9
       Width = 143
     end
   end
@@ -389,14 +399,22 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.EditFormat = '0.00'
     end
     object salesnamecxEditRepository1ComboBoxItem: TcxEditRepositoryComboBoxItem
+      Properties.DropDownSizeable = True
       Properties.OnEditValueChanged = salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged
       Properties.OnInitPopup = salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup
     end
+    object cxEditRepository1MemoItem1: TcxEditRepositoryMemoItem
+    end
   end
   object cxPropertiesStore1: TcxPropertiesStore
-    Components = <>
+    Components = <
+      item
+        Component = Panel1
+        Properties.Strings = (
+          'Height')
+      end>
     StorageName = 'customer.ini'
-    Left = 720
+    Left = 728
     Top = 208
   end
   object cxStyleRepository1: TcxStyleRepository
@@ -408,6 +426,16 @@ object bplCustomerFrame: TbplCustomerFrame
       Color = 14024703
     end
     object cxStyle2: TcxStyle
+    end
+    object otherpaycxStyle: TcxStyle
+      AssignedValues = [svFont, svTextColor]
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clRed
+      Font.Height = -20
+      Font.Name = #24494#36719#38597#40657
+      Font.Style = []
+      Font.Quality = fqClearType
+      TextColor = clRed
     end
   end
 end
