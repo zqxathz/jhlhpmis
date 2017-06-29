@@ -3,21 +3,51 @@
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
   System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  cxGraphics,
+  cxControls,
   cxLookAndFeels,
-  cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
-  cxDataStorage, cxEdit,
-  cxNavigator, Data.DB, cxDBData, Vcl.ExtCtrls, cxGridLevel, cxClasses,
+  cxLookAndFeelPainters,
+  cxStyles,
+  cxCustomData,
+  cxFilter,
+  cxData,
+  cxDataStorage,
+  cxEdit,
+  cxNavigator,
+  Data.DB,
+  cxDBData,
+  Vcl.ExtCtrls,
+  cxGridLevel,
+  cxClasses,
   cxGridCustomView,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, customerdm,
+  cxGridCustomTableView,
+  cxGridTableView,
+  cxGridDBTableView,
+  cxGrid,
+  customerdm,
   cxContainer,
-  Vcl.StdCtrls, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
+  Vcl.StdCtrls,
+  cxTextEdit,
+  cxMaskEdit,
+  cxDropDownEdit,
+  cxLookupEdit,
   cxDBLookupEdit,
-  cxDBLookupComboBox, cxExtEditRepositoryItems, cxCurrencyEdit,
+  cxDBLookupComboBox,
+  cxExtEditRepositoryItems,
+  cxCurrencyEdit,
   cxPropertiesStore,
-  cxEditRepositoryItems, cxDBEditRepository;
+  cxEditRepositoryItems,
+  cxDBEditRepository,
+  System.DateUtils;
 
 type
   TbplCustomerFrame = class(TFrame)
@@ -31,7 +61,7 @@ type
     cxEditRepository1: TcxEditRepository;
     IDcxEditRepository1Label: TcxEditRepositoryLabel;
     cxPropertiesStore1: TcxPropertiesStore;
-    Button1: TButton;
+    applyButton: TButton;
     Button2: TButton;
     StaticText2: TStaticText;
     StaticText3: TStaticText;
@@ -87,11 +117,15 @@ type
       AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
     procedure cxEditRepository1PopupItem1PropertiesInitPopup(Sender: TObject);
     procedure cxEditRepository1PopupItem1PropertiesCloseUp(Sender: TObject);
+    procedure applyButtonClick(Sender: TObject);
+    procedure cxGrid1DBTableView1DataControllerDataChanged(Sender: TObject);
   private
     { Private declarations }
-     columninfoMemo:TMemo;
+    columninfoMemo: TMemo;
+    procedure initGirdTableView;
   public
     { Public declarations }
+    procedure List;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   end;
@@ -109,15 +143,52 @@ begin
   end;
 end;
 
+procedure TbplCustomerFrame.applyButtonClick(Sender: TObject);
+begin
+  with customerDataModule do
+  begin
+    customerFDQuery.Append;
+    customerFDQuery.FieldValues['eid'] := expoFDQuery.FieldValues['id'];
+    customerFDQuery.FieldValues['customertype'] :=
+      trim(customertypecxComboBox.Text);
+    customerFDQuery.FieldValues['standnumber'] := trim(standnumberEdit.Text);
+    customerFDQuery.FieldValues['name'] := trim(nameEdit.Text);
+    customerFDQuery.FieldValues['mobilephone'] := phonecxMaskEdit.Text;
+    customerFDQuery.FieldValues['paytype'] := paytypeFDQuery.FieldValues['id'];
+    customerFDQuery.FieldValues['allpay'] := allpaycxCurrencyEdit.Value;
+    customerFDQuery.FieldValues['firstpay'] := firstpaycxCurrencyEdit.Value;
+    customerFDQuery.FieldValues['nowpay'] := nowpaycxCurrencyEdit.Value;
+    customerFDQuery.FieldValues['telphone'] := trim(telphonecxMaskEdit.Text);
+    customerFDQuery.FieldValues['email'] := trim(emailEdit.Text);
+    customerFDQuery.FieldValues['qq'] := trim(qqEdit.Text);
+    customerFDQuery.FieldValues['addr'] := trim(addrEdit.Text);
+    customerFDQuery.FieldValues['customerinfo']:=trim(infoMemo.Lines.Text);
+    customerFDQuery.FieldValues['groupid'] := 0;
+    customerFDQuery.FieldValues['salesname'] := trim(salescxComboBox.Text);
+    customerFDQuery.FieldValues['salesid'] := 0;
+    customerFDQuery.FieldValues['create_datetime'] :=
+      DateTimeToUnix(IncHour(Now, -8));
+    customerFDQuery.FieldValues['update_datetime'] :=  DateTimeToUnix(IncHour(Now, -8));
+    customerFDQuery.FieldValues['status']:=1;
+    customerFDQuery.FieldValues['trash']:=0;
+    customerFDQuery.Post;
+  end;
+end;
+
 constructor TbplCustomerFrame.Create(AOwner: TComponent);
-var
-  i: Integer;
 begin
   inherited;
   if customerDataModule = nil then
   begin
     customerDataModule := TcustomerDataModule.Create(nil);
   end;
+
+end;
+
+procedure TbplCustomerFrame.List;
+var
+  i: Integer;
+begin
   expocxLookupComboBox.ItemIndex := 0;
   paytypecxLookupComboBox.ItemIndex := 0;
   for i := 0 to cxGrid1DBTableView1.ColumnCount - 1 do
@@ -130,17 +201,19 @@ begin
   end;
   cxPropertiesStore1.RestoreFrom;
   if not Assigned(columninfoMemo) then
-    begin
-      columninfoMemo:=TMemo.Create(Self);
-      columninfoMemo.ScrollBars:=ssVertical;
-      columninfoMemo.Width:=300;
-      columninfoMemo.Height:=200;
-      columninfoMemo.Visible:=false;
-      columninfoMemo.Parent:=Panel1;
-      columninfoMemo.Font.Name:='微软雅黑';
-      columninfoMemo.Font.Size:=16;
-      cxEditRepository1PopupItem1.Properties.PopupControl:=columninfoMemo;
-    end;
+  begin
+    columninfoMemo := TMemo.Create(Self);
+    columninfoMemo.ScrollBars := ssVertical;
+    columninfoMemo.Width := 300;
+    columninfoMemo.Height := 200;
+    columninfoMemo.Visible := false;
+    columninfoMemo.Parent := Panel1;
+    columninfoMemo.Font.Name := '微软雅黑';
+    columninfoMemo.Font.Size := 16;
+    cxEditRepository1PopupItem1.Properties.PopupControl := columninfoMemo;
+  end;
+  initGirdTableView;
+
 end;
 
 procedure TbplCustomerFrame.
@@ -155,25 +228,36 @@ begin
   end;
 end;
 
-//客户备注弹出菜单关闭,将MEMO的值写入表
-procedure TbplCustomerFrame.cxEditRepository1PopupItem1PropertiesCloseUp(
-  Sender: TObject);
+// 客户备注弹出菜单关闭,将MEMO的值写入表
+procedure TbplCustomerFrame.cxEditRepository1PopupItem1PropertiesCloseUp
+  (Sender: TObject);
 begin
   with customerDataModule.customerFDQuery do
   begin
     Edit;
-    FieldByName('customerinfo').Value:=columninfoMemo.Lines.Text.Trim;
+    FieldByName('customerinfo').Value := columninfoMemo.Lines.Text.trim;
     Post;
   end;
 end;
 
-//客户备注弹出菜单初始化,将字段值放入MEMO
-procedure TbplCustomerFrame.cxEditRepository1PopupItem1PropertiesInitPopup(
-  Sender: TObject);
+// 客户备注弹出菜单初始化,将字段值放入MEMO
+procedure TbplCustomerFrame.cxEditRepository1PopupItem1PropertiesInitPopup
+  (Sender: TObject);
 begin
   if Assigned(columninfoMemo) then
   begin
-    columninfoMemo.Lines.Text:=customerDataModule.customerFDQuery.FieldByName('customerinfo').AsString;
+    columninfoMemo.Lines.Text := customerDataModule.customerFDQuery.FieldByName
+      ('customerinfo').AsString;
+  end;
+end;
+
+procedure TbplCustomerFrame.cxGrid1DBTableView1DataControllerDataChanged(
+  Sender: TObject);
+begin
+if cxGrid1DBTableView1.ColumnCount = 0 then
+  begin
+
+    cxGrid1DBTableView1.DataController.CreateAllItems(true);
   end;
 end;
 
@@ -190,67 +274,61 @@ end;
 
 destructor TbplCustomerFrame.Destroy;
 begin
+  if customerDataModule.customerFDQuery.State=dsEdit then
+     customerDataModule.customerFDQuery.Post;
+
   cxPropertiesStore1.StoreTo;
   FreeAndNil(customerDataModule);
   inherited;
 end;
 
-procedure TbplCustomerFrame.expocxLookupComboBoxPropertiesChange
-  (Sender: TObject);
-var
-  s: string;
-  i: Integer;
-  idfooter: TcxDataSummaryItem;
+procedure TbplCustomerFrame.initGirdTableView;
 begin
-  s := 'and eid=' + customerDataModule.expoFDQuery.FieldByName('id').AsString;
-  customerDataModule.customerOpen(s);
-  customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(nil);
-  salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(nil);
-  customertypecxComboBox.Properties.Items.Text :=
-    customerDataModule.getCustomerType.Text;
-  customertypecxComboBox.ItemIndex := 0;
-  if cxGrid1DBTableView1.ColumnCount = 0 then
+
+if cxGrid1DBTableView1.ColumnCount >0 then
   begin
-    cxGrid1DBTableView1.DataController.CreateAllItems(True);
+   // cxGrid1DBTableView1.DataController.CreateAllItems(True);
 
-
-
-    with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem
+      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
-      //FieldName:='id';
-      Column:= cxGrid1DBTableView1.GetColumnByFieldName('id');
-      Kind:= skCount;
-      Format:='共0条';
+      // FieldName:='id';
+      Column := cxGrid1DBTableView1.GetColumnByFieldName('id');
+      Kind := skCount;
+      Format := '共0条';
     end;
-    with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem
+      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
-     //FieldName:='allpay';
-      Column:= cxGrid1DBTableView1.GetColumnByFieldName('allpay');
-      Kind:= skSum;
-      Format:='¥,0.00;¥-,0.00';
+      // FieldName:='allpay';
+      Column := cxGrid1DBTableView1.GetColumnByFieldName('allpay');
+      Kind := skSum;
+      Format := '¥,0.00;¥-,0.00';
     end;
-    with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem
+      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
-      //FieldName:='firstpay';
-      Column:= cxGrid1DBTableView1.GetColumnByFieldName('firstpay');
-      Kind:= skSum;
-      Format:='¥,0.00;¥-,0.00';
+      // FieldName:='firstpay';
+      Column := cxGrid1DBTableView1.GetColumnByFieldName('firstpay');
+      Kind := skSum;
+      Format := '¥,0.00;¥-,0.00';
     end;
-    with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem
+      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
-      //FieldName:='nowpay';
-      Column:= cxGrid1DBTableView1.GetColumnByFieldName('nowpay');
-      Kind:= skSum;
-      Format:='¥,0.00;¥-,0.00';
+      // FieldName:='nowpay';
+      Column := cxGrid1DBTableView1.GetColumnByFieldName('nowpay');
+      Kind := skSum;
+      Format := '¥,0.00;¥-,0.00';
     end;
-     with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem
+      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
-      //FieldName:='otherpay';
-      Column:= cxGrid1DBTableView1.GetColumnByFieldName('otherpay');
-      Kind:= skSum;
-      Format:='¥,0.00;¥-,0.00';
+      // FieldName:='otherpay';
+      Column := cxGrid1DBTableView1.GetColumnByFieldName('otherpay');
+      Kind := skSum;
+      Format := '¥,0.00;¥-,0.00';
     end;
-
 
     with cxGrid1DBTableView1.GetColumnByFieldName('id') do
     begin
@@ -362,7 +440,7 @@ begin
       // Visible:=false;
       Caption := '客户备注';
       index := 13;
-      RepositoryItem:=cxEditRepository1PopupItem1;
+      RepositoryItem := cxEditRepository1PopupItem1;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('groupid') do
     begin
@@ -394,13 +472,13 @@ begin
     begin
       // Visible:=false;
       RepositoryItem := cxEditRepository1DateItem;
-      Options.Editing:=false;
+      Options.Editing := false;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('updatetime') do
     begin
       // Visible:=false;
       RepositoryItem := cxEditRepository1DateItem;
-      Options.Editing:=false;
+      Options.Editing := false;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('status') do
     begin
@@ -410,8 +488,30 @@ begin
     begin
       Visible := false;
     end;
-
   end;
+
+end;
+
+procedure TbplCustomerFrame.expocxLookupComboBoxPropertiesChange
+  (Sender: TObject);
+var
+  s: string;
+  i: Integer;
+  idfooter: TcxDataSummaryItem;
+begin
+
+  s := 'and eid=' + customerDataModule.expoFDQuery.FieldByName('id').AsString;
+  customerDataModule.customerOpen(s);
+
+  //cxGrid1DBTableView1.DataController.DataSource:=customerDataModule.customerDataSource;
+  customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(nil);
+  salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(nil);
+  customertypecxComboBox.Properties.Items.Text :=
+    customerDataModule.getCustomerType.Text;
+  customertypecxComboBox.ItemIndex := 0;
+
+
+
   // cxGrid1DBTableView1.ApplyBestFit(nil,true);
 
 end;

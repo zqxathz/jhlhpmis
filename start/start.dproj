@@ -199,12 +199,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxGDIPlusRS25.bpl" Configuration="Debug" Class="DependencyPackage">
+                <DeployFile LocalName="$(BDS)\Redist\Win64\rtl250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxComnRS25.bpl" Configuration="Debug" Class="DependencyPackage">
+                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxGDIPlusRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -224,7 +224,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win64\rtl250.bpl" Configuration="Debug" Class="DependencyPackage">
+                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxComnRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>

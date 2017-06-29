@@ -4,10 +4,13 @@ object customerDataModule: TcustomerDataModule
   Height = 430
   Width = 615
   object customerFDQuery: TFDQuery
+    AfterOpen = customerFDQueryAfterOpen
     OnCalcFields = customerFDQueryCalcFields
     FieldOptions.AutoCreateMode = acCombineAlways
     FieldOptions.PositionMode = poFirst
     AfterGetRecord = customerFDQueryAfterGetRecord
+    FetchOptions.AssignedValues = [evMode]
+    UpdateOptions.AutoIncFields = 'id'
     SQL.Strings = (
       
         'select * from jhlh_pmis_customers where status=1 and trash=0 !ei' +

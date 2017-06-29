@@ -34,6 +34,7 @@ object bplCustomerFrame: TbplCustomerFrame
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
+      DataController.OnDataChanged = cxGrid1DBTableView1DataControllerDataChanged
       OptionsBehavior.ImmediateEditor = False
       OptionsData.Deleting = False
       OptionsView.Footer = True
@@ -97,7 +98,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Caption = #36873#25321#23637#20250':'
       TabOrder = 17
     end
-    object Button1: TButton
+    object applyButton: TButton
       Left = 968
       Top = 242
       Width = 75
@@ -105,6 +106,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Anchors = [akLeft, akBottom]
       Caption = #22686#21152
       TabOrder = 15
+      OnClick = applyButtonClick
     end
     object Button2: TButton
       Left = 1049
@@ -330,7 +332,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Left = 64
       Top = 126
       Properties.MaskKind = emkRegExpr
-      Properties.EditMask = '\d{0,11}$'
+      Properties.EditMask = '\d{0,11}'
       Properties.MaxLength = 0
       TabOrder = 10
       Width = 147
@@ -389,6 +391,7 @@ object bplCustomerFrame: TbplCustomerFrame
     end
     object customertypecxEditRepository1ComboBoxItem1: TcxEditRepositoryComboBoxItem
       Properties.Alignment.Horz = taCenter
+      Properties.ImmediatePost = True
       Properties.Items.Strings = (
         'a'
         'd'

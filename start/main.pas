@@ -158,8 +158,10 @@ begin
 
   RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
   // bplshopperframe.Parent := nil;
+  bplcustomerframe.list;
   bplcustomerframe.Parent := RzPageControl1.ActivePage;
   //bplshopperframe.List;
+
   bplcustomerframe.customertypecxComboBox.SetFocus;
 
 end;

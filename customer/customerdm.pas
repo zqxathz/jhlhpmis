@@ -31,6 +31,7 @@ type
     procedure customerFDQueryupdatetimeChange(Sender: TField);
     procedure customerFDQueryCalcFields(DataSet: TDataSet);
     procedure salesFDQueryBeforePost(DataSet: TDataSet);
+    procedure customerFDQueryAfterOpen(DataSet: TDataSet);
     private
       { Private declarations }
     public
@@ -136,6 +137,11 @@ begin
   end;
 end;
 
+procedure TcustomerDataModule.customerFDQueryAfterOpen(DataSet: TDataSet);
+begin
+DataSet.FieldByName('id').ProviderFlags:=DataSet.FieldByName('id').ProviderFlags+[pfInKey];
+end;
+
 procedure TcustomerDataModule.customerFDQueryCalcFields(DataSet: TDataSet);
 begin
 
@@ -169,15 +175,18 @@ end;
 
 procedure TcustomerDataModule.customerOpen(s: string);
 begin
-  // 通过宏打开customer表
-  customerFDQuery.Close;
-  customerFDQuery.Macros.Items[0].Value := s;
-  customerFDQuery.open;
 
   // 通过参数打开customer类型表
   customertypeFDQuery.Close;
   customertypeFDQuery.Params.Items[0].Value := expoFDQuery.FieldValues['expotypeid'];
   customertypeFDQuery.open;
+  // 通过宏打开customer表
+
+  customerFDQuery.Close;
+  customerFDQuery.Macros.Items[0].Value := s;
+  customerFDQuery.open;
+
+
 end;
 
 end.
