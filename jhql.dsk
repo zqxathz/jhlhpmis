@@ -161,9 +161,9 @@ RightPanelData=000008000101000000003F0D00000000000001CC0700000000000001000000004
 BottomPanelSize=0
 BottomPanelClients=DockSite1
 BottomPanelData=0000080001000100000009000000446F636B53697465311B5200000000000000EF05000000000000FFFFFFFF
-BottomMiddlePanelSize=1926
+BottomMiddlePanelSize=1352
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel,MessageView
-BottomMiddelPanelData=0000080001020100000010000000477261706844726177696E6756696577A52D0000000000000286070000000000000100000000D31600000F0000004D65737361676556696577466F726D0100000000A52D000009000000446F636B5369746530FFFFFFFF
+BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E6756696577A52D0000000000000248050000000000000100000000A52D00000F0000004D65737361676556696577466F726DFFFFFFFF
 
 [View0]
 CustomEditViewType=TWelcomePageView
@@ -238,13 +238,13 @@ EditViewName=Borland.FormDesignerView
 [View7]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\customer\customer.pas
-CursorX=98
+CursorX=1
 CursorY=112
-TopLine=99
+TopLine=114
 LeftCol=1
-Elisions={{84,57},{93,3},{''}}
+Elisions=
 Bookmarks=
-EditViewName=D:\Develop\jhql\customer\customer.pas
+EditViewName=Borland.FormDesignerView
 
 [View8]
 CustomEditViewType=TEditView
@@ -509,13 +509,13 @@ Docked=1
 State=0
 Left=0
 Top=18
-Width=2449
-Height=1827
+Width=4930
+Height=1231
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2449
-ClientHeight=1827
-TBDockHeight=1827
+ClientWidth=4930
+ClientHeight=1231
+TBDockHeight=1231
 LRDockWidth=2770
 Dockable=1
 StayOnTop=0
@@ -596,6 +596,11 @@ LRDockWidth=1895
 Dockable=1
 StayOnTop=0
 SplitPos=111
+
+[PropInspDesignerSelection]
+ArrangeBy=Name
+SelectedItem=Align,
+ExpandedItems=Anchors=0,Constraints=0,Font=0
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -821,12 +826,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=2465
-Height=1587
+Width=2340
+Height=1240
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2465
-ClientHeight=1587
+ClientWidth=2340
+ClientHeight=1240
 TBDockHeight=2317
 LRDockWidth=2824
 Dockable=1
@@ -1007,23 +1012,23 @@ HostDockSite=DockBottomCenterPanel
 DockSiteType=1
 PercentageSizes=1
 Create=1
-Visible=1
+Visible=0
 Docked=1
 State=0
-Left=631
-Top=18
-Width=2465
-Height=1827
+Left=0
+Top=0
+Width=2340
+Height=1481
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2465
-ClientHeight=1827
-TBDockHeight=1827
+ClientWidth=2340
+ClientHeight=1481
+TBDockHeight=1481
 LRDockWidth=2340
 Dockable=1
 StayOnTop=0
 TabPosition=1
-ActiveTabID=FindReferencsForm
+ActiveTabID=RefactoringForm
 TabDockClients=RefactoringForm,PatchForm,FindReferencsForm,ToDo List,MetricsView,QAView
 
 [DockSite1]
