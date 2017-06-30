@@ -26,6 +26,7 @@ object bplCustomerFrame: TbplCustomerFrame
     Width = 1219
     Height = 317
     Align = alClient
+    PopupMenu = PopupMenu1
     TabOrder = 0
     TabStop = False
     object cxGrid1DBTableView1: TcxGridDBTableView
@@ -105,7 +106,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Height = 25
       Anchors = [akLeft, akBottom]
       Caption = #22686#21152
-      TabOrder = 15
+      TabOrder = 16
       OnClick = applyButtonClick
     end
     object Button2: TButton
@@ -216,10 +217,11 @@ object bplCustomerFrame: TbplCustomerFrame
     end
     object StaticText14: TStaticText
       Left = 888
-      Top = 89
+      Top = 88
       Width = 89
       Height = 31
       Caption = #25307#23637#20154#21592':'
+      PopupMenu = PopupMenu2
       TabOrder = 31
     end
     object StaticText15: TStaticText
@@ -244,14 +246,14 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 818
       Height = 62
       Anchors = [akLeft, akTop, akBottom]
-      TabOrder = 14
+      TabOrder = 15
     end
     object addrEdit: TEdit
       Left = 64
       Top = 164
       Width = 818
       Height = 35
-      TabOrder = 13
+      TabOrder = 14
     end
     object standnumberEdit: TEdit
       Left = 285
@@ -272,14 +274,14 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 48
       Width = 254
       Height = 35
-      TabOrder = 16
+      TabOrder = 5
     end
     object emailEdit: TEdit
       Left = 486
       Top = 125
       Width = 396
       Height = 35
-      TabOrder = 12
+      TabOrder = 13
     end
     object allpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 84
@@ -289,7 +291,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.Nullable = False
       Properties.Nullstring = '0'
       Properties.UseNullString = True
-      TabOrder = 5
+      TabOrder = 6
       OnClick = allpaycxCurrencyEditClick
       Width = 127
     end
@@ -299,7 +301,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 170
       Height = 35
       NumbersOnly = True
-      TabOrder = 11
+      TabOrder = 12
     end
     object firstpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 266
@@ -307,7 +309,7 @@ object bplCustomerFrame: TbplCustomerFrame
       EditValue = 0.000000000000000000
       Properties.EditFormat = '0.00;-0.00'
       Properties.Nullable = False
-      TabOrder = 6
+      TabOrder = 7
       OnClick = allpaycxCurrencyEditClick
       Width = 127
     end
@@ -316,7 +318,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 87
       EditValue = 0.000000000000000000
       Properties.EditFormat = '0.00;-0.00'
-      TabOrder = 7
+      TabOrder = 8
       OnClick = allpaycxCurrencyEditClick
       Width = 150
     end
@@ -325,7 +327,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 86
       RepositoryItem = paytypecxEditRepository1LookupComboBoxItem
       Properties.ListColumns = <>
-      TabOrder = 8
+      TabOrder = 9
       Width = 145
     end
     object telphonecxMaskEdit: TcxMaskEdit
@@ -334,7 +336,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.MaskKind = emkRegExpr
       Properties.EditMask = '\d{0,11}'
       Properties.MaxLength = 0
-      TabOrder = 10
+      TabOrder = 11
       Width = 147
     end
     object phonecxMaskEdit: TcxMaskEdit
@@ -355,8 +357,8 @@ object bplCustomerFrame: TbplCustomerFrame
       Left = 983
       Top = 86
       RepositoryItem = salesnamecxEditRepository1ComboBoxItem
-      TabOrder = 9
-      Width = 143
+      TabOrder = 10
+      Width = 148
     end
   end
   object cxEditRepository1: TcxEditRepository
@@ -443,6 +445,40 @@ object bplCustomerFrame: TbplCustomerFrame
       Font.Style = []
       Font.Quality = fqClearType
       TextColor = clRed
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 592
+    Top = 288
+    object refreshmenu: TMenuItem
+      Caption = #21047#26032
+      OnClick = refreshmenuClick
+    end
+    object softremovemenu: TMenuItem
+      Caption = #21024#38500
+      OnClick = softremovemenuClick
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object autowidthmenu: TMenuItem
+      Caption = #33258#21160#36866#24212#23485#24230
+      OnClick = autowidthmenuClick
+    end
+    object fetchmenu: TMenuItem
+      Caption = #26174#31034#24403#21069#23637#20250
+      OnClick = fetchmenuClick
+    end
+    object fetchallmenu: TMenuItem
+      Caption = #26174#31034#25152#26377#35760#24405
+      OnClick = fetchallmenuClick
+    end
+  end
+  object PopupMenu2: TPopupMenu
+    Left = 712
+    Top = 328
+    object N2: TMenuItem
+      Caption = #21024#38500
     end
   end
 end

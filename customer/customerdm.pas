@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async,
   FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Dialogs,
-  System.Variants, System.DateUtils;
+  System.Variants, System.DateUtils,Vcl.Forms,Windows;
 
 type
   TcustomerDataModule = class(TDataModule)
@@ -40,6 +40,7 @@ type
       function getCustomerType: TStringList;
       function getSalesName: TStringList;
       procedure addSales(salesname:string);
+      procedure softremovecurr;
   end;
 
 var
@@ -87,15 +88,19 @@ begin
 end;
 
 procedure TcustomerDataModule.addSales(salesname:string);
+var
+  etypeid:integer;
 begin
  if salesname.Trim='' then exit;
- if not salesFDQuery.Locate('name',Trim(salesname)) then
+ etypeid:=expoFDQuery.FieldValues['expotypeid'];
+ if not salesFDQuery.Locate('etypeid;name',varArrayOf([etypeid,Trim(salesname)])) then
  begin
    with salesFDQuery do
    begin
      Append;
      FieldValues['id']:=NUll;
      FieldValues['did']:=NUll;
+     FieldValues['etypeid']:=etypeid;
      FieldValues['name']:=Trim(salesname);
      FieldValues['status']:=1;
      FieldValues['trash']:=0;
@@ -110,7 +115,8 @@ begin
   salesFDQuery.First;
   while not salesFDQuery.Eof do
   begin
-    Result.Add(salesFDQuery.FieldByName('name').AsString);
+    if expoFDQuery.FieldByName('expotypeid').AsInteger = salesFDQuery.FieldByName('etypeid').AsInteger then
+         Result.Add(salesFDQuery.FieldByName('name').AsString);
     salesFDQuery.Next;
   end;
 end;
@@ -119,6 +125,24 @@ procedure TcustomerDataModule.salesFDQueryBeforePost(DataSet: TDataSet);
 begin
  DataSet.FieldByName('id').Required:=false;
  Dataset.FieldByName('did').Required:=False;
+end;
+
+procedure TcustomerDataModule.softremovecurr;
+begin
+  case MessageBox(0, '是否要删除当前记录?', '警告', MB_OKCANCEL + MB_ICONWARNING +
+    MB_DEFBUTTON2) of
+    IDOK:
+      begin
+        customerFDQuery.Edit;
+        customerFDQuery.FieldValues['trash']:=1;
+        customerFDQuery.Post;
+        customerFDQuery.RefreshRecord();
+      end;
+    IDCANCEL:
+      begin
+        exit;
+      end;
+  end;
 end;
 
 procedure TcustomerDataModule.customerFDQueryAfterGetRecord(DataSet: TFDDataSet);

@@ -47,7 +47,7 @@ uses
   cxPropertiesStore,
   cxEditRepositoryItems,
   cxDBEditRepository,
-  System.DateUtils;
+  System.DateUtils, Vcl.Menus;
 
 type
   TbplCustomerFrame = class(TFrame)
@@ -104,6 +104,15 @@ type
     salescxComboBox: TcxComboBox;
     otherpaycxStyle: TcxStyle;
     cxEditRepository1PopupItem1: TcxEditRepositoryPopupItem;
+    PopupMenu1: TPopupMenu;
+    autowidthmenu: TMenuItem;
+    refreshmenu: TMenuItem;
+    fetchmenu: TMenuItem;
+    N1: TMenuItem;
+    softremovemenu: TMenuItem;
+    fetchallmenu: TMenuItem;
+    PopupMenu2: TPopupMenu;
+    N2: TMenuItem;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
       (Sender: TObject);
@@ -119,13 +128,17 @@ type
     procedure cxEditRepository1PopupItem1PropertiesCloseUp(Sender: TObject);
     procedure applyButtonClick(Sender: TObject);
     procedure cxGrid1DBTableView1DataControllerDataChanged(Sender: TObject);
+    procedure autowidthmenuClick(Sender: TObject);
+    procedure refreshmenuClick(Sender: TObject);
+    procedure fetchmenuClick(Sender: TObject);
+    procedure fetchallmenuClick(Sender: TObject);
+    procedure softremovemenuClick(Sender: TObject);
   private
     { Private declarations }
     columninfoMemo: TMemo;
     procedure initGirdTableView;
   public
     { Public declarations }
-    procedure List;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   end;
@@ -159,6 +172,7 @@ begin
     customerFDQuery.FieldValues['firstpay'] := firstpaycxCurrencyEdit.Value;
     customerFDQuery.FieldValues['nowpay'] := nowpaycxCurrencyEdit.Value;
     customerFDQuery.FieldValues['telphone'] := trim(telphonecxMaskEdit.Text);
+    customerFDQuery.FieldValues['company']:=trim(companyEdit.Text);
     customerFDQuery.FieldValues['email'] := trim(emailEdit.Text);
     customerFDQuery.FieldValues['qq'] := trim(qqEdit.Text);
     customerFDQuery.FieldValues['addr'] := trim(addrEdit.Text);
@@ -175,46 +189,47 @@ begin
   end;
 end;
 
+procedure TbplCustomerFrame.autowidthmenuClick(Sender: TObject);
+begin
+  cxGrid1DBTableView1.ApplyBestFit();
+end;
+
 constructor TbplCustomerFrame.Create(AOwner: TComponent);
+var
+i:integer;
 begin
   inherited;
   if customerDataModule = nil then
   begin
     customerDataModule := TcustomerDataModule.Create(nil);
-  end;
-
-end;
-
-procedure TbplCustomerFrame.List;
-var
-  i: Integer;
-begin
-  expocxLookupComboBox.ItemIndex := 0;
-  paytypecxLookupComboBox.ItemIndex := 0;
-  for i := 0 to cxGrid1DBTableView1.ColumnCount - 1 do
-  begin
-    with cxPropertiesStore1.Components.Add do
+    expocxLookupComboBox.ItemIndex := 0;
+    paytypecxLookupComboBox.ItemIndex := 0;
+    for i := 0 to cxGrid1DBTableView1.ColumnCount - 1 do
     begin
-      Component := cxGrid1DBTableView1.Columns[i];
-      Properties.Add('width');
+      with cxPropertiesStore1.Components.Add do
+      begin
+        Component := cxGrid1DBTableView1.Columns[i];
+        Properties.Add('width');
+      end;
+    end;
+    initGirdTableView;
+    cxPropertiesStore1.RestoreFrom;
+    if not Assigned(columninfoMemo) then
+    begin
+      columninfoMemo := TMemo.Create(Self);
+      columninfoMemo.ScrollBars := ssVertical;
+      columninfoMemo.Width := 300;
+      columninfoMemo.Height := 200;
+      columninfoMemo.Visible := false;
+      columninfoMemo.Parent := Panel1;
+      columninfoMemo.Font.Name := '微软雅黑';
+      columninfoMemo.Font.Size := 16;
+      cxEditRepository1PopupItem1.Properties.PopupControl := columninfoMemo;
     end;
   end;
-  cxPropertiesStore1.RestoreFrom;
-  if not Assigned(columninfoMemo) then
-  begin
-    columninfoMemo := TMemo.Create(Self);
-    columninfoMemo.ScrollBars := ssVertical;
-    columninfoMemo.Width := 300;
-    columninfoMemo.Height := 200;
-    columninfoMemo.Visible := false;
-    columninfoMemo.Parent := Panel1;
-    columninfoMemo.Font.Name := '微软雅黑';
-    columninfoMemo.Font.Size := 16;
-    cxEditRepository1PopupItem1.Properties.PopupControl := columninfoMemo;
-  end;
-  initGirdTableView;
-
 end;
+
+
 
 procedure TbplCustomerFrame.
   customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
@@ -276,7 +291,6 @@ destructor TbplCustomerFrame.Destroy;
 begin
   if customerDataModule.customerFDQuery.State=dsEdit then
      customerDataModule.customerFDQuery.Post;
-
   cxPropertiesStore1.StoreTo;
   FreeAndNil(customerDataModule);
   inherited;
@@ -492,6 +506,11 @@ if cxGrid1DBTableView1.ColumnCount >0 then
 
 end;
 
+procedure TbplCustomerFrame.refreshmenuClick(Sender: TObject);
+begin
+  cxGrid1DBTableView1.DataController.RefreshExternalData;
+end;
+
 procedure TbplCustomerFrame.expocxLookupComboBoxPropertiesChange
   (Sender: TObject);
 var
@@ -502,18 +521,21 @@ begin
 
   s := 'and eid=' + customerDataModule.expoFDQuery.FieldByName('id').AsString;
   customerDataModule.customerOpen(s);
-
-  //cxGrid1DBTableView1.DataController.DataSource:=customerDataModule.customerDataSource;
   customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(nil);
   salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(nil);
   customertypecxComboBox.Properties.Items.Text :=
     customerDataModule.getCustomerType.Text;
   customertypecxComboBox.ItemIndex := 0;
+end;
 
+procedure TbplCustomerFrame.fetchallmenuClick(Sender: TObject);
+begin
+  customerDataModule.customerOpen('');
+end;
 
-
-  // cxGrid1DBTableView1.ApplyBestFit(nil,true);
-
+procedure TbplCustomerFrame.fetchmenuClick(Sender: TObject);
+begin
+  expocxLookupComboBoxPropertiesChange(nil);
 end;
 
 procedure TbplCustomerFrame.
@@ -529,6 +551,11 @@ procedure TbplCustomerFrame.
 begin
   salesnamecxEditRepository1ComboBoxItem.Properties.Items.Text :=
     customerDataModule.getSalesName.Text;
+end;
+
+procedure TbplCustomerFrame.softremovemenuClick(Sender: TObject);
+begin
+  customerDataModule.softremovecurr;
 end;
 
 end.
