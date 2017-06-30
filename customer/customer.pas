@@ -47,7 +47,8 @@ uses
   cxPropertiesStore,
   cxEditRepositoryItems,
   cxDBEditRepository,
-  System.DateUtils, Vcl.Menus;
+  System.DateUtils, Vcl.Menus, dxSkinsCore, dxSkinMetropolis, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinscxPCPainter;
 
 type
   TbplCustomerFrame = class(TFrame)
