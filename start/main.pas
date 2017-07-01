@@ -23,7 +23,7 @@ uses
   dxCustomTileControl,
   cxClasses,
   dxTileControl,
-  shopper, Vcl.StdCtrls,customer, dxSkinsCore, dxSkinMetropolis,
+  shopper, Vcl.StdCtrls,customer,clientsyc, dxSkinsCore, dxSkinMetropolis,
   dxSkinMoneyTwins, dxSkinOffice2007Black;
 
 type
@@ -52,11 +52,13 @@ type
     procedure N1Click(Sender: TObject);
     procedure dxTileControl1Item2Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item3Click(Sender: TdxTileControlItem);
+    procedure dxTileControl1Item4Click(Sender: TdxTileControlItem);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
     bplshopperframe1:  Tbplshopperframe;
     bplcustomerframe: TbplCustomerFrame;
+    bplclientsycframe: TclientsycFrame;
     tabX, tabY: Integer;
   public
     { Public declarations }
@@ -159,6 +161,36 @@ begin
   RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
   bplcustomerframe.Parent := RzPageControl1.ActivePage;
   bplcustomerframe.customertypecxComboBox.SetFocus;
+
+end;
+
+procedure Tmainform.dxTileControl1Item4Click(Sender: TdxTileControlItem);
+var
+  i: Integer;
+  menutabsheet: TRzTabSheet;
+begin
+  for i := 0 to RzPageControl1.PageCount - 1 do
+  begin
+    if RzPageControl1.Pages[i].Tag = 4 then
+    begin
+      RzPageControl1.ActivePageIndex := i;
+      exit;
+    end;
+  end;
+
+  menutabsheet := TRzTabSheet.Create(RzPageControl1);
+  menutabsheet.Caption := ' 数据同步 ';
+  menutabsheet.Tag := 4;
+  menutabsheet.PageControl := RzPageControl1;
+  // if bplshopperframe = nil then
+  begin
+    bplclientsycFrame:= TclientsycFrame.Create(menutabsheet);
+    bplclientsycFrame.Name := 'clientsyc';
+    bplclientsycFrame.Align := alClient;
+  end;
+
+  RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
+  bplclientsycFrame.Parent := RzPageControl1.ActivePage;
 
 end;
 

@@ -20,6 +20,16 @@
         </DeployFile>
     </ItemGroup>
     <ItemGroup Condition="'$(Platform)'=='Linux64'">
+        <DeployFile Include="Linux64\Release\server" Condition="'$(Config)'=='Release'">
+            <RemoteDir>server\</RemoteDir>
+            <RemoteName>server</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
         <DeployFile Include="Linux64\Debug\server" Condition="'$(Config)'=='Debug'">
             <RemoteDir>server\</RemoteDir>
             <RemoteName>server</RemoteName>
