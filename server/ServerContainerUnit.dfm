@@ -8,7 +8,12 @@ object ServerContainer1: TServerContainer1
   end
   object DSTCPServerTransport1: TDSTCPServerTransport
     Server = DSServer1
-    Filters = <>
+    Filters = <
+      item
+        FilterId = 'ZLibCompression'
+        Properties.Strings = (
+          'CompressMoreThan=1024')
+      end>
     AuthenticationManager = DSAuthenticationManager1
     Left = 96
     Top = 73

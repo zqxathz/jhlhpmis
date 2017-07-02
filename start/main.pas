@@ -23,8 +23,7 @@ uses
   dxCustomTileControl,
   cxClasses,
   dxTileControl,
-  shopper, Vcl.StdCtrls,customer,clientsyc, dxSkinsCore, dxSkinMetropolis,
-  dxSkinMoneyTwins, dxSkinOffice2007Black;
+  shopper, Vcl.StdCtrls,customer,clientsyc;
 
 type
   Tmainform = class(TForm)
@@ -98,8 +97,8 @@ begin
 
   RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
   // bplshopperframe.Parent := nil;
-  bplshopperframe.Parent := RzPageControl1.ActivePage;
   bplshopperframe.List;
+  bplshopperframe.Parent := RzPageControl1.ActivePage;
 end;
 
 procedure Tmainform.dxTileControl1Item2Click(Sender: TdxTileControlItem);

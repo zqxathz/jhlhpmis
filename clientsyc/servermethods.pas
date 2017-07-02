@@ -1,6 +1,6 @@
 // 
 // Created by the DataSnap proxy generator.
-// 2017/7/1 21:46:35
+// 2017/7/2 18:46:09
 // 
 
 unit servermethods;
@@ -12,44 +12,19 @@ uses System.JSON, Data.DBXCommon, Data.DBXClient, Data.DBXDataSnap, Data.DBXJSON
 type
   TServerMethodsClient = class(TDSAdminClient)
   private
-    FDSServerModuleCreateCommand: TDBXCommand;
     FEchoStringCommand: TDBXCommand;
     FReverseStringCommand: TDBXCommand;
+    FExpoDataCommand: TDBXCommand;
   public
     constructor Create(ADBXConnection: TDBXConnection); overload;
     constructor Create(ADBXConnection: TDBXConnection; AInstanceOwner: Boolean); overload;
     destructor Destroy; override;
-    procedure DSServerModuleCreate(Sender: TObject);
     function EchoString(Value: string): string;
     function ReverseString(Value: string): string;
+    function ExpoData(username: string; password: string): TStream;
   end;
 
 implementation
-
-procedure TServerMethodsClient.DSServerModuleCreate(Sender: TObject);
-begin
-  if FDSServerModuleCreateCommand = nil then
-  begin
-    FDSServerModuleCreateCommand := FDBXConnection.CreateCommand;
-    FDSServerModuleCreateCommand.CommandType := TDBXCommandTypes.DSServerMethod;
-    FDSServerModuleCreateCommand.Text := 'TServerMethods.DSServerModuleCreate';
-    FDSServerModuleCreateCommand.Prepare;
-  end;
-  if not Assigned(Sender) then
-    FDSServerModuleCreateCommand.Parameters[0].Value.SetNull
-  else
-  begin
-    FMarshal := TDBXClientCommand(FDSServerModuleCreateCommand.Parameters[0].ConnectionHandler).GetJSONMarshaler;
-    try
-      FDSServerModuleCreateCommand.Parameters[0].Value.SetJSONValue(FMarshal.Marshal(Sender), True);
-      if FInstanceOwner then
-        Sender.Free
-    finally
-      FreeAndNil(FMarshal)
-    end
-    end;
-  FDSServerModuleCreateCommand.ExecuteUpdate;
-end;
 
 function TServerMethodsClient.EchoString(Value: string): string;
 begin
@@ -79,6 +54,21 @@ begin
   Result := FReverseStringCommand.Parameters[1].Value.GetWideString;
 end;
 
+function TServerMethodsClient.ExpoData(username: string; password: string): TStream;
+begin
+  if FExpoDataCommand = nil then
+  begin
+    FExpoDataCommand := FDBXConnection.CreateCommand;
+    FExpoDataCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FExpoDataCommand.Text := 'TServerMethods.ExpoData';
+    FExpoDataCommand.Prepare;
+  end;
+  FExpoDataCommand.Parameters[0].Value.SetWideString(username);
+  FExpoDataCommand.Parameters[1].Value.SetWideString(password);
+  FExpoDataCommand.ExecuteUpdate;
+  Result := FExpoDataCommand.Parameters[2].Value.GetStream(FInstanceOwner);
+end;
+
 
 constructor TServerMethodsClient.Create(ADBXConnection: TDBXConnection);
 begin
@@ -94,9 +84,9 @@ end;
 
 destructor TServerMethodsClient.Destroy;
 begin
-  FDSServerModuleCreateCommand.DisposeOf;
   FEchoStringCommand.DisposeOf;
   FReverseStringCommand.DisposeOf;
+  FExpoDataCommand.DisposeOf;
   inherited;
 end;
 
