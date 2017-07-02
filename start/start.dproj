@@ -113,7 +113,7 @@
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <DCC_UsePackage>shopper;connection;customer</DCC_UsePackage>
+        <DCC_UsePackage>shopper;connection;customer;client</DCC_UsePackage>
         <UsePackages>true</UsePackages>
         <DCC_UnitSearchPath>D:\Tools\RaizeComponentsFullSource\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
@@ -194,17 +194,17 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxComnRS25.bpl" Configuration="Debug" Class="DependencyPackage">
+                    <Platform Name="Win64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxSpreadSheetRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\rtl250.bpl" Configuration="Debug" Class="DependencyPackage">
-                    <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxGDIPlusRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -224,7 +224,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxComnRS25.bpl" Configuration="Debug" Class="DependencyPackage">
+                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxGDIPlusRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>

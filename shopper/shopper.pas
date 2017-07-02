@@ -62,8 +62,7 @@ uses
   XLSSheetData5,
   XLSReadWriteII5,
   Clipbrd,
-  FireDAC.Phys.SQLiteWrapper, dxSkinMetropolis, dxSkinMoneyTwins,
-  dxSkinOffice2007Black, dxSkinscxPCPainter;
+  FireDAC.Phys.SQLiteWrapper;
 
 type
   Tbplshopperframe = class(TFrame)
@@ -595,6 +594,7 @@ procedure Tbplshopperframe.updateareaallbuttonClick(Sender: TObject);
 var
   iErrors: integer;
 begin
+  iErrors:=0;
   with shopperdatamod do
   begin
     shopperfdquery.DisableControls;
