@@ -4,7 +4,11 @@
     </PropertyGroup>
     <ItemGroup>
         <Projects Include="start\start.dproj">
+<<<<<<< HEAD
             <Dependencies>shopper\shopper.dproj;customer\customer.dproj;client\client.dproj</Dependencies>
+=======
+            <Dependencies>shopper\shopper.dproj;customer\customer.dproj;clientsyc\clientsyc.dproj</Dependencies>
+>>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
         </Projects>
         <Projects Include="shopper\shopper.dproj">
             <Dependencies/>
@@ -18,7 +22,11 @@
         <Projects Include="server\server.dproj">
             <Dependencies/>
         </Projects>
+<<<<<<< HEAD
         <Projects Include="client\client.dproj">
+=======
+        <Projects Include="clientsyc\clientsyc.dproj">
+>>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -29,6 +37,7 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+<<<<<<< HEAD
     <Target Name="start" DependsOnTargets="shopper;customer;client">
         <MSBuild Projects="start\start.dproj"/>
     </Target>
@@ -36,6 +45,15 @@
         <MSBuild Projects="start\start.dproj" Targets="Clean"/>
     </Target>
     <Target Name="start:Make" DependsOnTargets="shopper:Make;customer:Make;client:Make">
+=======
+    <Target Name="start" DependsOnTargets="shopper;customer;clientsyc">
+        <MSBuild Projects="start\start.dproj"/>
+    </Target>
+    <Target Name="start:Clean" DependsOnTargets="shopper:Clean;customer:Clean;clientsyc:Clean">
+        <MSBuild Projects="start\start.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="start:Make" DependsOnTargets="shopper:Make;customer:Make;clientsyc:Make">
+>>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
         <MSBuild Projects="start\start.dproj" Targets="Make"/>
     </Target>
     <Target Name="shopper">
@@ -74,6 +92,7 @@
     <Target Name="server:Make">
         <MSBuild Projects="server\server.dproj" Targets="Make"/>
     </Target>
+<<<<<<< HEAD
     <Target Name="client">
         <MSBuild Projects="client\client.dproj"/>
     </Target>
@@ -91,6 +110,25 @@
     </Target>
     <Target Name="Make">
         <CallTarget Targets="start:Make;shopper:Make;connection:Make;customer:Make;server:Make;client:Make"/>
+=======
+    <Target Name="clientsyc">
+        <MSBuild Projects="clientsyc\clientsyc.dproj"/>
+    </Target>
+    <Target Name="clientsyc:Clean">
+        <MSBuild Projects="clientsyc\clientsyc.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="clientsyc:Make">
+        <MSBuild Projects="clientsyc\clientsyc.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="start;shopper;connection;customer;server;clientsyc"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="start:Clean;shopper:Clean;connection:Clean;customer:Clean;server:Clean;clientsyc:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="start:Make;shopper:Make;connection:Make;customer:Make;server:Make;clientsyc:Make"/>
+>>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

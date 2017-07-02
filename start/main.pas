@@ -23,7 +23,12 @@ uses
   dxCustomTileControl,
   cxClasses,
   dxTileControl,
+<<<<<<< HEAD
   shopper, Vcl.StdCtrls,customer,client;
+=======
+  shopper, Vcl.StdCtrls,customer,clientsyc, dxSkinsCore, dxSkinMetropolis,
+  dxSkinMoneyTwins, dxSkinOffice2007Black;
+>>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
 
 type
   Tmainform = class(TForm)
@@ -57,7 +62,11 @@ type
     bplshopperframe: Tbplshopperframe;
     bplshopperframe1:  Tbplshopperframe;
     bplcustomerframe: TbplCustomerFrame;
+<<<<<<< HEAD
     bplclientframe: TclientFrame;
+=======
+    bplclientsycframe: TclientsycFrame;
+>>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
     tabX, tabY: Integer;
   public
     { Public declarations }
@@ -170,7 +179,11 @@ var
 begin
   for i := 0 to RzPageControl1.PageCount - 1 do
   begin
+<<<<<<< HEAD
     if RzPageControl1.Pages[i].Tag = 3 then
+=======
+    if RzPageControl1.Pages[i].Tag = 4 then
+>>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
     begin
       RzPageControl1.ActivePageIndex := i;
       exit;
@@ -183,6 +196,7 @@ begin
   menutabsheet.PageControl := RzPageControl1;
   // if bplshopperframe = nil then
   begin
+<<<<<<< HEAD
     bplclientframe := TclientFrame.Create(menutabsheet);
     bplclientframe.Name := 'clientdatasyc';
     bplclientframe.Align := alClient;
@@ -191,6 +205,15 @@ begin
   RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
   bplclientframe.Parent := RzPageControl1.ActivePage;
 
+=======
+    bplclientsycFrame:= TclientsycFrame.Create(menutabsheet);
+    bplclientsycFrame.Name := 'clientsyc';
+    bplclientsycFrame.Align := alClient;
+  end;
+
+  RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
+  bplclientsycFrame.Parent := RzPageControl1.ActivePage;
+>>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
 
 end;
 
