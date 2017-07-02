@@ -2,13 +2,8 @@
 EditorSecs=2373
 DesignerSecs=16
 InspectorSecs=292
-<<<<<<< HEAD
-CompileSecs=84447
-OtherSecs=1577
-=======
 CompileSecs=85324
 OtherSecs=1583
->>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
 StartTime=2017/6/26 10:15:39
 RealKeys=0
 EffectiveKeys=0

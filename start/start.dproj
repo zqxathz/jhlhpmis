@@ -113,11 +113,7 @@
         <AppEnableHighDPI>true</AppEnableHighDPI>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-<<<<<<< HEAD
-        <DCC_UsePackage>shopper;connection;customer;client</DCC_UsePackage>
-=======
         <DCC_UsePackage>shopper;connection;customer;clientsyc</DCC_UsePackage>
->>>>>>> 40a4c5479fe9a6c3d210123ec13cabe219d6e5ef
         <UsePackages>true</UsePackages>
         <DCC_UnitSearchPath>D:\Tools\RaizeComponentsFullSource\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>

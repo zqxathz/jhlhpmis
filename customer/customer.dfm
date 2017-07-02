@@ -241,8 +241,8 @@ object bplCustomerFrame: TbplCustomerFrame
       TabOrder = 33
     end
     object infoMemo: TMemo
-      Left = -56
-      Top = 197
+      Left = 64
+      Top = 205
       Width = 818
       Height = 62
       Anchors = [akLeft, akTop, akBottom]

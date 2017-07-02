@@ -223,6 +223,8 @@ begin
 end;
 
 procedure Tshopperdatamod.shopperfdqueryAfterGetRecord(DataSet: TFDDataSet);
+var
+  area: string;
 begin
   if (shopperfdquery.FieldValues['create_time'] = 0) then
     shopperfdquery.FieldValues['createtime'] := null
