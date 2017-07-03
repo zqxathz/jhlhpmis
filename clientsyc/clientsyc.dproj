@@ -146,6 +146,8 @@
         <DCCReference Include="dsnap.dcp"/>
         <DCCReference Include="dbexpress.dcp"/>
         <DCCReference Include="dbxcds.dcp"/>
+        <DCCReference Include="connection.dcp"/>
+        <DCCReference Include="vcldb.dcp"/>
         <DCCReference Include="clientsyc.pas">
             <Form>clientsycFrame</Form>
             <FormType>dfm</FormType>
@@ -179,6 +181,12 @@
                 </Source>
             </Delphi.Personality>
             <Deployment Version="3">
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\Win64\clientsyc.bpl" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win64">
+                        <RemoteName>clientsyc.bpl</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\clientsyc.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>clientsyc.bpl</RemoteName>
@@ -553,6 +561,9 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">True</Platform>
             </Platforms>
+            <DataSnapProxyLookup>
+                <servermethods>{E47C037B-B7E9-48D8-9E96-81BB9D31ED96}</servermethods>
+            </DataSnapProxyLookup>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

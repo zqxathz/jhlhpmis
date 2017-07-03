@@ -43,7 +43,9 @@ requires
   IndyIPClient,
   dsnap,
   dbexpress,
-  dbxcds;
+  dbxcds,
+  connection,
+  vcldb;
 
 contains
   clientsyc in 'clientsyc.pas' {clientsycFrame: TFrame},
