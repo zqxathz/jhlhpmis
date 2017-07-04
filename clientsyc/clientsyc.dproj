@@ -148,6 +148,7 @@
         <DCCReference Include="dbxcds.dcp"/>
         <DCCReference Include="connection.dcp"/>
         <DCCReference Include="vcldb.dcp"/>
+        <DCCReference Include="FireDACCommon.dcp"/>
         <DCCReference Include="clientsyc.pas">
             <Form>clientsycFrame</Form>
             <FormType>dfm</FormType>

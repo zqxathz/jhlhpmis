@@ -14,17 +14,26 @@ type
     SQLConnection1: TSQLConnection;
     expoFDQuery: TFDQuery;
     FDStanStorageBinLink1: TFDStanStorageBinLink;
-    DataSource1: TDataSource;
+    customertypeFDQuery: TFDQuery;
+    paytypeFDQuery: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
     { Private declarations }
-
+    FCantConnection:boolean;
+    FSyncError:boolean;
+    FOnExec:TGetStrProc;
   public
     { Public declarations }
     function test:string;
     procedure openexpodata;
     procedure GetExpoData;
+    procedure GetCustomertypeData;
+    procedure GetPaytypeData;
+  published
+    property CantConnection:boolean read FCantConnection;
+    property SyncError:boolean read FSyncError;
+    property OnExec:TGetStrProc read FOnExec write FOnExec;
   end;
 
 var
@@ -70,8 +79,18 @@ end;
 
 procedure TclientsycDataModule.DataModuleCreate(Sender: TObject);
 begin
- SQLConnection1.Open;
+ FOnExec:=nil;
+ FSyncError:=false;
+ FCantConnection:=false;
+ try
+   SQLConnection1.Open;
+ except
+   FCantConnection:=true;
+   //raise Exception.Create('Error Message');
+ end;
  expoFDQuery.Connection:=connectionDataModule.mainFDConnection;
+ customertypeFDQuery.Connection:= connectionDataModule.mainFDConnection;
+ paytypeFDQuery.Connection:= connectionDataModule.mainFDConnection;
 end;
 
 procedure TclientsycDataModule.DataModuleDestroy(Sender: TObject);
@@ -79,27 +98,120 @@ begin
  SQLConnection1.Close;
 end;
 
+procedure TclientsycDataModule.GetCustomertypeData;
+var
+ server:TObject;
+ stream:TStream;
+ memtable:TFDMemTable;
+ i,ierror:Integer;
+begin
+ server:=nil;
+ stream:=nil;
+ if not SQLConnection1.Connected then
+   try
+     SQLConnection1.Open;
+   except on E: Exception do
+     begin
+       FSyncError:=true;
+       if Assigned(FOnExec) then
+         FOnExec('错误:远程连接发生异常,同步中止!'+#13#10+E.Message);
+       exit;
+     end;
+   end;
+
+  try
+    server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
+    stream:=TServerMethodsClient(Server).CustomertypeData('','');
+  except
+    SQLConnection1.Close;
+    server.free;
+    stream.Free;
+    FSyncError:=true;
+    if Assigned(FOnExec) then
+       FOnExec('错误:获取远程数据发生异常,同步中止!');
+    exit;
+  end;
+  stream.Position:=0;
+
+  if Assigned(FOnExec) then
+       FOnExec('开始更新客户类型');
+
+  memtable:=TFDMemTable.Create(nil);
+  memtable.LoadFromStream(stream,TFDStorageFormat.sfBinary);
+  memtable.First;
+  customertypeFDQuery.Open;
+  customertypeFDQuery.UpdateOptions.UpdateTableName:='jhlh_crm_customerstype';
+  customertypeFDQuery.CopyDataSet(memtable);
+
+  customertypeFDQuery.Connection.ExecSQL('delete FROM jhlh_crm_customerstype');
+  customertypeFDQuery.Connection.StartTransaction;
+  ierror:=customertypeFDQuery.ApplyUpdates;
+  if ierror>0 then
+  begin
+    customertypeFDQuery.Connection.Rollback;
+    FSyncError:=true;
+    if Assigned(FOnExec) then
+         FOnExec('错误:客户类型更新到本地时出现异常');
+  end
+  else
+  begin
+    customertypeFDQuery.Connection.Commit;
+    customertypeFDQuery.Close;
+    if Assigned(FOnExec) then
+       FOnExec('客户类型更新完成');
+  end;
+
+  server.Free;
+  memtable.Free;
+end;
+
 procedure TclientsycDataModule.GetExpoData;
 var
  server:tobject;
  stream:Tstream;
  memtable:TFDMemTable;
-  i,ierror: Integer;
-  fieldname:string;
+ i,ierror: Integer;
+ fieldname:string;
 begin
-  if not SQLConnection1.Connected then exit;
+   server:=nil;
+   stream:=nil;
+   if Assigned(FOnExec) then
+    FOnExec('开始同步数据');
 
-  memtable:=TFDMemTable.Create(nil);
-  server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
-  stream:=TServerMethodsClient(Server).ExpoData('','');
+   if not SQLConnection1.Connected then
+   try
+     SQLConnection1.Open;
+   except on E: Exception do
+     begin
+       FSyncError:=true;
+       if Assigned(FOnExec) then
+         FOnExec('错误:远程连接发生异常,同步中止!'+#13#10+E.Message);
+       exit;
+     end;
+   end;
+
+  try
+    server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
+    stream:=TServerMethodsClient(Server).ExpoData('','');
+  except
+    SQLConnection1.Close;
+    server.free;
+    stream.Free;
+    FSyncError:=true;
+    if Assigned(FOnExec) then
+       FOnExec('错误:获取远程数据发生异常,同步中止!');
+    exit;
+  end;
   stream.Position:=0;
   expoFDQuery.Close;
   expoFDQuery.UpdateOptions.UpdateTableName:='jhlh_pmis_expo';
   expoFDQuery.Open;
 
+  if Assigned(FOnExec) then
+       FOnExec('开始更新展会信息');
 
+  memtable:=TFDMemTable.Create(nil);
   memtable.LoadFromStream(stream,TFDStorageFormat.sfBinary);
-
   memtable.First;
   while not memtable.Eof do
   begin
@@ -117,16 +229,92 @@ begin
     memtable.Next;
   end;
 
-  //expoFDQuery.CopyDataSet(memtable);
-
   expoFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_expo');
   expoFDQuery.Connection.StartTransaction;
   ierror := expoFDQuery.ApplyUpdates;
-   expoFDQuery.Connection.Commit;
-  //ShowMessage(ierror.ToString);
-  expoFDQuery.CommitUpdates;
-  expoFDQuery.Close;
-  //expoFDQuery.Refresh;
+  if ierror>0 then
+  begin
+    expoFDQuery.Connection.Rollback;
+    FSyncError:=true;
+    if Assigned(FOnExec) then
+         FOnExec('错误:展会信息更新到本地时出现异常');
+  end
+  else
+  begin
+    expoFDQuery.Connection.Commit;
+    expoFDQuery.CommitUpdates;
+    expoFDQuery.Close;
+    FSyncError:=false;
+    if Assigned(FOnExec) then
+         FOnExec('展会信息更新完成');
+  end;
+  server.Free;
+  memtable.Free;
+end;
+
+procedure TclientsycDataModule.GetPaytypeData;
+var
+ server:TObject;
+ stream:TStream;
+ memtable:TFDMemTable;
+ i,ierror:Integer;
+begin
+ server:=nil;
+ stream:=nil;
+ if not SQLConnection1.Connected then
+   try
+     SQLConnection1.Open;
+   except on E: Exception do
+     begin
+       FSyncError:=true;
+       if Assigned(FOnExec) then
+         FOnExec('错误:远程连接发生异常,同步中止!'+#13#10+E.Message);
+       exit;
+     end;
+   end;
+
+  try
+    server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
+    stream:=TServerMethodsClient(Server).PaytypeData('','');
+  except
+    SQLConnection1.Close;
+    server.free;
+    stream.Free;
+    FSyncError:=true;
+    if Assigned(FOnExec) then
+       FOnExec('错误:获取远程数据发生异常,同步中止!');
+    exit;
+  end;
+  stream.Position:=0;
+
+  if Assigned(FOnExec) then
+       FOnExec('开始更新支付方式');
+
+  memtable:=TFDMemTable.Create(nil);
+  memtable.LoadFromStream(stream,TFDStorageFormat.sfBinary);
+  memtable.First;
+  paytypeFDQuery.Open;
+  paytypeFDQuery.UpdateOptions.UpdateTableName:='jhlh_pmis_paytype';
+  paytypeFDQuery.CopyDataSet(memtable);
+
+  paytypeFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_paytype');
+  paytypeFDQuery.Connection.StartTransaction;
+  ierror:=paytypeFDQuery.ApplyUpdates;
+  if ierror>0 then
+  begin
+    paytypeFDQuery.Connection.Rollback;
+    FSyncError:=true;
+    if Assigned(FOnExec) then
+         FOnExec('错误:支付方式更新到本地时出现异常');
+  end
+  else
+  begin
+    paytypeFDQuery.Connection.Commit;
+    paytypeFDQuery.Close;
+    if Assigned(FOnExec) then
+       FOnExec('支付方式更新完成');
+  end;
+
   server.Free;
   memtable.Free;
 end;

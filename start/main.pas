@@ -183,13 +183,21 @@ begin
   menutabsheet.PageControl := RzPageControl1;
   // if bplshopperframe = nil then
   begin
+  try
     bplclientsycFrame:= TclientsycFrame.Create(menutabsheet);
     bplclientsycFrame.Name := 'clientsyc';
     bplclientsycFrame.Align := alClient;
+
+    RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
+    bplclientsycFrame.Parent := RzPageControl1.ActivePage;
+  except
+    FreeAndNil(menutabsheet);
+    FreeAndNil(bplclientsycframe);
+    raise;
+  end;
   end;
 
-  RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
-  bplclientsycFrame.Parent := RzPageControl1.ActivePage;
+
 
 end;
 

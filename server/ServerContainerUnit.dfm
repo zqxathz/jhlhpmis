@@ -7,6 +7,7 @@ object ServerContainer1: TServerContainer1
     Top = 11
   end
   object DSTCPServerTransport1: TDSTCPServerTransport
+    PoolSize = 0
     Server = DSServer1
     Filters = <
       item

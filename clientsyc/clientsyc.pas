@@ -13,6 +13,7 @@ type
     Memo1: TMemo;
     procedure Button1Click(Sender: TObject);
   private
+    procedure clientsycDataModuleOnExce(const s: string);
     { Private declarations }
   public
     constructor Create(AOwner: TComponent); override;
@@ -24,26 +25,41 @@ implementation
 
 {$R *.dfm}
 
+procedure TclientsycFrame.clientsycDataModuleOnExce(const s:string);
+begin
+  if Assigned(Memo1) then
+  begin
+    memo1.Lines.add(s);
+    //Memo1.Repaint;
+  end;
+end;
+
 procedure TclientsycFrame.Button1Click(Sender: TObject);
 begin
   Memo1.Lines.Clear;
   Memo1.Repaint;
-  Memo1.Lines.Add('开始同步本地数据');
-  Memo1.Lines.Add('开始更新展会信息');
+  clientsycDataModule.OnExec:=clientsycDataModuleOnExce;
   clientsycDataModule.GetExpoData;
-  Memo1.Lines.Add('展会信息更新完成');
-  Memo1.Lines.Add('本地数据同步完成');
+  if not clientsycDataModule.SyncError then
+    clientsycDataModule.GetCustomertypeData;
+  if not clientsycDataModule.SyncError then
+    clientsycDataModule.GetPaytypeData;
+
+  if not clientsycDataModule.SyncError then
+    Memo1.Lines.Add('同步数据完成')
+  else
+    Memo1.Lines.Add('同步数据时发生错误,有可能导致数据不完整,建议稍后再次同步')
 end;
 
 constructor TclientsycFrame.Create(AOwner: TComponent);
 begin
   inherited;
-
   if clientsycDataModule=nil then
-      clientsycDataModule:=TclientsycDataModule.Create(nil);
+        clientsycDataModule:=TclientsycDataModule.Create(self);
 
-    Button1.Enabled:=clientsycDataModule.SQLConnection1.Connected;
-    //raise;
+  Button1.Enabled:=clientsycDataModule.SQLConnection1.Connected;
+  if clientsycDataModule.CantConnection then
+      raise Exception.Create('无法连接到服务器,请稍后再试!');
 
 end;
 

@@ -1,7 +1,7 @@
-// 
+//
 // Created by the DataSnap proxy generator.
-// 2017/7/2 18:46:09
-// 
+// 2017/7/5 0:42:10
+//
 
 unit servermethods;
 
@@ -15,6 +15,8 @@ type
     FEchoStringCommand: TDBXCommand;
     FReverseStringCommand: TDBXCommand;
     FExpoDataCommand: TDBXCommand;
+    FCustomertypeDataCommand: TDBXCommand;
+    FPaytypeDataCommand: TDBXCommand;
   public
     constructor Create(ADBXConnection: TDBXConnection); overload;
     constructor Create(ADBXConnection: TDBXConnection; AInstanceOwner: Boolean); overload;
@@ -22,6 +24,8 @@ type
     function EchoString(Value: string): string;
     function ReverseString(Value: string): string;
     function ExpoData(username: string; password: string): TStream;
+    function CustomertypeData(username: string; password: string): TStream;
+    function PaytypeData(username: string; password: string): TStream;
   end;
 
 implementation
@@ -69,6 +73,36 @@ begin
   Result := FExpoDataCommand.Parameters[2].Value.GetStream(FInstanceOwner);
 end;
 
+function TServerMethodsClient.CustomertypeData(username: string; password: string): TStream;
+begin
+  if FCustomertypeDataCommand = nil then
+  begin
+    FCustomertypeDataCommand := FDBXConnection.CreateCommand;
+    FCustomertypeDataCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FCustomertypeDataCommand.Text := 'TServerMethods.CustomertypeData';
+    FCustomertypeDataCommand.Prepare;
+  end;
+  FCustomertypeDataCommand.Parameters[0].Value.SetWideString(username);
+  FCustomertypeDataCommand.Parameters[1].Value.SetWideString(password);
+  FCustomertypeDataCommand.ExecuteUpdate;
+  Result := FCustomertypeDataCommand.Parameters[2].Value.GetStream(FInstanceOwner);
+end;
+
+function TServerMethodsClient.PaytypeData(username: string; password: string): TStream;
+begin
+  if FPaytypeDataCommand = nil then
+  begin
+    FPaytypeDataCommand := FDBXConnection.CreateCommand;
+    FPaytypeDataCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FPaytypeDataCommand.Text := 'TServerMethods.PaytypeData';
+    FPaytypeDataCommand.Prepare;
+  end;
+  FPaytypeDataCommand.Parameters[0].Value.SetWideString(username);
+  FPaytypeDataCommand.Parameters[1].Value.SetWideString(password);
+  FPaytypeDataCommand.ExecuteUpdate;
+  Result := FPaytypeDataCommand.Parameters[2].Value.GetStream(FInstanceOwner);
+end;
+
 
 constructor TServerMethodsClient.Create(ADBXConnection: TDBXConnection);
 begin
@@ -87,7 +121,10 @@ begin
   FEchoStringCommand.DisposeOf;
   FReverseStringCommand.DisposeOf;
   FExpoDataCommand.DisposeOf;
+  FCustomertypeDataCommand.DisposeOf;
+  FPaytypeDataCommand.DisposeOf;
   inherited;
 end;
 
 end.
+
