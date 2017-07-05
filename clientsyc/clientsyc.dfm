@@ -22,8 +22,6 @@ object clientsycFrame: TclientsycFrame
     Caption = #24320#22987#26356#26032
     TabOrder = 0
     OnClick = Button1Click
-    ExplicitTop = 400
-    ExplicitWidth = 233
   end
   object Memo1: TMemo
     Left = 152

@@ -11,8 +11,8 @@ object clientsycDataModule: TclientsycDataModule
     Params.Strings = (
       'DriverUnit=Data.DBXDataSnap'
       'HostName=192.168.2.201'
-      'Port=8082'
-      'CommunicationProtocol=http'
+      'Port=211'
+      'CommunicationProtocol=tcp/ip'
       'DatasnapContext=datasnap/'
       
         'DriverAssemblyLoader=Borland.Data.TDBXClientDriverLoader,Borland' +
@@ -39,8 +39,24 @@ object clientsycDataModule: TclientsycDataModule
     Left = 472
     Top = 312
   end
-  object DataSource1: TDataSource
-    Left = 272
+  object customertypeFDQuery: TFDQuery
+    CachedUpdates = True
+    FetchOptions.AssignedValues = [evMode, evAutoFetchAll]
+    FetchOptions.Mode = fmManual
+    FetchOptions.AutoFetchAll = afDisable
+    SQL.Strings = (
+      'select * from jhlh_crm_customerstype')
+    Left = 224
+    Top = 224
+  end
+  object paytypeFDQuery: TFDQuery
+    CachedUpdates = True
+    FetchOptions.AssignedValues = [evMode, evAutoFetchAll]
+    FetchOptions.Mode = fmManual
+    FetchOptions.AutoFetchAll = afDisable
+    SQL.Strings = (
+      'select * from jhlh_pmis_paytype')
+    Left = 184
     Top = 312
   end
 end

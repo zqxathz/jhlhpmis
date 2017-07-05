@@ -40,7 +40,6 @@ contains
   FireDAC.Phys.SQLite in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLite.pas',
   FireDAC.Phys.SQLiteCli in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteCli.pas',
   FireDAC.Phys.SQLiteDef in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteDef.pas',
-  //FireDAC.Phys.SQLiteMeta in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteMeta.pas',
   FireDAC.Phys.SQLiteVDataSet in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteVDataSet.pas',
   FireDAC.Phys.SQLiteWrapper in 'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteWrapper.pas';
 

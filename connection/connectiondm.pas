@@ -7,8 +7,7 @@ uses
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.ConsoleUI.Wait,
   FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef, FireDAC.Phys.SQLite,
-  FireDAC.Comp.Client, FireDAC.VCLUI.Wait, FireDAC.Comp.UI,
-  FireDAC.Phys.DS, FireDAC.Phys.DSDef, Data.DB;
+  FireDAC.Comp.Client, FireDAC.VCLUI.Wait, FireDAC.Comp.UI, Data.DB;
 
 type
   TconnectionDataModule = class(TDataModule)

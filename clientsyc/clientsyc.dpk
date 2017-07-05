@@ -45,7 +45,8 @@ requires
   dbexpress,
   dbxcds,
   connection,
-  vcldb;
+  vcldb,
+  FireDACCommon;
 
 contains
   clientsyc in 'clientsyc.pas' {clientsycFrame: TFrame},
