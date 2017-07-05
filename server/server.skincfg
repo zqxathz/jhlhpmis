@@ -1,7 +1,7 @@
 [ExpressSkins]
 Default=1
 ShowNotifications=1
-Enabled=1
+Enabled=0
 dxSkinBlack=0
 dxSkinBlue=0
 dxSkinBlueprint=0
@@ -19,10 +19,10 @@ dxSkinLilian=0
 dxSkinLiquidSky=0
 dxSkinLondonLiquidSky=0
 dxSkinMcSkin=0
-dxSkinMetropolis=1
+dxSkinMetropolis=0
 dxSkinMetropolisDark=0
-dxSkinMoneyTwins=1
-dxSkinOffice2007Black=1
+dxSkinMoneyTwins=0
+dxSkinOffice2007Black=0
 dxSkinOffice2007Blue=0
 dxSkinOffice2007Green=0
 dxSkinOffice2007Pink=0
