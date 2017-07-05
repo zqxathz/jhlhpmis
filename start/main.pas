@@ -23,7 +23,7 @@ uses
   dxCustomTileControl,
   cxClasses,
   dxTileControl,
-  shopper, Vcl.StdCtrls,customer,clientsyc;
+  shopper, Vcl.StdCtrls,customer,clientsyc,clientuploadfrm;
 
 type
   Tmainform = class(TForm)
@@ -52,12 +52,14 @@ type
     procedure dxTileControl1Item2Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item3Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item4Click(Sender: TdxTileControlItem);
+    procedure dxTileControl1Item5Click(Sender: TdxTileControlItem);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
     bplshopperframe1:  Tbplshopperframe;
     bplcustomerframe: TbplCustomerFrame;
     bplclientsycframe: TclientsycFrame;
+    bplclientuploadframe: TbplclientuploadFrame;
     tabX, tabY: Integer;
   public
     { Public declarations }
@@ -196,9 +198,41 @@ begin
     raise;
   end;
   end;
+end;
 
+procedure Tmainform.dxTileControl1Item5Click(Sender: TdxTileControlItem);
+var
+  i: Integer;
+  menutabsheet: TRzTabSheet;
+begin
+  for i := 0 to RzPageControl1.PageCount - 1 do
+  begin
+    if RzPageControl1.Pages[i].Tag = 5 then
+    begin
+      RzPageControl1.ActivePageIndex := i;
+      exit;
+    end;
+  end;
 
+  menutabsheet := TRzTabSheet.Create(RzPageControl1);
+  menutabsheet.Caption := ' 数据上传 ';
+  menutabsheet.Tag := 5;
+  menutabsheet.PageControl := RzPageControl1;
+  // if bplshopperframe = nil then
+  begin
+  try
+    bplclientuploadFrame:= TbplclientuploadFrame.Create(menutabsheet);
+    bplclientuploadFrame.Name := 'clientsyc';
+    bplclientuploadFrame.Align := alClient;
 
+    RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
+    bplclientuploadFrame.Parent := RzPageControl1.ActivePage;
+  except
+    FreeAndNil(menutabsheet);
+    FreeAndNil(bplclientuploadFrame);
+    raise;
+  end;
+  end;
 end;
 
 procedure Tmainform.FormCreate(Sender: TObject);

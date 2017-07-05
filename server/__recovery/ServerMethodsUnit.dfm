@@ -74,14 +74,7 @@ object ServerMethods: TServerMethods
     OnUpdateError = customerFDQueryUpdateError
     Connection = FDConnection1
     ResourceOptions.AssignedValues = [rvStoreMergeData]
-    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
-    UpdateOptions.UpdateChangedFields = False
-    UpdateOptions.LockWait = True
-    UpdateOptions.RefreshMode = rmManual
-    UpdateOptions.FetchGeneratorsPoint = gpNone
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.CheckReadOnly = False
-    UpdateOptions.CheckUpdatable = False
+    UpdateOptions.AssignedValues = [uvUpdateMode]
     UpdateOptions.UpdateTableName = 'jhlh_pmis_customers'
     UpdateOptions.AutoIncFields = 'id'
     SQL.Strings = (

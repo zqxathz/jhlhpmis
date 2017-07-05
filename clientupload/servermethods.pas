@@ -1,7 +1,7 @@
-//
+// 
 // Created by the DataSnap proxy generator.
-// 2017/7/5 22:46:50
-//
+// 2017/7/5 23:04:50
+// 
 
 unit servermethods;
 
@@ -197,4 +197,3 @@ begin
 end;
 
 end.
-

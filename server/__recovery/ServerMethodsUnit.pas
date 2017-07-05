@@ -178,8 +178,10 @@ var
 begin
   try
     try
+
       if not VarIsNull(ARow.GetData('id')) then LDataStr := ARow.GetData('id');
-      FErrorsList.AddPair('Errorid', LDataStr);
+
+      FErrorsList.AddPair('Errorid:'+AException.Message, LDataStr);
     except
 
     end;

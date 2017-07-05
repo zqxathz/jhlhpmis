@@ -18,7 +18,7 @@ object clientsycDataModule: TclientsycDataModule
         'DriverAssemblyLoader=Borland.Data.TDBXClientDriverLoader,Borland' +
         '.Data.DbxClientDriver,Version=24.0.0.0,Culture=neutral,PublicKey' +
         'Token=91d62ebb5b0d1b1b'
-      'Filters={}')
+      'Filters={"ZLibCompression":{"CompressMoreThan":"1024"}}')
     Left = 336
     Top = 224
     UniqueId = '{E47C037B-B7E9-48D8-9E96-81BB9D31ED96}'
@@ -32,8 +32,8 @@ object clientsycDataModule: TclientsycDataModule
     UpdateOptions.UpdateChangedFields = False
     SQL.Strings = (
       'select * from jhlh_pmis_expo ')
-    Left = 448
-    Top = 224
+    Left = 344
+    Top = 320
   end
   object FDStanStorageBinLink1: TFDStanStorageBinLink
     Left = 472
@@ -46,8 +46,8 @@ object clientsycDataModule: TclientsycDataModule
     FetchOptions.AutoFetchAll = afDisable
     SQL.Strings = (
       'select * from jhlh_crm_customerstype')
-    Left = 224
-    Top = 224
+    Left = 248
+    Top = 320
   end
   object paytypeFDQuery: TFDQuery
     CachedUpdates = True
@@ -56,7 +56,7 @@ object clientsycDataModule: TclientsycDataModule
     FetchOptions.AutoFetchAll = afDisable
     SQL.Strings = (
       'select * from jhlh_pmis_paytype')
-    Left = 184
-    Top = 312
+    Left = 144
+    Top = 320
   end
 end

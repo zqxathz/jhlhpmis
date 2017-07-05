@@ -225,6 +225,7 @@ object mainform: Tmainform
           Text2.AssignedValues = []
           Text3.AssignedValues = []
           Text4.AssignedValues = []
+          OnClick = dxTileControl1Item5Click
         end
         object dxTileControl1Item6: TdxTileControlItem
           GroupIndex = 1
