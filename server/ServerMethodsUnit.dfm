@@ -1,6 +1,6 @@
 object ServerMethods: TServerMethods
   OldCreateOrder = False
-  Height = 329
+  Height = 328
   Width = 505
   object FDConnection1: TFDConnection
     Params.Strings = (
@@ -93,8 +93,32 @@ object ServerMethods: TServerMethods
     CachedUpdates = True
     OnUpdateError = customerFDQueryUpdateError
     Connection = FDConnection1
+    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
+    UpdateOptions.UpdateChangedFields = False
+    UpdateOptions.LockWait = True
+    UpdateOptions.RefreshMode = rmManual
+    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.CheckReadOnly = False
+    UpdateOptions.CheckUpdatable = False
     UpdateOptions.UpdateTableName = 'jhlh_pmis_shopper'
+    SQL.Strings = (
+      'select * from jhlh_pmis_shopper')
     Left = 160
+    Top = 128
+  end
+  object ShopperRemoveFDCommand: TFDCommand
+    Connection = FDConnection1
+    ResourceOptions.AssignedValues = [rvCmdExecMode]
+    ResourceOptions.CmdExecMode = amNonBlocking
+    CommandText.Strings = (
+      
+        'delete from jhlh_pmis_shopper where (phone) in (select phone fro' +
+        'm jhlh_pmis_shopper group by phone having count(id) > 1) '
+      
+        'and id not in (select max(id) from jhlh_pmis_shopper group by ph' +
+        'one having count(id)>1)')
+    Left = 272
     Top = 128
   end
 end

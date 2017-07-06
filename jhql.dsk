@@ -1,42 +1,61 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.JSON.pas',0,1,1,1,10,0,0,,
-File_1=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.pas',0,1,1292,1,1310,0,0,,
-File_2=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,520,45,537,0,0,{{1656,4}
-File_3=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Comp.Client.pas',0,1,6737,1,6756,0,0,,
-File_4=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Stan.Option.pas',0,1,56,3,75,0,0,,
-File_5=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\RTL\SYS\System.SysUtils.pas',0,1,12294,39,12317,0,0,,
+File_0=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,8766,21,8788,0,0,,
+File_1=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.pas',0,1,545,1,564,0,0,,
+File_2=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.JSON.pas',0,1,1,1,10,0,0,,
+File_3=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,520,45,537,0,0,{{1656,4}
+File_4=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Comp.Client.pas',0,1,6737,1,6756,0,0,,
+File_5=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Stan.Option.pas',0,1,56,3,75,0,0,,
 File_6=TSourceModule,'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteVDataSet.pas',0,1,1,1,1,0,0,,
 File_7=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Controls.pas',0,1,1112,38,1131,0,0,,
 File_8=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.UITypes.pas',0,1,90,34,109,0,0,,
 File_9=TTogetherDocModule,'D:\Develop\jhql\shopper\ModelSupport_shopper\default.txaPackage',0
 File_10=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Menus.pas',0,1,1,1,10,0,0,,
-File_11=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,150,1,169,0,0,,
-File_12=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\win\Winapi.Windows.pas',0,1,39399,1,39418,0,0,,
-File_13=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Dialogs.pas',0,1,1255,10,1204,0,0,,
-File_14=TSourceModule,'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Stan.Tracer.pas',0,1,1,1,1,0,0,,
+File_11=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\win\Winapi.Windows.pas',0,1,39399,1,39418,0,0,,
+File_12=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Dialogs.pas',0,1,1255,10,1204,0,0,,
+File_13=TSourceModule,'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Stan.Tracer.pas',0,1,1,1,1,0,0,,
 
 [Modules]
 Module0=D:\Develop\jhql\server\ServerMethodsUnit.pas
-Module1=D:\Develop\jhql\clientsyc\clientsyc.pas
-Module2=D:\Develop\jhql\start\main.pas
-Count=3
+Module1=D:\Develop\jhql\clientupload\clientuploaddm.pas
+Module2=D:\Develop\jhql\clientsyc\clientsyc.pas
+Module3=D:\Develop\jhql\clientupload\clientuploadfrm.pas
+Module4=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas
+Module5=D:\Develop\jhql\clientsyc\clientsycdm.pas
+Module6=D:\Develop\jhql\start\main.pas
+Count=7
 EditWindowCount=1
 
 [D:\Develop\jhql\server\ServerMethodsUnit.pas]
 ModuleType=TSourceModule
 
+[D:\Develop\jhql\clientupload\clientuploaddm.pas]
+ModuleType=TSourceModule
+
 [D:\Develop\jhql\clientsyc\clientsyc.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\clientupload\clientuploadfrm.pas]
+ModuleType=TSourceModule
+
+[c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\clientsyc\clientsycdm.pas]
 ModuleType=TSourceModule
 
 [D:\Develop\jhql\start\main.pas]
 ModuleType=TSourceModule
 
 [EditWindow0]
-ViewCount=3
+ViewCount=7
 CurrentEditView=D:\Develop\jhql\server\ServerMethodsUnit.pas
 View0=0
 View1=1
 View2=2
+View3=3
+View4=4
+View5=5
+View6=6
 PercentageSizes=1
 Create=1
 Visible=1
@@ -62,9 +81,9 @@ RightPanelData=000008000101000000009A0E00000000000001CC0700000000000001000000004
 BottomPanelSize=0
 BottomPanelClients=DockSite1
 BottomPanelData=0000080001000100000009000000446F636B53697465311B5200000000000000EF05000000000000FFFFFFFF
-BottomMiddlePanelSize=1120
+BottomMiddlePanelSize=833
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel,MessageView
-BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E675669657722380000000000000260040000000000000100000000223800000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E675669657722380000000000000241030000000000000100000000223800000F0000004D65737361676556696577466F726DFFFFFFFF
 
 [View0]
 CustomEditViewType=TEditView
@@ -79,6 +98,39 @@ EditViewName=D:\Develop\jhql\start\main.pas
 
 [View1]
 CustomEditViewType=TEditView
+Module=D:\Develop\jhql\clientsyc\clientsycdm.pas
+CursorX=69
+CursorY=157
+TopLine=115
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\clientsyc\clientsycdm.pas
+
+[View2]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\clientupload\clientuploaddm.pas
+CursorX=50
+CursorY=118
+TopLine=96
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\clientupload\clientuploaddm.pas
+
+[View3]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\clientupload\clientuploadfrm.pas
+CursorX=73
+CursorY=33
+TopLine=22
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\clientupload\clientuploadfrm.pas
+
+[View4]
+CustomEditViewType=TEditView
 Module=D:\Develop\jhql\clientsyc\clientsyc.pas
 CursorX=1
 CursorY=1
@@ -88,16 +140,27 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View2]
+[View5]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\server\ServerMethodsUnit.pas
-CursorX=33
-CursorY=95
-TopLine=70
+CursorX=1
+CursorY=142
+TopLine=138
 LeftCol=1
 Elisions=
-Bookmarks={9,80,6}
+Bookmarks={9,89,6}
 EditViewName=Borland.FormDesignerView
+
+[View6]
+CustomEditViewType=TEditView
+Module=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas
+CursorX=45
+CursorY=4134
+TopLine=256
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas
 
 [UndockedDesigner]
 Count=0
@@ -156,14 +219,14 @@ Create=1
 Visible=1
 Docked=0
 State=2
-Left=1070
-Top=385
-Width=8930
-Height=9298
+Left=1016
+Top=808
+Width=7309
+Height=9192
 MaxLeft=-4
 MaxTop=-10
-MaxWidth=8930
-MaxHeight=9298
+MaxWidth=7309
+MaxHeight=9192
 ClientWidth=10000
 ClientHeight=9779
 BottomPanelSize=8861
@@ -198,12 +261,12 @@ State=0
 Left=0
 Top=18
 Width=6062
-Height=990
+Height=692
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=6062
-ClientHeight=990
-TBDockHeight=990
+ClientHeight=692
+TBDockHeight=692
 LRDockWidth=2770
 Dockable=1
 StayOnTop=0
@@ -287,8 +350,8 @@ SplitPos=111
 
 [PropInspDesignerSelection]
 ArrangeBy=Name
-SelectedItem=UpdateOptions.UpdateMode,AfterApplyUpdates
-ExpandedItems=Anchors=0,BorderIcons=0,Constraints=0,ConnectedStoredUsage=0,FetchOptions=0,FormatOptions=0,"LiveBindings Designer=0",Params=0,ResourceOptions=0,BevelEdges=0,LiveBindings=0,DriverLink=0,Options=0,DataSet=0,Font=0,Margins=0,ActiveStoredUsage=0,Connection=0,FieldOptions=0,FilterChanges=0,FilterOptions=0,UpdateOptions=1,UpdateOptions.AssignedValues=0
+SelectedItem=Active,AfterExecute
+ExpandedItems=Anchors=0,BorderIcons=0,Constraints=0,ConnectedStoredUsage=0,FetchOptions=1,FormatOptions=0,"LiveBindings Designer=0",Params=0,ResourceOptions=1,BevelEdges=0,LiveBindings=0,DriverLink=0,Options=0,DataSet=0,Font=0,Margins=0,ActiveStoredUsage=0,Connection=0,FieldOptions=0,FilterChanges=0,FilterOptions=0,UpdateOptions=1,UpdateOptions.AssignedValues=0,Driver=1,TableScope=0,Driver.DelegateConnection=0,FetchOptions.AssignedValues=0,FetchOptions.Cache=0,FetchOptions.Items=0,ResourceOptions.AssignedValues=0,ResourceOptions.StoreItems=0
 
 [ClassBrowserTool]
 PercentageSizes=1

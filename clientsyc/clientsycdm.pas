@@ -143,8 +143,8 @@ begin
   customertypeFDQuery.UpdateOptions.UpdateTableName:='jhlh_crm_customerstype';
   customertypeFDQuery.CopyDataSet(memtable);
 
-  customertypeFDQuery.Connection.ExecSQL('delete FROM jhlh_crm_customerstype');
   customertypeFDQuery.Connection.StartTransaction;
+  customertypeFDQuery.Connection.ExecSQL('delete FROM jhlh_crm_customerstype');
   ierror:=customertypeFDQuery.ApplyUpdates;
   if ierror>0 then
   begin
@@ -228,9 +228,8 @@ begin
     end;
     memtable.Next;
   end;
-
-  expoFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_expo');
   expoFDQuery.Connection.StartTransaction;
+  expoFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_expo');
   ierror := expoFDQuery.ApplyUpdates;
   if ierror>0 then
   begin
@@ -297,8 +296,8 @@ begin
   paytypeFDQuery.UpdateOptions.UpdateTableName:='jhlh_pmis_paytype';
   paytypeFDQuery.CopyDataSet(memtable);
 
-  paytypeFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_paytype');
   paytypeFDQuery.Connection.StartTransaction;
+  paytypeFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_paytype');
   ierror:=paytypeFDQuery.ApplyUpdates;
   if ierror>0 then
   begin

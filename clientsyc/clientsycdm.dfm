@@ -10,7 +10,7 @@ object clientsycDataModule: TclientsycDataModule
     LoginPrompt = False
     Params.Strings = (
       'DriverUnit=Data.DBXDataSnap'
-      'HostName=192.168.2.201'
+      'HostName=192.168.1.183'
       'Port=211'
       'CommunicationProtocol=tcp/ip'
       'DatasnapContext=datasnap/'
@@ -18,7 +18,10 @@ object clientsycDataModule: TclientsycDataModule
         'DriverAssemblyLoader=Borland.Data.TDBXClientDriverLoader,Borland' +
         '.Data.DbxClientDriver,Version=24.0.0.0,Culture=neutral,PublicKey' +
         'Token=91d62ebb5b0d1b1b'
-      'Filters={"ZLibCompression":{"CompressMoreThan":"1024"}}')
+      'Filters={"ZLibCompression":{"CompressMoreThan":"1024"}}'
+      'ConnectTimeout=5000'
+      'CommunicationTimeout=5000'
+      'CommunicationIPVersion=IP_IPv4')
     Left = 336
     Top = 224
     UniqueId = '{E47C037B-B7E9-48D8-9E96-81BB9D31ED96}'

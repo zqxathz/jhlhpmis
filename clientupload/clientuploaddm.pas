@@ -21,6 +21,7 @@ type
   public
     { Public declarations }
     procedure CustomerDataUpload;
+    procedure ShopperDataUpload;
   end;
 
 var
@@ -67,7 +68,6 @@ begin
     memtable.ResourceOptions.StoreItems := [siDelta, siMeta];
     memtable.SaveToStream(stream, TFDStorageFormat.sfBinary);
     stream.Position := 0;
-    showmessage(stream.Size.ToString);
     try
       LResponseMessage := TServerMethodsClient(Server).CustomerDataPost(stream);
     except
@@ -84,10 +84,66 @@ begin
   end;
 end;
 
+procedure TclientuploadDataModule.ShopperDataUpload;
+var
+  server:tobject;
+  stream:TMemoryStream;
+  memtable:TFDMemTable;
+
+  I: integer;
+  LResponseMessage: string;
+begin
+  if shopperFDQuery <> nil then
+  begin
+    shopperFDQuery.Open;
+    if shopperFDQuery.State in dsEditModes then
+      shopperFDQuery.Post;
+  end;
+
+  showmessage(shopperFDQuery.RecordCount.ToString);
+
+  memtable:=TFDMemTable.Create(self);
+  memtable.CachedUpdates:=true;
+  memtable.UpdateOptions.AutoIncFields:='id';
+  memtable.UpdateOptions.AutoCommitUpdates:=true;
+  memtable.UpdateOptions.CheckRequired:=false;
+
+  memtable.CopyDataSet(shopperFDQuery,[coStructure, coRestart, coAppend]);
+  memtable.FieldByName('id').ProviderFlags:= memtable.FieldByName('id').ProviderFlags-[pfInupdate];
+  //exit;
+  stream := TMemoryStream.Create;
+
+  SQLConnection1.Open;
+  server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
+  try
+    memtable.ResourceOptions.StoreItems := [siDelta, siMeta];
+    memtable.SaveToStream(stream, TFDStorageFormat.sfBinary);
+    showmessage(stream.Size.ToString);
+
+    stream.Position := 0;
+    try
+      LResponseMessage := TServerMethodsClient(Server).ShopperDataPost(stream);
+    except
+      On E: Exception do
+        raise Exception.Create(E.Message);
+    end;
+  finally
+    Server.Free;
+    memtable.Free;
+    shopperFDQuery.Close;
+    SQLConnection1.Close;
+    if LResponseMessage <> '' then
+      raise Exception.Create(LResponseMessage);
+  end;
+
+end;
+
 procedure TclientuploadDataModule.DataModuleCreate(Sender: TObject);
 begin
   customerFDQuery.Connection:=connectionDataModule.mainFDConnection;
   shopperFDQuery.Connection:=connectionDataModule.mainFDConnection;
 end;
+
+
 
 end.

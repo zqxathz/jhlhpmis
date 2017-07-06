@@ -27,8 +27,15 @@ uses clientuploaddm;
 
 procedure TbplclientuploadFrame.Button1Click(Sender: TObject);
 begin
+{
   try
     clientuploadDataModule.CustomerDataUpload;
+  except on E: Exception do
+    Memo1.Lines.Add(E.Message);
+  end;
+ }
+  try
+    clientuploadDataModule.ShopperDataUpload;
   except on E: Exception do
     Memo1.Lines.Add(E.Message);
   end;
