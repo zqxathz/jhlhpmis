@@ -1,7 +1,7 @@
 object ServerMethods: TServerMethods
   OldCreateOrder = False
-  Height = 328
-  Width = 505
+  Height = 555
+  Width = 984
   object FDConnection1: TFDConnection
     Params.Strings = (
       'User_Name=jhlh'
@@ -9,13 +9,13 @@ object ServerMethods: TServerMethods
       'Database=jhlh'
       'CharacterSet=utf8'
       'DriverID=MySQL')
-    Left = 56
-    Top = 32
+    Left = 384
+    Top = 168
   end
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
     VendorLib = '/lib64/mysql/libmysqlclient.so'
-    Left = 128
-    Top = 32
+    Left = 144
+    Top = 176
   end
   object expoFDQuery: TFDQuery
     CachedUpdates = True
@@ -25,19 +25,19 @@ object ServerMethods: TServerMethods
       
         'select * from jhlh_pmis_expo where status=1 and trash=0 and clie' +
         'ntvisable=1')
-    Left = 248
-    Top = 248
+    Left = 288
+    Top = 288
   end
   object FDStanStorageBinLink1: TFDStanStorageBinLink
-    Left = 208
-    Top = 32
+    Left = 144
+    Top = 256
   end
   object customertypeFDQuery: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
       'select * from jhlh_crm_customerstype where status=1 and trash=0')
-    Left = 432
-    Top = 248
+    Left = 592
+    Top = 288
   end
   object paytypeFDQuery: TFDQuery
     Connection = FDConnection1
@@ -46,8 +46,8 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_pmis_paytype where status=1 and trash=0')
-    Left = 168
-    Top = 248
+    Left = 440
+    Top = 288
   end
   object expotypeFDQuery: TFDQuery
     Connection = FDConnection1
@@ -56,8 +56,8 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_pmis_expotype where status=1 and trash=0')
-    Left = 80
-    Top = 248
+    Left = 768
+    Top = 296
   end
   object shoppersourceFDQuery: TFDQuery
     Connection = FDConnection1
@@ -66,8 +66,8 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_pmis_shopper_sourcetype where status=1')
-    Left = 336
-    Top = 248
+    Left = 440
+    Top = 408
   end
   object customerFDQuery: TFDQuery
     CachedUpdates = True
@@ -86,8 +86,8 @@ object ServerMethods: TServerMethods
     UpdateOptions.AutoIncFields = 'id'
     SQL.Strings = (
       'select * from jhlh_pmis_customers')
-    Left = 64
-    Top = 128
+    Left = 600
+    Top = 408
   end
   object shopperFDQuery: TFDQuery
     CachedUpdates = True
@@ -104,21 +104,18 @@ object ServerMethods: TServerMethods
     UpdateOptions.UpdateTableName = 'jhlh_pmis_shopper'
     SQL.Strings = (
       'select * from jhlh_pmis_shopper')
-    Left = 160
-    Top = 128
+    Left = 288
+    Top = 408
   end
   object ShopperRemoveFDCommand: TFDCommand
     Connection = FDConnection1
     ResourceOptions.AssignedValues = [rvCmdExecMode]
-    ResourceOptions.CmdExecMode = amNonBlocking
     CommandText.Strings = (
       
-        'delete from jhlh_pmis_shopper where (phone) in (select phone fro' +
-        'm jhlh_pmis_shopper group by phone having count(id) > 1) '
-      
-        'and id not in (select max(id) from jhlh_pmis_shopper group by ph' +
-        'one having count(id)>1)')
-    Left = 272
-    Top = 128
+        'delete from jhlh_pmis_shopper where id not in (select maxid from' +
+        ' (select max(id) as maxid from jhlh_pmis_shopper group by phone)' +
+        ' b) order by phone;')
+    Left = 544
+    Top = 176
   end
 end
