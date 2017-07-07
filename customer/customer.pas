@@ -113,6 +113,7 @@ type
     fetchallmenu: TMenuItem;
     PopupMenu2: TPopupMenu;
     N2: TMenuItem;
+    toexcelmenu: TMenuItem;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
       (Sender: TObject);
@@ -133,10 +134,12 @@ type
     procedure fetchmenuClick(Sender: TObject);
     procedure fetchallmenuClick(Sender: TObject);
     procedure softremovemenuClick(Sender: TObject);
+    procedure toexcelmenuClick(Sender: TObject);
   private
     { Private declarations }
     columninfoMemo: TMemo;
     procedure initGirdTableView;
+    procedure CxGridToExcel(AcxGrid: TcxGrid);
   public
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -144,8 +147,26 @@ type
   end;
 
 implementation
+uses cxGridExportLink;
 
 {$R *.dfm}
+
+
+//将当前GRID数据导出到EXCEL文件
+procedure TbplCustomerFrame.CxGridToExcel(AcxGrid: TcxGrid);
+var
+ SaveDialog: TSaveDialog;
+begin
+ SaveDialog := TSaveDialog.Create(nil);
+ with SaveDialog do
+ begin
+   Filter := '*.xls|*.xls';
+   if Execute then
+     ExportGridToExcel(SaveDialog.FileName, AcxGrid, true, true, true, 'xls');
+ end;
+ SaveDialog.Free;
+end;
+
 
 procedure TbplCustomerFrame.allpaycxCurrencyEditClick(Sender: TObject);
 begin
@@ -157,35 +178,64 @@ begin
 end;
 
 procedure TbplCustomerFrame.applyButtonClick(Sender: TObject);
+var
+  required_str:string;
 begin
+  required_str:='';
+
+  if trim(standnumberEdit.Text)='' then
+   required_str:=required_str+'展位号未填写'+#13#10;
+
+  if trim(nameEdit.Text)='' then
+   required_str:=required_str+'姓名未填写'+#13#10;
+
+  if phonecxMaskEdit.Text='' then
+    required_str:=required_str+'手机号未填写'+#13#10;
+
+  if required_str<>'' then
+  begin
+    showmessage( required_str);
+    exit;
+  end;
+
+
   with customerDataModule do
   begin
     customerFDQuery.Append;
-    customerFDQuery.FieldValues['eid'] := expoFDQuery.FieldValues['id'];
-    customerFDQuery.FieldValues['customertype'] :=
-      trim(customertypecxComboBox.Text);
-    customerFDQuery.FieldValues['standnumber'] := trim(standnumberEdit.Text);
-    customerFDQuery.FieldValues['name'] := trim(nameEdit.Text);
-    customerFDQuery.FieldValues['mobilephone'] := phonecxMaskEdit.Text;
-    customerFDQuery.FieldValues['paytype'] := paytypeFDQuery.FieldValues['id'];
-    customerFDQuery.FieldValues['allpay'] := allpaycxCurrencyEdit.Value;
-    customerFDQuery.FieldValues['firstpay'] := firstpaycxCurrencyEdit.Value;
-    customerFDQuery.FieldValues['nowpay'] := nowpaycxCurrencyEdit.Value;
-    customerFDQuery.FieldValues['telphone'] := trim(telphonecxMaskEdit.Text);
-    customerFDQuery.FieldValues['company']:=trim(companyEdit.Text);
-    customerFDQuery.FieldValues['email'] := trim(emailEdit.Text);
-    customerFDQuery.FieldValues['qq'] := trim(qqEdit.Text);
-    customerFDQuery.FieldValues['addr'] := trim(addrEdit.Text);
-    customerFDQuery.FieldValues['customerinfo']:=trim(infoMemo.Lines.Text);
-    customerFDQuery.FieldValues['groupid'] := 0;
-    customerFDQuery.FieldValues['salesname'] := trim(salescxComboBox.Text);
-    customerFDQuery.FieldValues['salesid'] := 0;
-    customerFDQuery.FieldValues['create_datetime'] :=
-      DateTimeToUnix(IncHour(Now, -8));
-    customerFDQuery.FieldValues['update_datetime'] :=  DateTimeToUnix(IncHour(Now, -8));
-    customerFDQuery.FieldValues['status']:=1;
-    customerFDQuery.FieldValues['trash']:=0;
-    customerFDQuery.Post;
+    try
+      customerFDQuery.FieldValues['eid'] := expoFDQuery.FieldValues['id'];
+      customerFDQuery.FieldValues['customertype'] :=
+        trim(customertypecxComboBox.Text);
+      customerFDQuery.FieldValues['standnumber'] := trim(standnumberEdit.Text);
+      customerFDQuery.FieldValues['name'] := trim(nameEdit.Text);
+      customerFDQuery.FieldValues['mobilephone'] := phonecxMaskEdit.Text;
+      customerFDQuery.FieldValues['paytype'] := paytypeFDQuery.FieldValues['id'];
+      customerFDQuery.FieldValues['allpay'] := allpaycxCurrencyEdit.Value;
+      customerFDQuery.FieldValues['firstpay'] := firstpaycxCurrencyEdit.Value;
+      customerFDQuery.FieldValues['nowpay'] := nowpaycxCurrencyEdit.Value;
+      customerFDQuery.FieldValues['telphone'] := trim(telphonecxMaskEdit.Text);
+      customerFDQuery.FieldValues['company']:=trim(companyEdit.Text);
+      customerFDQuery.FieldValues['email'] := trim(emailEdit.Text);
+      customerFDQuery.FieldValues['qq'] := trim(qqEdit.Text);
+      customerFDQuery.FieldValues['addr'] := trim(addrEdit.Text);
+      customerFDQuery.FieldValues['customerinfo']:=trim(infoMemo.Lines.Text);
+      customerFDQuery.FieldValues['groupid'] := 0;
+      customerFDQuery.FieldValues['salesname'] := trim(salescxComboBox.Text);
+      customerFDQuery.FieldValues['salesid'] := 0;
+      customerFDQuery.FieldValues['create_datetime'] :=
+        DateTimeToUnix(IncHour(Now, -8));
+      customerFDQuery.FieldValues['update_datetime'] :=  DateTimeToUnix(IncHour(Now, -8));
+
+      customerFDQuery.FieldValues['updatetime'] := Now;
+      customerFDQuery.FieldValues['createtime'] := Now;
+
+      customerFDQuery.FieldValues['status']:=1;
+      customerFDQuery.FieldValues['trash']:=0;
+      customerFDQuery.Post;
+    except
+      customerFDQuery.Cancel;
+      raise;
+    end;
   end;
 end;
 
@@ -556,6 +606,11 @@ end;
 procedure TbplCustomerFrame.softremovemenuClick(Sender: TObject);
 begin
   customerDataModule.softremovecurr;
+end;
+
+procedure TbplCustomerFrame.toexcelmenuClick(Sender: TObject);
+begin
+  CxGridToExcel(cxGrid1);
 end;
 
 end.

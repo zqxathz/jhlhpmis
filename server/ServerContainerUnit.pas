@@ -171,6 +171,12 @@ begin
   Write(cArrow);
 end;
 
+
+ procedure Test;
+ begin
+   //
+ end;
+
 procedure RunDSServer;
 var
   LModule: TServerContainer1;
@@ -197,6 +203,8 @@ begin
           SetPort(LModule, LResponse.Replace(cCommandSetHTTPPort, '').Trim, DSProtocol.HTTP)
         else if sametext(LResponse, cCommandHelp) then
           WriteCommands
+        else if sametext(LResponse,'test') then
+          Test
         else if sametext(LResponse, cCommandExit) then
           if LModule.DSServer1.Started then
           begin
@@ -215,6 +223,8 @@ begin
     LModule.Free;
   end;
 end;
+
+
 
 end.
 

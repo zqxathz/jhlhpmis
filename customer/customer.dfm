@@ -473,6 +473,10 @@ object bplCustomerFrame: TbplCustomerFrame
       Caption = #26174#31034#25152#26377#35760#24405
       OnClick = fetchallmenuClick
     end
+    object toexcelmenu: TMenuItem
+      Caption = #23548#20986#21040'EXCEL'
+      OnClick = toexcelmenuClick
+    end
   end
   object PopupMenu2: TPopupMenu
     Left = 712

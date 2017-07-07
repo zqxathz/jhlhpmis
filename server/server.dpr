@@ -6,7 +6,8 @@ uses
   System.SysUtils,
   ServerMethodsUnit in 'ServerMethodsUnit.pas' {ServerMethods: TDSServerModule},
   ServerConst in 'ServerConst.pas',
-  ServerContainerUnit in 'ServerContainerUnit.pas' {ServerContainer1: TDataModule};
+  ServerContainerUnit in 'ServerContainerUnit.pas' {ServerContainer1: TDataModule},
+  Alidayu in 'Alidayu.pas';
 
 begin
   try

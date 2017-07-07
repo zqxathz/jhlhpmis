@@ -12,7 +12,6 @@ uses
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
   FireDAC.Stan.StorageBin,
   FireDAC.Comp.DataSet, System.Generics.Collections, System.Variants;
-
 type
   TErrorRecordIDs = array of integer;
 
@@ -63,7 +62,8 @@ implementation
 {$R *.dfm}
 
 uses
-  System.StrUtils, System.DateUtils;
+  System.StrUtils, System.DateUtils,Alidayu;
+
 
 function CopyStream(const AStream: TStream): TMemoryStream;
 var
@@ -94,6 +94,8 @@ var
   count: int64;
   starttime, endtime: TDateTime;
   Log: TServerLog;
+  Dayu:TAlidayu;
+  send_message:string;
 begin
   if AStream.Size = 0 then
     exit;
@@ -104,6 +106,8 @@ begin
   end
   else
     Log := TServerLog.Create(LogFilename, fmOpenWrite);
+
+  Log.SaveLog('Start append shopper data');
   FErrorsList := TJSONObject.Create;
   LMemStream := CopyStream(AStream);
   Log.SaveLog('stream size:' + LMemStream.Size.ToString); // LOG 流的大小
@@ -147,7 +151,12 @@ begin
     FErrorsList.Free;
     FreeAndNil(Log); // 关闭Logy文件
   end;
-
+  Dayu:=TAlidayu.Create;
+  try
+    Dayu.SendSMS;
+  finally
+    Dayu.Free;
+  end;
 end;
 
 { -------------------------------------------------------------------------------
@@ -157,6 +166,8 @@ end;
   参数:      AStream: TStream
   返回值:    string (JSON)
   ------------------------------------------------------------------------------- }
+
+
 function TServerMethods.CustomerDataPost(AStream: TStream): string;
 var
   LMemStream: TMemoryStream;
@@ -164,6 +175,8 @@ var
   count: int64;
   starttime, endtime: TDateTime;
   Log: TServerLog;
+  Dayu:TAlidayu;
+  send_message:string;
 begin
   if AStream.Size = 0 then
     exit;
@@ -207,6 +220,11 @@ begin
     Log.SaveLog('------------------------'); // Log文件分割线
     FErrorsList.Free; // 释放Josn对象
     FreeAndNil(Log); // 关闭Logy文件
+  end;
+  try
+     Dayu.SendSMS;
+  finally
+    Dayu.Free;
   end;
 end;
 
@@ -364,6 +382,8 @@ function TServerMethods.ReverseString(Value: string): string;
 begin
   Result := System.StrUtils.ReverseString(Value);
 end;
+
+
 
 { TServerLog }
 
