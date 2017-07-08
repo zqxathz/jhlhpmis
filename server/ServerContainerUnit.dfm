@@ -3,6 +3,7 @@ object ServerContainer1: TServerContainer1
   Height = 271
   Width = 415
   object DSServer1: TDSServer
+    OnPrepare = DSServer1Prepare
     Left = 96
     Top = 11
   end

@@ -22,8 +22,8 @@ object clientsycDataModule: TclientsycDataModule
       'ConnectTimeout=5000'
       'CommunicationTimeout=5000'
       'CommunicationIPVersion=IP_IPv4')
-    Left = 336
-    Top = 224
+    Left = 480
+    Top = 200
     UniqueId = '{E47C037B-B7E9-48D8-9E96-81BB9D31ED96}'
   end
   object expoFDQuery: TFDQuery
@@ -61,5 +61,35 @@ object clientsycDataModule: TclientsycDataModule
       'select * from jhlh_pmis_paytype')
     Left = 144
     Top = 320
+  end
+  object expotypeFDQuery: TFDQuery
+    CachedUpdates = True
+    FetchOptions.AssignedValues = [evMode, evAutoFetchAll]
+    FetchOptions.Mode = fmManual
+    FetchOptions.AutoFetchAll = afDisable
+    SQL.Strings = (
+      'select * from jhlh_pmis_expotype')
+    Left = 56
+    Top = 320
+  end
+  object shoppersourceFDQuery: TFDQuery
+    CachedUpdates = True
+    FetchOptions.AssignedValues = [evMode, evAutoFetchAll]
+    FetchOptions.Mode = fmManual
+    FetchOptions.AutoFetchAll = afDisable
+    SQL.Strings = (
+      'select * from jhlh_pmis_shopper_sourcetype')
+    Left = 56
+    Top = 256
+  end
+  object memberFDQuery: TFDQuery
+    CachedUpdates = True
+    FetchOptions.AssignedValues = [evMode, evAutoFetchAll]
+    FetchOptions.Mode = fmManual
+    FetchOptions.AutoFetchAll = afDisable
+    SQL.Strings = (
+      'select * from jhlh_admin_member')
+    Left = 200
+    Top = 248
   end
 end

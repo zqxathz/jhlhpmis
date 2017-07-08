@@ -56,8 +56,8 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_pmis_expotype where status=1 and trash=0')
-    Left = 768
-    Top = 296
+    Left = 728
+    Top = 288
   end
   object shoppersourceFDQuery: TFDQuery
     Connection = FDConnection1
@@ -66,8 +66,8 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_pmis_shopper_sourcetype where status=1')
-    Left = 440
-    Top = 408
+    Left = 280
+    Top = 384
   end
   object customerFDQuery: TFDQuery
     CachedUpdates = True
@@ -86,8 +86,8 @@ object ServerMethods: TServerMethods
     UpdateOptions.AutoIncFields = 'id'
     SQL.Strings = (
       'select * from jhlh_pmis_customers')
-    Left = 600
-    Top = 408
+    Left = 824
+    Top = 136
   end
   object shopperFDQuery: TFDQuery
     CachedUpdates = True
@@ -104,8 +104,8 @@ object ServerMethods: TServerMethods
     UpdateOptions.UpdateTableName = 'jhlh_pmis_shopper'
     SQL.Strings = (
       'select * from jhlh_pmis_shopper')
-    Left = 288
-    Top = 408
+    Left = 744
+    Top = 128
   end
   object ShopperRemoveFDCommand: TFDCommand
     Connection = FDConnection1
@@ -117,5 +117,15 @@ object ServerMethods: TServerMethods
         ' b) order by phone;')
     Left = 544
     Top = 176
+  end
+  object memberFDQuery: TFDQuery
+    Connection = FDConnection1
+    ResourceOptions.AssignedValues = [rvStoreMergeData, rvStoreMergeMeta]
+    ResourceOptions.StoreMergeData = dmDataAppend
+    ResourceOptions.StoreMergeMeta = mmAdd
+    SQL.Strings = (
+      'select * from jhlh_admin_member where locked=0')
+    Left = 424
+    Top = 392
   end
 end

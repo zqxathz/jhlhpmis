@@ -18,8 +18,10 @@ type
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
+    FOnExec:TGetStrProc; //事件:用来输出相关执行信息到主界面
   public
     { Public declarations }
+    property OnExec:TGetStrProc read FOnExec write FOnExec; //事件属性
     procedure CustomerDataUpload;
     procedure ShopperDataUpload;
   end;
@@ -44,12 +46,19 @@ var
   I: integer;
   LResponseMessage: string;
 begin
+
   if customerFDQuery <> nil then
   begin
     customerFDQuery.Open;
     if customerFDQuery.State in dsEditModes then
       customerFDQuery.Post;
   end;
+
+  if customerFDQuery.RecordCount=0 then exit;
+
+
+  if Assigned(FOnExec) then
+       FOnExec('开始上传客户数据');
 
   memtable:=TFDMemTable.Create(self);
   memtable.CachedUpdates:=true;
@@ -82,6 +91,8 @@ begin
     customerFDQuery.Close;
     SQLConnection1.Close;
   end;
+  if Assigned(FOnExec) then
+      FOnExec('客户数据上传成功');
 end;
 
 procedure TclientuploadDataModule.ShopperDataUpload;
@@ -100,7 +111,10 @@ begin
       shopperFDQuery.Post;
   end;
 
-  showmessage(shopperFDQuery.RecordCount.ToString);
+  if shopperFDQuery.RecordCount=0 then exit;
+
+   if Assigned(FOnExec) then
+       FOnExec('开始上传顾客数据');
 
   memtable:=TFDMemTable.Create(self);
   memtable.CachedUpdates:=true;
@@ -118,8 +132,6 @@ begin
   try
     memtable.ResourceOptions.StoreItems := [siDelta, siMeta];
     memtable.SaveToStream(stream, TFDStorageFormat.sfBinary);
-    showmessage(stream.Size.ToString);
-
     stream.Position := 0;
     try
       LResponseMessage := TServerMethodsClient(Server).ShopperDataPost(stream);
@@ -135,6 +147,8 @@ begin
     if LResponseMessage <> '' then
       raise Exception.Create(LResponseMessage);
   end;
+  if Assigned(FOnExec) then
+       FOnExec('顾客数据上传成功');
 
 end;
 

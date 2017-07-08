@@ -6,7 +6,7 @@ uses System.SysUtils, System.Classes,
   Datasnap.DSTCPServerTransport,
     Datasnap.DSHTTPCommon, Datasnap.DSHTTP,
   Datasnap.DSServer, Datasnap.DSCommonServer,
-  IPPeerServer, IPPeerAPI, Datasnap.DSAuth, DbxCompressionFilter,ServerConst;
+  IPPeerServer, IPPeerAPI, Datasnap.DSAuth, DbxCompressionFilter;
 
 type
   TServerContainer1 = class(TDataModule)
@@ -22,6 +22,7 @@ type
     procedure DSAuthenticationManager1UserAuthenticate(Sender: TObject;
       const Protocol, Context, User, Password: string; var valid: Boolean;
       UserRoles: TStrings);
+    procedure DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
   private
     { Private declarations }
   public
@@ -36,7 +37,23 @@ implementation
 
 {$R *.dfm}
 
-uses ServerMethodsUnit;
+uses ServerMethodsUnit,ServerConst;
+
+procedure TServerContainer1.DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
+var
+  Log:TServerLog;
+begin
+  if not FileExists(LogFilename) then // 创建或者打开LOG文件
+  begin
+    Log := TServerLog.Create(LogFilename, fmCreate);
+  end
+  else
+    Log := TServerLog.Create(LogFilename, fmOpenWrite);
+  Log.SaveLog('username:'+DSPrepareEventObject.UserName);
+  Log.SaveLog('ip:'+DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
+  Log.SaveLog('exect:'+DSPrepareEventObject.MethodAlias); //Log调用方法
+  FreeAndNil(Log);
+end;
 
 procedure TServerContainer1.DSServerClass1GetClass(
   DSServerClass: TDSServerClass; var PersistentClass: TPersistentClass);

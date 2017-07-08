@@ -153,7 +153,8 @@ begin
 
     sms_param:=list.Values['sms_param'];
 
-    Result:=SendSMS(app_key,app_secret,rec_num,sms_free_sign_name,sms_template_code,sms_param,send_message);
+    if list.Values['enable']='1' then
+      Result:=SendSMS(app_key,app_secret,rec_num,sms_free_sign_name,sms_template_code,sms_param,send_message);
    //Result:=SendSMS('24537550','249cc7372a19a8ea9e7694d04b677c5c','18606829855','ÇàÁ«Õ¹ÀÀ','SMS_76460043','',send_message);
   finally
     list.Free;

@@ -32,6 +32,7 @@ type
     customerFDQuery: TFDQuery;
     shopperFDQuery: TFDQuery;
     ShopperRemoveFDCommand: TFDCommand;
+    memberFDQuery: TFDQuery;
     procedure customerFDQueryUpdateError(ASender: TDataSet;
       AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
       var AAction: TFDErrorAction);
@@ -42,13 +43,17 @@ type
     function GenerateErrorMessage: string;
   public
     { Public declarations }
+    //Delhpi自己生成的例子方法
     function EchoString(Value: string): string;
     function ReverseString(Value: string): string;
+    //获取服务器数据的方法
     function ExpoData(username: string; password: string): TStream;
     function CustomertypeData(username: string; password: string): TStream;
     function PaytypeData(username: string; password: string): TStream;
     function ExpoTypeData(username: string; password: string): TStream;
     function ShopperSourceData(username: string; password: string): TStream;
+    function MemberData:TStream;
+    //上传数据到服务器的方法
     function CustomerDataPost(AStream: TStream): string;
     function ShopperDataPost(AStream: TStream): string;
   end;
@@ -64,7 +69,7 @@ implementation
 uses
   System.StrUtils, System.DateUtils,Alidayu;
 
-
+//复制流到内存流
 function CopyStream(const AStream: TStream): TMemoryStream;
 var
   LBuffer: TBytes;
@@ -87,6 +92,7 @@ begin
   end;
 end;
 
+//Shopper数据提交处理方法
 function TServerMethods.ShopperDataPost(AStream: TStream): string;
 var
   LMemStream: TMemoryStream;
@@ -117,10 +123,11 @@ begin
     shopperFDQuery.LoadFromStream(LMemStream, TFDStorageFormat.sfBinary);
     Log.SaveLog('record count:' + shopperFDQuery.RecordCount.ToString);
     // LOG 本次更新的记录数
+
     starttime := now();
     FDConnection1.StartTransaction;
     LErrors := shopperFDQuery.ApplyUpdates;
-    if LErrors <> 0 then
+    if LErrors <> 0 then        //一旦有出错就回滚
       FDConnection1.Rollback
     else
     begin
@@ -132,9 +139,9 @@ begin
         raise;
       end;
     end;
-
     endtime := now();
     count := MilliSecondsBetween(endtime, starttime);
+
     Log.SaveLog('time count:' + count.ToString); // LOG插入数据用时
   finally
     customerFDQuery.Close;
@@ -142,15 +149,14 @@ begin
     FDConnection1.Close;
     if LErrors <> 0 then
     begin
-      // Result := Format(sErrorsOnApplyUpdates, [GenerateErrorMessage]);
-      // Writeln(Result);
-      Result := FErrorsList.ToJSON;
+      Result := FErrorsList.ToJSON;  //返回出错数据
       Log.SaveLog('error message:' + Result); // Log出错数据
     end;
     Log.SaveLog('------------------------');
-    FErrorsList.Free;
-    FreeAndNil(Log); // 关闭Logy文件
+    FErrorsList.Free;       //释放Josn对象
+    FreeAndNil(Log);        //关闭Log文件
   end;
+  //通过阿里大于发送短信给管理员
   Dayu:=TAlidayu.Create;
   try
     Dayu.SendSMS;
@@ -166,8 +172,6 @@ end;
   参数:      AStream: TStream
   返回值:    string (JSON)
   ------------------------------------------------------------------------------- }
-
-
 function TServerMethods.CustomerDataPost(AStream: TStream): string;
 var
   LMemStream: TMemoryStream;
@@ -219,8 +223,10 @@ begin
     end;
     Log.SaveLog('------------------------'); // Log文件分割线
     FErrorsList.Free; // 释放Josn对象
-    FreeAndNil(Log); // 关闭Logy文件
+    FreeAndNil(Log); // 关闭Log文件
   end;
+  //通过阿里大于发送短信给管理员
+  Dayu:=TAlidayu.Create;
   try
      Dayu.SendSMS;
   finally
@@ -238,7 +244,7 @@ begin
     try
       if not VarIsNull(ARow.GetData('id')) then
         LDataStr := ARow.GetData('id');
-      FErrorsList.AddPair('Errorid', LDataStr);
+      FErrorsList.AddPair(AException.Message, LDataStr);
     except
 
     end;
@@ -255,6 +261,30 @@ var
 begin
   //
 end;
+
+function TServerMethods.MemberData: TStream;
+begin
+ Result := TMemoryStream.Create;
+  try
+    try
+      FDConnection1.Open;
+      memberFDQuery.Close;
+      memberFDQuery.Open;
+      memberFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
+      Result.Position := 0;
+    except
+      on E: Exception do
+      begin
+        writeln(E.Message);
+        Result.Free;
+      end;
+    end;
+  finally
+    memberFDQuery.Close;
+    FDConnection1.Close;
+  end;
+end;
+
 
 function TServerMethods.CustomertypeData(username, password: string): TStream;
 begin
@@ -305,7 +335,6 @@ begin
     expoFDQuery.Close;
     FDConnection1.Close;
   end;
-
 end;
 
 function TServerMethods.ExpoTypeData(username, password: string): TStream;

@@ -1,5 +1,5 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas',0,1,8766,21,8788,0,0,,
+File_0=TSourceModule,'D:\Develop\jhql\clientsyc\servermethods.pas',0,1,13,23,34,0,0,,
 File_1=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.pas',0,1,545,1,564,0,0,,
 File_2=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.JSON.pas',0,1,1,1,10,0,0,,
 File_3=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,520,45,537,0,0,{{1656,4}
@@ -15,15 +15,25 @@ File_12=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL
 File_13=TSourceModule,'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Stan.Tracer.pas',0,1,1,1,1,0,0,,
 
 [Modules]
-Module0=D:\Develop\jhql\server\ServerMethodsUnit.pas
-Module1=D:\Develop\jhql\clientupload\clientuploaddm.pas
-Module2=D:\Develop\jhql\clientsyc\clientsyc.pas
+Module0=D:\Develop\jhql\server\Alidayu.pas
+Module1=D:\Develop\jhql\server\ServerMethodsUnit.pas
+Module2=D:\Develop\jhql\clientupload\clientuploaddm.pas
 Module3=D:\Develop\jhql\clientupload\clientuploadfrm.pas
-Module4=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas
-Module5=D:\Develop\jhql\clientsyc\clientsycdm.pas
-Module6=D:\Develop\jhql\start\main.pas
-Count=7
+Module4=D:\Develop\jhql\clientsyc\clientsycdm.pas
+Module5=D:\Develop\jhql\clientsyc\clientsyc.pas
+Module6=D:\Develop\jhql\clientupload\servermethodsupload.pas
+Module7=D:\Develop\jhql\start\main.pas
+Module8=D:\Develop\jhql\start\login.pas
+Module9=D:\Develop\jhql\shopper\shopper.pas
+Module10=D:\Develop\jhql\server\ServerContainerUnit.pas
+Module11=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas
+Module12=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas
+Module13=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas
+Count=14
 EditWindowCount=1
+
+[D:\Develop\jhql\server\Alidayu.pas]
+ModuleType=TSourceModule
 
 [D:\Develop\jhql\server\ServerMethodsUnit.pas]
 ModuleType=TSourceModule
@@ -31,24 +41,42 @@ ModuleType=TSourceModule
 [D:\Develop\jhql\clientupload\clientuploaddm.pas]
 ModuleType=TSourceModule
 
-[D:\Develop\jhql\clientsyc\clientsyc.pas]
-ModuleType=TSourceModule
-
 [D:\Develop\jhql\clientupload\clientuploadfrm.pas]
-ModuleType=TSourceModule
-
-[c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas]
 ModuleType=TSourceModule
 
 [D:\Develop\jhql\clientsyc\clientsycdm.pas]
 ModuleType=TSourceModule
 
+[D:\Develop\jhql\clientsyc\clientsyc.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\clientupload\servermethodsupload.pas]
+ModuleType=TSourceModule
+
 [D:\Develop\jhql\start\main.pas]
 ModuleType=TSourceModule
 
+[D:\Develop\jhql\start\login.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\shopper\shopper.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\server\ServerContainerUnit.pas]
+ModuleType=TSourceModule
+
+[c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas]
+ModuleType=TSourceModule
+
+[C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas]
+ModuleType=TSourceModule
+
+[c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas]
+ModuleType=TSourceModule
+
 [EditWindow0]
-ViewCount=7
-CurrentEditView=D:\Develop\jhql\server\ServerMethodsUnit.pas
+ViewCount=14
+CurrentEditView=D:\Develop\jhql\server\Alidayu.pas
 View0=0
 View1=1
 View2=2
@@ -56,6 +84,13 @@ View3=3
 View4=4
 View5=5
 View6=6
+View7=7
+View8=8
+View9=9
+View10=10
+View11=11
+View12=12
+View13=13
 PercentageSizes=1
 Create=1
 Visible=1
@@ -75,22 +110,22 @@ TopPanelSize=0
 LeftPanelSize=1895
 LeftPanelClients=PropertyInspector,DockSite3
 LeftPanelData=000008000101000000009A0E00000000000001670700000000000001000000005C0E000009000000446F636B536974653301000000009D2200001100000050726F7065727479496E73706563746F72FFFFFFFF
-RightPanelSize=1996
+RightPanelSize=1480
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=000008000101000000009A0E00000000000001CC0700000000000001000000004412000009000000446F636B536974653201000000009D22000009000000446F636B5369746534FFFFFFFF
+RightPanelData=000008000101000000009A0E00000000000001C80500000000000001000000003218000009000000446F636B536974653201000000009D22000009000000446F636B5369746534FFFFFFFF
 BottomPanelSize=0
 BottomPanelClients=DockSite1
 BottomPanelData=0000080001000100000009000000446F636B53697465311B5200000000000000EF05000000000000FFFFFFFF
-BottomMiddlePanelSize=833
+BottomMiddlePanelSize=1500
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel,MessageView
-BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E675669657722380000000000000241030000000000000100000000223800000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomMiddelPanelData=0000080001020100000010000000477261706844726177696E6756696577E93C00000000000002DC050000000000000100000000D02900000F0000004D65737361676556696577466F726D0100000000E93C000009000000446F636B5369746530FFFFFFFF
 
 [View0]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\start\main.pas
-CursorX=31
-CursorY=13
-TopLine=1
+CursorX=71
+CursorY=224
+TopLine=202
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -99,9 +134,9 @@ EditViewName=D:\Develop\jhql\start\main.pas
 [View1]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\clientsyc\clientsycdm.pas
-CursorX=69
-CursorY=157
-TopLine=115
+CursorX=45
+CursorY=147
+TopLine=130
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -110,9 +145,9 @@ EditViewName=D:\Develop\jhql\clientsyc\clientsycdm.pas
 [View2]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\clientupload\clientuploaddm.pas
-CursorX=50
-CursorY=118
-TopLine=96
+CursorX=145
+CursorY=145
+TopLine=125
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -120,38 +155,115 @@ EditViewName=D:\Develop\jhql\clientupload\clientuploaddm.pas
 
 [View3]
 CustomEditViewType=TEditView
+Module=D:\Develop\jhql\clientupload\servermethodsupload.pas
+CursorX=1
+CursorY=1
+TopLine=16
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\clientupload\servermethodsupload.pas
+
+[View4]
+CustomEditViewType=TEditView
 Module=D:\Develop\jhql\clientupload\clientuploadfrm.pas
-CursorX=73
-CursorY=33
-TopLine=22
+CursorX=135
+CursorY=42
+TopLine=25
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\clientupload\clientuploadfrm.pas
 
-[View4]
+[View5]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\clientsyc\clientsyc.pas
+CursorX=11
+CursorY=34
+TopLine=28
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\clientsyc\clientsyc.pas
+
+[View6]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\shopper\shopper.pas
 CursorX=1
 CursorY=1
+TopLine=121
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\shopper\shopper.pas
+
+[View7]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\start\login.pas
+CursorX=31
+CursorY=35
+TopLine=13
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\start\login.pas
+
+[View8]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\server\ServerMethodsUnit.pas
+CursorX=22
+CursorY=244
+TopLine=33
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\server\ServerMethodsUnit.pas
+
+[View9]
+CustomEditViewType=TEditView
+Module=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas
+CursorX=17
+CursorY=1053
+TopLine=1053
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas
+
+[View10]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\server\ServerContainerUnit.pas
+CursorX=12
+CursorY=47
+TopLine=30
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\server\ServerContainerUnit.pas
+
+[View11]
+CustomEditViewType=TEditView
+Module=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas
+CursorX=1
+CursorY=10
+TopLine=13
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas
+
+[View12]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\server\Alidayu.pas
+CursorX=66
+CursorY=135
 TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=Borland.FormDesignerView
+EditViewName=D:\Develop\jhql\server\Alidayu.pas
 
-[View5]
-CustomEditViewType=TEditView
-Module=D:\Develop\jhql\server\ServerMethodsUnit.pas
-CursorX=1
-CursorY=142
-TopLine=138
-LeftCol=1
-Elisions=
-Bookmarks={9,89,6}
-EditViewName=Borland.FormDesignerView
-
-[View6]
+[View13]
 CustomEditViewType=TEditView
 Module=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas
 CursorX=45
@@ -219,14 +331,14 @@ Create=1
 Visible=1
 Docked=0
 State=2
-Left=1016
-Top=808
-Width=7309
-Height=9192
+Left=1156
+Top=163
+Width=7242
+Height=9298
 MaxLeft=-4
 MaxTop=-10
-MaxWidth=7309
-MaxHeight=9192
+MaxWidth=7242
+MaxHeight=9298
 ClientWidth=10000
 ClientHeight=9779
 BottomPanelSize=8861
@@ -241,12 +353,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1996
-Height=4404
+Width=1480
+Height=5981
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1996
-ClientHeight=4404
+ClientWidth=1480
+ClientHeight=5981
 TBDockHeight=5904
 LRDockWidth=2348
 Dockable=1
@@ -260,13 +372,13 @@ Docked=1
 State=0
 Left=0
 Top=18
-Width=6062
-Height=692
+Width=4500
+Height=1385
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=6062
-ClientHeight=692
-TBDockHeight=692
+ClientWidth=4500
+ClientHeight=1385
+TBDockHeight=1385
 LRDockWidth=2770
 Dockable=1
 StayOnTop=0
@@ -279,12 +391,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=1996
-Height=4173
+Width=1480
+Height=2596
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1996
-ClientHeight=4173
+ClientWidth=1480
+ClientHeight=2596
 TBDockHeight=7154
 LRDockWidth=1996
 Dockable=1
@@ -347,11 +459,6 @@ LRDockWidth=1895
 Dockable=1
 StayOnTop=0
 SplitPos=111
-
-[PropInspDesignerSelection]
-ArrangeBy=Name
-SelectedItem=Active,AfterExecute
-ExpandedItems=Anchors=0,BorderIcons=0,Constraints=0,ConnectedStoredUsage=0,FetchOptions=1,FormatOptions=0,"LiveBindings Designer=0",Params=0,ResourceOptions=1,BevelEdges=0,LiveBindings=0,DriverLink=0,Options=0,DataSet=0,Font=0,Margins=0,ActiveStoredUsage=0,Connection=0,FieldOptions=0,FilterChanges=0,FilterOptions=0,UpdateOptions=1,UpdateOptions.AssignedValues=0,Driver=1,TableScope=0,Driver.DelegateConnection=0,FetchOptions.AssignedValues=0,FetchOptions.Cache=0,FetchOptions.Items=0,ResourceOptions.AssignedValues=0,ResourceOptions.StoreItems=0
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -558,12 +665,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=2340
-Height=1240
+Width=3289
+Height=3096
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2340
-ClientHeight=1240
+ClientWidth=3289
+ClientHeight=3096
 TBDockHeight=2500
 LRDockWidth=3398
 Dockable=1
@@ -577,12 +684,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=2340
-Height=1240
+Width=3289
+Height=3096
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2340
-ClientHeight=1240
+ClientWidth=3289
+ClientHeight=3096
 TBDockHeight=2317
 LRDockWidth=2824
 Dockable=1
@@ -596,12 +703,12 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=2340
-Height=1240
+Width=2062
+Height=1144
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2340
-ClientHeight=1240
+ClientWidth=2062
+ClientHeight=1144
 TBDockHeight=3212
 LRDockWidth=2824
 Dockable=1
@@ -763,18 +870,18 @@ HostDockSite=DockBottomCenterPanel
 DockSiteType=1
 PercentageSizes=1
 Create=1
-Visible=0
+Visible=1
 Docked=1
 State=0
-Left=0
-Top=0
-Width=2340
-Height=1481
+Left=1156
+Top=18
+Width=2062
+Height=1385
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=2340
-ClientHeight=1481
-TBDockHeight=1481
+ClientWidth=2062
+ClientHeight=1385
+TBDockHeight=1385
 LRDockWidth=2340
 Dockable=1
 StayOnTop=0
@@ -816,14 +923,14 @@ Docked=1
 State=0
 Left=0
 Top=18
-Width=1996
-Height=4644
+Width=1480
+Height=6221
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1996
-ClientHeight=4644
+ClientWidth=1480
+ClientHeight=6221
 TBDockHeight=8173
-LRDockWidth=1996
+LRDockWidth=1480
 Dockable=1
 StayOnTop=0
 TabPosition=1
@@ -863,15 +970,15 @@ Visible=1
 Docked=1
 State=0
 Left=0
-Top=523
-Width=1996
-Height=4173
+Top=687
+Width=1480
+Height=2596
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1996
-ClientHeight=4173
+ClientWidth=1480
+ClientHeight=2596
 TBDockHeight=8173
-LRDockWidth=1996
+LRDockWidth=1480
 Dockable=1
 StayOnTop=0
 TabPosition=1

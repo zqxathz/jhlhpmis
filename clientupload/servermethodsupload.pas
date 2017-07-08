@@ -1,7 +1,7 @@
-// 
+//
 // Created by the DataSnap proxy generator.
-// 2017/7/5 23:04:50
-// 
+// 2017/7/8 17:13:26
+//
 
 unit servermethodsupload;
 
@@ -19,6 +19,7 @@ type
     FPaytypeDataCommand: TDBXCommand;
     FExpoTypeDataCommand: TDBXCommand;
     FShopperSourceDataCommand: TDBXCommand;
+    FMemberDataCommand: TDBXCommand;
     FCustomerDataPostCommand: TDBXCommand;
     FShopperDataPostCommand: TDBXCommand;
   public
@@ -32,6 +33,7 @@ type
     function PaytypeData(username: string; password: string): TStream;
     function ExpoTypeData(username: string; password: string): TStream;
     function ShopperSourceData(username: string; password: string): TStream;
+    function MemberData: TStream;
     function CustomerDataPost(AStream: TStream): string;
     function ShopperDataPost(AStream: TStream): string;
   end;
@@ -141,6 +143,19 @@ begin
   Result := FShopperSourceDataCommand.Parameters[2].Value.GetStream(FInstanceOwner);
 end;
 
+function TServerMethodsClient.MemberData: TStream;
+begin
+  if FMemberDataCommand = nil then
+  begin
+    FMemberDataCommand := FDBXConnection.CreateCommand;
+    FMemberDataCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FMemberDataCommand.Text := 'TServerMethods.MemberData';
+    FMemberDataCommand.Prepare;
+  end;
+  FMemberDataCommand.ExecuteUpdate;
+  Result := FMemberDataCommand.Parameters[0].Value.GetStream(FInstanceOwner);
+end;
+
 function TServerMethodsClient.CustomerDataPost(AStream: TStream): string;
 begin
   if FCustomerDataPostCommand = nil then
@@ -191,9 +206,11 @@ begin
   FPaytypeDataCommand.DisposeOf;
   FExpoTypeDataCommand.DisposeOf;
   FShopperSourceDataCommand.DisposeOf;
+  FMemberDataCommand.DisposeOf;
   FCustomerDataPostCommand.DisposeOf;
   FShopperDataPostCommand.DisposeOf;
   inherited;
 end;
 
 end.
+

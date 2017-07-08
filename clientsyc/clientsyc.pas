@@ -36,14 +36,28 @@ end;
 
 procedure TclientsycFrame.Button1Click(Sender: TObject);
 begin
-  Memo1.Lines.Clear;
-  Memo1.Repaint;
-  clientsycDataModule.OnExec:=clientsycDataModuleOnExce;
-  clientsycDataModule.GetExpoData;
+  Memo1.Lines.Clear;    //清空
+  Memo1.Repaint;  //重画
+
+  clientsycDataModule.OnExec:=clientsycDataModuleOnExce;    //关联事件
+
+  clientsycDataModule.GetExpotypeData;       //展会类型
+
   if not clientsycDataModule.SyncError then
-    clientsycDataModule.GetCustomertypeData;
+    clientsycDataModule.GetExpoData;          //可用展会
+
   if not clientsycDataModule.SyncError then
-    clientsycDataModule.GetPaytypeData;
+    clientsycDataModule.GetCustomertypeData;  //客户类型
+
+  if not clientsycDataModule.SyncError then
+    clientsycDataModule.GetPaytypeData;       //支付类型
+
+  if not clientsycDataModule.SyncError then
+    clientsycDataModule.GetShoppersourceData;  //顾客来源
+
+  if not clientsycDataModule.SyncError then
+    clientsycDataModule.GetMemberData;        //系统成员
+
 
   if not clientsycDataModule.SyncError then
     Memo1.Lines.Add('同步数据完成')
