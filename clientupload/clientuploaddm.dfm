@@ -9,7 +9,7 @@ object clientuploadDataModule: TclientuploadDataModule
     LoginPrompt = False
     Params.Strings = (
       'DriverUnit=Data.DBXDataSnap'
-      'HostName=192.168.1.183'
+      'HostName=www.jhlotus.com'
       'Port=211'
       'CommunicationProtocol=tcp/ip'
       'DatasnapContext=datasnap/'

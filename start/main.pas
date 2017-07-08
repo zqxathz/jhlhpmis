@@ -23,7 +23,7 @@ uses
   dxCustomTileControl,
   cxClasses,
   dxTileControl,
-  shopper, Vcl.StdCtrls,customer,clientsyc,clientuploadfrm;
+  shopper, Vcl.StdCtrls,customer,clientsyc,clientuploadfrm,System.TypInfo;
 
 type
   Tmainform = class(TForm)
@@ -53,6 +53,7 @@ type
     procedure dxTileControl1Item3Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item4Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item5Click(Sender: TdxTileControlItem);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -222,7 +223,7 @@ begin
   begin
   try
     bplclientuploadFrame:= TbplclientuploadFrame.Create(menutabsheet);
-    bplclientuploadFrame.Name := 'clientsyc';
+    bplclientuploadFrame.Name := 'clientupload';
     bplclientuploadFrame.Align := alClient;
 
     RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
@@ -233,6 +234,16 @@ begin
     raise;
   end;
   end;
+end;
+
+procedure Tmainform.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if Assigned(bplclientuploadFrame) and bplclientuploadframe.IsUploading then
+  begin
+    CanClose:=false;
+    showmessage('正在上传数据,请稍后关闭软件');
+  end
+  else  CanClose:=true;
 end;
 
 procedure Tmainform.FormCreate(Sender: TObject);
@@ -287,7 +298,13 @@ procedure Tmainform.RzPageControl1Close(Sender: TObject;
 begin
   if RzPageControl1.ActivePageIndex > 0 then
   begin
-
+    AllowClose:=false;
+    if IsPublishedProp(RzPageControl1.ActivePage.FindChildControl('clientupload'),'IsUploading') and
+      TbplclientuploadFrame(RzPageControl1.ActivePage.FindChildControl('clientupload')).IsUploading then
+    begin
+      showmessage('正在上传中,目前不能关闭当前标签');
+      exit;
+    end;
     if MessageBox(self.Handle, '是否要关闭当前标签', '', MB_ICONQUESTION + MB_OkCancel)
       <> mrOk then
       exit;

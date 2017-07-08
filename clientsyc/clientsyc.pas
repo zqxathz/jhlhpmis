@@ -39,6 +39,7 @@ begin
   Memo1.Lines.Clear;    //清空
   Memo1.Repaint;  //重画
 
+
   clientsycDataModule.OnExec:=clientsycDataModuleOnExce;    //关联事件
 
   clientsycDataModule.GetExpotypeData;       //展会类型

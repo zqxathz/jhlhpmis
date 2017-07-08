@@ -12,7 +12,7 @@ type
     Memo1: TMemo;
     procedure Button1Click(Sender: TObject);
   private
-    FUploading:boolean;
+    FUploading: Boolean;
     procedure Dataupload;
     procedure clientuploadDataModuleOnExce(const s: string);
     { Private declarations }
@@ -20,6 +20,8 @@ type
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+  published
+    property IsUploading: Boolean read FUploading;
   end;
 
 implementation
@@ -29,7 +31,12 @@ implementation
 uses clientuploaddm;
 
 procedure TbplclientuploadFrame.Dataupload;
+var
+  eshopperupload:boolean;
+  ecustomerupload:boolean;
 begin
+  eshopperupload:=false;
+  ecustomerupload:=false;
   clientuploadDataModule.OnExec:=clientuploadDataModuleOnExce;
   try
     try
@@ -37,10 +44,12 @@ begin
     except
       on E: Exception do
       begin
+        eshopperupload:=true;
         Memo1.Lines.Add('顾客数据上传失败');
         Memo1.Lines.Add(E.Message);
       end;
     end;
+
     try
       clientuploadDataModule.CustomerDataUpload;
     except
