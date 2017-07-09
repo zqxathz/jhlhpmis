@@ -24,6 +24,7 @@ object clientuploadDataModule: TclientuploadDataModule
   end
   object customerFDQuery: TFDQuery
     CachedUpdates = True
+    Transaction = FDTransaction1
     SQL.Strings = (
       'select * from jhlh_pmis_customers where status=1 and trash=0')
     Left = 280
@@ -31,6 +32,7 @@ object clientuploadDataModule: TclientuploadDataModule
   end
   object shopperFDQuery: TFDQuery
     CachedUpdates = True
+    Transaction = FDTransaction1
     SQL.Strings = (
       'select * from jhlh_pmis_shopper where status=1 and trash=0')
     Left = 456
@@ -39,5 +41,10 @@ object clientuploadDataModule: TclientuploadDataModule
   object FDStanStorageBinLink1: TFDStanStorageBinLink
     Left = 240
     Top = 272
+  end
+  object FDTransaction1: TFDTransaction
+    Options.DisconnectAction = xdRollback
+    Left = 528
+    Top = 240
   end
 end

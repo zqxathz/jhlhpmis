@@ -15,6 +15,7 @@ type
     customerFDQuery: TFDQuery;
     shopperFDQuery: TFDQuery;
     FDStanStorageBinLink1: TFDStanStorageBinLink;
+    FDTransaction1: TFDTransaction;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -24,6 +25,7 @@ type
     property OnExec:TGetStrProc read FOnExec write FOnExec; //事件属性
     procedure CustomerDataUpload;
     procedure ShopperDataUpload;
+    function test:boolean;
   end;
 
 var
@@ -52,9 +54,15 @@ begin
     customerFDQuery.Open;
     if customerFDQuery.State in dsEditModes then
       customerFDQuery.Post;
-  end;
+  end
+  else exit;
 
-  if customerFDQuery.RecordCount=0 then exit;
+  if customerFDQuery.RecordCount=0 then
+  begin
+    if Assigned(FOnExec) then
+       FOnExec('目前没有客户数据');
+    exit;
+  end;
 
 
   if Assigned(FOnExec) then
@@ -70,26 +78,37 @@ begin
   memtable.FieldByName('id').ProviderFlags:= memtable.FieldByName('id').ProviderFlags-[pfInupdate];
   //exit;
   stream := TMemoryStream.Create;
+  memtable.ResourceOptions.StoreItems := [siDelta, siMeta];
+  memtable.SaveToStream(stream, TFDStorageFormat.sfBinary);
+  stream.Position := 0;
 
   SQLConnection1.Open;
   server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
   try
-    memtable.ResourceOptions.StoreItems := [siDelta, siMeta];
-    memtable.SaveToStream(stream, TFDStorageFormat.sfBinary);
-    stream.Position := 0;
+    FDTransaction1.StartTransaction; //本地事务开启
     try
+      customerFDQuery.ServerDeleteAll;
       LResponseMessage := TServerMethodsClient(Server).CustomerDataPost(stream);
+      if LResponseMessage='' then
+      begin
+         FDTransaction1.Commit;  //本地事务提交,删除本地数据
+         if Assigned(FOnExec) then
+           FOnExec('本地客户数据已经删除');
+      end
     except
       On E: Exception do
+      begin
+        FDTransaction1.Rollback;
         raise Exception.Create(E.Message);
+      end;
     end;
   finally
-    if LResponseMessage <> '' then
-      raise Exception.Create(LResponseMessage);
     Server.Free;
     memtable.Free;
     customerFDQuery.Close;
     SQLConnection1.Close;
+    if LResponseMessage <> '' then
+      raise Exception.Create(LResponseMessage);
   end;
   if Assigned(FOnExec) then
       FOnExec('客户数据上传成功');
@@ -100,44 +119,68 @@ var
   server:tobject;
   stream:TMemoryStream;
   memtable:TFDMemTable;
-
   I: integer;
   LResponseMessage: string;
 begin
+  //打开数据集,并处于浏览模式下
   if shopperFDQuery <> nil then
   begin
     shopperFDQuery.Open;
     if shopperFDQuery.State in dsEditModes then
       shopperFDQuery.Post;
+  end
+  else exit;
+
+  //记录数为0就退出
+  if shopperFDQuery.RecordCount=0 then
+  begin
+    if Assigned(FOnExec) then
+       FOnExec('目前没有顾客数据');
+    exit;
   end;
 
-  if shopperFDQuery.RecordCount=0 then exit;
 
-   if Assigned(FOnExec) then
+  if Assigned(FOnExec) then
        FOnExec('开始上传顾客数据');
 
+  //建立内存表
   memtable:=TFDMemTable.Create(self);
   memtable.CachedUpdates:=true;
   memtable.UpdateOptions.AutoIncFields:='id';
   memtable.UpdateOptions.AutoCommitUpdates:=true;
   memtable.UpdateOptions.CheckRequired:=false;
 
+  //将记录复制到内存表,并设置字段ID为不更新字段
   memtable.CopyDataSet(shopperFDQuery,[coStructure, coRestart, coAppend]);
   memtable.FieldByName('id').ProviderFlags:= memtable.FieldByName('id').ProviderFlags-[pfInupdate];
-  //exit;
+
+  //建立内存流,并将内存表保存到流
   stream := TMemoryStream.Create;
+  memtable.ResourceOptions.StoreItems := [siDelta, siMeta];
+  memtable.SaveToStream(stream, TFDStorageFormat.sfBinary);
+  stream.Position := 0;
 
   SQLConnection1.Open;
   server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
   try
-    memtable.ResourceOptions.StoreItems := [siDelta, siMeta];
-    memtable.SaveToStream(stream, TFDStorageFormat.sfBinary);
-    stream.Position := 0;
+    FDTransaction1.StartTransaction; //本地事务开启,用于删除本地已经提交完成的记录
     try
-      LResponseMessage := TServerMethodsClient(Server).ShopperDataPost(stream);
+      shopperFDQuery.ServerDeleteAll;
+      LResponseMessage := TServerMethodsClient(Server).ShopperDataPost(stream);  //上传本地数据到服务器
+      if LResponseMessage='' then
+      begin
+         FDTransaction1.Commit;  //本地事务提交,删除本地数据
+         if Assigned(FOnExec) then
+           FOnExec('本地顾客数据已经删除');
+      end
+      else
+         FDTransaction1.Rollback;
     except
       On E: Exception do
+      begin
+        FDTransaction1.Rollback;
         raise Exception.Create(E.Message);
+      end;
     end;
   finally
     Server.Free;
@@ -149,6 +192,10 @@ begin
   end;
   if Assigned(FOnExec) then
        FOnExec('顾客数据上传成功');
+end;
+
+function TclientuploadDataModule.test: boolean;
+begin
 
 end;
 
@@ -156,6 +203,7 @@ procedure TclientuploadDataModule.DataModuleCreate(Sender: TObject);
 begin
   customerFDQuery.Connection:=connectionDataModule.mainFDConnection;
   shopperFDQuery.Connection:=connectionDataModule.mainFDConnection;
+  FDTransaction1.Connection:=connectionDataModule.mainFDConnection;
 end;
 
 

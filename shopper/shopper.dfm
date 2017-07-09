@@ -362,7 +362,7 @@ object bplshopperframe: Tbplshopperframe
     end
     object RzStatusBar1: TRzStatusBar
       Left = 0
-      Top = 165
+      Top = 154
       Width = 1220
       Height = 30
       AutoStyle = False

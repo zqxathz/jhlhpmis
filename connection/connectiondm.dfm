@@ -10,6 +10,7 @@ object connectionDataModule: TconnectionDataModule
       'LockingMode=Exclusive'
       'Synchronous=Off'
       'DriverID=jhqlSQLite')
+    TxOptions.DisconnectAction = xdRollback
     Left = 360
     Top = 168
   end

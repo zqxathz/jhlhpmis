@@ -23,8 +23,7 @@ uses
   dxCustomTileControl,
   cxClasses,
   dxTileControl,
-  shopper, Vcl.StdCtrls,customer,clientsyc,clientuploadfrm,System.TypInfo, dxSkinsCore,
-  dxSkinMetropolis, dxSkinMoneyTwins, dxSkinOffice2007Black;
+  shopper, Vcl.StdCtrls,customer,clientsyc,clientuploadfrm;
 
 type
   Tmainform = class(TForm)

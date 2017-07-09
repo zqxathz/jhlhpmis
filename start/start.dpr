@@ -7,7 +7,6 @@ uses
   main in 'main.pas' {mainform},
   login in 'login.pas' {loginframe: TFrame},
   logindm in 'logindm.pas' {logindatamod: TDataModule},
-  shopper in '..\shopper\shopper.pas',
   staticstr in '..\common\staticstr.pas',
   connectiondm in '..\connection\connectiondm.pas' {connectionDataModule: TDataModule};
 
@@ -22,5 +21,4 @@ begin
   Application.CreateForm(TconnectionDataModule, connectionDataModule);
   Application.CreateForm(Tlogindatamod, logindatamod);
   Application.Run;
-
 end.
