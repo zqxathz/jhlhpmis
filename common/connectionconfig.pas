@@ -3,9 +3,11 @@ unit connectionconfig;
 interface
 
 const
-   sqlite3DLL = '..\..\..\sqlite3.dll';
+   debug_path ='..\..\..\';
    sqlite3password = '123';
-   databasename =  '..\..\..\database2.db';
+var
+   sqlite3DLL :string = 'sqlite3.dll';
+   databasename :string =  'database2.db';
 
 implementation
 

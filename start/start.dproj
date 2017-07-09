@@ -186,67 +186,96 @@
             <Deployment Version="3">
                 <DeployFile LocalName="$(BDS)\Redist\Win64\DBXClientDriver250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\IndyCore250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\vclimg250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxSpreadSheetRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxGDIPlusRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\FireDACCommonDriver250.bpl" Configuration="Debug" Class="DependencyPackage">
+                    <Platform Name="Win64">
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\clientupload.rsm" Configuration="Debug" Class="DependencyPackageDebugSymbols">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\XLSReadWriteIID10_2.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\clientupload.bpl" Configuration="Debug" Class="DependencyPackage">
+                    <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\dsnap250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\database2.db" Configuration="Debug" Class="File">
+                    <Platform Name="Win64">
+                        <RemoteName>database2.db</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\dbrtl250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxSkinsCoreRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\RaizeComponentsVclDb250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxDataRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\IndyIPClient250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="Win64\Debug\start.exe" Configuration="Debug" Class="ProjectOutput">
@@ -257,12 +286,14 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\RaizeComponentsVcl250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\vclx250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\connection.rsm" Configuration="Debug" Class="DependencyPackageDebugSymbols">
@@ -270,19 +301,29 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="..\sqlite3.dll" Configuration="Debug" Class="File">
+                    <Platform Name="Win64">
+                        <Enabled>false</Enabled>
+                        <RemoteName>sqlite3.dll</RemoteName>
+                        <Overwrite>false</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\DataSnapClient250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\dbexpress250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxCoreRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\shopper.bpl" Configuration="Debug" Class="DependencyPackage">
@@ -292,67 +333,80 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxLayoutControlRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxLibraryRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\DataSnapCommon250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\dbxcds250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\IndySystem250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxGridRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\IndyIPCommon250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxComnRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\rtl250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\vcldb250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxThemeRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxServerModeRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\dxSkinscxPCPainterRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\customer.bpl" Configuration="Debug" Class="DependencyPackage">
@@ -373,7 +427,8 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\FireDACCommon250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\shopper.rsm" Configuration="Debug" Class="DependencyPackageDebugSymbols">
@@ -381,19 +436,29 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="..\msvcr110.dll" Configuration="Debug" Class="File">
+                    <Platform Name="Win64">
+                        <Enabled>false</Enabled>
+                        <RemoteName>msvcr110.dll</RemoteName>
+                        <Overwrite>false</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxPageControlRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\IndyProtocols250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\xmlrtl250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\connection.bpl" Configuration="Debug" Class="DependencyPackage">
@@ -408,27 +473,32 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\vcl250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxEditorsRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\DBXCommonDriver250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDSCOMMONDIR)\Bpl\$(Platform)\cxExportRS25.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\Win64\CustomIPTransport250.bpl" Configuration="Debug" Class="DependencyPackage">
                     <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
+                        <Enabled>false</Enabled>
+                        <Overwrite>false</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="Win64\Debug\start.rsm" Configuration="Debug" Class="DebugSymbols">

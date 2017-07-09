@@ -1,5 +1,6 @@
 *.nouse
 *.~*
+msvcr110.dll
 
 Win32/
 Win64/

@@ -62,7 +62,8 @@ uses
   XLSSheetData5,
   XLSReadWriteII5,
   Clipbrd,
-  FireDAC.Phys.SQLiteWrapper;
+  FireDAC.Phys.SQLiteWrapper, dxSkinMetropolis, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinscxPCPainter;
 
 type
   Tbplshopperframe = class(TFrame)

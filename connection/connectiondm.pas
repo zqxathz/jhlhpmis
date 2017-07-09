@@ -38,6 +38,12 @@ var
  apppath:string;
 begin
   apppath:=ExtractFilePath(Application.Exename);
+  if not FileExists(apppath+sqlite3DLL) then
+    sqlite3DLL:=debug_path+sqlite3DLL;
+  if not FileExists(apppath+databasename) then
+    databasename:=debug_path+databasename;
+
+
   mainFDConnection.Params.Clear;
   mainFDConnection.Params.DriverID:='jhqlSQLite';
   mainFDConnection.Params.Add('Password='+sqlite3password);

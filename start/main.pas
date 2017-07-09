@@ -23,7 +23,8 @@ uses
   dxCustomTileControl,
   cxClasses,
   dxTileControl,
-  shopper, Vcl.StdCtrls,customer,clientsyc,clientuploadfrm,System.TypInfo;
+  shopper, Vcl.StdCtrls,customer,clientsyc,clientuploadfrm,System.TypInfo, dxSkinsCore,
+  dxSkinMetropolis, dxSkinMoneyTwins, dxSkinOffice2007Black;
 
 type
   Tmainform = class(TForm)
@@ -299,12 +300,12 @@ begin
   if RzPageControl1.ActivePageIndex > 0 then
   begin
     AllowClose:=false;
-    if IsPublishedProp(RzPageControl1.ActivePage.FindChildControl('clientupload'),'IsUploading') and
-      TbplclientuploadFrame(RzPageControl1.ActivePage.FindChildControl('clientupload')).IsUploading then
-    begin
-      showmessage('正在上传中,目前不能关闭当前标签');
-      exit;
-    end;
+    if Assigned(bplclientuploadframe) then
+      if bplclientuploadframe.IsUploading then
+      begin
+        showmessage('正在上传中,目前不能关闭当前标签');
+        exit;
+      end;
     if MessageBox(self.Handle, '是否要关闭当前标签', '', MB_ICONQUESTION + MB_OkCancel)
       <> mrOk then
       exit;
