@@ -16,18 +16,18 @@ File_13=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL
 File_14=TSourceModule,'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Stan.Tracer.pas',0,1,1,1,1,0,0,,
 
 [Modules]
-Module0=D:\Develop\jhql\clientupload\clientuploadfrm.pas
+Module0=D:\Develop\jhql\clientsyc\clientsycdm.pas
 Module1=D:\Develop\jhql\clientupload\clientuploaddm.pas
-Module2=D:\Develop\jhql\clientsyc\clientsycdm.pas
-Module3=D:\Develop\jhql\connection\connectiondm.pas
+Module2=D:\Develop\jhql\clientupload\clientuploadfrm.pas
+Module3=default.htm
 Module4=D:\Develop\jhql\start\start.dproj
-Module5=D:\Develop\jhql\clientsyc\clientsyc.pas
-Module6=D:\Develop\jhql\customer\customerdm.pas
-Module7=D:\Develop\jhql\customer\customer.pas
-Module8=D:\Develop\jhql\start\main.pas
-Module9=D:\Develop\jhql\server\Alidayu.pas
-Module10=default.htm
-Module11=D:\Develop\jhql\start\login.pas
+Module5=D:\Develop\jhql\connection\connectiondm.pas
+Module6=D:\Develop\jhql\clientsyc\clientsyc.pas
+Module7=D:\Develop\jhql\customer\customerdm.pas
+Module8=D:\Develop\jhql\customer\customer.pas
+Module9=D:\Develop\jhql\start\main.pas
+Module10=D:\Develop\jhql\start\login.pas
+Module11=D:\Develop\jhql\server\Alidayu.pas
 Module12=D:\Develop\jhql\common\connectionconfig.pas
 Module13=D:\Develop\jhql\server\ServerMethodsUnit.pas
 Module14=D:\Develop\jhql\clientupload\servermethodsupload.pas
@@ -38,20 +38,23 @@ Module18=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.Sy
 Count=19
 EditWindowCount=1
 
-[D:\Develop\jhql\clientupload\clientuploadfrm.pas]
+[D:\Develop\jhql\clientsyc\clientsycdm.pas]
 ModuleType=TSourceModule
 
 [D:\Develop\jhql\clientupload\clientuploaddm.pas]
 ModuleType=TSourceModule
 
-[D:\Develop\jhql\clientsyc\clientsycdm.pas]
+[D:\Develop\jhql\clientupload\clientuploadfrm.pas]
 ModuleType=TSourceModule
 
-[D:\Develop\jhql\connection\connectiondm.pas]
-ModuleType=TSourceModule
+[default.htm]
+ModuleType=TURLModule
 
 [D:\Develop\jhql\start\start.dproj]
 ModuleType=TBaseProject
+
+[D:\Develop\jhql\connection\connectiondm.pas]
+ModuleType=TSourceModule
 
 [D:\Develop\jhql\clientsyc\clientsyc.pas]
 ModuleType=TSourceModule
@@ -65,13 +68,10 @@ ModuleType=TSourceModule
 [D:\Develop\jhql\start\main.pas]
 ModuleType=TSourceModule
 
-[D:\Develop\jhql\server\Alidayu.pas]
+[D:\Develop\jhql\start\login.pas]
 ModuleType=TSourceModule
 
-[default.htm]
-ModuleType=TURLModule
-
-[D:\Develop\jhql\start\login.pas]
+[D:\Develop\jhql\server\Alidayu.pas]
 ModuleType=TSourceModule
 
 [D:\Develop\jhql\common\connectionconfig.pas]
@@ -97,7 +97,7 @@ ModuleType=TSourceModule
 
 [EditWindow0]
 ViewCount=19
-CurrentEditView=D:\Develop\jhql\clientupload\clientuploadfrm.pas
+CurrentEditView=D:\Develop\jhql\clientsyc\clientsycdm.pas
 View0=0
 View1=1
 View2=2
@@ -124,27 +124,27 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=8383
-Height=8346
+Width=10000
+Height=9202
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=8383
-ClientHeight=8346
+ClientWidth=10000
+ClientHeight=9202
 DockedToMainForm=1
 BorlandEditorCodeExplorer=BorlandEditorCodeExplorer@EditWindow0
 TopPanelSize=0
 LeftPanelSize=1895
 LeftPanelClients=PropertyInspector,DockSite3
-LeftPanelData=000008000101000000003F0D00000000000001670700000000000001000000005C0E000009000000446F636B53697465330100000000651F00001100000050726F7065727479496E73706563746F72FFFFFFFF
+LeftPanelData=000008000101000000009A0E00000000000001670700000000000001000000005C0E000009000000446F636B536974653301000000009D2200001100000050726F7065727479496E73706563746F72FFFFFFFF
 RightPanelSize=1996
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=000008000101000000003F0D00000000000001CC0700000000000001000000004412000009000000446F636B53697465320100000000651F000009000000446F636B5369746534FFFFFFFF
+RightPanelData=000008000101000000009A0E00000000000001CC0700000000000001000000004412000009000000446F636B536974653201000000009D22000009000000446F636B5369746534FFFFFFFF
 BottomPanelSize=0
 BottomPanelClients=DockSite1
 BottomPanelData=0000080001000100000009000000446F636B53697465311B5200000000000000EF05000000000000FFFFFFFF
 BottomMiddlePanelSize=1352
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel,MessageView
-BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E675669657729290000000000000248050000000000000100000000292900000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E675669657722380000000000000248050000000000000100000000223800000F0000004D65737361676556696577466F726DFFFFFFFF
 
 [View0]
 CustomEditViewType=TWelcomePageView
@@ -164,9 +164,9 @@ EditViewName=D:\Develop\jhql\start\main.pas
 [View2]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\clientsyc\clientsycdm.pas
-CursorX=45
-CursorY=147
-TopLine=1
+CursorX=10
+CursorY=355
+TopLine=339
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -181,7 +181,7 @@ TopLine=187
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=D:\Develop\jhql\clientupload\clientuploaddm.pas
+EditViewName=Borland.FormDesignerView
 
 [View4]
 CustomEditViewType=TEditView
@@ -203,7 +203,7 @@ TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=D:\Develop\jhql\clientupload\clientuploadfrm.pas
+EditViewName=Borland.FormDesignerView
 
 [View6]
 CustomEditViewType=TEditView
@@ -404,16 +404,18 @@ PercentageSizes=1
 Create=1
 Visible=1
 Docked=0
-State=0
-Left=664
-Top=481
-Width=8445
+State=2
+Left=1070
+Top=490
+Width=8930
 Height=9298
 MaxLeft=-4
 MaxTop=-10
-ClientWidth=8383
-ClientHeight=8923
-BottomPanelSize=8037
+MaxWidth=8930
+MaxHeight=9298
+ClientWidth=10000
+ClientHeight=9779
+BottomPanelSize=8861
 BottomPanelClients=EditWindow0
 BottomPanelData=0000080000000000000000000000000000000000000000000000000100000000000000000C0000004564697457696E646F775F30FFFFFFFF
 
@@ -444,11 +446,11 @@ Docked=1
 State=0
 Left=0
 Top=18
-Width=4445
+Width=6062
 Height=1231
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=4445
+ClientWidth=6062
 ClientHeight=1231
 TBDockHeight=1231
 LRDockWidth=2770
@@ -464,11 +466,11 @@ State=0
 Left=0
 Top=0
 Width=1996
-Height=3317
+Height=4173
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=3317
+ClientHeight=4173
 TBDockHeight=7154
 LRDockWidth=1996
 Dockable=1
@@ -521,21 +523,16 @@ State=0
 Left=0
 Top=415
 Width=1895
-Height=4356
+Height=5212
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1895
-ClientHeight=4356
+ClientHeight=5212
 TBDockHeight=8173
 LRDockWidth=1895
 Dockable=1
 StayOnTop=0
 SplitPos=111
-
-[PropInspDesignerSelection]
-ArrangeBy=Name
-SelectedItem=Align,CustomHint
-ExpandedItems=ConnectedStoredUsage=0,FetchOptions=0,FormatOptions=0,"LiveBindings Designer=0",Params=0,ResourceOptions=0,TxOptions=1,Anchors=0,BorderIcons=0,Constraints=0,Font=0,ActiveStoredUsage=0,FieldOptions=0,FilterChanges=0,FilterOptions=0,UpdateOptions=0,ResourceOptions.AssignedValues=0,ResourceOptions.StoreItems=0,TxOptions.StopOptions=1,Options=1,Options.StopOptions=0,LiveBindings=0,Transaction=0,Margins=0,BevelEdges=0
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -1049,11 +1046,11 @@ State=0
 Left=0
 Top=523
 Width=1996
-Height=3317
+Height=4173
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=3317
+ClientHeight=4173
 TBDockHeight=8173
 LRDockWidth=1996
 Dockable=1
@@ -1063,5 +1060,5 @@ ActiveTabID=ToolForm
 TabDockClients=ToolForm,TemplateView
 
 [ActiveProject]
-ActiveProject=1
+ActiveProject=7
 

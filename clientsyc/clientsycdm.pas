@@ -186,8 +186,6 @@ var
 begin
    server:=nil;
    stream:=nil;
-   if Assigned(FOnExec) then
-    FOnExec('开始同步数据');
 
    if not SQLConnection1.Connected then
    try
@@ -351,6 +349,9 @@ begin
        exit;
      end;
    end;
+
+  if Assigned(FOnExec) then
+    FOnExec('开始同步数据');
 
   try
     server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
