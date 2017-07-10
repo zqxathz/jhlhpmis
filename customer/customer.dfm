@@ -3,11 +3,14 @@ object bplCustomerFrame: TbplCustomerFrame
   Top = 0
   Width = 1219
   Height = 603
+  DoubleBuffered = True
   Font.Charset = GB2312_CHARSET
   Font.Color = clWindowText
   Font.Height = -20
   Font.Name = #24494#36719#38597#40657
   Font.Style = []
+  ParentBackground = False
+  ParentDoubleBuffered = False
   ParentFont = False
   TabOrder = 0
   object Splitter1: TSplitter
@@ -55,7 +58,15 @@ object bplCustomerFrame: TbplCustomerFrame
     Height = 283
     Align = alBottom
     BevelOuter = bvNone
+    BiDiMode = bdLeftToRight
     Constraints.MinHeight = 283
+    Ctl3D = True
+    DoubleBuffered = True
+    ParentBiDiMode = False
+    ParentBackground = False
+    ParentCtl3D = False
+    ParentDoubleBuffered = False
+    ShowCaption = False
     TabOrder = 1
     DesignSize = (
       1219
@@ -357,7 +368,18 @@ object bplCustomerFrame: TbplCustomerFrame
       Left = 983
       Top = 86
       RepositoryItem = salesnamecxEditRepository1ComboBoxItem
+      Properties.DropDownSizeable = True
+      Properties.HideSelection = False
+      Properties.Items.Strings = (
+        #27979#35797'1'
+        #27979#35797'2'
+        #27979#35797'3')
+      Style.LookAndFeel.NativeStyle = True
+      StyleDisabled.LookAndFeel.NativeStyle = True
+      StyleFocused.LookAndFeel.NativeStyle = True
+      StyleHot.LookAndFeel.NativeStyle = True
       TabOrder = 10
+      OnEnter = salescxComboBoxEnter
       Width = 148
     end
   end
@@ -405,7 +427,15 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.EditFormat = '0.00'
     end
     object salesnamecxEditRepository1ComboBoxItem: TcxEditRepositoryComboBoxItem
-      Properties.DropDownSizeable = True
+      Properties.DropDownAutoWidth = False
+      Properties.DropDownWidth = 200
+      Properties.HideSelection = False
+      Properties.ImmediateUpdateText = True
+      Properties.Items.Strings = (
+        #27979#35797'1'#27979#35797'1'#27979#35797'1'
+        #27979#35797'2'
+        #27979#35797'3')
+      Properties.OnDrawItem = salesnamecxEditRepository1ComboBoxItemPropertiesDrawItem
       Properties.OnEditValueChanged = salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged
       Properties.OnInitPopup = salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup
     end

@@ -135,11 +135,15 @@ type
     procedure fetchallmenuClick(Sender: TObject);
     procedure softremovemenuClick(Sender: TObject);
     procedure toexcelmenuClick(Sender: TObject);
+    procedure salesnamecxEditRepository1ComboBoxItemPropertiesDrawItem(AControl: TcxCustomComboBox; ACanvas: TcxCanvas;
+      AIndex: Integer; const ARect: TRect; AState: TOwnerDrawState);
+    procedure salescxComboBoxEnter(Sender: TObject);
   private
     { Private declarations }
     columninfoMemo: TMemo;
     procedure initGirdTableView;
     procedure CxGridToExcel(AcxGrid: TcxGrid);
+    procedure MouseUp(Sender: Tobject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
   public
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -267,6 +271,7 @@ begin
     if not Assigned(columninfoMemo) then
     begin
       columninfoMemo := TMemo.Create(Self);
+      columninfoMemo.left:=2000;
       columninfoMemo.ScrollBars := ssVertical;
       columninfoMemo.Width := 300;
       columninfoMemo.Height := 200;
@@ -276,10 +281,37 @@ begin
       columninfoMemo.Font.Size := 16;
       cxEditRepository1PopupItem1.Properties.PopupControl := columninfoMemo;
     end;
+
+
   end;
 end;
 
+procedure TbplCustomerFrame.MouseUp(Sender:Tobject;Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  a,b:integer;
+  name:string;
+begin
+  name:='';
+  a:=TcxComboBoxListBox(Sender).ItemAtPos(Point(X, Y), True);
+  b:=TcxComboBoxListBox(Sender).Left+TcxComboBoxListBox(Sender).Width-25;
+  if x>=b then
+   begin
+     name:=salesnamecxEditRepository1ComboBoxItem.Properties.Items.Strings[a];
+     if Application.MessageBox(PChar('是否要删除'+name+'?'), '提示', MB_YESNO + MB_ICONQUESTION) =
+       IDYES then
+     begin
+       if salescxComboBox.ItemIndex=a then salescxComboBox.Text:='';
+       if customerDataModule.salesFDQuery.Locate('etypeid;name',varArrayOf([customerDataModule.expoFDQuery.FieldByName('expotypeid').AsInteger,name])) then
+          customerDataModule.salesFDQuery.Delete;
+     end;
 
+   end
+   else
+   begin
+     salescxComboBox.ItemIndex:=a;
+   end;
+
+end;
 
 procedure TbplCustomerFrame.
   customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
@@ -516,6 +548,7 @@ if cxGrid1DBTableView1.ColumnCount >0 then
       Caption := '招展人员';
       index := 11;
       RepositoryItem := salesnamecxEditRepository1ComboBoxItem;
+
       // Properties.Alignment.Horz:=taCenter;
       HeaderAlignmentHorz := taCenter;
     end;
@@ -588,6 +621,42 @@ begin
   expocxLookupComboBoxPropertiesChange(nil);
 end;
 
+procedure TbplCustomerFrame.salescxComboBoxEnter(Sender: TObject);
+var
+  A:TcxComboBox;
+begin
+  TcxComboBoxListBox(salescxComboBox.ILookupData.ActiveControl).OnMouseUp:=MouseUp;
+    //salesnamecxEditRepository1ComboBoxItem.Properties.
+
+//   TcxComboBoxListBox(
+//     TcxComboBox(cxGrid1DBTableView1.GetColumnByFieldName('salesname').RepositoryItem).ILookupData.ActiveControl
+//     ).OnMouseUp:= MouseUp;
+end;
+
+procedure TbplCustomerFrame.salesnamecxEditRepository1ComboBoxItemPropertiesDrawItem(AControl: TcxCustomComboBox;
+  ACanvas: TcxCanvas; AIndex: Integer; const ARect: TRect; AState: TOwnerDrawState);
+var
+  VRect:TRect;
+begin
+  VRect:=ARect;
+  VRect.Right:=ARect.Right-25;
+  ACanvas.FillRect(VRect);
+  if odSelected in AState then
+  begin
+    ACanvas.Font.Color:=clWhite;
+  end
+  else
+    ACanvas.Font.Color:=clBlack;
+  ACanvas.TextOut(ARect.Left,Arect.Top,salesnamecxEditRepository1ComboBoxItem.Properties.Items.Strings[AIndex]);
+  VRect.Left:=Arect.Right-25;
+  VRect.Right:=ARect.Right;
+  ACanvas.FillRect(Vrect,clwhite);
+  ACanvas.Brush.Color:=clWhite;
+  if odSelected in AState then
+    ACanvas.Font.Color:=clRed;
+  ACanvas.TextOut(ARect.Right-20,ARect.Top,'X');
+end;
+
 procedure TbplCustomerFrame.
   salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged
   (Sender: TObject);
@@ -599,8 +668,8 @@ end;
 procedure TbplCustomerFrame.
   salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(Sender: TObject);
 begin
-  salesnamecxEditRepository1ComboBoxItem.Properties.Items.Text :=
-    customerDataModule.getSalesName.Text;
+ salesnamecxEditRepository1ComboBoxItem.Properties.Items.Text :=
+  customerDataModule.getSalesName.Text;
 end;
 
 procedure TbplCustomerFrame.softremovemenuClick(Sender: TObject);
