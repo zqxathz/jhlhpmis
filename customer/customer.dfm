@@ -33,7 +33,9 @@ object bplCustomerFrame: TbplCustomerFrame
     TabOrder = 0
     TabStop = False
     object cxGrid1DBTableView1: TcxGridDBTableView
+      OnDblClick = cxGrid1DBTableView1DblClick
       Navigator.Buttons.CustomButtons = <>
+      OnFocusedRecordChanged = cxGrid1DBTableView1FocusedRecordChanged
       DataController.DataSource = customerDataModule.customerDataSource
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
@@ -108,10 +110,10 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #36873#25321#23637#20250':'
-      TabOrder = 17
+      TabOrder = 18
     end
     object applyButton: TButton
-      Left = 968
+      Left = 967
       Top = 242
       Width = 75
       Height = 25
@@ -127,8 +129,9 @@ object bplCustomerFrame: TbplCustomerFrame
       Height = 25
       Anchors = [akLeft, akBottom]
       Caption = #37325#32622
-      TabOrder = 18
+      TabOrder = 19
       TabStop = False
+      OnClick = Button2Click
     end
     object StaticText2: TStaticText
       Left = 216
@@ -136,7 +139,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 69
       Height = 31
       Caption = #23637#20301#21495':'
-      TabOrder = 19
+      TabOrder = 20
     end
     object StaticText3: TStaticText
       Left = 400
@@ -144,7 +147,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #22995#21517':'
-      TabOrder = 20
+      TabOrder = 21
     end
     object StaticText4: TStaticText
       Left = 569
@@ -152,7 +155,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #25163#26426':'
-      TabOrder = 21
+      TabOrder = 22
     end
     object StaticText5: TStaticText
       Left = 822
@@ -160,7 +163,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #20844#21496':'
-      TabOrder = 22
+      TabOrder = 23
     end
     object StaticText6: TStaticText
       Left = 9
@@ -168,7 +171,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #30005#35805':'
-      TabOrder = 23
+      TabOrder = 24
     end
     object StaticText7: TStaticText
       Left = 9
@@ -176,7 +179,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #31867#22411':'
-      TabOrder = 24
+      TabOrder = 25
     end
     object StaticText8: TStaticText
       Left = 9
@@ -184,7 +187,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 69
       Height = 31
       Caption = #24635#37329#39069':'
-      TabOrder = 25
+      TabOrder = 26
     end
     object StaticText9: TStaticText
       Left = 216
@@ -192,7 +195,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #35746#37329':'
-      TabOrder = 26
+      TabOrder = 27
     end
     object StaticText10: TStaticText
       Left = 397
@@ -200,7 +203,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #29616#22330#20132#27454':'
-      TabOrder = 27
+      TabOrder = 28
     end
     object StaticText11: TStaticText
       Left = 642
@@ -208,7 +211,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #25903#20184#31867#22411':'
-      TabOrder = 28
+      TabOrder = 29
     end
     object StaticText12: TStaticText
       Left = 216
@@ -216,7 +219,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 41
       Height = 31
       Caption = 'QQ:'
-      TabOrder = 29
+      TabOrder = 30
     end
     object StaticText13: TStaticText
       Left = 431
@@ -224,7 +227,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #37038#31665':'
-      TabOrder = 30
+      TabOrder = 31
     end
     object StaticText14: TStaticText
       Left = 888
@@ -233,7 +236,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Height = 31
       Caption = #25307#23637#20154#21592':'
       PopupMenu = PopupMenu2
-      TabOrder = 31
+      TabOrder = 32
     end
     object StaticText15: TStaticText
       Left = 9
@@ -241,7 +244,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #22320#22336':'
-      TabOrder = 32
+      TabOrder = 33
     end
     object StaticText16: TStaticText
       Left = 9
@@ -249,7 +252,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #22791#27880':'
-      TabOrder = 33
+      TabOrder = 34
     end
     object infoMemo: TMemo
       Left = 64
@@ -382,6 +385,27 @@ object bplCustomerFrame: TbplCustomerFrame
       OnEnter = salescxComboBoxEnter
       Width = 148
     end
+    object EditmodeCheckBox: TCheckBox
+      Left = 968
+      Top = 202
+      Width = 113
+      Height = 26
+      TabStop = False
+      Caption = #32534#36753#27169#24335
+      TabOrder = 35
+      OnClick = EditmodeCheckBoxClick
+    end
+    object updateButton: TButton
+      Left = 967
+      Top = 242
+      Width = 75
+      Height = 25
+      Anchors = [akLeft, akBottom]
+      Caption = #26356#26032
+      TabOrder = 17
+      Visible = False
+      OnClick = applyButtonClick
+    end
   end
   object cxEditRepository1: TcxEditRepository
     Left = 640
@@ -411,6 +435,7 @@ object bplCustomerFrame: TbplCustomerFrame
           FieldName = 'payname'
         end>
       Properties.ListOptions.ShowHeader = False
+      Properties.ListOptions.SyncMode = True
       Properties.ListSource = customerDataModule.paytypeDataSource
     end
     object customertypecxEditRepository1ComboBoxItem1: TcxEditRepositoryComboBoxItem

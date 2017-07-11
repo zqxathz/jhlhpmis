@@ -114,6 +114,8 @@ type
     PopupMenu2: TPopupMenu;
     N2: TMenuItem;
     toexcelmenu: TMenuItem;
+    EditmodeCheckBox: TCheckBox;
+    updateButton: TButton;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
       (Sender: TObject);
@@ -138,12 +140,19 @@ type
     procedure salesnamecxEditRepository1ComboBoxItemPropertiesDrawItem(AControl: TcxCustomComboBox; ACanvas: TcxCanvas;
       AIndex: Integer; const ARect: TRect; AState: TOwnerDrawState);
     procedure salescxComboBoxEnter(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure EditmodeCheckBoxClick(Sender: TObject);
+    procedure cxGrid1DBTableView1FocusedRecordChanged(Sender: TcxCustomGridTableView;
+      APrevFocusedRecord, AFocusedRecord: TcxCustomGridRecord;
+      ANewItemRecordFocusingChanged: Boolean);
+    procedure cxGrid1DBTableView1DblClick(Sender: TObject);
   private
     { Private declarations }
     columninfoMemo: TMemo;
     procedure initGirdTableView;
     procedure CxGridToExcel(AcxGrid: TcxGrid);
     procedure MouseUp(Sender: Tobject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure AppendUpdateData;
   public
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -181,20 +190,20 @@ begin
   end;
 end;
 
-procedure TbplCustomerFrame.applyButtonClick(Sender: TObject);
+procedure TbplCustomerFrame.AppendUpdateData;
 var
   required_str:string;
 begin
-  required_str:='';
+required_str:='';
 
   if trim(standnumberEdit.Text)='' then
    required_str:=required_str+'展位号未填写'+#13#10;
 
-  if trim(nameEdit.Text)='' then
-   required_str:=required_str+'姓名未填写'+#13#10;
-
-  if phonecxMaskEdit.Text='' then
-    required_str:=required_str+'手机号未填写'+#13#10;
+//  if trim(nameEdit.Text)='' then
+//   required_str:=required_str+'姓名未填写'+#13#10;
+//
+//  if phonecxMaskEdit.Text='' then
+//    required_str:=required_str+'手机号未填写'+#13#10;
 
   if required_str<>'' then
   begin
@@ -202,10 +211,12 @@ begin
     exit;
   end;
 
-
   with customerDataModule do
   begin
-    customerFDQuery.Append;
+    if EditmodeCheckBox.Checked then
+      customerFDQuery.Edit
+    else
+      customerFDQuery.Append;
     try
       customerFDQuery.FieldValues['eid'] := expoFDQuery.FieldValues['id'];
       customerFDQuery.FieldValues['customertype'] :=
@@ -226,26 +237,56 @@ begin
       customerFDQuery.FieldValues['groupid'] := 0;
       customerFDQuery.FieldValues['salesname'] := trim(salescxComboBox.Text);
       customerFDQuery.FieldValues['salesid'] := 0;
-      customerFDQuery.FieldValues['create_datetime'] :=
-        DateTimeToUnix(IncHour(Now, -8));
-      customerFDQuery.FieldValues['update_datetime'] :=  DateTimeToUnix(IncHour(Now, -8));
+      if customerFDQuery.State=dsInsert then
+      begin
+        customerFDQuery.FieldValues['create_datetime'] :=
+          DateTimeToUnix(IncHour(Now, -8));
+        customerFDQuery.FieldValues['createtime'] := Now;
+      end;
 
+      customerFDQuery.FieldValues['update_datetime'] :=  DateTimeToUnix(IncHour(Now, -8));
       customerFDQuery.FieldValues['updatetime'] := Now;
-      customerFDQuery.FieldValues['createtime'] := Now;
 
       customerFDQuery.FieldValues['status']:=1;
       customerFDQuery.FieldValues['trash']:=0;
       customerFDQuery.Post;
+      customertypecxComboBox.SetFocus;
     except
       customerFDQuery.Cancel;
       raise;
     end;
   end;
+
+end;
+
+procedure TbplCustomerFrame.applyButtonClick(Sender: TObject);
+begin
+  AppendUpdateData;
 end;
 
 procedure TbplCustomerFrame.autowidthmenuClick(Sender: TObject);
 begin
   cxGrid1DBTableView1.ApplyBestFit();
+end;
+
+procedure TbplCustomerFrame.Button2Click(Sender: TObject);
+begin
+  customertypecxComboBox.ItemIndex:=0;
+  standnumberEdit.Text:='';
+  nameEdit.Text:='';
+  phonecxMaskEdit.Text:='';
+  companyEdit.Text:='';
+  allpaycxCurrencyEdit.Value:=0;
+  firstpaycxCurrencyEdit.Value:=0;
+  nowpaycxCurrencyEdit.Value:=0;
+  paytypecxLookupComboBox.ItemIndex:=0;
+  salescxComboBox.Text:='';
+  telphonecxMaskEdit.Text:='';
+  qqEdit.Text:='';
+  emailEdit.Text:='';
+  addrEdit.Text:='';
+  infoMemo.Lines.Clear;
+  customertypecxComboBox.SetFocus;
 end;
 
 constructor TbplCustomerFrame.Create(AOwner: TComponent);
@@ -358,6 +399,37 @@ if cxGrid1DBTableView1.ColumnCount = 0 then
   end;
 end;
 
+procedure TbplCustomerFrame.cxGrid1DBTableView1DblClick(Sender: TObject);
+begin
+  EditmodeCheckBox.Checked:=not EditmodeCheckBox.Checked;
+  EditmodeCheckBoxClick(EditmodeCheckBox);
+end;
+
+procedure TbplCustomerFrame.cxGrid1DBTableView1FocusedRecordChanged(Sender: TcxCustomGridTableView;
+  APrevFocusedRecord, AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
+begin
+  if not EditmodeCheckBox.Checked then exit;
+
+  with customerDataModule.customerFDQuery do
+  begin
+     customertypecxComboBox.Text:=FieldValues['customertype'];
+     standnumberEdit.Text:=FieldValues['standnumber'];
+     nameEdit.Text:=FieldValues['name'];
+     phonecxMaskEdit.Text:=FieldValues['mobilephone'];
+     companyEdit.Text:=FieldValues['company'];
+     allpaycxCurrencyEdit.Value:=FieldValues['allpay'];
+     firstpaycxCurrencyEdit.Value:=FieldValues['firstpay'];
+     nowpaycxCurrencyEdit.Value:=FieldValues['nowpay'];
+     paytypecxLookupComboBox.ItemIndex:=FieldValues['paytype']-1;
+     salescxComboBox.Text:=FieldValues['salesname'];
+     telphonecxMaskEdit.Text:=FieldValues['telphone'];
+     emailEdit.Text:=FieldValues['email'];
+     qqEdit.Text:=FieldValues['qq'];
+     addrEdit.Text:=FieldValues['addr'];
+     infoMemo.Lines.Text:=FieldValues['customerinfo'];
+  end;
+end;
+
 procedure TbplCustomerFrame.cxGrid1DBTableView1StylesGetContentStyle
   (Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord;
   AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
@@ -376,6 +448,15 @@ begin
   cxPropertiesStore1.StoreTo;
   FreeAndNil(customerDataModule);
   inherited;
+end;
+
+procedure TbplCustomerFrame.EditmodeCheckBoxClick(Sender: TObject);
+begin
+  updateButton.Visible := EditmodeCheckBox.Checked;
+  applyButton.Visible := not EditmodeCheckBox.Checked;
+  if EditmodeCheckBox.Checked then
+    cxGrid1DBTableView1FocusedRecordChanged(cxGrid1DBTableView1,nil,nil,false);
+
 end;
 
 procedure TbplCustomerFrame.initGirdTableView;
