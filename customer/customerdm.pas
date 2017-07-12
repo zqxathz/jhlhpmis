@@ -41,7 +41,6 @@ type
       function getSalesName: TStringList;
       procedure addSales(salesname:string);
       procedure softremovecurr;
-      procedure test;
   end;
 
 var
@@ -146,10 +145,6 @@ begin
   end;
 end;
 
-procedure TcustomerDataModule.test;
-begin
-  showmessage(clientuser.Userid);
-end;
 
 procedure TcustomerDataModule.customerFDQueryAfterGetRecord(DataSet: TFDDataSet);
 begin

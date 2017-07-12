@@ -116,7 +116,6 @@ type
     toexcelmenu: TMenuItem;
     EditmodeCheckBox: TCheckBox;
     updateButton: TButton;
-    Button1: TButton;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
       (Sender: TObject);
@@ -147,7 +146,6 @@ type
       APrevFocusedRecord, AFocusedRecord: TcxCustomGridRecord;
       ANewItemRecordFocusingChanged: Boolean);
     procedure cxGrid1DBTableView1DblClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     columninfoMemo: TMemo;
@@ -162,7 +160,7 @@ type
   end;
 
 implementation
-uses cxGridExportLink;
+uses cxGridExportLink,connectiondm;
 
 {$R *.dfm}
 
@@ -239,6 +237,7 @@ required_str:='';
       customerFDQuery.FieldValues['groupid'] := 0;
       customerFDQuery.FieldValues['salesname'] := trim(salescxComboBox.Text);
       customerFDQuery.FieldValues['salesid'] := 0;
+      customerFDQuery.FieldValues['create_member']:=clientuser.Userid;
       if customerFDQuery.State=dsInsert then
       begin
         customerFDQuery.FieldValues['create_datetime'] :=
@@ -269,11 +268,6 @@ end;
 procedure TbplCustomerFrame.autowidthmenuClick(Sender: TObject);
 begin
   cxGrid1DBTableView1.ApplyBestFit();
-end;
-
-procedure TbplCustomerFrame.Button1Click(Sender: TObject);
-begin
-  customerDataModule.test;
 end;
 
 procedure TbplCustomerFrame.Button2Click(Sender: TObject);
@@ -644,6 +638,11 @@ if cxGrid1DBTableView1.ColumnCount >0 then
     begin
       Visible := false;
       Caption := '招展人员编号';
+    end;
+    with cxGrid1DBTableView1.GetColumnByFieldName('create_member') do
+    begin
+      Visible := false;
+      Caption := '创建人员';
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('create_datetime') do
     begin

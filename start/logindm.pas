@@ -15,13 +15,13 @@ type
     { Private declarations }
     FUsername:string;
     FPassword:string;
-    FUserid:string;
+    FUserid:integer;
   public
   { Public declarations }
     constructor Create(AOwner: TComponent); override;
     property Username:string read FUsername write FUsername;
     property Password:string read FPassword write FPassword;
-    property Userid:string read FUserid;
+    property Userid:integer read FUserid;
     procedure login;
   end;
 
@@ -43,7 +43,7 @@ begin
   inherited;
   FUsername:='';
   FPassword:='';
-  FUserid:='';
+  FUserid:=0;
 end;
 
 procedure Tlogindatamod.login;
@@ -55,7 +55,10 @@ begin
     raise Exception.Create('用户名或密码错误 ')
   else
   begin
-    clientuser.Userid:=loginfdquery.FieldValues['userid'];
+    clientuser.Username:=Username;
+    clientuser.Password:=Password;
+    clientuser.Userid:=loginfdquery.FieldValues['id'];
+    FUserid:=loginfdquery.FieldValues['id'];
   end;
 end;
 

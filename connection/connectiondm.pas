@@ -14,11 +14,11 @@ type
   private
     FUsername:string;
     FPassword:string;
-    FUserid:string;
+    FUserid:integer;
   public
     property Username: string read FUsername write FUsername;
     property Password: string read FPassword write FPassword;
-    property Userid:string read FUserid write FUserid;
+    property Userid:integer read FUserid write FUserid;
     constructor Create;
   end;
 
@@ -79,7 +79,7 @@ begin
   inherited;
   FUsername:='';
   FPassword:='';
-  FUserid:='';
+  FUserid:=0;
 end;
 
 end.
