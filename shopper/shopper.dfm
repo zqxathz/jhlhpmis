@@ -362,7 +362,7 @@ object bplshopperframe: Tbplshopperframe
     end
     object RzStatusBar1: TRzStatusBar
       Left = 0
-      Top = 154
+      Top = 165
       Width = 1220
       Height = 30
       AutoStyle = False
@@ -721,7 +721,7 @@ object bplshopperframe: Tbplshopperframe
         Properties.Strings = (
           'Height')
       end>
-    StorageName = 'd:\shopper.ini'
+    StorageName = 'shopper.ini'
     Left = 896
     Top = 216
   end

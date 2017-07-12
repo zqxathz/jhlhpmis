@@ -200,6 +200,7 @@ var
   LResponse: string;
 begin
   LModule := TServerContainer1.Create(nil);
+  LModule.DSServer1.Start;
     try
       if LModule.DSServer1.Started then
         Writeln(sServerIsRunning);

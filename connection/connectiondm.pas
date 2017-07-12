@@ -10,6 +10,18 @@ uses
   FireDAC.Comp.Client, FireDAC.VCLUI.Wait, FireDAC.Comp.UI, Data.DB;
 
 type
+  TClientUser = class
+  private
+    FUsername:string;
+    FPassword:string;
+    FUserid:string;
+  public
+    property Username: string read FUsername write FUsername;
+    property Password: string read FPassword write FPassword;
+    property Userid:string read FUserid write FUserid;
+    constructor Create;
+  end;
+
   TconnectionDataModule = class(TDataModule)
     mainFDConnection: TFDConnection;
     mainFDPhysSQLiteDriverLink: TFDPhysSQLiteDriverLink;
@@ -24,6 +36,7 @@ type
 
 var
   connectionDataModule: TconnectionDataModule;
+  clientuser:TClientUser;
 
 implementation
 
@@ -57,6 +70,16 @@ end;
 procedure TconnectionDataModule.DataModuleDestroy(Sender: TObject);
 begin
   mainFDConnection.Close;
+end;
+
+{ TClientUser }
+
+constructor TClientUser.Create;
+begin
+  inherited;
+  FUsername:='';
+  FPassword:='';
+  FUserid:='';
 end;
 
 end.

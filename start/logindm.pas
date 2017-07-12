@@ -15,10 +15,13 @@ type
     { Private declarations }
     FUsername:string;
     FPassword:string;
+    FUserid:string;
   public
-    { Public declarations }
+  { Public declarations }
+    constructor Create(AOwner: TComponent); override;
     property Username:string read FUsername write FUsername;
     property Password:string read FPassword write FPassword;
+    property Userid:string read FUserid;
     procedure login;
   end;
 
@@ -27,6 +30,7 @@ var
 
 
 implementation
+uses connectiondm;
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
@@ -34,13 +38,25 @@ implementation
 
 { Tlogindatamod }
 
+constructor Tlogindatamod.Create(AOwner: TComponent);
+begin
+  inherited;
+  FUsername:='';
+  FPassword:='';
+  FUserid:='';
+end;
+
 procedure Tlogindatamod.login;
 begin
 
   loginfdquery.SQL.Clear;
   loginfdquery.Open(format(LOGIN_SQL,[Username,Password]));
   if loginfdquery.RecordCount=0 then
-    raise Exception.Create('用户名或密码错误 ');
+    raise Exception.Create('用户名或密码错误 ')
+  else
+  begin
+    clientuser.Userid:=loginfdquery.FieldValues['userid'];
+  end;
 end;
 
 end.

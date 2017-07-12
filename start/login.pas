@@ -31,6 +31,7 @@ procedure Tloginframe.loginbuttonClick(Sender: TObject);
 begin
   logindatamod.Username:=usernameedit.Text;
   logindatamod.Password:=passwordedit.Text;
+  clientuser:=TClientUser.create;
   try
     try
       logindatamod.loginfdquery.Connection:=connectionDataModule.mainFDConnection;

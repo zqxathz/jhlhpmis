@@ -53,7 +53,6 @@ requires
 
 contains
   shopper in 'shopper.pas' {bplshopperframe: TFrame},
-  shopperdm in 'shopperdm.pas' {shopperdatamod: TDataModule},
-  staticstr in '..\common\staticstr.pas';
-
+  shopperdm in 'shopperdm.pas' {shopperdatamod: TDataModule};
 end.
+

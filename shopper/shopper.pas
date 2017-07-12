@@ -196,8 +196,6 @@ var
 
 implementation
 
-uses
-  staticstr;
 
 {$R *.dfm}
 
@@ -521,8 +519,8 @@ begin
     shopperdatamod := Tshopperdatamod.Create(nil);
     shopperds.DataSet := shopperdatamod.shopperfdquery;
   end;
-  cxPropertiesStore1.StorageName := ExtractFilePath(Application.Exename)
-    + inifile;
+//  cxPropertiesStore1.StorageName := ExtractFilePath(Application.Exename)
+//    + inifile;
   cxPropertiesStore1.Active := true;
   cxPropertiesStore1.RestoreFrom; //读取保存的一些组件数据
 end;

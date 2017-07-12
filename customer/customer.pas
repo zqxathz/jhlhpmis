@@ -116,6 +116,7 @@ type
     toexcelmenu: TMenuItem;
     EditmodeCheckBox: TCheckBox;
     updateButton: TButton;
+    Button1: TButton;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
       (Sender: TObject);
@@ -146,6 +147,7 @@ type
       APrevFocusedRecord, AFocusedRecord: TcxCustomGridRecord;
       ANewItemRecordFocusingChanged: Boolean);
     procedure cxGrid1DBTableView1DblClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     columninfoMemo: TMemo;
@@ -269,6 +271,11 @@ begin
   cxGrid1DBTableView1.ApplyBestFit();
 end;
 
+procedure TbplCustomerFrame.Button1Click(Sender: TObject);
+begin
+  customerDataModule.test;
+end;
+
 procedure TbplCustomerFrame.Button2Click(Sender: TObject);
 begin
   customertypecxComboBox.ItemIndex:=0;
@@ -329,19 +336,19 @@ end;
 
 procedure TbplCustomerFrame.MouseUp(Sender:Tobject;Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
-  a,b:integer;
+  itemindex,clickX:integer;
   name:string;
 begin
   name:='';
-  a:=TcxComboBoxListBox(Sender).ItemAtPos(Point(X, Y), True);
-  b:=TcxComboBoxListBox(Sender).Left+TcxComboBoxListBox(Sender).Width-25;
-  if x>=b then
+  itemindex:=TcxComboBoxListBox(Sender).ItemAtPos(Point(X, Y), True);
+  clickX:=TcxComboBoxListBox(Sender).Left+TcxComboBoxListBox(Sender).Width-25;
+  if x>=clickX then
    begin
-     name:=salesnamecxEditRepository1ComboBoxItem.Properties.Items.Strings[a];
+     name:=salesnamecxEditRepository1ComboBoxItem.Properties.Items.Strings[itemindex];
      if Application.MessageBox(PChar('是否要删除'+name+'?'), '提示', MB_YESNO + MB_ICONQUESTION) =
        IDYES then
      begin
-       if salescxComboBox.ItemIndex=a then salescxComboBox.Text:='';
+       if salescxComboBox.ItemIndex=itemindex then salescxComboBox.Text:='';
        if customerDataModule.salesFDQuery.Locate('etypeid;name',varArrayOf([customerDataModule.expoFDQuery.FieldByName('expotypeid').AsInteger,name])) then
           customerDataModule.salesFDQuery.Delete;
      end;
@@ -349,7 +356,7 @@ begin
    end
    else
    begin
-     salescxComboBox.ItemIndex:=a;
+     salescxComboBox.ItemIndex:=itemindex;
    end;
 
 end;
