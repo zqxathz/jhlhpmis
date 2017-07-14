@@ -85,20 +85,20 @@ begin
   SQLConnection1.Open;
   server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
   try
-    FDTransaction1.StartTransaction; //本地事务开启
+    //FDTransaction1.StartTransaction; //本地事务开启
     try
-      customerFDQuery.ServerDeleteAll;
+      //customerFDQuery.ServerDeleteAll;
       LResponseMessage := TServerMethodsClient(Server).CustomerDataPost(stream);
       if LResponseMessage='' then
       begin
-         FDTransaction1.Commit;  //本地事务提交,删除本地数据
-         if Assigned(FOnExec) then
-           FOnExec('本地客户数据已经删除');
+         //FDTransaction1.Commit;  //本地事务提交,删除本地数据
+        // if Assigned(FOnExec) then
+        //   FOnExec('本地客户数据已经删除');
       end
     except
       On E: Exception do
       begin
-        FDTransaction1.Rollback;
+        //FDTransaction1.Rollback;
         raise Exception.Create(E.Message);
       end;
     end;

@@ -70,6 +70,7 @@ object bplCustomerFrame: TbplCustomerFrame
     ParentDoubleBuffered = False
     ShowCaption = False
     TabOrder = 1
+    ExplicitTop = 323
     DesignSize = (
       1219
       283)
@@ -358,6 +359,8 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 47
       Properties.MaskKind = emkRegExprEx
       Properties.EditMask = '([1])\d{10}'
+      Properties.ValidationOptions = []
+      Properties.OnValidate = phonecxMaskEditPropertiesValidate
       TabOrder = 4
       Width = 196
     end
@@ -386,7 +389,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 148
     end
     object EditmodeCheckBox: TCheckBox
-      Left = 968
+      Left = 967
       Top = 202
       Width = 113
       Height = 26

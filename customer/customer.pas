@@ -47,7 +47,7 @@ uses
   cxPropertiesStore,
   cxEditRepositoryItems,
   cxDBEditRepository,
-  System.DateUtils, Vcl.Menus;
+  System.DateUtils, Vcl.Menus,common;
 
 type
   TbplCustomerFrame = class(TFrame)
@@ -146,6 +146,8 @@ type
       APrevFocusedRecord, AFocusedRecord: TcxCustomGridRecord;
       ANewItemRecordFocusingChanged: Boolean);
     procedure cxGrid1DBTableView1DblClick(Sender: TObject);
+    procedure phonecxMaskEditPropertiesValidate(Sender: TObject; var DisplayValue: Variant;
+      var ErrorText: TCaption; var Error: Boolean);
   private
     { Private declarations }
     columninfoMemo: TMemo;
@@ -353,6 +355,12 @@ begin
      salescxComboBox.ItemIndex:=itemindex;
    end;
 
+end;
+
+procedure TbplCustomerFrame.phonecxMaskEditPropertiesValidate(Sender: TObject;
+  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+begin
+  ErrorText:='手机号不正确';
 end;
 
 procedure TbplCustomerFrame.
@@ -638,6 +646,11 @@ if cxGrid1DBTableView1.ColumnCount >0 then
     begin
       Visible := false;
       Caption := '招展人员编号';
+    end;
+    with cxGrid1DBTableView1.GetColumnByFieldName('uuid') do
+    begin
+      Visible := false;
+      Caption := 'UUID';
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('create_member') do
     begin

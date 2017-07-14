@@ -40,7 +40,7 @@ begin
   clientuploadDataModule.OnExec:=clientuploadDataModuleOnExce;
   try
     try
-      clientuploadDataModule.ShopperDataUpload;
+     // clientuploadDataModule.ShopperDataUpload;
     except
       on E: Exception do
       begin

@@ -146,6 +146,7 @@
         <DCCReference Include="dxLayoutControlRS25.dcp"/>
         <DCCReference Include="cxGridRS25.dcp"/>
         <DCCReference Include="FireDACCommon.dcp"/>
+        <DCCReference Include="common.dcp"/>
         <DCCReference Include="customer.pas">
             <Form>bplCustomerFrame</Form>
             <DesignClass>TFrame</DesignClass>

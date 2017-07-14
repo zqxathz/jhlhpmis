@@ -33,6 +33,7 @@ type
     shopperFDQuery: TFDQuery;
     ShopperRemoveFDCommand: TFDCommand;
     memberFDQuery: TFDQuery;
+    CustomerRemoveFDCommand: TFDCommand;
     procedure customerFDQueryUpdateError(ASender: TDataSet;
       AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
       var AAction: TFDErrorAction);
@@ -208,7 +209,15 @@ begin
     if LErrors <> 0 then
       FDConnection1.Rollback // 出错就回滚
     else
-      FDConnection1.Commit; // 无错提交事务
+    begin
+      try
+        CustomerRemoveFDCommand.Execute();
+        FDConnection1.Commit; // 无错提交事务
+      except
+        FDConnection1.Rollback;
+        raise;
+      end;
+    end;
     endtime := now(); // 当前时间
     count := MilliSecondsBetween(endtime, starttime); // 计算插入数据耗时
     Log.SaveLog('time count:' + count.ToString); // LOG插入数据用时

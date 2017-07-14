@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async,
   FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Dialogs,
-  System.Variants, System.DateUtils,Vcl.Forms,Windows;
+  System.Variants, System.DateUtils,Vcl.Forms,Windows,common;
 
 type
   TcustomerDataModule = class(TDataModule)
@@ -32,6 +32,7 @@ type
     procedure customerFDQueryCalcFields(DataSet: TDataSet);
     procedure salesFDQueryBeforePost(DataSet: TDataSet);
     procedure customerFDQueryAfterOpen(DataSet: TDataSet);
+    procedure customerFDQueryBeforePost(DataSet: TDataSet);
     private
       { Private declarations }
     public
@@ -165,6 +166,19 @@ end;
 procedure TcustomerDataModule.customerFDQueryAfterOpen(DataSet: TDataSet);
 begin
 DataSet.FieldByName('id').ProviderFlags:=DataSet.FieldByName('id').ProviderFlags+[pfInKey];
+end;
+
+procedure TcustomerDataModule.customerFDQueryBeforePost(DataSet: TDataSet);
+begin
+  if DataSet.State = dsEdit then
+  begin
+    DataSet.FieldByName('update_microsecond').AsLargeInt :=getmillisecond;
+  end;
+  if DataSet.State = dsInsert then
+  begin
+    DataSet.FieldByName('update_microsecond').AsLargeInt:=getmillisecond;
+    Dataset.FieldByName('uuid').Value:=getuuid;
+  end;
 end;
 
 procedure TcustomerDataModule.customerFDQueryCalcFields(DataSet: TDataSet);

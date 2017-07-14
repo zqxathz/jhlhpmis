@@ -5,6 +5,7 @@ object customerDataModule: TcustomerDataModule
   Width = 615
   object customerFDQuery: TFDQuery
     AfterOpen = customerFDQueryAfterOpen
+    BeforePost = customerFDQueryBeforePost
     OnCalcFields = customerFDQueryCalcFields
     FieldOptions.AutoCreateMode = acCombineAlways
     FieldOptions.PositionMode = poFirst
