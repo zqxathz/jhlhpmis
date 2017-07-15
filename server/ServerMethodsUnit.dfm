@@ -25,8 +25,8 @@ object ServerMethods: TServerMethods
       
         'select * from jhlh_pmis_expo where status=1 and trash=0 and clie' +
         'ntvisable=1')
-    Left = 160
-    Top = 416
+    Left = 184
+    Top = 400
   end
   object FDStanStorageBinLink1: TFDStanStorageBinLink
     Left = 144
@@ -85,7 +85,7 @@ object ServerMethods: TServerMethods
     UpdateOptions.UpdateTableName = 'jhlh_pmis_customers'
     UpdateOptions.AutoIncFields = 'id'
     SQL.Strings = (
-      'select * from jhlh_pmis_customers')
+      'select * from jhlh_pmis_customers limit 1')
     Left = 760
     Top = 184
   end
@@ -103,7 +103,7 @@ object ServerMethods: TServerMethods
     UpdateOptions.CheckUpdatable = False
     UpdateOptions.UpdateTableName = 'jhlh_pmis_shopper'
     SQL.Strings = (
-      'select * from jhlh_pmis_shopper')
+      'select * from jhlh_pmis_shopper limit 1')
     Left = 608
     Top = 176
   end
@@ -138,5 +138,34 @@ object ServerMethods: TServerMethods
         ' jhlh_pmis_customers group by uuid) b)')
     Left = 760
     Top = 112
+  end
+  object expireExpoFDQuery: TFDQuery
+    CachedUpdates = True
+    Connection = FDConnection1
+    ResourceOptions.AssignedValues = [rvStoreMergeData, rvStoreMergeMeta]
+    SQL.Strings = (
+      
+        'select * from jhlh_pmis_expo where status=0 or trash=1 or client' +
+        'visable=0')
+    Left = 80
+    Top = 400
+  end
+  object getcustomerFDQuery: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select jhlh_pmis_customers.* from jhlh_pmis_customers '
+      
+        'JOIN jhlh_pmis_expo on jhlh_pmis_expo.id = jhlh_pmis_customers.e' +
+        'id and jhlh_pmis_expo.clientvisable=1'
+      'where jhlh_pmis_customers.create_member=:memberid')
+    Left = 664
+    Top = 304
+    ParamData = <
+      item
+        Name = 'MEMBERID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
   end
 end

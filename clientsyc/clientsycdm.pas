@@ -19,6 +19,8 @@ type
     expotypeFDQuery: TFDQuery;
     shoppersourceFDQuery: TFDQuery;
     memberFDQuery: TFDQuery;
+    removecustomerFDCommand: TFDCommand;
+    customerFDQuery: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private
@@ -36,6 +38,8 @@ type
     procedure GetExpotypeData;
     procedure GetShoppersourceData;
     procedure GetMemberData;
+    procedure GetCustomerData;
+    procedure RemoveCustomerData;
   published
     property CantConnection:boolean read FCantConnection;
     property SyncError:boolean read FSyncError;
@@ -100,6 +104,8 @@ begin
  paytypeFDQuery.Connection:= connectionDataModule.mainFDConnection;
  memberFDQuery.Connection:=connectionDataModule.mainFDConnection;
  shoppersourceFDQuery.Connection:=connectionDataModule.mainFDConnection;
+ removecustomerFDCommand.Connection:=connectionDataModule.mainFDConnection;
+ customerFDQuery.Connection:=connectionDataModule.mainFDConnection;
 end;
 
 procedure TclientsycDataModule.DataModuleDestroy(Sender: TObject);
@@ -107,8 +113,90 @@ begin
  SQLConnection1.Close;
 end;
 
-//获取客户类型数据
+
+procedure TclientsycDataModule.GetCustomerData;
+var
+ server:TObject;
+ stream:TStream;
+ lstream:TMemoryStream;
+ memtable:TFDMemTable;
+ ierror:Integer;
+begin
+ server:=nil;
+ stream:=nil;
+ if not SQLConnection1.Connected then
+   try
+     SQLConnection1.Open;
+   except on E: Exception do
+     begin
+       FSyncError:=true;
+       if Assigned(FOnExec) then
+         FOnExec('错误:远程连接发生异常,同步中止!'+#13#10+E.Message);
+       exit;
+     end;
+   end;
+
+  try
+    server:=TServerMethodsClient.Create(SQLConnection1.DBXConnection);
+    stream:=TServerMethodsClient(Server).CustomerData(clientuser.Userid);
+    stream.Position:=0;
+
+    lstream:=TMemoryStream.Create;
+    lstream:=CopyStream(stream);
+   // showmessage(lstream.Size.ToString);
+  except
+    SQLConnection1.Close;
+    server.free;
+    stream.Free;
+    FSyncError:=true;
+    if Assigned(FOnExec) then
+       FOnExec('错误:获取远程数据发生异常,同步中止!');
+    exit;
+  end;
+
+  //showmessage(lstream.Size.ToString);
+  lstream.Position:=0;
+
+  if Assigned(FOnExec) then
+       FOnExec('开始更新客户数据');
+
+  memtable:=TFDMemTable.Create(nil);
+  memtable.LoadFromStream(lstream,TFDStorageFormat.sfBinary);
+
+  memtable.First;
+
+  customerFDQuery.Open;
+  customerFDQuery.UpdateOptions.UpdateTableName:='jhlh_pmis_customers';
+
+  customerFDQuery.CopyDataSet(memtable);
+
+  customertypeFDQuery.UpdateOptions.AutoIncFields:='id';
+  customerFDQuery.FieldByName('id').ProviderFlags:=customerFDQuery.FieldByName('id').ProviderFlags-[pfInUpdate];
+
+  customerFDQuery.Connection.StartTransaction;
+  ierror:=customerFDQuery.ApplyUpdates;
+  if ierror>0 then
+  begin
+    customerFDQuery.Connection.Rollback;
+    FSyncError:=true;
+    if Assigned(FOnExec) then
+         FOnExec('错误:客户数据更新到本地时出现异常');
+  end
+  else
+  begin
+    customerFDQuery.Connection.Commit;
+    customerFDQuery.Close;
+    if Assigned(FOnExec) then
+       FOnExec('客户数据更新完成');
+  end;
+  lstream.Free;
+  server.Free;
+  memtable.Free;
+end;
+
+
 procedure TclientsycDataModule.GetCustomertypeData;
+//获取客户类型数据
 var
  server:TObject;
  stream:TStream;
@@ -540,6 +628,19 @@ end;
 procedure TclientsycDataModule.openexpodata;
 begin
   GetExpoData;
+end;
+
+procedure TclientsycDataModule.RemoveCustomerData;
+begin
+  if Assigned(FOnExec) then
+       FOnExec('开始清理本地顾客数据');
+  removecustomerFDCommand.Execute();
+  removecustomerFDCommand.NextRecordSet;
+  removecustomerFDCommand.Execute();
+  removecustomerFDCommand.NextRecordSet;
+  removecustomerFDCommand.Execute();
+  if Assigned(FOnExec) then
+       FOnExec('本地顾客数据清理完成');
 end;
 
 function TclientsycDataModule.test: string;

@@ -1,6 +1,6 @@
 //
 // Created by the DataSnap proxy generator.
-// 2017/7/8 16:26:30
+// 2017/7/15 15:10:45
 //
 
 unit servermethods;
@@ -20,8 +20,11 @@ type
     FExpoTypeDataCommand: TDBXCommand;
     FShopperSourceDataCommand: TDBXCommand;
     FMemberDataCommand: TDBXCommand;
+    FCustomerDataCommand: TDBXCommand;
     FCustomerDataPostCommand: TDBXCommand;
     FShopperDataPostCommand: TDBXCommand;
+    FUseExpoIdsCommand: TDBXCommand;
+    FExpireExpoIdsCommand: TDBXCommand;
   public
     constructor Create(ADBXConnection: TDBXConnection); overload;
     constructor Create(ADBXConnection: TDBXConnection; AInstanceOwner: Boolean); overload;
@@ -34,8 +37,11 @@ type
     function ExpoTypeData(username: string; password: string): TStream;
     function ShopperSourceData(username: string; password: string): TStream;
     function MemberData: TStream;
+    function CustomerData(memberid: Integer): TStream;
     function CustomerDataPost(AStream: TStream): string;
     function ShopperDataPost(AStream: TStream): string;
+    function UseExpoIds: string;
+    function ExpireExpoIds: string;
   end;
 
 implementation
@@ -156,6 +162,20 @@ begin
   Result := FMemberDataCommand.Parameters[0].Value.GetStream(FInstanceOwner);
 end;
 
+function TServerMethodsClient.CustomerData(memberid: Integer): TStream;
+begin
+  if FCustomerDataCommand = nil then
+  begin
+    FCustomerDataCommand := FDBXConnection.CreateCommand;
+    FCustomerDataCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FCustomerDataCommand.Text := 'TServerMethods.CustomerData';
+    FCustomerDataCommand.Prepare;
+  end;
+  FCustomerDataCommand.Parameters[0].Value.SetInt32(memberid);
+  FCustomerDataCommand.ExecuteUpdate;
+  Result := FCustomerDataCommand.Parameters[1].Value.GetStream(FInstanceOwner);
+end;
+
 function TServerMethodsClient.CustomerDataPost(AStream: TStream): string;
 begin
   if FCustomerDataPostCommand = nil then
@@ -184,6 +204,32 @@ begin
   Result := FShopperDataPostCommand.Parameters[1].Value.GetWideString;
 end;
 
+function TServerMethodsClient.UseExpoIds: string;
+begin
+  if FUseExpoIdsCommand = nil then
+  begin
+    FUseExpoIdsCommand := FDBXConnection.CreateCommand;
+    FUseExpoIdsCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FUseExpoIdsCommand.Text := 'TServerMethods.UseExpoIds';
+    FUseExpoIdsCommand.Prepare;
+  end;
+  FUseExpoIdsCommand.ExecuteUpdate;
+  Result := FUseExpoIdsCommand.Parameters[0].Value.GetWideString;
+end;
+
+function TServerMethodsClient.ExpireExpoIds: string;
+begin
+  if FExpireExpoIdsCommand = nil then
+  begin
+    FExpireExpoIdsCommand := FDBXConnection.CreateCommand;
+    FExpireExpoIdsCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FExpireExpoIdsCommand.Text := 'TServerMethods.ExpireExpoIds';
+    FExpireExpoIdsCommand.Prepare;
+  end;
+  FExpireExpoIdsCommand.ExecuteUpdate;
+  Result := FExpireExpoIdsCommand.Parameters[0].Value.GetWideString;
+end;
+
 
 constructor TServerMethodsClient.Create(ADBXConnection: TDBXConnection);
 begin
@@ -207,8 +253,11 @@ begin
   FExpoTypeDataCommand.DisposeOf;
   FShopperSourceDataCommand.DisposeOf;
   FMemberDataCommand.DisposeOf;
+  FCustomerDataCommand.DisposeOf;
   FCustomerDataPostCommand.DisposeOf;
   FShopperDataPostCommand.DisposeOf;
+  FUseExpoIdsCommand.DisposeOf;
+  FExpireExpoIdsCommand.DisposeOf;
   inherited;
 end;
 

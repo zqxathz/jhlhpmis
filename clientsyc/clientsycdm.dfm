@@ -22,8 +22,8 @@ object clientsycDataModule: TclientsycDataModule
       'ConnectTimeout=5000'
       'CommunicationTimeout=5000'
       'CommunicationIPVersion=IP_IPv4')
-    Left = 480
-    Top = 200
+    Left = 336
+    Top = 104
     UniqueId = '{E47C037B-B7E9-48D8-9E96-81BB9D31ED96}'
   end
   object expoFDQuery: TFDQuery
@@ -40,7 +40,7 @@ object clientsycDataModule: TclientsycDataModule
   end
   object FDStanStorageBinLink1: TFDStanStorageBinLink
     Left = 472
-    Top = 312
+    Top = 328
   end
   object customertypeFDQuery: TFDQuery
     CachedUpdates = True
@@ -90,6 +90,35 @@ object clientsycDataModule: TclientsycDataModule
     SQL.Strings = (
       'select * from jhlh_admin_member')
     Left = 200
+    Top = 248
+  end
+  object removecustomerFDCommand: TFDCommand
+    CommandText.Strings = (
+      
+        'delete from jhlh_pmis_customers where update_microsecond not in ' +
+        '(select maxid from (select max(update_microsecond) as maxid from' +
+        ' jhlh_pmis_customers group by uuid) b);'
+      
+        'delete from jhlh_pmis_customers where id not in (select maxid fr' +
+        'om (select max(id) as maxid from jhlh_pmis_customers group by up' +
+        'date_microsecond) b);'
+      
+        'delete from jhlh_pmis_customers where eid not in (select id from' +
+        ' jhlh_pmis_expo where jhlh_pmis_expo.status=1 or jhlh_pmis_expo.' +
+        'trash=0);')
+    Left = 480
+    Top = 216
+  end
+  object customerFDQuery: TFDQuery
+    CachedUpdates = True
+    ResourceOptions.AssignedValues = [rvPersistent, rvStoreMergeData, rvStoreMergeMeta]
+    ResourceOptions.StoreMergeData = dmDataSet
+    ResourceOptions.StoreMergeMeta = mmAdd
+    UpdateOptions.AssignedValues = [uvUpdateChngFields]
+    UpdateOptions.UpdateChangedFields = False
+    SQL.Strings = (
+      'select * from jhlh_pmis_customers limit 1')
+    Left = 336
     Top = 248
   end
 end

@@ -26,9 +26,16 @@ object clientuploadDataModule: TclientuploadDataModule
     CachedUpdates = True
     Transaction = FDTransaction1
     SQL.Strings = (
-      'select * from jhlh_pmis_customers where status=1 and trash=0')
+      
+        'select * from jhlh_pmis_customers where status=1 and trash=0 &ex' +
+        'poids')
     Left = 280
     Top = 328
+    MacroData = <
+      item
+        Value = ''
+        Name = 'expoids'
+      end>
   end
   object shopperFDQuery: TFDQuery
     CachedUpdates = True

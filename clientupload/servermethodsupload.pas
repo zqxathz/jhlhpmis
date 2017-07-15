@@ -1,6 +1,6 @@
 //
 // Created by the DataSnap proxy generator.
-// 2017/7/8 17:13:26
+// 2017/7/15 12:39:23
 //
 
 unit servermethodsupload;
@@ -22,6 +22,8 @@ type
     FMemberDataCommand: TDBXCommand;
     FCustomerDataPostCommand: TDBXCommand;
     FShopperDataPostCommand: TDBXCommand;
+    FUseExpoIdsCommand: TDBXCommand;
+    FExpireExpoIdsCommand: TDBXCommand;
   public
     constructor Create(ADBXConnection: TDBXConnection); overload;
     constructor Create(ADBXConnection: TDBXConnection; AInstanceOwner: Boolean); overload;
@@ -36,6 +38,8 @@ type
     function MemberData: TStream;
     function CustomerDataPost(AStream: TStream): string;
     function ShopperDataPost(AStream: TStream): string;
+    function UseExpoIds: string;
+    function ExpireExpoIds: string;
   end;
 
 implementation
@@ -184,6 +188,32 @@ begin
   Result := FShopperDataPostCommand.Parameters[1].Value.GetWideString;
 end;
 
+function TServerMethodsClient.UseExpoIds: string;
+begin
+  if FUseExpoIdsCommand = nil then
+  begin
+    FUseExpoIdsCommand := FDBXConnection.CreateCommand;
+    FUseExpoIdsCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FUseExpoIdsCommand.Text := 'TServerMethods.UseExpoIds';
+    FUseExpoIdsCommand.Prepare;
+  end;
+  FUseExpoIdsCommand.ExecuteUpdate;
+  Result := FUseExpoIdsCommand.Parameters[0].Value.GetWideString;
+end;
+
+function TServerMethodsClient.ExpireExpoIds: string;
+begin
+  if FExpireExpoIdsCommand = nil then
+  begin
+    FExpireExpoIdsCommand := FDBXConnection.CreateCommand;
+    FExpireExpoIdsCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FExpireExpoIdsCommand.Text := 'TServerMethods.ExpireExpoIds';
+    FExpireExpoIdsCommand.Prepare;
+  end;
+  FExpireExpoIdsCommand.ExecuteUpdate;
+  Result := FExpireExpoIdsCommand.Parameters[0].Value.GetWideString;
+end;
+
 
 constructor TServerMethodsClient.Create(ADBXConnection: TDBXConnection);
 begin
@@ -209,6 +239,8 @@ begin
   FMemberDataCommand.DisposeOf;
   FCustomerDataPostCommand.DisposeOf;
   FShopperDataPostCommand.DisposeOf;
+  FUseExpoIdsCommand.DisposeOf;
+  FExpireExpoIdsCommand.DisposeOf;
   inherited;
 end;
 

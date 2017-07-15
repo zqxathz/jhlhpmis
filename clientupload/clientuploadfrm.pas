@@ -72,7 +72,8 @@ begin
   begin
     FUploading:=true;
     Button1.Enabled:=false;
-    TThread.CreateAnonymousThread(DataUpload).Start;
+    //TThread.CreateAnonymousThread(DataUpload).Start;
+    Dataupload;
   end;
 
 end;

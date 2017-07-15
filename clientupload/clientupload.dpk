@@ -45,7 +45,8 @@ requires
   FireDACCommon,
   dsnap,
   dbxcds,
-  connection;
+  connection,
+  vcldb;
 
 contains
   clientuploaddm in 'clientuploaddm.pas' {clientuploadDataModule: TDataModule},
