@@ -186,14 +186,13 @@ begin
   customertypeFDQuery.UpdateOptions.AutoIncFields:='id';
   customerFDQuery.FieldByName('id').ProviderFlags:=customerFDQuery.FieldByName('id').ProviderFlags-[pfInUpdate];
   customerFDQuery.IndexFieldNames:='id;update_microsecond';
+  customertypeFDQuery.UpdateOptions.KeyFields:='update_microsecond';
   customerFDQuery.Connection.StartTransaction;
   ierror:=customerFDQuery.ApplyUpdates;
   if ierror>0 then
   begin
-    //customerFDQuery.Connection.Rollback;
-
-    customerFDQuery.Connection.Commit;
-    //FSyncError:=true;
+    customerFDQuery.Connection.Rollback;
+    FSyncError:=true;
     if Assigned(FOnExec) then
     begin
          FOnExec('错误:客户数据更新到本地时出现异常');

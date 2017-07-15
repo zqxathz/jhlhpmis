@@ -112,11 +112,15 @@ object clientsycDataModule: TclientsycDataModule
   object customerFDQuery: TFDQuery
     CachedUpdates = True
     OnUpdateError = customerFDQueryUpdateError
-    ResourceOptions.AssignedValues = [rvPersistent, rvStoreMergeData, rvStoreMergeMeta]
-    ResourceOptions.StoreMergeData = dmDataSet
-    ResourceOptions.StoreMergeMeta = mmAdd
-    UpdateOptions.AssignedValues = [uvUpdateChngFields]
+    ResourceOptions.AssignedValues = [rvCmdExecMode, rvPersistent, rvSilentMode, rvStoreMergeData, rvStoreMergeMeta]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
     UpdateOptions.UpdateChangedFields = False
+    UpdateOptions.LockWait = True
+    UpdateOptions.RefreshMode = rmManual
+    UpdateOptions.FetchGeneratorsPoint = gpNone
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.CheckReadOnly = False
     SQL.Strings = (
       'select * from jhlh_pmis_customers limit 1')
     Left = 336
