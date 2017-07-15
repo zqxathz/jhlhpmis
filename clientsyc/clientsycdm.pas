@@ -7,7 +7,7 @@ uses
   IPPeerClient, Data.DB, Data.SqlExpr, Data.DbxHTTPLayer, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Stan.StorageBin,Vcl.Dialogs;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Stan.StorageBin,Vcl.Dialogs,System.JSON,System.Variants;
 
 type
   TclientsycDataModule = class(TDataModule)
@@ -23,11 +23,14 @@ type
     customerFDQuery: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
+    procedure customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException; ARow: TFDDatSRow;
+      ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
   private
     { Private declarations }
     FCantConnection:boolean;
     FSyncError:boolean;
     FOnExec:TGetStrProc;
+    FErrorJson:TJsonObject;
   public
     { Public declarations }
     function test:string;
@@ -87,6 +90,21 @@ end;
 
 { TclientsycDataModule }
 
+procedure TclientsycDataModule.customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException; ARow: TFDDatSRow;
+  ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
+begin
+  if AException.FDCode<>1600 then
+  begin
+    if not Assigned(FErrorJson) then
+      FErrorJson:=TJSONObject.Create;
+    FErrorJson.AddPair(AException.Message+','+AException.FDCode.ToString,Vartostr(ARow.GetData('id')));
+  end
+  else
+  begin
+    AAction:=eaSkip;
+  end;
+end;
+
 procedure TclientsycDataModule.DataModuleCreate(Sender: TObject);
 begin
  FOnExec:=nil;
@@ -143,7 +161,7 @@ begin
 
     lstream:=TMemoryStream.Create;
     lstream:=CopyStream(stream);
-   // showmessage(lstream.Size.ToString);
+
   except
     SQLConnection1.Close;
     server.free;
@@ -154,7 +172,6 @@ begin
     exit;
   end;
 
-  //showmessage(lstream.Size.ToString);
   lstream.Position:=0;
 
   if Assigned(FOnExec) then
@@ -162,25 +179,27 @@ begin
 
   memtable:=TFDMemTable.Create(nil);
   memtable.LoadFromStream(lstream,TFDStorageFormat.sfBinary);
-
   memtable.First;
-
   customerFDQuery.Open;
   customerFDQuery.UpdateOptions.UpdateTableName:='jhlh_pmis_customers';
-
   customerFDQuery.CopyDataSet(memtable);
-
   customertypeFDQuery.UpdateOptions.AutoIncFields:='id';
   customerFDQuery.FieldByName('id').ProviderFlags:=customerFDQuery.FieldByName('id').ProviderFlags-[pfInUpdate];
-
+  customerFDQuery.IndexFieldNames:='id;update_microsecond';
   customerFDQuery.Connection.StartTransaction;
   ierror:=customerFDQuery.ApplyUpdates;
   if ierror>0 then
   begin
-    customerFDQuery.Connection.Rollback;
-    FSyncError:=true;
+    //customerFDQuery.Connection.Rollback;
+
+    customerFDQuery.Connection.Commit;
+    //FSyncError:=true;
     if Assigned(FOnExec) then
+    begin
          FOnExec('错误:客户数据更新到本地时出现异常');
+         if Assigned(FErrorJson) then FOnExec(FErrorJson.ToJSON);
+    end;
+    if Assigned(FErrorJson) then  FreeAndNil(FErrorJson);
   end
   else
   begin

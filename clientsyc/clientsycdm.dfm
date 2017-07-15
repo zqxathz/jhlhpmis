@@ -111,6 +111,7 @@ object clientsycDataModule: TclientsycDataModule
   end
   object customerFDQuery: TFDQuery
     CachedUpdates = True
+    OnUpdateError = customerFDQueryUpdateError
     ResourceOptions.AssignedValues = [rvPersistent, rvStoreMergeData, rvStoreMergeMeta]
     ResourceOptions.StoreMergeData = dmDataSet
     ResourceOptions.StoreMergeMeta = mmAdd
