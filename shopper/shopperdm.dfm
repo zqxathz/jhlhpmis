@@ -6,6 +6,7 @@ object shopperdatamod: Tshopperdatamod
   object shopperfdquery: TFDQuery
     BeforeOpen = shopperfdqueryBeforeOpen
     AfterOpen = shopperfdqueryAfterOpen
+    BeforePost = shopperfdqueryBeforePost
     AfterApplyUpdates = shopperfdqueryAfterApplyUpdates
     AfterGetRecord = shopperfdqueryAfterGetRecord
     FetchOptions.AssignedValues = [evCursorKind]
@@ -220,7 +221,7 @@ object shopperdatamod: Tshopperdatamod
     Left = 408
     Top = 64
     Content = {
-      414442530F00BD390D010000FF00010001FF02FF0304001A0000007300650078
+      414442530F0043360D010000FF00010001FF02FF0304001A0000007300650078
       00660064006D0065006D007400610062006C00650005000A0000005400610062
       006C006500060000000000070000080032000000090000FF0AFF0B0400040000
       0069006400050004000000690064000C00010000000E000D000F000110000111
@@ -405,7 +406,7 @@ object shopperdatamod: Tshopperdatamod
         Name = 'PHONE'
         ParamType = ptInput
       end>
-    Left = 224
+    Left = 240
     Top = 240
   end
   object updateshopperFDCommand: TFDCommand
@@ -418,8 +419,8 @@ object shopperdatamod: Tshopperdatamod
         Name = 'PHONE'
         ParamType = ptInput
       end>
-    Left = 128
-    Top = 240
+    Left = 88
+    Top = 248
   end
   object softremoveFDCommand: TFDCommand
     UpdateOptions.AssignedValues = [uvLockMode]
@@ -438,7 +439,7 @@ object shopperdatamod: Tshopperdatamod
         Value = Null
         Name = 'PHONE'
       end>
-    Left = 328
+    Left = 344
     Top = 248
   end
 end

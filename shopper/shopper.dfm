@@ -362,7 +362,7 @@ object bplshopperframe: Tbplshopperframe
     end
     object RzStatusBar1: TRzStatusBar
       Left = 0
-      Top = 165
+      Top = 176
       Width = 1220
       Height = 30
       AutoStyle = False
@@ -378,7 +378,6 @@ object bplshopperframe: Tbplshopperframe
       ParentFont = False
       TabOrder = 18
       Visible = False
-      ExplicitTop = 176
       object RzStatusPane1: TRzStatusPane
         AlignWithMargins = True
         Left = 3
@@ -871,23 +870,31 @@ object bplshopperframe: Tbplshopperframe
       Caption = #21047#26032
       OnClick = refreshmenuClick
     end
-    object copyitemmenu: TMenuItem
-      Caption = #22797#21046#24403#21069#23383#27573
-      OnClick = copyitemmenuClick
-    end
     object deletemenu: TMenuItem
       Caption = #21024#38500#24403#21069#35760#24405
       OnClick = deletemenuClick
     end
+    object copyitemmenu: TMenuItem
+      Caption = #22797#21046#24403#21069#23383#27573
+      OnClick = copyitemmenuClick
+    end
     object N1: TMenuItem
       Caption = '-'
     end
+    object autowidthmenu: TMenuItem
+      Caption = #33258#21160#36866#24212#23485#24230
+      OnClick = autowidthmenuClick
+    end
+    object fetchmenu: TMenuItem
+      Caption = #26174#31034#24403#21069#23637#20250
+      OnClick = fetchmenuClick
+    end
     object allrecordmenu: TMenuItem
-      Caption = #26597#30475#25152#26377#35760#24405
+      Caption = #26174#31034#25152#26377#35760#24405
       OnClick = allrecordmenuClick
     end
     object toexcelmenu: TMenuItem
-      Caption = #23548#20986#21040'EXCEL'
+      Caption = #23548#20986'EXCEL'
       OnClick = toexcelmenuClick
     end
     object fromexcelmenu: TMenuItem

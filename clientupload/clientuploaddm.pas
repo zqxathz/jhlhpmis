@@ -173,7 +173,7 @@ begin
   try
     FDTransaction1.StartTransaction; // 本地事务开启,用于删除本地已经提交完成的记录
     try
-     // shopperFDQuery.ServerDeleteAll;
+      shopperFDQuery.ServerDeleteAll;
       LResponseMessage := TServerMethodsClient(server).ShopperDataPost(stream); // 上传本地数据到服务器
       if LResponseMessage = '' then
       begin

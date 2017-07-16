@@ -138,7 +138,7 @@ begin
     else
     begin
       try
-        ShopperRemoveFDCommand.Execute;
+        //ShopperRemoveFDCommand.Execute;
         FDConnection1.Commit;
       except
         FDConnection1.Rollback;

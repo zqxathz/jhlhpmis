@@ -34,6 +34,7 @@ object bplCustomerFrame: TbplCustomerFrame
     TabStop = False
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnDblClick = cxGrid1DBTableView1DblClick
+      OnKeyDown = cxGrid1DBTableView1KeyDown
       Navigator.Buttons.CustomButtons = <>
       OnFocusedRecordChanged = cxGrid1DBTableView1FocusedRecordChanged
       DataController.DataSource = customerDataModule.customerDataSource
@@ -41,6 +42,7 @@ object bplCustomerFrame: TbplCustomerFrame
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
       DataController.OnDataChanged = cxGrid1DBTableView1DataControllerDataChanged
+      OptionsBehavior.CopyRecordsToClipboard = False
       OptionsBehavior.ImmediateEditor = False
       OptionsData.Deleting = False
       OptionsView.Footer = True
@@ -70,7 +72,6 @@ object bplCustomerFrame: TbplCustomerFrame
     ParentDoubleBuffered = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitTop = 323
     DesignSize = (
       1219
       283)
@@ -515,6 +516,10 @@ object bplCustomerFrame: TbplCustomerFrame
     object softremovemenu: TMenuItem
       Caption = #21024#38500
       OnClick = softremovemenuClick
+    end
+    object copyitemmenu: TMenuItem
+      Caption = #22797#21046#24403#21069#23383#27573
+      OnClick = copyitemmenuClick
     end
     object N1: TMenuItem
       Caption = '-'

@@ -162,6 +162,8 @@ type
     RzStatusPane2: TRzStatusPane;
     refreshmenu: TMenuItem;
     copyitemmenu: TMenuItem;
+    fetchmenu: TMenuItem;
+    autowidthmenu: TMenuItem;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure updateareaallbuttonClick(Sender: TObject);
     procedure applyButtonClick(Sender: TObject);
@@ -179,6 +181,8 @@ type
     procedure restButtonClick(Sender: TObject);
     procedure cxGrid1DBTableView1phonePropertiesValidate(Sender: TObject; var DisplayValue: Variant;
       var ErrorText: TCaption; var Error: Boolean);
+    procedure fetchmenuClick(Sender: TObject);
+    procedure autowidthmenuClick(Sender: TObject);
   private
     { Private declarations }
     procedure CxGridToExcel(AcxGrid: TcxGrid);
@@ -387,7 +391,8 @@ procedure Tbplshopperframe.allrecordmenuClick(Sender: TObject);
 var
   sqlstr: string;
 begin
-  sqlstr := format(SHOPPER_SQL, [' group by phone order by id']);
+  //sqlstr := format(SHOPPER_SQL, [' group by phone order by id']);
+  sqlstr := format(SHOPPER_SQL, ['']);
   shopperdatamod.shopperfdquery.Close;
   shopperdatamod.shopperfdquery.Open(sqlstr);
   shopperdatamod.areafdquery.First;
@@ -503,6 +508,11 @@ begin
   end;
 end;
 
+procedure Tbplshopperframe.autowidthmenuClick(Sender: TObject);
+begin
+  cxGrid1DBTableView1.ApplyBestFit();
+end;
+
 //右键弹出菜单复制当前选中字段到剪贴板
 procedure Tbplshopperframe.copyitemmenuClick(Sender: TObject);
 begin
@@ -582,6 +592,11 @@ begin
 end;
 
 //右键弹出菜单导入EXCEL
+procedure Tbplshopperframe.fetchmenuClick(Sender: TObject);
+begin
+  expocxLookupComboBoxPropertiesChange(nil);
+end;
+
 procedure Tbplshopperframe.fromexcelmenuClick(Sender: TObject);
 begin
   LoadExcel;

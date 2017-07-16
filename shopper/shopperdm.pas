@@ -9,10 +9,19 @@ uses
   System.Variants,
   System.DateUtils,
   Vcl.Forms,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Stan.StorageBin,
-  FireDAC.Comp.Client, Data.DB, FireDAC.Comp.DataSet;
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error,
+  FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
+  FireDAC.DApt,
+  FireDAC.Stan.StorageBin,
+  FireDAC.Comp.Client,
+  Data.DB,
+  FireDAC.Comp.DataSet;
 
 type
   Tshopperdatamod = class(TDataModule)
@@ -86,15 +95,11 @@ type
     procedure shopperfdqueryBeforeOpen(DataSet: TDataSet);
     procedure shopperfdqueryAfterOpen(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
-    procedure FDEventAlerter1Alert(ASender: TFDCustomEventAlerter;
-      const AEventName: string; const AArgument: Variant);
-    procedure shopperfdqueryUpdateRecord(ASender: TDataSet;
-      ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
-      AOptions: TFDUpdateRowOptions);
-    procedure shopperfdqueryAfterApplyUpdates(DataSet: TFDDataSet;
-      AErrors: Integer);
-    procedure softremoveFDCommandError(ASender, AInitiator: TObject;
-      var AException: Exception);
+    procedure FDEventAlerter1Alert(ASender: TFDCustomEventAlerter; const AEventName: string; const AArgument: Variant);
+    procedure shopperfdqueryUpdateRecord(ASender: TDataSet; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction; AOptions: TFDUpdateRowOptions);
+    procedure shopperfdqueryAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
+    procedure softremoveFDCommandError(ASender, AInitiator: TObject; var AException: Exception);
+    procedure shopperfdqueryBeforePost(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -114,7 +119,8 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses connectiondm;
+uses
+  connectiondm;
 {$R *.dfm}
 
 function UnixDateToDateTime(const USec: Longint): TDateTime;
@@ -151,7 +157,7 @@ begin
   if (PhoneList = nil) or (PhoneList.count = 0) then
     exit;
   try
-    s := String.Join(',', PhoneList.ToStringArray);
+    s := string.Join(',', PhoneList.ToStringArray);
     // 直接从STRINGLIST到数组再到STRING,一步完成
 
     softremoveFDCommand.Connection := connectionDataModule.mainFDConnection;
@@ -205,8 +211,7 @@ begin
   expofdquery.Active := true;
 end;
 
-procedure Tshopperdatamod.FDEventAlerter1Alert(ASender: TFDCustomEventAlerter;
-  const AEventName: string; const AArgument: Variant);
+procedure Tshopperdatamod.FDEventAlerter1Alert(ASender: TFDCustomEventAlerter; const AEventName: string; const AArgument: Variant);
 begin
   shopperfdquery.Refresh;
 end;
@@ -216,8 +221,7 @@ begin
   // shopperfdquery.Open(format(SHOPPER_SQL,[map]));
 end;
 
-procedure Tshopperdatamod.shopperfdqueryAfterApplyUpdates(DataSet: TFDDataSet;
-  AErrors: Integer);
+procedure Tshopperdatamod.shopperfdqueryAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
 begin
   SoftRemoveWithPhone;
 end;
@@ -229,42 +233,35 @@ begin
   if (shopperfdquery.FieldValues['create_time'] = 0) then
     shopperfdquery.FieldValues['createtime'] := null
   else
-    shopperfdquery.FieldValues['createtime'] :=
-      UnixDateToDateTime(shopperfdquery.FieldValues['create_time']);
+    shopperfdquery.FieldValues['createtime'] := UnixDateToDateTime(shopperfdquery.FieldValues['create_time']);
 
   if (shopperfdquery.FieldValues['update_time'] = 0) then
     shopperfdquery.FieldValues['updatetime'] := null
   else
-    shopperfdquery.FieldValues['updatetime'] :=
-      UnixDateToDateTime(shopperfdquery.FieldValues['update_time']);
+    shopperfdquery.FieldValues['updatetime'] := UnixDateToDateTime(shopperfdquery.FieldValues['update_time']);
 
   if (shopperfdquery.FieldValues['birthday_time'] = 0) then
     shopperfdquery.FieldValues['birthdaytime'] := null
   else
-    shopperfdquery.FieldValues['birthdaytime'] :=
-      UnixDateToDateTime(shopperfdquery.FieldValues['birthday_time']);
+    shopperfdquery.FieldValues['birthdaytime'] := UnixDateToDateTime(shopperfdquery.FieldValues['birthday_time']);
 
   if (shopperfdquery.FieldValues['expiry_time'] = 0) then
     shopperfdquery.FieldValues['expirytime'] := null
   else
-    shopperfdquery.FieldValues['expirytime'] :=
-      UnixDateToDateTime(shopperfdquery.FieldValues['expiry_time']);
+    shopperfdquery.FieldValues['expirytime'] := UnixDateToDateTime(shopperfdquery.FieldValues['expiry_time']);
 
   if (shopperfdquery.FieldValues['lastshop_time'] = 0) then
     shopperfdquery.FieldValues['lastshoptime'] := null
   else
-    shopperfdquery.FieldValues['lastshoptime'] :=
-      UnixDateToDateTime(shopperfdquery.FieldValues['lastshop_time']);
+    shopperfdquery.FieldValues['lastshoptime'] := UnixDateToDateTime(shopperfdquery.FieldValues['lastshop_time']);
 
   if (shopperfdquery.FieldValues['adcode'] > 0) then
   begin
     // areafdquery.First;
     areafdquery.DisableControls;
 
-    if areafdquery.FindKey([shopperfdquery.FieldByName('adcode').AsInteger])
-    then
-      shopperfdquery.FieldValues['area'] := areafdquery.FieldValues['p'] +
-        areafdquery.FieldValues['c'] + areafdquery.FieldValues['a']
+    if areafdquery.FindKey([shopperfdquery.FieldByName('adcode').AsInteger]) then
+      shopperfdquery.FieldValues['area'] := areafdquery.FieldValues['p'] + areafdquery.FieldValues['c'] + areafdquery.FieldValues['a']
     else
       shopperfdquery.FieldValues['area'] := '无';
 
@@ -285,13 +282,21 @@ begin
   DataSet.DisableControls;
 end;
 
+procedure Tshopperdatamod.shopperfdqueryBeforePost(DataSet: TDataSet);
+begin
+  if DataSet.State=dsEdit then
+  begin
+    DataSet.FieldValues['update_time'] := DateTimeToUnix(IncHour(now(), 0));
+    DataSet.FieldValues['updatetime'] := now;
+  end;
+end;
+
 procedure Tshopperdatamod.shopperfdquerybirthdaytimeChange(Sender: TField);
 begin
   if (Sender.Value = null) then
     shopperfdquery.FieldValues['birthday_time'] := 0
   else
-    shopperfdquery.FieldValues['birthday_time'] :=
-      DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
+    shopperfdquery.FieldValues['birthday_time'] := DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
 end;
 
 procedure Tshopperdatamod.shopperfdquerycreatetimeChange(Sender: TField);
@@ -299,8 +304,7 @@ begin
   if (Sender.Value = null) then
     shopperfdquery.FieldValues['create_time'] := 0
   else
-    shopperfdquery.FieldValues['create_time'] :=
-      DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
+    shopperfdquery.FieldValues['create_time'] := DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
 end;
 
 procedure Tshopperdatamod.shopperfdqueryexpirytimeChange(Sender: TField);
@@ -308,8 +312,7 @@ begin
   if (Sender.Value = null) then
     shopperfdquery.FieldValues['expiry_time'] := 0
   else
-    shopperfdquery.FieldValues['expiry_time'] :=
-      DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
+    shopperfdquery.FieldValues['expiry_time'] := DateTimeToUnix(IncHour(Sender.AsDateTime, 0));
 end;
 
 procedure Tshopperdatamod.shopperfdquerylastshoptimeChange(Sender: TField);
@@ -317,13 +320,10 @@ begin
   if (Sender.Value = null) then
     shopperfdquery.FieldValues['lastshop_time'] := 0
   else
-    shopperfdquery.FieldValues['lastshop_time'] :=
-      DateTimeToUnix(IncHour(Sender.AsDateTime, -8));
+    shopperfdquery.FieldValues['lastshop_time'] := DateTimeToUnix(IncHour(Sender.AsDateTime, -8));
 end;
 
-procedure Tshopperdatamod.shopperfdqueryUpdateRecord(ASender: TDataSet;
-  ARequest: TFDUpdateRequest; var AAction: TFDErrorAction;
-  AOptions: TFDUpdateRowOptions);
+procedure Tshopperdatamod.shopperfdqueryUpdateRecord(ASender: TDataSet; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction; AOptions: TFDUpdateRowOptions);
 begin
   AddPhonetoList(ASender.FieldByName('phone').AsString);
   AAction := eaDefault;
@@ -334,18 +334,15 @@ begin
   if (Sender.Value = null) then
     shopperfdquery.FieldValues['update_time'] := 0
   else
-    shopperfdquery.FieldValues['update_time'] :=
-      DateTimeToUnix(IncHour(Sender.AsDateTime, 0))
+    shopperfdquery.FieldValues['update_time'] := DateTimeToUnix(IncHour(Sender.AsDateTime, 0))
 end;
 
-procedure Tshopperdatamod.softremoveFDCommandError(ASender, AInitiator: TObject;
-  var AException: Exception);
+procedure Tshopperdatamod.softremoveFDCommandError(ASender, AInitiator: TObject; var AException: Exception);
 begin
   showmessage(AException.Message);
 end;
 
-function Tshopperdatamod.validatePhone(phone: string;
-  const count: Integer = 0): Boolean;
+function Tshopperdatamod.validatePhone(phone: string; const count: Integer = 0): Boolean;
 var
   oTab: TFDDatSTable;
 begin
@@ -367,3 +364,4 @@ begin
 end;
 
 end.
+
