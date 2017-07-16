@@ -253,16 +253,23 @@ procedure TServerMethods.customerFDQueryUpdateError(ASender: TDataSet; AExceptio
 var
   LDataStr: string;
 begin
-  try
+  if AException.FDCode<>1100 then
+  begin
     try
-      if not VarIsNull(ARow.GetData('id')) then
-        LDataStr := ARow.GetData('id');
-      FErrorsList.AddPair(AException.Message, LDataStr);
-    except
+      try
+        if not VarIsNull(ARow.GetData('id')) then
+          LDataStr := ARow.GetData('id');
+        FErrorsList.AddPair(AException.Message+','+AException.FDCode.ToString, LDataStr);
+      except
+
+      end;
+    finally
 
     end;
-  finally
-
+  end
+  else
+  begin
+    AAction:=eaSkip;
   end;
 end;
 

@@ -93,6 +93,8 @@ object ServerMethods: TServerMethods
     CachedUpdates = True
     OnUpdateError = customerFDQueryUpdateError
     Connection = FDConnection1
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
     UpdateOptions.AssignedValues = [uvUpdateChngFields, uvUpdateMode, uvLockMode, uvLockPoint, uvLockWait, uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvCheckReadOnly, uvCheckUpdatable]
     UpdateOptions.UpdateChangedFields = False
     UpdateOptions.LockWait = True
@@ -100,7 +102,6 @@ object ServerMethods: TServerMethods
     UpdateOptions.FetchGeneratorsPoint = gpNone
     UpdateOptions.CheckRequired = False
     UpdateOptions.CheckReadOnly = False
-    UpdateOptions.CheckUpdatable = False
     UpdateOptions.UpdateTableName = 'jhlh_pmis_shopper'
     SQL.Strings = (
       'select * from jhlh_pmis_shopper limit 1')
@@ -125,8 +126,8 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_admin_member where locked=0')
-    Left = 424
-    Top = 392
+    Left = 408
+    Top = 408
   end
   object CustomerRemoveFDCommand: TFDCommand
     Connection = FDConnection1
