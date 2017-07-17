@@ -1,5 +1,6 @@
 object ServerContainer1: TServerContainer1
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 271
   Width = 415
   object DSServer1: TDSServer
@@ -18,6 +19,7 @@ object ServerContainer1: TServerContainer1
           'CompressMoreThan=1024')
       end>
     AuthenticationManager = DSAuthenticationManager1
+    OnDisconnect = DSTCPServerTransport1Disconnect
     Left = 96
     Top = 73
   end

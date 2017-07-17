@@ -15,37 +15,46 @@ File_12=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl
 
 [Modules]
 Module0=D:\Develop\jhql\server\ServerMethodsUnit.pas
-Module1=D:\Develop\jhql\server\Alidayu.pas
-Module2=D:\Develop\jhql\clientupload\clientuploaddm.pas
-Module3=D:\Develop\jhql\clientupload\clientuploadfrm.pas
-Module4=D:\Develop\jhql\clientsyc\clientsycdm.pas
-Module5=default.htm
-Module6=D:\Develop\jhql\start\start.dproj
-Module7=D:\Develop\jhql\shopper\shopper.dproj
-Module8=D:\Develop\jhql\customer\customer.dproj
-Module9=D:\Develop\jhql\clientsyc\clientsyc.pas
-Module10=D:\Develop\jhql\server\ServerContainerUnit.pas
-Module11=D:\Develop\jhql\clientsyc\servermethods.pas
-Module12=c:\program files (x86)\embarcadero\studio\19.0\source\data\Data.DB.pas
-Module13=D:\Develop\jhql\connection\connectiondm.pas
-Module14=D:\Develop\jhql\clientupload\servermethodsupload.pas
-Module15=D:\Develop\jhql\customer\customer.pas
-Module16=D:\Develop\jhql\customer\customerdm.pas
-Module17=D:\Develop\jhql\common\common.pas
-Module18=D:\Develop\jhql\start\logindm.pas
-Module19=D:\Develop\jhql\common\staticstr.pas
-Module20=D:\Develop\jhql\start\login.pas
-Module21=D:\Develop\jhql\shopper\shopper.pas
-Module22=D:\Develop\jhql\shopper\shopperdm.pas
-Module23=D:\Develop\jhql\start\main.pas
-Module24=D:\Develop\jhql\common\connectionconfig.pas
-Module25=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas
-Module26=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas
+Module1=D:\Develop\jhql\start\start.dproj
+Module2=D:\Develop\jhql\shopper\shopper.dproj
+Module3=D:\Develop\jhql\customer\customer.dproj
+Module4=D:\Develop\jhql\server\Alidayu.pas
+Module5=D:\Develop\jhql\clientupload\clientuploaddm.pas
+Module6=D:\Develop\jhql\clientupload\clientuploadfrm.pas
+Module7=D:\Develop\jhql\clientsyc\clientsycdm.pas
+Module8=D:\Develop\jhql\clientsyc\clientsyc.pas
+Module9=D:\Develop\jhql\server\ServerContainerUnit.pas
+Module10=D:\Develop\jhql\clientsyc\servermethods.pas
+Module11=c:\program files (x86)\embarcadero\studio\19.0\source\data\Data.DB.pas
+Module12=D:\Develop\jhql\connection\connectiondm.pas
+Module13=D:\Develop\jhql\clientupload\servermethodsupload.pas
+Module14=D:\Develop\jhql\customer\customer.pas
+Module15=D:\Develop\jhql\customer\customerdm.pas
+Module16=D:\Develop\jhql\common\common.pas
+Module17=D:\Develop\jhql\start\logindm.pas
+Module18=D:\Develop\jhql\common\staticstr.pas
+Module19=D:\Develop\jhql\start\login.pas
+Module20=D:\Develop\jhql\shopper\shopper.pas
+Module21=D:\Develop\jhql\shopper\shopperdm.pas
+Module22=D:\Develop\jhql\start\main.pas
+Module23=D:\Develop\jhql\common\connectionconfig.pas
+Module24=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas
+Module25=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas
+Module26=default.htm
 Count=27
 EditWindowCount=1
 
 [D:\Develop\jhql\server\ServerMethodsUnit.pas]
 ModuleType=TSourceModule
+
+[D:\Develop\jhql\start\start.dproj]
+ModuleType=TBaseProject
+
+[D:\Develop\jhql\shopper\shopper.dproj]
+ModuleType=TBaseProject
+
+[D:\Develop\jhql\customer\customer.dproj]
+ModuleType=TBaseProject
 
 [D:\Develop\jhql\server\Alidayu.pas]
 ModuleType=TSourceModule
@@ -58,18 +67,6 @@ ModuleType=TSourceModule
 
 [D:\Develop\jhql\clientsyc\clientsycdm.pas]
 ModuleType=TSourceModule
-
-[default.htm]
-ModuleType=TURLModule
-
-[D:\Develop\jhql\start\start.dproj]
-ModuleType=TBaseProject
-
-[D:\Develop\jhql\shopper\shopper.dproj]
-ModuleType=TBaseProject
-
-[D:\Develop\jhql\customer\customer.dproj]
-ModuleType=TBaseProject
 
 [D:\Develop\jhql\clientsyc\clientsyc.pas]
 ModuleType=TSourceModule
@@ -124,6 +121,9 @@ ModuleType=TSourceModule
 
 [c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.SysUtils.pas]
 ModuleType=TSourceModule
+
+[default.htm]
+ModuleType=TURLModule
 
 [EditWindow0]
 ViewCount=27
@@ -660,8 +660,8 @@ SplitPos=111
 
 [PropInspDesignerSelection]
 ArrangeBy=Name
-SelectedItem=ResourceOptions.SilentMode,AfterApplyUpdates
-ExpandedItems=ActiveStoredUsage=0,Connection=0,FetchOptions=0,FieldOptions=0,LiveBindings=0,FilterChanges=0,FilterOptions=0,FormatOptions=0,"LiveBindings Designer=0",ResourceOptions=1,UpdateOptions=1,UpdateOptions.AssignedValues=0,ResourceOptions.AssignedValues=0,ResourceOptions.StoreItems=0
+SelectedItem="LiveBindings Designer",AfterExecute
+ExpandedItems=Anchors=0,BorderIcons=0,Constraints=0,ConnectedStoredUsage=0,FetchOptions=0,FormatOptions=0,"LiveBindings Designer=0",Params=0,ResourceOptions=0,BevelEdges=0,LiveBindings=0,DriverLink=0,Options=0,DataSet=0,Font=0,Margins=0
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -1189,5 +1189,5 @@ ActiveTabID=ToolForm
 TabDockClients=ToolForm,TemplateView
 
 [ActiveProject]
-ActiveProject=5
+ActiveProject=1
 

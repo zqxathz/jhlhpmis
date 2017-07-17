@@ -14,11 +14,20 @@ uses
   FireDAC.Comp.DataSet, System.Generics.Collections, System.Variants;
 
 type
-  TErrorRecordIDs = array of integer;
-
   TServerLog = class(TFileStream)
     public
       procedure SaveLog(msg: string);
+  end;
+
+  TServerLogThread = class(TThread)
+  private
+    FLogList:TStringList;
+  protected
+    procedure Execute; override;
+  public
+    constructor Create; overload;
+    destructor Destroy; override;
+    procedure AddLog(msg:string);
   end;
 
   TServerMethods = class(TDSServerModule)
@@ -41,7 +50,6 @@ type
       ARow: TFDDatSRow; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
     private
       { Private declarations }
-      FUpdateErrorRecords: TErrorRecordIDs;
       FErrorsList: TJSONObject;
       function GenerateErrorMessage: string;
     public
@@ -62,10 +70,17 @@ type
       function ShopperDataPost(AStream: TStream): string;
       function UseExpoIds: string;
       function ExpireExpoIds:string;
+      //测试用的
+      function test1:integer;
   end;
+
 
 const
   LogFilename = './server.log';
+
+var
+  One:Tobject;
+  ServerLogThread:TServerLogThread;
 
 implementation
 
@@ -358,7 +373,6 @@ begin
 end;
 
 
-
 function TServerMethods.ExpoData(username, password: string): TStream;
 begin
   Result := TMemoryStream.Create;
@@ -452,6 +466,11 @@ begin
 
 end;
 
+function TServerMethods.test1: integer;
+begin
+  Sleep(100000);
+end;
+
 function TServerMethods.UseExpoIds: string;
 begin
   Result := '';
@@ -521,6 +540,53 @@ begin
   len := Length(oString);
   if len > 0 then
     self.WriteBuffer(oString[1], len);
+end;
+
+{ TServerLogThread }
+
+procedure TServerLogThread.AddLog(msg: string);
+begin
+  if Assigned(FLogList) then
+  begin
+    FLogList.Add(msg);
+  end;
+end;
+
+constructor TServerLogThread.Create;
+begin
+  FLogList:=TStringList.Create;
+  Create(True);
+end;
+
+destructor TServerLogThread.Destroy;
+begin
+  if Assigned(FLogList) then FLogList.Free;
+  inherited;
+end;
+
+procedure TServerLogThread.Execute;
+var
+  Log:TServerLog;
+  I: Integer;
+begin
+  //inherited;
+  FreeOnTerminate:=true;
+  system.TMonitor.Enter(One);
+  try
+    if FLogList.Count = 0  then exit;
+    if not FileExists(LogFilename) then // 创建或者打开LOG文件
+      Log := TServerLog.Create(LogFilename, fmCreate)
+    else
+      Log := TServerLog.Create(LogFilename, fmOpenWrite);
+
+      for I := 0 to FLogList.Count-1 do
+      begin
+        Log.SaveLog(FLogList.Strings[i]);
+      end;
+  finally
+    FreeAndNil(Log);
+    system.TMonitor.Exit(One);
+  end;
 end;
 
 end.

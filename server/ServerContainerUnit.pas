@@ -23,6 +23,8 @@ type
       const Protocol, Context, User, Password: string; var valid: Boolean;
       UserRoles: TStrings);
     procedure DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
+    procedure DSTCPServerTransport1Disconnect(Event: TDSTCPDisconnectEventObject);
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -59,6 +61,17 @@ procedure TServerContainer1.DSServerClass1GetClass(
   DSServerClass: TDSServerClass; var PersistentClass: TPersistentClass);
 begin
   PersistentClass := ServerMethodsUnit.TServerMethods;
+end;
+
+procedure TServerContainer1.DSTCPServerTransport1Disconnect(Event: TDSTCPDisconnectEventObject);
+begin
+ Writeln(formatdatetime('hh:nn:ss',now));
+ Writeln(DSServer1.GetAllChannelNames.Count.ToString);
+end;
+
+procedure TServerContainer1.DataModuleCreate(Sender: TObject);
+begin
+  One:=Tobject.create;
 end;
 
 procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(
