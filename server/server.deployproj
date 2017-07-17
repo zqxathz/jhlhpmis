@@ -23,7 +23,7 @@
         <DeployFile Include="alidayu.cfg" Condition="'$(Config)'=='Release'">
             <RemoteDir>server\</RemoteDir>
             <RemoteName>alidayu.cfg</RemoteName>
-            <DeployClass>File</DeployClass>
+            <DeployClass>ProjectFile</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>

@@ -33,13 +33,14 @@ type
 procedure RunDSServer;
 
 implementation
+uses ServerMethodsUnit,ServerConst, Serverdm;
 
 {%CLASSGROUP 'System.Classes.TPersistent'}
 
 
 {$R *.dfm}
 
-uses ServerMethodsUnit,ServerConst;
+
 
 procedure TServerContainer1.DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
 begin
@@ -59,11 +60,13 @@ end;
 procedure TServerContainer1.DataModuleCreate(Sender: TObject);
 begin
   One:=Tobject.create;
+  ServerDataModule:=TServerDataModule.Create(nil);
 end;
 
 procedure TServerContainer1.DataModuleDestroy(Sender: TObject);
 begin
   if Assigned(one) then one.Free;
+  if Assigned(ServerDataModule) then ServerDataModule.free;
 end;
 
 procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(
@@ -72,7 +75,11 @@ procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(
 begin
   { TODO : Validate the client user and password.
     If role-based authorization is needed, add role names to the UserRoles parameter  }
-  valid := True;
+  //valid := True;
+  if assigned(ServerDataModule) then
+  begin
+    valid:=ServerDataModule.verifyMember(User,Password);
+  end;
 end;
 
 procedure TServerContainer1.DSAuthenticationManager1UserAuthorize(

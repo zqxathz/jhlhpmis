@@ -36,7 +36,7 @@ object ServerMethods: TServerMethods
     Connection = FDConnection1
     SQL.Strings = (
       'select * from jhlh_crm_customerstype where status=1 and trash=0')
-    Left = 520
+    Left = 512
     Top = 400
   end
   object paytypeFDQuery: TFDQuery
@@ -46,8 +46,8 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_pmis_paytype where status=1 and trash=0')
-    Left = 704
-    Top = 408
+    Left = 744
+    Top = 400
   end
   object expotypeFDQuery: TFDQuery
     Connection = FDConnection1
@@ -56,8 +56,8 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_pmis_expotype where status=1 and trash=0')
-    Left = 616
-    Top = 408
+    Left = 624
+    Top = 400
   end
   object shoppersourceFDQuery: TFDQuery
     Connection = FDConnection1
@@ -66,7 +66,7 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_pmis_shopper_sourcetype where status=1')
-    Left = 312
+    Left = 288
     Top = 400
   end
   object customerFDQuery: TFDQuery
@@ -126,8 +126,8 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
       'select * from jhlh_admin_member where locked=0')
-    Left = 408
-    Top = 408
+    Left = 392
+    Top = 400
   end
   object CustomerRemoveFDCommand: TFDCommand
     Connection = FDConnection1
@@ -159,8 +159,8 @@ object ServerMethods: TServerMethods
         'JOIN jhlh_pmis_expo on jhlh_pmis_expo.id = jhlh_pmis_customers.e' +
         'id and jhlh_pmis_expo.clientvisable=1'
       'where jhlh_pmis_customers.create_member=:memberid')
-    Left = 664
-    Top = 304
+    Left = 872
+    Top = 400
     ParamData = <
       item
         Name = 'MEMBERID'

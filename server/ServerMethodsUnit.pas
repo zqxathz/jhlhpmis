@@ -3,31 +3,50 @@ unit ServerMethodsUnit;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Json,
+  System.SysUtils,
+  System.Classes,
+  System.Json,
   DataSnap.DSProviderDataModuleAdapter,
-  DataSnap.DSServer, DataSnap.DSAuth, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
-  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
-  FireDAC.Phys.MySQLDef, FireDAC.ConsoleUI.Wait, Data.DB, FireDAC.Comp.Client,
-  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  DataSnap.DSServer,
+  DataSnap.DSAuth,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Phys.MySQL,
+  FireDAC.Phys.MySQLDef,
+  FireDAC.ConsoleUI.Wait,
+  Data.DB,
+  FireDAC.Comp.Client,
+  FireDAC.Stan.Param,
+  FireDAC.DatS,
+  FireDAC.DApt.Intf,
+  FireDAC.DApt,
   FireDAC.Stan.StorageBin,
-  FireDAC.Comp.DataSet, System.Generics.Collections, System.Variants;
+  FireDAC.Comp.DataSet,
+  System.Generics.Collections,
+  System.Variants;
 
 type
   TServerLog = class(TFileStream)
-    public
-      procedure SaveLog(msg: string);
+  public
+    procedure SaveLog(msg: string);
   end;
 
   TServerLogThread = class(TThread)
   private
-    FLogList:TStringList;
+    FLogList: TStringList;
   protected
     procedure Execute; override;
   public
     constructor Create; overload;
     destructor Destroy; override;
-    procedure AddLog(msg:string);
+    procedure AddLog(msg: string);
   end;
 
   TServerMethods = class(TDSServerModule)
@@ -46,41 +65,39 @@ type
     CustomerRemoveFDCommand: TFDCommand;
     expireExpoFDQuery: TFDQuery;
     getcustomerFDQuery: TFDQuery;
-    procedure customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException;
-      ARow: TFDDatSRow; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
-    private
+    procedure customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
+  private
       { Private declarations }
-      FErrorsList: TJSONObject;
-      function GenerateErrorMessage: string;
-    public
+    FErrorsList: TJSONObject;
+    function GenerateErrorMessage: string;
+  public
       { Public declarations }
       // Delhpi自己生成的例子方法
-      function EchoString(Value: string): string;
-      function ReverseString(Value: string): string;
+    function EchoString(Value: string): string;
+    function ReverseString(Value: string): string;
       // 获取服务器数据的方法
-      function ExpoData(username: string; password: string): TStream;
-      function CustomertypeData(username: string; password: string): TStream;
-      function PaytypeData(username: string; password: string): TStream;
-      function ExpoTypeData(username: string; password: string): TStream;
-      function ShopperSourceData(username: string; password: string): TStream;
-      function MemberData: TStream;
-      function CustomerData(memberid:integer=0):TStream;
+    function ExpoData(username: string; password: string): TStream;
+    function CustomertypeData(username: string; password: string): TStream;
+    function PaytypeData(username: string; password: string): TStream;
+    function ExpoTypeData(username: string; password: string): TStream;
+    function ShopperSourceData(username: string; password: string): TStream;
+    function MemberData: TStream;
+    function CustomerData(memberid: integer = 0): TStream;
       // 上传数据到服务器的方法
-      function CustomerDataPost(AStream: TStream): string;
-      function ShopperDataPost(AStream: TStream): string;
-      function UseExpoIds: string;
-      function ExpireExpoIds:string;
+    function CustomerDataPost(AStream: TStream): string;
+    function ShopperDataPost(AStream: TStream): string;
+    function UseExpoIds: string;
+    function ExpireExpoIds: string;
       //测试用的
-      function test1:integer;
+    function test1: integer;
   end;
-
 
 const
   LogFilename = './server.log';
 
 var
-  One:Tobject;
-  log:TServerLogThread;
+  One: Tobject;
+  log: TServerLogThread;
 
 implementation
 
@@ -88,7 +105,9 @@ implementation
 {$R *.dfm}
 
 uses
-  System.StrUtils, System.DateUtils, Alidayu;
+  System.StrUtils,
+  System.DateUtils,
+  Alidayu;
 
 // 复制流到内存流
 function CopyStream(const AStream: TStream): TMemoryStream;
@@ -126,7 +145,7 @@ begin
   if AStream.Size = 0 then
     exit;
 
-  log:=TServerLogThread.Create;
+  log := TServerLogThread.Create;
 
   Log.AddLog('Start append shopper data');
 
@@ -203,7 +222,7 @@ begin
 
   Result := '';
 
-  log:=TServerLogThread.Create;
+  log := TServerLogThread.Create;
 
   Log.AddLog('Start append customer data');
   FErrorsList := TJSONObject.Create; // 创建一个JsonObject用来更新出错记录的数据
@@ -257,18 +276,17 @@ begin
   end;
 end;
 
-procedure TServerMethods.customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException;
-  ARow: TFDDatSRow; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
+procedure TServerMethods.customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
 var
   LDataStr: string;
 begin
-  if AException.FDCode<>1100 then
+  if AException.FDCode <> 1100 then
   begin
     try
       try
         if not VarIsNull(ARow.GetData('id')) then
           LDataStr := ARow.GetData('id');
-        FErrorsList.AddPair(AException.Message+','+AException.FDCode.ToString, LDataStr);
+        FErrorsList.AddPair(AException.Message + ',' + AException.FDCode.ToString, LDataStr);
       except
 
       end;
@@ -278,27 +296,23 @@ begin
   end
   else
   begin
-    AAction:=eaSkip;
+    AAction := eaSkip;
   end;
 end;
 
 function TServerMethods.GenerateErrorMessage: string;
-var
-  I: integer;
-  LJSONObject: TJSONObject;
-  LJSONArray: TJSONArray;
 begin
   //
 end;
 
-function TServerMethods.CustomerData(memberid: integer=0): TStream;
+function TServerMethods.CustomerData(memberid: integer = 0): TStream;
 begin
   Result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
       getcustomerFDQuery.Close;
-      getcustomerFDQuery.Params.Items[0].AsInteger:=memberid;
+      getcustomerFDQuery.Params.Items[0].AsInteger := memberid;
       getcustomerFDQuery.Open;
       getcustomerFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
       Result.Position := 0;
@@ -365,7 +379,6 @@ function TServerMethods.EchoString(Value: string): string;
 begin
   Result := Value;
 end;
-
 
 function TServerMethods.ExpoData(username, password: string): TStream;
 begin
@@ -462,7 +475,8 @@ end;
 
 function TServerMethods.test1: integer;
 begin
-  Sleep(100000);
+  {$IFDEF DEBUG}
+  {$ENDIF}
 end;
 
 function TServerMethods.UseExpoIds: string;
@@ -479,7 +493,7 @@ begin
         Result := Result + ',' + expoFDQuery.FieldByName('id').AsString;
         expoFDQuery.Next;
       end;
-      delete(result,1,1);
+      delete(result, 1, 1);
     end
   finally
     expoFDQuery.Close;
@@ -501,7 +515,7 @@ begin
         Result := Result + ',' + expireExpoFDQuery.FieldByName('id').AsString;
         expireExpoFDQuery.Next;
       end;
-      delete(result,1,1);
+      delete(result, 1, 1);
     end
   finally
     expireExpoFDQuery.Close;
@@ -548,35 +562,37 @@ end;
 
 constructor TServerLogThread.Create;
 begin
-  FLogList:=TStringList.Create;
+  FLogList := TStringList.Create;
   Create(True);
 end;
 
 destructor TServerLogThread.Destroy;
 begin
-  if Assigned(FLogList) then FLogList.Free;
+  if Assigned(FLogList) then
+    FLogList.Free;
   inherited;
 end;
 
 procedure TServerLogThread.Execute;
 var
-  Log:TServerLog;
+  Log: TServerLog;
   I: Integer;
 begin
   //inherited;
-  FreeOnTerminate:=true;
+  FreeOnTerminate := true;
   system.TMonitor.Enter(One);
   try
-    if FLogList.Count = 0  then exit;
+    if FLogList.Count = 0 then
+      exit;
     if not FileExists(LogFilename) then // 创建或者打开LOG文件
       Log := TServerLog.Create(LogFilename, fmCreate)
     else
       Log := TServerLog.Create(LogFilename, fmOpenWrite);
 
-      for I := 0 to FLogList.Count-1 do
-      begin
-        Log.SaveLog(FLogList.Strings[i]);
-      end;
+    for I := 0 to FLogList.Count - 1 do
+    begin
+      Log.SaveLog(FLogList.Strings[I]);
+    end;
   finally
     FLogList.Clear;
     FreeAndNil(Log);
@@ -585,3 +601,4 @@ begin
 end;
 
 end.
+

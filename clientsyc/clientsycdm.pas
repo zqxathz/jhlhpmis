@@ -7,7 +7,8 @@ uses
   IPPeerClient, Data.DB, Data.SqlExpr, Data.DbxHTTPLayer, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Stan.StorageBin,Vcl.Dialogs,System.JSON,System.Variants;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Stan.StorageBin,Vcl.Dialogs,System.JSON,System.Variants,
+  Datasnap.DBClient, Data.DBXTrace;
 
 type
   TclientsycDataModule = class(TDataModule)
@@ -110,14 +111,20 @@ begin
  FOnExec:=nil;
  FSyncError:=false;
  FCantConnection:=false;
- SQLConnection1.Params.Values['DSAuthenticationPassword']:=clientuser.Password;
+ //SQLConnection1.Params.Values['DSAuthenticationPassword']:=clientuser.Password;
  SQLConnection1.Params.Values['DSAuthenticationUser']:=clientuser.Username;
  try
    SQLConnection1.Open;
  except
-   FCantConnection:=true;
-   //raise Exception.Create('Error Message');
+   on E: Exception do
+   begin
+     FCantConnection:=true;
+
+     raise Exception.Create(TDBXError(E).ErrorCode.ToString);
+   end;
+
  end;
+
  expotypeFDQuery.Connection:=connectionDataModule.mainFDConnection;
  expoFDQuery.Connection:=connectionDataModule.mainFDConnection;
  customertypeFDQuery.Connection:= connectionDataModule.mainFDConnection;
