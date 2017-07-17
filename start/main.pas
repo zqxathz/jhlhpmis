@@ -23,7 +23,11 @@ uses
   dxCustomTileControl,
   cxClasses,
   dxTileControl,
-  shopper, Vcl.StdCtrls,customer,clientsyc,clientuploadfrm;
+  shopper,
+  Vcl.StdCtrls,
+  customer,
+  clientsyc,
+  clientuploadfrm;
 
 type
   Tmainform = class(TForm)
@@ -46,18 +50,18 @@ type
     procedure dxTileControl1Item1Click(Sender: TdxTileControlItem);
     procedure RzPageControl1Close(Sender: TObject; var AllowClose: Boolean);
     procedure RzPageControl1Change(Sender: TObject);
-    procedure RzPageControl1MouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
+    procedure RzPageControl1MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure N1Click(Sender: TObject);
     procedure dxTileControl1Item2Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item3Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item4Click(Sender: TdxTileControlItem);
     procedure dxTileControl1Item5Click(Sender: TdxTileControlItem);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure dxTileControl1Item6Click(Sender: TdxTileControlItem);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
-    bplshopperframe1:  Tbplshopperframe;
+    bplshopperframe1: Tbplshopperframe;
     bplcustomerframe: TbplCustomerFrame;
     bplclientsycframe: TclientsycFrame;
     bplclientuploadframe: TbplclientuploadFrame;
@@ -72,6 +76,35 @@ var
 implementation
 
 {$R *.dfm}
+function GetBuildInfo: string; //获取版本号
+var
+  verinfosize: DWORD;
+  verinfo: pointer;
+  vervaluesize: dword;
+  vervalue: pvsfixedfileinfo;
+  dummy: dword;
+  v1, v2, v3, v4: word;
+begin
+  verinfosize := getfileversioninfosize(pchar(paramstr(0)), dummy);
+  if verinfosize = 0 then
+  begin
+    dummy := getlasterror;
+    result := '0.0.0.0';
+  end;
+  getmem(verinfo, verinfosize);
+  //getfileversioninfo(pchar(paramstr(0)), 0, verinfosize, verinfo);
+  getfileversioninfo(pchar('C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\Win64\customer.bpl'), 0, verinfosize, verinfo);
+  verqueryvalue(verinfo, '\', pointer(vervalue), vervaluesize);
+  with vervalue^ do
+  begin
+    v1 := dwfileversionms shr 16;
+    v2 := dwfileversionms and $ffff;
+    v3 := dwfileversionls shr 16;
+    v4 := dwfileversionls and $ffff;
+  end;
+  result := inttostr(v1) + '.' + inttostr(v2) + '.' + inttostr(v3) + '.' + inttostr(v4);
+  freemem(verinfo, verinfosize);
+end;
 
 procedure Tmainform.dxTileControl1Item1Click(Sender: TdxTileControlItem);
 var
@@ -155,7 +188,7 @@ begin
   menutabsheet.PageControl := RzPageControl1;
   // if bplshopperframe = nil then
   begin
-    bplcustomerframe:= Tbplcustomerframe.Create(menutabsheet);
+    bplcustomerframe := Tbplcustomerframe.Create(menutabsheet);
     bplcustomerframe.Name := 'customerinputer';
     bplcustomerframe.Align := alClient;
   end;
@@ -186,18 +219,18 @@ begin
   menutabsheet.PageControl := RzPageControl1;
   // if bplshopperframe = nil then
   begin
-  try
-    bplclientsycFrame:= TclientsycFrame.Create(menutabsheet);
-    bplclientsycFrame.Name := 'clientsyc';
-    bplclientsycFrame.Align := alClient;
+    try
+      bplclientsycFrame := TclientsycFrame.Create(menutabsheet);
+      bplclientsycFrame.Name := 'clientsyc';
+      bplclientsycFrame.Align := alClient;
 
-    RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
-    bplclientsycFrame.Parent := RzPageControl1.ActivePage;
-  except
-    FreeAndNil(menutabsheet);
-    FreeAndNil(bplclientsycframe);
-    raise;
-  end;
+      RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
+      bplclientsycFrame.Parent := RzPageControl1.ActivePage;
+    except
+      FreeAndNil(menutabsheet);
+      FreeAndNil(bplclientsycframe);
+      raise;
+    end;
   end;
 end;
 
@@ -221,29 +254,35 @@ begin
   menutabsheet.PageControl := RzPageControl1;
   // if bplshopperframe = nil then
   begin
-  try
-    bplclientuploadFrame:= TbplclientuploadFrame.Create(menutabsheet);
-    bplclientuploadFrame.Name := 'clientupload';
-    bplclientuploadFrame.Align := alClient;
+    try
+      bplclientuploadFrame := TbplclientuploadFrame.Create(menutabsheet);
+      bplclientuploadFrame.Name := 'clientupload';
+      bplclientuploadFrame.Align := alClient;
 
-    RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
-    bplclientuploadFrame.Parent := RzPageControl1.ActivePage;
-  except
-    FreeAndNil(menutabsheet);
-    FreeAndNil(bplclientuploadFrame);
-    raise;
+      RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
+      bplclientuploadFrame.Parent := RzPageControl1.ActivePage;
+    except
+      FreeAndNil(menutabsheet);
+      FreeAndNil(bplclientuploadFrame);
+      raise;
+    end;
   end;
-  end;
+end;
+
+procedure Tmainform.dxTileControl1Item6Click(Sender: TdxTileControlItem);
+begin
+  showmessage(GetBuildInfo);
 end;
 
 procedure Tmainform.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if Assigned(bplclientuploadFrame) and bplclientuploadframe.IsUploading then
   begin
-    CanClose:=false;
+    CanClose := false;
     showmessage('正在上传数据,请稍后关闭软件');
   end
-  else  CanClose:=true;
+  else
+    CanClose := true;
 end;
 
 procedure Tmainform.FormCreate(Sender: TObject);
@@ -289,24 +328,21 @@ end;
 procedure Tmainform.RzPageControl1Change(Sender: TObject);
 begin
   RzPageControl1.ShowCloseButton := RzPageControl1.ActivePageIndex > 0;
-  RzPageControl1.ShowCloseButtonOnActiveTab :=
-    RzPageControl1.ActivePageIndex > 0;
+  RzPageControl1.ShowCloseButtonOnActiveTab := RzPageControl1.ActivePageIndex > 0;
 end;
 
-procedure Tmainform.RzPageControl1Close(Sender: TObject;
-  var AllowClose: Boolean);
+procedure Tmainform.RzPageControl1Close(Sender: TObject; var AllowClose: Boolean);
 begin
   if RzPageControl1.ActivePageIndex > 0 then
   begin
-    AllowClose:=false;
+    AllowClose := false;
     if Assigned(bplclientuploadframe) then
       if bplclientuploadframe.IsUploading then
       begin
         showmessage('正在上传中,目前不能关闭当前标签');
         exit;
       end;
-    if MessageBox(self.Handle, '是否要关闭当前标签', '', MB_ICONQUESTION + MB_OkCancel)
-      <> mrOk then
+    if MessageBox(self.Handle, '是否要关闭当前标签', '', MB_ICONQUESTION + MB_OkCancel) <> mrOk then
       exit;
 
     AllowClose := true;
@@ -318,8 +354,7 @@ begin
   end;
 end;
 
-procedure Tmainform.RzPageControl1MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure Tmainform.RzPageControl1MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
   p: Tpoint;
   index: Integer;
@@ -337,3 +372,4 @@ begin
 end;
 
 end.
+

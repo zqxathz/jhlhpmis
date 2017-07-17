@@ -107,10 +107,6 @@ object mainform: Tmainform
     FixedDimension = 32
     object TabSheet1: TRzTabSheet
       Caption = ' '#39318#39029' '
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object dxTileControl1: TdxTileControl
         Left = 0
         Top = 0
@@ -239,6 +235,7 @@ object mainform: Tmainform
           Text2.AssignedValues = []
           Text3.AssignedValues = []
           Text4.AssignedValues = []
+          OnClick = dxTileControl1Item6Click
         end
       end
     end

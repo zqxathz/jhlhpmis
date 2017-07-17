@@ -74,13 +74,18 @@ end;
 constructor TclientsycFrame.Create(AOwner: TComponent);
 begin
   inherited;
-  if clientsycDataModule=nil then
-        clientsycDataModule:=TclientsycDataModule.Create(self);
+    if clientsycDataModule=nil then
+       clientsycDataModule:=TclientsycDataModule.Create(self);
+
 
   Button1.Enabled:=clientsycDataModule.SQLConnection1.Connected;
   if clientsycDataModule.CantConnection then
-      raise Exception.Create('无法连接到服务器,请稍后再试!');
-
+  begin
+     if clientsycDataModule.ErrorMsg='远程错误: 服务器拒绝当前用户登录' then
+       raise Exception.Create(clientsycDataModule.ErrorMsg)
+     else
+       raise Exception.Create('无法连接到服务器,请稍后再试!');
+  end;
 end;
 
 destructor TclientsycFrame.Destroy;

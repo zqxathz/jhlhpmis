@@ -8,7 +8,8 @@ uses
   ServerConst in 'ServerConst.pas',
   ServerContainerUnit in 'ServerContainerUnit.pas' {ServerContainer1: TDataModule},
   Alidayu in 'Alidayu.pas',
-  Serverdm in 'Serverdm.pas' {ServerDataModule: TDataModule};
+  Serverdm in 'Serverdm.pas' {ServerDataModule: TDataModule},
+  Data.DBXClientResStrs in 'Data.DBXClientResStrs.pas';
 
 begin
   try

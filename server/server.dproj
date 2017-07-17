@@ -109,6 +109,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Data.DBXClientResStrs.pas"/>
         <None Include="alidayu.cfg"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

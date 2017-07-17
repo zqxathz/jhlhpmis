@@ -34,6 +34,7 @@ type
     FErrorJson:TJsonObject;
   public
     { Public declarations }
+    ErrorMsg:string;
     function test:string;
     procedure openexpodata;
     procedure GetExpoData;
@@ -119,10 +120,9 @@ begin
    on E: Exception do
    begin
      FCantConnection:=true;
-
-     raise Exception.Create(TDBXError(E).ErrorCode.ToString);
+     ErrorMsg:=E.Message;
+     //raise  Exception.Create(E.Message);
    end;
-
  end;
 
  expotypeFDQuery.Connection:=connectionDataModule.mainFDConnection;
