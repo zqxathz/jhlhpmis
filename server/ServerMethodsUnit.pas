@@ -80,7 +80,7 @@ const
 
 var
   One:Tobject;
-  ServerLogThread:TServerLogThread;
+  log:TServerLogThread;
 
 implementation
 
@@ -120,29 +120,24 @@ var
   LErrors: integer;
   count: int64;
   starttime, endtime: TDateTime;
-  Log: TServerLog;
   Dayu: TAlidayu;
   send_message: string;
 begin
   if AStream.Size = 0 then
     exit;
-  if not FileExists(LogFilename) then // 创建或者打开LOG文件
-  begin
-    Log := TServerLog.Create(LogFilename, fmCreate);
-    writeln('file not exists');
-  end
-  else
-    Log := TServerLog.Create(LogFilename, fmOpenWrite);
 
-  Log.SaveLog('Start append shopper data');
+  log:=TServerLogThread.Create;
+
+  Log.AddLog('Start append shopper data');
+
   FErrorsList := TJSONObject.Create;
   LMemStream := CopyStream(AStream);
-  Log.SaveLog('stream size:' + LMemStream.Size.ToString); // LOG 流的大小
+  Log.AddLog('stream size:' + LMemStream.Size.ToString); // LOG 流的大小
   LMemStream.Position := 0;
   try
     shopperFDQuery.Close;
     shopperFDQuery.LoadFromStream(LMemStream, TFDStorageFormat.sfBinary);
-    Log.SaveLog('record count:' + shopperFDQuery.RecordCount.ToString);
+    Log.AddLog('record count:' + shopperFDQuery.RecordCount.ToString);
     // LOG 本次更新的记录数
 
     starttime := now();
@@ -163,7 +158,7 @@ begin
     endtime := now();
     count := MilliSecondsBetween(endtime, starttime);
 
-    Log.SaveLog('time count:' + count.ToString); // LOG插入数据用时
+    Log.AddLog('time count:' + count.ToString); // LOG插入数据用时
   finally
     customerFDQuery.Close;
     LMemStream.Free;
@@ -171,11 +166,12 @@ begin
     if LErrors <> 0 then
     begin
       Result := FErrorsList.ToJSON; // 返回出错数据
-      Log.SaveLog('error message:' + Result); // Log出错数据
+      Log.AddLog('error message:' + Result); // Log出错数据
     end;
-    Log.SaveLog('------------------------');
+    Log.AddLog('------------------------');
     FErrorsList.Free; // 释放Josn对象
-    FreeAndNil(Log); // 关闭Log文件
+    //FreeAndNil(Log); // 关闭Log文件
+    log.Start;
   end;
   // 通过阿里大于发送短信给管理员
   Dayu := TAlidayu.Create;
@@ -199,7 +195,6 @@ var
   LErrors: integer;
   count: int64;
   starttime, endtime: TDateTime;
-  Log: TServerLog;
   Dayu: TAlidayu;
   send_message: string;
 begin
@@ -207,21 +202,19 @@ begin
     exit;
 
   Result := '';
-  if not FileExists(LogFilename) then // 创建或者打开LOG文件
-    Log := TServerLog.Create(LogFilename, fmCreate)
-  else
-    Log := TServerLog.Create(LogFilename, fmOpenWrite);
 
-  Log.SaveLog('Start append customer data');
+  log:=TServerLogThread.Create;
+
+  Log.AddLog('Start append customer data');
   FErrorsList := TJSONObject.Create; // 创建一个JsonObject用来更新出错记录的数据
   LMemStream := CopyStream(AStream); // 将Stream转换成内存流
-  Log.SaveLog('stream size:' + LMemStream.Size.ToString); // LOG 流的大小
+  Log.AddLog('stream size:' + LMemStream.Size.ToString); // LOG 流的大小
   LMemStream.Position := 0;
   try
     customerFDQuery.Close;
     customerFDQuery.LoadFromStream(LMemStream, TFDStorageFormat.sfBinary);
     // Query组件加载流
-    Log.SaveLog('record count:' + customerFDQuery.RecordCount.ToString);
+    Log.AddLog('record count:' + customerFDQuery.RecordCount.ToString);
     // LOG 本次更新的记录数
     starttime := now(); // 当前时间
     FDConnection1.StartTransaction; // 开始事务
@@ -240,7 +233,7 @@ begin
     end;
     endtime := now(); // 当前时间
     count := MilliSecondsBetween(endtime, starttime); // 计算插入数据耗时
-    Log.SaveLog('time count:' + count.ToString); // LOG插入数据用时
+    Log.AddLog('time count:' + count.ToString); // LOG插入数据用时
   finally
     customerFDQuery.Close; // 关闭Query组件
     LMemStream.Free; // 释放内存流
@@ -248,11 +241,12 @@ begin
     if LErrors > 0 then // 出错返回错误数据
     begin
       Result := FErrorsList.ToJSON;
-      Log.SaveLog('error message:' + Result); // Log出错数据
+      Log.AddLog('error message:' + Result); // Log出错数据
     end;
-    Log.SaveLog('------------------------'); // Log文件分割线
+    Log.AddLog('------------------------'); // Log文件分割线
     FErrorsList.Free; // 释放Josn对象
-    FreeAndNil(Log); // 关闭Log文件
+    //FreeAndNil(Log); // 关闭Log文件
+    Log.Start;
   end;
   // 通过阿里大于发送短信给管理员
   Dayu := TAlidayu.Create;
@@ -584,6 +578,7 @@ begin
         Log.SaveLog(FLogList.Strings[i]);
       end;
   finally
+    FLogList.Clear;
     FreeAndNil(Log);
     system.TMonitor.Exit(One);
   end;

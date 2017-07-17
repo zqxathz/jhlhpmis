@@ -16,6 +16,7 @@ type
     shopperFDQuery: TFDQuery;
     FDStanStorageBinLink1: TFDStanStorageBinLink;
     FDTransaction1: TFDTransaction;
+    setshopperautoincFDCommand: TFDCommand;
     procedure DataModuleCreate(Sender: TObject);
     private
       { Private declarations }
@@ -174,6 +175,7 @@ begin
     FDTransaction1.StartTransaction; // 本地事务开启,用于删除本地已经提交完成的记录
     try
       shopperFDQuery.ServerDeleteAll;
+      setshopperautoincFDCommand.Execute;
       LResponseMessage := TServerMethodsClient(server).ShopperDataPost(stream); // 上传本地数据到服务器
       if LResponseMessage = '' then
       begin
@@ -211,6 +213,7 @@ procedure TclientuploadDataModule.DataModuleCreate(Sender: TObject);
 begin
   customerFDQuery.Connection := connectionDataModule.mainFDConnection;
   shopperFDQuery.Connection := connectionDataModule.mainFDConnection;
+  setshopperautoincFDCommand.Connection:=connectionDataModule.mainFDConnection;
   FDTransaction1.Connection := connectionDataModule.mainFDConnection;
 end;
 

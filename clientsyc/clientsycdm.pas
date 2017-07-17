@@ -110,6 +110,8 @@ begin
  FOnExec:=nil;
  FSyncError:=false;
  FCantConnection:=false;
+ SQLConnection1.Params.Values['DSAuthenticationPassword']:=clientuser.Password;
+ SQLConnection1.Params.Values['DSAuthenticationUser']:=clientuser.Username;
  try
    SQLConnection1.Open;
  except

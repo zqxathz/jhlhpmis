@@ -104,6 +104,7 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Alidayu.pas"/>
+        <None Include="alidayu.cfg"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -126,9 +127,9 @@
                 </Source>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="alidayu.cfg" Configuration="Release" Class="File">
+                <DeployFile LocalName="alidayu.cfg" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Linux64">
-                        <RemoteName>alidayu.cfg</RemoteName>
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

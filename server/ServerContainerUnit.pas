@@ -23,8 +23,8 @@ type
       const Protocol, Context, User, Password: string; var valid: Boolean;
       UserRoles: TStrings);
     procedure DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
-    procedure DSTCPServerTransport1Disconnect(Event: TDSTCPDisconnectEventObject);
     procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,19 +42,12 @@ implementation
 uses ServerMethodsUnit,ServerConst;
 
 procedure TServerContainer1.DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
-var
-  Log:TServerLog;
 begin
-  if not FileExists(LogFilename) then // 创建或者打开LOG文件
-  begin
-    Log := TServerLog.Create(LogFilename, fmCreate);
-  end
-  else
-    Log := TServerLog.Create(LogFilename, fmOpenWrite);
-  Log.SaveLog('username:'+DSPrepareEventObject.UserName);
-  Log.SaveLog('ip:'+DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
-  Log.SaveLog('exect:'+DSPrepareEventObject.MethodAlias); //Log调用方法
-  FreeAndNil(Log);
+  Log:=TServerLogThread.Create;
+  Log.AddLog('username:'+DSPrepareEventObject.UserName);
+  Log.AddLog('ip:'+DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
+  Log.AddLog('exect:'+DSPrepareEventObject.MethodAlias); //Log调用方法
+  Log.start;
 end;
 
 procedure TServerContainer1.DSServerClass1GetClass(
@@ -63,15 +56,14 @@ begin
   PersistentClass := ServerMethodsUnit.TServerMethods;
 end;
 
-procedure TServerContainer1.DSTCPServerTransport1Disconnect(Event: TDSTCPDisconnectEventObject);
-begin
- Writeln(formatdatetime('hh:nn:ss',now));
- Writeln(DSServer1.GetAllChannelNames.Count.ToString);
-end;
-
 procedure TServerContainer1.DataModuleCreate(Sender: TObject);
 begin
   One:=Tobject.create;
+end;
+
+procedure TServerContainer1.DataModuleDestroy(Sender: TObject);
+begin
+  if Assigned(one) then one.Free;
 end;
 
 procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(

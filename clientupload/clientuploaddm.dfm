@@ -56,4 +56,11 @@ object clientuploadDataModule: TclientuploadDataModule
     Left = 528
     Top = 240
   end
+  object setshopperautoincFDCommand: TFDCommand
+    Transaction = FDTransaction1
+    CommandText.Strings = (
+      'update sqlite_sequence set seq=0 where name='#39'jhlh_pmis_shopper'#39)
+    Left = 568
+    Top = 328
+  end
 end
