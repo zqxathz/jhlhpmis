@@ -26,7 +26,7 @@
     <Transaction>2017/07/17 23:01:36.000.018,=D:\Develop\jhql\server\Unit1.pas</Transaction>
     <Transaction>2017/07/17 23:02:02.000.648,D:\Develop\jhql\server\Unit1.pas=D:\Develop\jhql\server\Serverdm.pas</Transaction>
     <Transaction>2017/07/17 23:02:02.000.648,D:\Develop\jhql\server\Unit1.dfm=D:\Develop\jhql\server\Serverdm.dfm</Transaction>
-    <Transaction>2017/07/18 01:50:16.679,=D:\Develop\jhql\server\Data.DBXClientResStrs.pas</Transaction>
+    <Transaction>2017/07/18 01:50:16.000.679,=D:\Develop\jhql\server\Data.DBXClientResStrs.pas</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
 		<NoProfile iOSSimulator="iPhone5" Android="mytest"/>

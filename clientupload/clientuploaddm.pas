@@ -23,6 +23,8 @@ type
       FOnExec: TGetStrProc; // 事件:用来输出相关执行信息到主界面
     public
       { Public declarations }
+      ServerError:boolean;
+      ServerErrorMsg:string;
       property OnExec: TGetStrProc read FOnExec write FOnExec; // 事件属性
       procedure CustomerDataUpload;
       procedure ShopperDataUpload;
@@ -137,8 +139,7 @@ begin
     if shopperFDQuery.State in dsEditModes then
       shopperFDQuery.Post;
   end
-  else
-    exit;
+  else exit;
 
   // 记录数为0就退出
   if shopperFDQuery.RecordCount = 0 then
@@ -160,8 +161,7 @@ begin
 
   // 将记录复制到内存表,并设置字段ID为不更新字段
   memtable.CopyDataSet(shopperFDQuery, [coStructure, coRestart, coAppend]);
-  memtable.FieldByName('id').ProviderFlags := memtable.FieldByName('id').ProviderFlags -
-    [pfInupdate];
+  memtable.FieldByName('id').ProviderFlags := memtable.FieldByName('id').ProviderFlags -[pfInupdate];
 
   // 建立内存流,并将内存表保存到流
   stream := TMemoryStream.Create;
@@ -169,22 +169,23 @@ begin
   memtable.SaveToStream(stream, TFDStorageFormat.sfBinary);
   stream.Position := 0;
 
-  SQLConnection1.Open;
-  server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
   try
-    FDTransaction1.StartTransaction; // 本地事务开启,用于删除本地已经提交完成的记录
     try
-      shopperFDQuery.ServerDeleteAll;
-      setshopperautoincFDCommand.Execute;
+      SQLConnection1.Open;
+      server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
+      FDTransaction1.StartTransaction; // 本地事务开启,用于删除本地已经提交完成的记录
+      shopperFDQuery.ServerDeleteAll;    //删除本地表中数据
+      setshopperautoincFDCommand.Execute; //重置自增字段
       LResponseMessage := TServerMethodsClient(server).ShopperDataPost(stream); // 上传本地数据到服务器
-      if LResponseMessage = '' then
+
+      if LResponseMessage = '' then //判断服务器是否返回出错信息
       begin
         FDTransaction1.Commit; // 本地事务提交,删除本地数据
         if Assigned(FOnExec) then
           FOnExec('本地顾客数据已经删除');
       end
       else
-        FDTransaction1.Rollback;
+        FDTransaction1.Rollback;    //服务器如果发生异常,本地事务回滚
     except
       On E: Exception do
       begin
@@ -211,6 +212,25 @@ end;
 
 procedure TclientuploadDataModule.DataModuleCreate(Sender: TObject);
 begin
+  ServerError:=false;
+
+  SQLConnection1.Params.Values['DSAuthenticationPassword']:=clientuser.Password;
+  SQLConnection1.Params.Values['DSAuthenticationUser']:=clientuser.Username;
+  try
+    try
+      SQLConnection1.Open;
+    except
+      on E:Exception do
+      begin
+        ServerError:=true;
+        ServerErrorMsg:=E.Message;
+        exit;
+      end;
+    end;
+  finally
+    SQLConnection1.Close;
+  end;
+
   customerFDQuery.Connection := connectionDataModule.mainFDConnection;
   shopperFDQuery.Connection := connectionDataModule.mainFDConnection;
   setshopperautoincFDCommand.Connection:=connectionDataModule.mainFDConnection;

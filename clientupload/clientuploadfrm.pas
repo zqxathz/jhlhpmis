@@ -89,8 +89,15 @@ end;
 constructor TbplclientuploadFrame.Create(AOwner: TComponent);
 begin
   inherited;
-  clientuploadDataModule:=TclientuploadDataModule.Create(self);
   FUploading:=false;
+  clientuploadDataModule:=TclientuploadDataModule.Create(self);
+  if clientuploadDataModule.ServerError then
+  begin
+   if clientuploadDataModule.ServerErrorMsg='远程错误: 服务器拒绝当前用户登录' then
+     raise Exception.Create(clientuploadDataModule.ServerErrorMsg)
+   else
+     raise Exception.Create('无法连接到服务器,请稍后再试!');
+  end;
 end;
 
 destructor TbplclientuploadFrame.Destroy;

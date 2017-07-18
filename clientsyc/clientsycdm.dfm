@@ -23,23 +23,7 @@ object clientsycDataModule: TclientsycDataModule
       'CommunicationTimeout=5000'
       'CommunicationIPVersion=IP_IPv4'
       'DSAuthenticationPassword=111'
-      'DSAuthenticationUser=111'
-      'DelegateConnection=DBXTrace'
-      
-        'DBXTrace.TraceFlags=PARAMETER;ERROR;EXECUTE;COMMAND;CONNECT;TRAN' +
-        'SACT;BLOB;MISC;VENDOR;READER;DRIVER_LOAD;METADATA'
-      'DBXTrace.DriverUnit=Data.DBXTrace'
-      'DBXTrace.DelegateDriver=True'
-      'DBXTrace.DriverName=DBXTrace'
-      
-        'DBXTrace.DriverPackageLoader=TDBXTraceDriverLoader,DBXCommonDriv' +
-        'er250.bpl'
-      
-        'DBXTrace.DriverAssemblyLoader=Borland.Data.TDBXTraceDriverLoader' +
-        ',Borland.Data.DbxCommonDriver,Version=24.0.0.0,Culture=neutral,P' +
-        'ublicKeyToken=91d62ebb5b0d1b1b'
-      'DBXTrace.TraceDriver=True'
-      'DBXTrace.TraceFile=d:\abcdef.txt')
+      'DSAuthenticationUser=111')
     Left = 336
     Top = 104
     UniqueId = '{E47C037B-B7E9-48D8-9E96-81BB9D31ED96}'

@@ -75,10 +75,12 @@ constructor TclientsycFrame.Create(AOwner: TComponent);
 begin
   inherited;
     if clientsycDataModule=nil then
+    begin
        clientsycDataModule:=TclientsycDataModule.Create(self);
+    end;
 
 
-  Button1.Enabled:=clientsycDataModule.SQLConnection1.Connected;
+  //Button1.Enabled:=clientsycDataModule.SQLConnection1.Connected;
   if clientsycDataModule.CantConnection then
   begin
      if clientsycDataModule.ErrorMsg='远程错误: 服务器拒绝当前用户登录' then

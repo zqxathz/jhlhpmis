@@ -34,5 +34,30 @@
     <Transaction>2017/07/02 18:52:04.000.639,=connection.dcp</Transaction>
     <Transaction>2017/07/02 19:05:17.000.512,=vcldb.dcp</Transaction>
     <Transaction>2017/07/04 23:40:22.000.476,=FireDACCommon.dcp</Transaction>
-  </Transactions>
+  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="clientsyc.pas"/>
+    <File Path="clientsyc.dfm"/>
+    <File Path="clientsycdm.pas"/>
+    <File Path="clientsycdm.dfm"/>
+    <File Path="servermethods.pas"/>
+    <File Path="connection.dcp"/>
+    <File Path="CustomIPTransport.dcp"/>
+    <File Path="DataSnapClient.dcp"/>
+    <File Path="DataSnapCommon.dcp"/>
+    <File Path="dbexpress.dcp"/>
+    <File Path="dbrtl.dcp"/>
+    <File Path="dbxcds.dcp"/>
+    <File Path="DbxClientDriver.dcp"/>
+    <File Path="DbxCommonDriver.dcp"/>
+    <File Path="dsnap.dcp"/>
+    <File Path="FireDACCommon.dcp"/>
+    <File Path="IndyCore.dcp"/>
+    <File Path="IndyIPClient.dcp"/>
+    <File Path="IndyIPCommon.dcp"/>
+    <File Path="IndyProtocols.dcp"/>
+    <File Path="IndySystem.dcp"/>
+    <File Path="rtl.dcp"/>
+    <File Path="vcl.dcp"/>
+    <File Path="vcldb.dcp"/>
+  </ProjectSortOrder>
 </BorlandProject>

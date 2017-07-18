@@ -17,7 +17,9 @@ object clientuploadDataModule: TclientuploadDataModule
         'DriverAssemblyLoader=Borland.Data.TDBXClientDriverLoader,Borland' +
         '.Data.DbxClientDriver,Version=24.0.0.0,Culture=neutral,PublicKey' +
         'Token=91d62ebb5b0d1b1b'
-      'Filters={"ZLibCompression":{"CompressMoreThan":"1024"}}')
+      'Filters={"ZLibCompression":{"CompressMoreThan":"1024"}}'
+      'DSAuthenticationPassword=111'
+      'DSAuthenticationUser=111')
     Left = 376
     Top = 232
     UniqueId = '{25A7D595-54B4-4CF8-8413-7F57E17F0D5D}'

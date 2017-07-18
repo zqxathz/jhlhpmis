@@ -228,7 +228,7 @@ begin
       bplclientsycFrame.Parent := RzPageControl1.ActivePage;
     except
       FreeAndNil(menutabsheet);
-      FreeAndNil(bplclientsycframe);
+      if Assigned(bplshopperframe) then FreeAndNil(bplclientsycframe);
       raise;
     end;
   end;
@@ -263,7 +263,7 @@ begin
       bplclientuploadFrame.Parent := RzPageControl1.ActivePage;
     except
       FreeAndNil(menutabsheet);
-      FreeAndNil(bplclientuploadFrame);
+      if Assigned(bplclientuploadFrame) then FreeAndNil(bplclientuploadFrame);
       raise;
     end;
   end;
@@ -346,6 +346,7 @@ begin
       exit;
 
     AllowClose := true;
+    //RzPageControl1.ActivePage.FindChildControl('clientsyc').Free;
     // if RzPageControl1.ActivePage.Tag = 1 then
     // bplshopperframe.Parent := nil;
 
