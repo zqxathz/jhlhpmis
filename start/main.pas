@@ -128,7 +128,7 @@ begin
   begin
     bplshopperframe := Tbplshopperframe.Create(menutabsheet);
     bplshopperframe.Name := 'shopperinputer';
-    bplshopperframe.inputtype:=itquick;
+    bplshopperframe.inputtype := itquick;
     bplshopperframe.Align := alClient;
   end;
 
@@ -159,7 +159,7 @@ begin
   begin
     bplshopperframe1 := Tbplshopperframe.Create(menutabsheet);
     bplshopperframe1.Name := 'shopperinputer1';
-    bplshopperframe1.inputtype:=itgife;
+    bplshopperframe1.inputtype := itgife;
     bplshopperframe1.Align := alClient;
   end;
 
@@ -230,7 +230,8 @@ begin
       bplclientsycFrame.Parent := RzPageControl1.ActivePage;
     except
       FreeAndNil(menutabsheet);
-      if Assigned(bplshopperframe) then FreeAndNil(bplclientsycframe);
+      if Assigned(bplshopperframe) then
+        FreeAndNil(bplclientsycframe);
       raise;
     end;
   end;
@@ -265,7 +266,8 @@ begin
       bplclientuploadFrame.Parent := RzPageControl1.ActivePage;
     except
       FreeAndNil(menutabsheet);
-      if Assigned(bplclientuploadFrame) then FreeAndNil(bplclientuploadFrame);
+      if Assigned(bplclientuploadFrame) then
+        FreeAndNil(bplclientuploadFrame);
       raise;
     end;
   end;
@@ -283,8 +285,12 @@ begin
     CanClose := false;
     showmessage('正在上传数据,请稍后关闭软件');
   end
-  else
+  else if Application.MessageBox('是否确定要退出程序?', '提示', MB_YESNO + MB_ICONQUESTION) = IDYES then
+  begin
     CanClose := true;
+  end
+  else
+    CanClose := false;
 end;
 
 procedure Tmainform.FormCreate(Sender: TObject);

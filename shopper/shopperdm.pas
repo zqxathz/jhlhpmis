@@ -109,9 +109,11 @@ type
     procedure ClearPhonetoList;
     procedure SoftRemoveWithPhone;
     procedure List(map: string);
-    function validatePhone(phone: string; const count: Integer = 0): Boolean;overload;
+    function validatePhone(phone: string;  id:integer; const count: Integer=0): Boolean;overload;
     function validatePhone(phone:string):string;overload;
   end;
+
+function UnixDateToDateTime(const USec: Longint): TDateTime;
 
 const
   SHOPPER_SQL = 'SELECT * FROM jhlh_pmis_shopper where status=1 and trash=0 %s';
@@ -186,8 +188,13 @@ begin
 end;
 
 function Tshopperdatamod.validatePhone(phone: string): string;
+var
+  value:Variant;
 begin
- result:=shopperfdquery.Lookup('phone',phone,'create_time');
+  Result:='';
+  value:=shopperfdquery.Lookup('phone',phone,'create_time');
+  if Vartype(value)=varInteger then
+   result:=formatdatetime('yyyyƒÍmm‘¬dd»’',UnixDateToDateTime(value));
 end;
 
 procedure Tshopperdatamod.DataModuleCreate(Sender: TObject);
@@ -348,7 +355,7 @@ begin
   showmessage(AException.Message);
 end;
 
-function Tshopperdatamod.validatePhone(phone: string; const count: Integer = 0): Boolean;
+function Tshopperdatamod.validatePhone(phone: string; id:integer; const count: Integer=0): Boolean;
 var
   oTab: TFDDatSTable;
 begin
@@ -363,6 +370,7 @@ begin
     validateFdCommand.Close;
     oTab.Free;
     updateshopperFDCommand.Params.Items[0].Value := phone;
+    updateshopperFDCommand.Params.Items[1].Value := id;
     updateshopperFDCommand.OpenOrExecute;
 
     Result := false;

@@ -132,8 +132,16 @@ begin
   FOnExec := nil;
   FSyncError := false;
   FCantConnection := false;
-  SQLConnection1.Params.Values['DSAuthenticationPassword'] := clientuser.Password;
-  SQLConnection1.Params.Values['DSAuthenticationUser'] := clientuser.Username;
+
+  if not Assigned(clientuser) then
+  begin
+    SQLConnection1.Params.Values['DSAuthenticationPassword'] := 'admin';
+    SQLConnection1.Params.Values['DSAuthenticationUser'] := 'admin';
+  end
+  else begin
+    SQLConnection1.Params.Values['DSAuthenticationPassword'] := clientuser.Password;
+    SQLConnection1.Params.Values['DSAuthenticationUser'] := clientuser.Username;
+  end;
   try
     SQLConnection1.Open;
   except

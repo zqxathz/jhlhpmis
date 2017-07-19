@@ -379,7 +379,6 @@ object bplshopperframe: Tbplshopperframe
       ParentFont = False
       TabOrder = 18
       Visible = False
-      ExplicitTop = 169
       object RzStatusPane1: TRzStatusPane
         AlignWithMargins = True
         Left = 3

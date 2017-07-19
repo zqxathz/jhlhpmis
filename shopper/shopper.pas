@@ -207,6 +207,8 @@ implementation
 
 {$R *.dfm}
 
+uses confirmappend;
+
 //将当前GRID数据导出到EXCEL文件
 procedure Tbplshopperframe.CxGridToExcel(AcxGrid: TcxGrid);
 var
@@ -378,9 +380,10 @@ begin
   weixinedit.Text := '';
   emailEdit.Text := '';
   passportEdit.Text := '';
-  birtydaycxDateEdit.Text := '';
-  pastcxDateEdit.Text := '';
-  lastshopcxDateEdit.Text := '';
+  birtydaycxDateEdit.Clear;
+  pastcxDateEdit.Clear;
+  //lastshopcxDateEdit.Text := '';
+  lastshopcxDateEdit.Clear;
   addrEdit.Text := '';
   chinesebdCheckBox.Checked := false;
 end;
@@ -417,6 +420,7 @@ var
   ierror: Boolean;
   Caption: TCaption;
   chinesebd: integer;
+  validatedate:string;
 begin
   if Trim(phonecxMaskEdit.Text) = '' then
   begin
@@ -436,7 +440,19 @@ begin
   end;
   if inputtype=itgife then
   begin
-
+    validatedate:=shopperdatamod.validatePhone(phone);
+    if not validatedate.IsEmpty then
+    begin
+      Beep;
+      confirmappendForm:=TconfirmappendForm.Create(self);
+      try
+        confirmappendForm.Label1.Caption:=format(confirmappendForm.Label1.Caption,[phone]);
+        confirmappendForm.Label2.Caption:=format(confirmappendForm.Label2.Caption,[validatedate]);
+        if confirmappendForm.ShowModal = mrCancel then exit;
+      finally
+        confirmappendForm.Free;
+      end;
+    end;
   end;
   //对Dataset添加数据
   try
@@ -501,9 +517,10 @@ begin
           FieldValues['area'] := RzStatusPane1.Caption;
         end;
         shopperfdquery.Post;
+
         {检测库中是否已经有这个手机号,如果有全部软删除,
         只保留当前输入的为可用}
-        if not validatePhone(Trim(phonecxMaskEdit.Text), 1) then
+        if not validatePhone(Trim(phonecxMaskEdit.Text),shopperfdquery.FieldByName('id').AsInteger, 1) then
           shopperfdquery.Refresh;
       end;
       Resetform;

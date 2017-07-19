@@ -17,55 +17,6 @@ object mainform: Tmainform
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 27
-  inline loginframe1: Tloginframe
-    Left = 199
-    Top = 75
-    Width = 468
-    Height = 400
-    Align = alCustom
-    Anchors = []
-    TabOrder = 0
-    ExplicitLeft = 199
-    ExplicitTop = 75
-    ExplicitWidth = 468
-    DesignSize = (
-      468
-      400)
-    inherited GroupBox1: TGroupBox
-      Left = 86
-      Top = 108
-      ParentFont = True
-      ExplicitLeft = 86
-      ExplicitTop = 108
-      inherited Label1: TLabel
-        Width = 65
-        Height = 27
-        ParentFont = True
-        ExplicitWidth = 65
-        ExplicitHeight = 27
-      end
-      inherited Label2: TLabel
-        Width = 65
-        Height = 27
-        ParentFont = True
-        ExplicitWidth = 65
-        ExplicitHeight = 27
-      end
-      inherited usernameedit: TEdit
-        Height = 35
-        ParentFont = True
-        ExplicitHeight = 35
-      end
-      inherited passwordedit: TEdit
-        Height = 35
-        ParentFont = True
-        ExplicitHeight = 35
-      end
-      inherited loginbutton: TButton
-        OnClick = loginframe1loginbuttonClick
-      end
-    end
-  end
   object RzPageControl1: TRzPageControl
     AlignWithMargins = True
     Left = 3
@@ -236,6 +187,58 @@ object mainform: Tmainform
           Text3.AssignedValues = []
           Text4.AssignedValues = []
           OnClick = dxTileControl1Item6Click
+        end
+      end
+    end
+  end
+  inline loginframe1: Tloginframe
+    Left = 199
+    Top = 75
+    Width = 468
+    Height = 400
+    Align = alCustom
+    Anchors = []
+    TabOrder = 0
+    ExplicitLeft = 199
+    ExplicitTop = 75
+    ExplicitWidth = 468
+    DesignSize = (
+      468
+      400)
+    inherited GroupBox1: TGroupBox
+      Left = 86
+      Top = 108
+      ParentFont = True
+      ExplicitLeft = 86
+      ExplicitTop = 108
+      inherited Label1: TLabel
+        Width = 65
+        Height = 27
+        ParentFont = True
+        ExplicitWidth = 65
+        ExplicitHeight = 27
+      end
+      inherited Label2: TLabel
+        Width = 65
+        Height = 27
+        ParentFont = True
+        ExplicitWidth = 65
+        ExplicitHeight = 27
+      end
+      inherited usernameedit: TEdit
+        Height = 35
+        ParentFont = True
+        ExplicitHeight = 35
+      end
+      inherited passwordedit: TEdit
+        Height = 35
+        ParentFont = True
+        ExplicitHeight = 35
+      end
+      inherited Panel1: TPanel
+        ExplicitLeft = 2
+        inherited loginbutton: TButton
+          OnClick = loginframe1loginbuttonClick
         end
       end
     end

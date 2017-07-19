@@ -11,7 +11,7 @@ object loginframe: Tloginframe
     Left = 106
     Top = 107
     Width = 292
-    Height = 168
+    Height = 174
     Anchors = []
     Caption = #31995#32479#30331#24405
     Font.Charset = DEFAULT_CHARSET
@@ -76,15 +76,37 @@ object loginframe: Tloginframe
       TabOrder = 1
       Text = 'admin'
     end
-    object loginbutton: TButton
+    object Panel1: TPanel
       Left = 2
-      Top = 129
+      Top = 131
       Width = 288
-      Height = 37
+      Height = 41
       Align = alBottom
-      Caption = #30331#24405
+      Caption = 'Panel1'
+      ParentBackground = False
+      ShowCaption = False
       TabOrder = 2
-      OnClick = loginbuttonClick
+      ExplicitLeft = 3
+      object loginbutton: TButton
+        Left = 1
+        Top = 1
+        Width = 192
+        Height = 39
+        Align = alLeft
+        Caption = #30331#24405
+        TabOrder = 0
+        OnClick = loginbuttonClick
+      end
+      object syncmemberButton: TButton
+        Left = 192
+        Top = 1
+        Width = 95
+        Height = 39
+        Align = alRight
+        Caption = #21516#27493#29992#25143
+        TabOrder = 1
+        OnClick = syncmemberButtonClick
+      end
     end
   end
 end
