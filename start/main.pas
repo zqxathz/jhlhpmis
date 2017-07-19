@@ -128,6 +128,7 @@ begin
   begin
     bplshopperframe := Tbplshopperframe.Create(menutabsheet);
     bplshopperframe.Name := 'shopperinputer';
+    bplshopperframe.inputtype:=itquick;
     bplshopperframe.Align := alClient;
   end;
 
@@ -158,6 +159,7 @@ begin
   begin
     bplshopperframe1 := Tbplshopperframe.Create(menutabsheet);
     bplshopperframe1.Name := 'shopperinputer1';
+    bplshopperframe1.inputtype:=itgife;
     bplshopperframe1.Align := alClient;
   end;
 
@@ -302,8 +304,8 @@ begin
   // windowstate:=wsMinimized;
   hide;
   loginframe1.hide;
-  width := 1680;
-  height := 950;
+  width := 1280;
+  height := 750;
   self.Position := poDesktopCenter;
   show;
   RzPageControl1.show;

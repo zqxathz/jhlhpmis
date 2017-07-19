@@ -43,9 +43,7 @@ object clientuploadDataModule: TclientuploadDataModule
     CachedUpdates = True
     Transaction = FDTransaction1
     SQL.Strings = (
-      
-        'select * from jhlh_pmis_shopper where status=1 and trash=0 order' +
-        ' by id desc')
+      'select * from jhlh_pmis_shopper where status=1 and trash=0')
     Left = 456
     Top = 328
   end

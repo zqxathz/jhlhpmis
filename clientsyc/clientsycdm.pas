@@ -161,6 +161,9 @@ begin
   SQLConnection1.Close;
 end;
 
+{
+获取服务端客户数据
+}
 procedure TclientsycDataModule.GetCustomerData;
 var
   server: TObject;
@@ -188,10 +191,6 @@ begin
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
     stream := TServerMethodsClient(server).CustomerData(clientuser.Userid);
     stream.Position := 0;
-
-    lstream := TMemoryStream.Create;
-    lstream := CopyStream(stream);
-
   except
     SQLConnection1.Close;
     server.free;
@@ -202,53 +201,59 @@ begin
     exit;
   end;
 
-  lstream.Position := 0;
+  lstream := TMemoryStream.Create;
+  try
+    lstream := CopyStream(stream);
+    lstream.Position := 0;
 
-  if Assigned(FOnExec) then
-    FOnExec('开始更新客户数据');
-
-  memtable := TFDMemTable.Create(nil);
-  memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
-  memtable.First;
-  customerFDQuery.Open;
-  customerFDQuery.UpdateOptions.UpdateTableName := 'jhlh_pmis_customers';
-  customerFDQuery.CopyDataSet(memtable);
-  customertypeFDQuery.UpdateOptions.AutoIncFields := 'id';
-  customerFDQuery.FieldByName('id').ProviderFlags := customerFDQuery.FieldByName('id').ProviderFlags - [pfInUpdate];
-  customerFDQuery.IndexFieldNames := 'id;update_microsecond';
-  customertypeFDQuery.UpdateOptions.KeyFields := 'update_microsecond';
-  customerFDQuery.Connection.StartTransaction;
-  ierror := customerFDQuery.ApplyUpdates;
-  if ierror > 0 then
-  begin
-    customerFDQuery.Connection.Rollback;
-    FSyncError := true;
     if Assigned(FOnExec) then
+      FOnExec('开始更新客户数据');
+
+    memtable := TFDMemTable.Create(nil);
+    memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
+    memtable.First;
+    customerFDQuery.Open;
+    customerFDQuery.UpdateOptions.UpdateTableName := 'jhlh_pmis_customers';
+    customerFDQuery.CopyDataSet(memtable);
+    customertypeFDQuery.UpdateOptions.AutoIncFields := 'id';
+    customerFDQuery.FieldByName('id').ProviderFlags := customerFDQuery.FieldByName('id').ProviderFlags - [pfInUpdate];
+    customerFDQuery.IndexFieldNames := 'id;update_microsecond';
+    customertypeFDQuery.UpdateOptions.KeyFields := 'update_microsecond';
+    customerFDQuery.Connection.StartTransaction;
+    ierror := customerFDQuery.ApplyUpdates;
+    if ierror > 0 then
     begin
-      FOnExec('错误:客户数据更新到本地时出现异常');
+      customerFDQuery.Connection.Rollback;
+      FSyncError := true;
+      if Assigned(FOnExec) then
+      begin
+        FOnExec('错误:客户数据更新到本地时出现异常');
+        if Assigned(FErrorJson) then
+          FOnExec(FErrorJson.ToJSON);
+      end;
       if Assigned(FErrorJson) then
-        FOnExec(FErrorJson.ToJSON);
+        FreeAndNil(FErrorJson);
+    end
+    else
+    begin
+      customerFDQuery.Connection.Commit;
+      customerFDQuery.Close;
+      if Assigned(FOnExec) then
+        FOnExec('客户数据更新完成');
     end;
-    if Assigned(FErrorJson) then
-      FreeAndNil(FErrorJson);
-  end
-  else
-  begin
-    customerFDQuery.Connection.Commit;
-    customerFDQuery.Close;
-    if Assigned(FOnExec) then
-      FOnExec('客户数据更新完成');
+  finally
+    lstream.Free;
+    server.Free;
+    memtable.Free;
   end;
-  lstream.Free;
-  server.Free;
-  memtable.Free;
 end;
 
 procedure TclientsycDataModule.GetCustomertypeData;
 //获取客户类型数据
 var
   server: TObject;
-  stream: TStream;
+  stream:TStream;
+  lstream: TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
 begin
@@ -279,38 +284,46 @@ begin
       FOnExec('错误:获取远程数据发生异常,同步中止!');
     exit;
   end;
+
   stream.Position := 0;
+  lstream:=TMemoryStream.Create;
+  try
+    lstream:=CopyStream(stream);
+    lstream.Position:=0;
 
-  if Assigned(FOnExec) then
-    FOnExec('开始更新客户类型');
-
-  memtable := TFDMemTable.Create(nil);
-  memtable.LoadFromStream(stream, TFDStorageFormat.sfBinary);
-  memtable.First;
-  customertypeFDQuery.Open;
-  customertypeFDQuery.UpdateOptions.UpdateTableName := 'jhlh_crm_customerstype';
-  customertypeFDQuery.CopyDataSet(memtable);
-
-  customertypeFDQuery.Connection.StartTransaction;
-  customertypeFDQuery.Connection.ExecSQL('delete FROM jhlh_crm_customerstype');
-  ierror := customertypeFDQuery.ApplyUpdates;
-  if ierror > 0 then
-  begin
-    customertypeFDQuery.Connection.Rollback;
-    FSyncError := true;
     if Assigned(FOnExec) then
-      FOnExec('错误:客户类型更新到本地时出现异常');
-  end
-  else
-  begin
-    customertypeFDQuery.Connection.Commit;
-    customertypeFDQuery.Close;
-    if Assigned(FOnExec) then
-      FOnExec('客户类型更新完成');
+      FOnExec('开始更新客户类型');
+
+    memtable := TFDMemTable.Create(nil);
+    memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
+    memtable.First;
+    customertypeFDQuery.Open;
+    customertypeFDQuery.UpdateOptions.UpdateTableName := 'jhlh_crm_customerstype';
+    customertypeFDQuery.CopyDataSet(memtable);
+
+    customertypeFDQuery.Connection.StartTransaction;
+    customertypeFDQuery.Connection.ExecSQL('delete FROM jhlh_crm_customerstype');
+    ierror := customertypeFDQuery.ApplyUpdates;
+    if ierror > 0 then
+    begin
+      customertypeFDQuery.Connection.Rollback;
+      FSyncError := true;
+      if Assigned(FOnExec) then
+        FOnExec('错误:客户类型更新到本地时出现异常');
+    end
+    else
+    begin
+      customertypeFDQuery.Connection.Commit;
+      customertypeFDQuery.Close;
+      if Assigned(FOnExec) then
+        FOnExec('客户类型更新完成');
+    end;
+  finally
+    lstream.Free;
+    server.Free;
+    memtable.Free;
   end;
 
-  server.Free;
-  memtable.Free;
 end;
 
 //获取展会数据
@@ -318,12 +331,14 @@ procedure TclientsycDataModule.GetExpoData;
 var
   server: tobject;
   stream: Tstream;
+  lstream:TMemoryStream;
   memtable: TFDMemTable;
   i, ierror: Integer;
   fieldname: string;
 begin
   server := nil;
   stream := nil;
+  lstream:=nil;
 
   if not SQLConnection1.Connected then
   try
@@ -358,45 +373,54 @@ begin
   if Assigned(FOnExec) then
     FOnExec('开始更新展会信息');
 
-  memtable := TFDMemTable.Create(nil);
-  memtable.LoadFromStream(stream, TFDStorageFormat.sfBinary);
-  memtable.First;
-  while not memtable.Eof do
-  begin
-    expoFDQuery.Append;
-    for i := 0 to memtable.FieldCount - 1 do
+  lstream:=TMemoryStream.Create;
+  try
+    lstream:=CopyStream(stream);
+    lstream.Position:=0;
+
+    memtable := TFDMemTable.Create(nil);
+    memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
+    memtable.First;
+    while not memtable.Eof do
     begin
-      fieldname := memtable.FieldDefs.Items[i].Name;
-      if fieldname = 'clientvisable' then
-        continue;
-      if (fieldname = 'startdate') or (fieldname = 'enddate') or (fieldname = 'beforedate') or (fieldname = 'afterdate') then
-        expoFDQuery.FieldValues[fieldname] := FormatDateTime('yyyy-mm-dd', UnixDateToDateTime(memtable.FieldByName(fieldname).AsInteger))
-      else
-        expoFDQuery.FieldValues[fieldname] := memtable.FieldValues[fieldname];
+      expoFDQuery.Append;
+      for i := 0 to memtable.FieldCount - 1 do
+      begin
+        fieldname := memtable.FieldDefs.Items[i].Name;
+        if fieldname = 'clientvisable' then
+          continue;
+        if (fieldname = 'startdate') or (fieldname = 'enddate') or (fieldname = 'beforedate') or (fieldname = 'afterdate') then
+          expoFDQuery.FieldValues[fieldname] := FormatDateTime('yyyy-mm-dd', UnixDateToDateTime(memtable.FieldByName(fieldname).AsInteger))
+        else
+          expoFDQuery.FieldValues[fieldname] := memtable.FieldValues[fieldname];
+      end;
+      memtable.Next;
     end;
-    memtable.Next;
+    expoFDQuery.Connection.StartTransaction;
+    expoFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_expo');
+    ierror := expoFDQuery.ApplyUpdates;
+    if ierror > 0 then
+    begin
+      expoFDQuery.Connection.Rollback;
+      FSyncError := true;
+      if Assigned(FOnExec) then
+        FOnExec('错误:展会信息更新到本地时出现异常');
+    end
+    else
+    begin
+      expoFDQuery.Connection.Commit;
+      expoFDQuery.CommitUpdates;
+      expoFDQuery.Close;
+      FSyncError := false;
+      if Assigned(FOnExec) then
+        FOnExec('展会信息更新完成');
+    end;
+  finally
+    lstream.Free;
+    server.Free;
+    memtable.Free;
   end;
-  expoFDQuery.Connection.StartTransaction;
-  expoFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_expo');
-  ierror := expoFDQuery.ApplyUpdates;
-  if ierror > 0 then
-  begin
-    expoFDQuery.Connection.Rollback;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:展会信息更新到本地时出现异常');
-  end
-  else
-  begin
-    expoFDQuery.Connection.Commit;
-    expoFDQuery.CommitUpdates;
-    expoFDQuery.Close;
-    FSyncError := false;
-    if Assigned(FOnExec) then
-      FOnExec('展会信息更新完成');
-  end;
-  server.Free;
-  memtable.Free;
+
 end;
 
 //获取支付类型数据
@@ -404,11 +428,13 @@ procedure TclientsycDataModule.GetPaytypeData;
 var
   server: TObject;
   stream: TStream;
+  lstream:TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
 begin
   server := nil;
   stream := nil;
+  lstream:=nil;
   if not SQLConnection1.Connected then
   try
     SQLConnection1.Open;
@@ -439,33 +465,41 @@ begin
   if Assigned(FOnExec) then
     FOnExec('开始更新支付方式');
 
-  memtable := TFDMemTable.Create(nil);
-  memtable.LoadFromStream(stream, TFDStorageFormat.sfBinary);
-  memtable.First;
-  paytypeFDQuery.Open;
-  paytypeFDQuery.UpdateOptions.UpdateTableName := 'jhlh_pmis_paytype';
-  paytypeFDQuery.CopyDataSet(memtable);
+  lstream:=TMemoryStream.Create;
+  try
+    lstream:=CopyStream(stream);
+    lstream.Position:=0;
 
-  paytypeFDQuery.Connection.StartTransaction;
-  paytypeFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_paytype');
-  ierror := paytypeFDQuery.ApplyUpdates;
-  if ierror > 0 then
-  begin
-    paytypeFDQuery.Connection.Rollback;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:支付方式更新到本地时出现异常');
-  end
-  else
-  begin
-    paytypeFDQuery.Connection.Commit;
-    paytypeFDQuery.Close;
-    if Assigned(FOnExec) then
-      FOnExec('支付方式更新完成');
+    memtable := TFDMemTable.Create(nil);
+    memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
+    memtable.First;
+    paytypeFDQuery.Open;
+    paytypeFDQuery.UpdateOptions.UpdateTableName := 'jhlh_pmis_paytype';
+    paytypeFDQuery.CopyDataSet(memtable);
+
+    paytypeFDQuery.Connection.StartTransaction;
+    paytypeFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_paytype');
+    ierror := paytypeFDQuery.ApplyUpdates;
+    if ierror > 0 then
+    begin
+      paytypeFDQuery.Connection.Rollback;
+      FSyncError := true;
+      if Assigned(FOnExec) then
+        FOnExec('错误:支付方式更新到本地时出现异常');
+    end
+    else
+    begin
+      paytypeFDQuery.Connection.Commit;
+      paytypeFDQuery.Close;
+      if Assigned(FOnExec) then
+        FOnExec('支付方式更新完成');
+    end;
+  finally
+    lstream.Free;
+    server.Free;
+    memtable.Free;
   end;
 
-  server.Free;
-  memtable.Free;
 end;
 
 //获取展会类型数据
@@ -473,11 +507,14 @@ procedure TclientsycDataModule.GetExpotypeData;
 var
   server: TObject;
   stream: TStream;
+  lstream:TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
 begin
   server := nil;
   stream := nil;
+  lstream:=nil;
+
   if not SQLConnection1.Connected then
   try
     SQLConnection1.Open;
@@ -511,33 +548,41 @@ begin
   if Assigned(FOnExec) then
     FOnExec('开始更新展会类型');
 
-  memtable := TFDMemTable.Create(nil);
-  memtable.LoadFromStream(stream, TFDStorageFormat.sfBinary);
-  memtable.First;
-  expotypeFDQuery.Open;
-  expotypeFDQuery.UpdateOptions.UpdateTableName := 'jhlh_pmis_expotype';
-  expotypeFDQuery.CopyDataSet(memtable);
+  lstream:=TMemoryStream.Create;
+  try
+    lstream:=CopyStream(stream);
+    lstream.Position:=0;
+    memtable := TFDMemTable.Create(nil);
+    memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
+    memtable.First;
+    expotypeFDQuery.Open;
+    expotypeFDQuery.UpdateOptions.UpdateTableName := 'jhlh_pmis_expotype';
+    expotypeFDQuery.CopyDataSet(memtable);
 
-  expotypeFDQuery.Connection.StartTransaction;
-  expotypeFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_expotype');
-  ierror := expotypeFDQuery.ApplyUpdates;
-  if ierror > 0 then
-  begin
-    expotypeFDQuery.Connection.Rollback;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:展会类型更新到本地时出现异常');
-  end
-  else
-  begin
-    expotypeFDQuery.Connection.Commit;
-    expotypeFDQuery.Close;
-    if Assigned(FOnExec) then
-      FOnExec('展会类型更新完成');
+    expotypeFDQuery.Connection.StartTransaction;
+    expotypeFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_expotype');
+    ierror := expotypeFDQuery.ApplyUpdates;
+    if ierror > 0 then
+    begin
+      expotypeFDQuery.Connection.Rollback;
+      FSyncError := true;
+      if Assigned(FOnExec) then
+        FOnExec('错误:展会类型更新到本地时出现异常');
+    end
+    else
+    begin
+      expotypeFDQuery.Connection.Commit;
+      expotypeFDQuery.Close;
+      if Assigned(FOnExec) then
+        FOnExec('展会类型更新完成');
+    end;
+  finally
+    lstream.Free;
+    server.Free;
+    memtable.Free;
   end;
 
-  server.Free;
-  memtable.Free;
+
 end;
 
 //获取系统用户数据
@@ -545,11 +590,13 @@ procedure TclientsycDataModule.GetMemberData;
 var
   server: TObject;
   stream: TStream;
+  lstream:TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
 begin
   server := nil;
   stream := nil;
+  lstream:=nil;
   if not SQLConnection1.Connected then
   try
     SQLConnection1.Open;
@@ -580,34 +627,40 @@ begin
   if Assigned(FOnExec) then
     FOnExec('开始更新系统用户');
 
-  memtable := TFDMemTable.Create(nil);
-  memtable.LoadFromStream(stream, TFDStorageFormat.sfBinary);
-  memtable.First;
-  memberFDQuery.Open;
-  memberFDQuery.UpdateOptions.UpdateTableName := 'jhlh_admin_member';
-  memberFDQuery.CopyDataSet(memtable);
+  lstream:=TMemoryStream.Create;
+  try
+    lstream:=CopyStream(stream);
+    lstream.Position:=0;
 
-  memberFDQuery.Connection.StartTransaction;
-  memberFDQuery.Connection.ExecSQL('delete FROM jhlh_admin_member');
-  ierror := memberFDQuery.ApplyUpdates;
-  if ierror > 0 then
-  begin
-    memberFDQuery.Connection.Rollback;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误系统用户更新到本地时出现异常');
-  end
-  else
-  begin
-    memberFDQuery.Connection.Commit;
-    memberFDQuery.Close;
-    if Assigned(FOnExec) then
-      FOnExec('系统用户更新完成');
+    memtable := TFDMemTable.Create(nil);
+    memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
+    memtable.First;
+    memberFDQuery.Open;
+    memberFDQuery.UpdateOptions.UpdateTableName := 'jhlh_admin_member';
+    memberFDQuery.CopyDataSet(memtable);
+
+    memberFDQuery.Connection.StartTransaction;
+    memberFDQuery.Connection.ExecSQL('delete FROM jhlh_admin_member');
+    ierror := memberFDQuery.ApplyUpdates;
+    if ierror > 0 then
+    begin
+      memberFDQuery.Connection.Rollback;
+      FSyncError := true;
+      if Assigned(FOnExec) then
+        FOnExec('错误系统用户更新到本地时出现异常');
+    end
+    else
+    begin
+      memberFDQuery.Connection.Commit;
+      memberFDQuery.Close;
+      if Assigned(FOnExec) then
+        FOnExec('系统用户更新完成');
+    end;
+  finally
+    lstream.Free;
+    server.Free;
+    memtable.Free;
   end;
-
-  server.Free;
-  memtable.Free;
-
 end;
 
 //获取顾客来源数据
@@ -615,6 +668,7 @@ procedure TclientsycDataModule.GetShoppersourceData;
 var
   server: TObject;
   stream: TStream;
+  lstream:TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
 begin
@@ -650,33 +704,41 @@ begin
   if Assigned(FOnExec) then
     FOnExec('开始更新顾客来源');
 
-  memtable := TFDMemTable.Create(nil);
-  memtable.LoadFromStream(stream, TFDStorageFormat.sfBinary);
-  memtable.First;
-  shoppersourceFDQuery.Open;
-  shoppersourceFDQuery.UpdateOptions.UpdateTableName := 'jhlh_pmis_shopper_sourcetype';
-  shoppersourceFDQuery.CopyDataSet(memtable);
+  lstream:=TMemoryStream.Create;
+  try
+    lstream:=CopyStream(stream);
+    lstream.Position:=0;
 
-  shoppersourceFDQuery.Connection.StartTransaction;
-  shoppersourceFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_shopper_sourcetype');
-  ierror := shoppersourceFDQuery.ApplyUpdates;
-  if ierror > 0 then
-  begin
-    shoppersourceFDQuery.Connection.Rollback;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:顾客来源更新到本地时出现异常');
-  end
-  else
-  begin
-    shoppersourceFDQuery.Connection.Commit;
-    shoppersourceFDQuery.Close;
-    if Assigned(FOnExec) then
-      FOnExec('顾客来源更新完成');
+    memtable := TFDMemTable.Create(nil);
+    memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
+    memtable.First;
+    shoppersourceFDQuery.Open;
+    shoppersourceFDQuery.UpdateOptions.UpdateTableName := 'jhlh_pmis_shopper_sourcetype';
+    shoppersourceFDQuery.CopyDataSet(memtable);
+
+    shoppersourceFDQuery.Connection.StartTransaction;
+    shoppersourceFDQuery.Connection.ExecSQL('delete FROM jhlh_pmis_shopper_sourcetype');
+    ierror := shoppersourceFDQuery.ApplyUpdates;
+    if ierror > 0 then
+    begin
+      shoppersourceFDQuery.Connection.Rollback;
+      FSyncError := true;
+      if Assigned(FOnExec) then
+        FOnExec('错误:顾客来源更新到本地时出现异常');
+    end
+    else
+    begin
+      shoppersourceFDQuery.Connection.Commit;
+      shoppersourceFDQuery.Close;
+      if Assigned(FOnExec) then
+        FOnExec('顾客来源更新完成');
+    end;
+  finally
+    lstream.Free;
+    server.Free;
+    memtable.Free;
   end;
 
-  server.Free;
-  memtable.Free;
 end;
 
 procedure TclientsycDataModule.openexpodata;

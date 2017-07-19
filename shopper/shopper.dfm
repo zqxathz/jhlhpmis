@@ -261,6 +261,7 @@ object bplshopperframe: Tbplshopperframe
     Height = 206
     Align = alBottom
     BevelOuter = bvNone
+    Constraints.MinHeight = 200
     DoubleBuffered = True
     ParentDoubleBuffered = False
     TabOrder = 1
@@ -378,6 +379,7 @@ object bplshopperframe: Tbplshopperframe
       ParentFont = False
       TabOrder = 18
       Visible = False
+      ExplicitTop = 169
       object RzStatusPane1: TRzStatusPane
         AlignWithMargins = True
         Left = 3
@@ -402,6 +404,14 @@ object bplshopperframe: Tbplshopperframe
         Align = alLeft
         AutoSize = True
         Caption = ''
+      end
+      object RzClockStatus1: TRzClockStatus
+        Left = 1048
+        Top = 0
+        Width = 172
+        Height = 30
+        Align = alRight
+        Alignment = taRightJustify
       end
       object updateareaallbutton: TButton
         Left = 46

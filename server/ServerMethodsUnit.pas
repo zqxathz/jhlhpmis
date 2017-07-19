@@ -377,6 +377,7 @@ end;
 
 function TServerMethods.EchoString(Value: string): string;
 begin
+  exit;
   Result := Value;
 end;
 
@@ -525,6 +526,7 @@ end;
 
 function TServerMethods.ReverseString(Value: string): string;
 begin
+  exit;
   Result := System.StrUtils.ReverseString(Value);
 end;
 

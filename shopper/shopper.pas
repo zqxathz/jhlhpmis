@@ -65,6 +65,8 @@ uses
   FireDAC.Phys.SQLiteWrapper;
 
 type
+  TInputType = (itquick,itgife);
+
   Tbplshopperframe = class(TFrame)
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
@@ -164,6 +166,7 @@ type
     copyitemmenu: TMenuItem;
     fetchmenu: TMenuItem;
     autowidthmenu: TMenuItem;
+    RzClockStatus1: TRzClockStatus;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure updateareaallbuttonClick(Sender: TObject);
     procedure applyButtonClick(Sender: TObject);
@@ -190,6 +193,7 @@ type
     procedure LoadExcel;
   public
     { Public declarations }
+    inputtype:TInputType;
     procedure List;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -221,13 +225,20 @@ end;
 //右键菜单删除当前记录
 procedure Tbplshopperframe.deletemenuClick(Sender: TObject);
 begin
-  with shopperdatamod.shopperfdquery do
-  begin
-    Edit;
-    FieldValues['trash'] := 1;
-    Post;
-    RefreshRecord;
+   case MessageBox(0, '是否要删除当前记录?', '警告', MB_OKCANCEL + MB_ICONWARNING +
+    MB_DEFBUTTON2) of
+    IDOK:
+        with shopperdatamod.shopperfdquery do
+        begin
+          Edit;
+          FieldValues['trash'] := 1;
+          Post;
+          RefreshRecord;
+        end;
+    IDCANCEL: exit;
   end;
+
+
 end;
 
 
@@ -423,7 +434,10 @@ begin
     showmessage('请输入正确的手机号');
     exit;
   end;
+  if inputtype=itgife then
+  begin
 
+  end;
   //对Dataset添加数据
   try
     try
@@ -607,6 +621,12 @@ procedure Tbplshopperframe.updateareaallbuttonClick(Sender: TObject);
 var
   iErrors: integer;
 begin
+  if Application.MessageBox('是否要批量更新地区信息?', '提示', MB_YESNO + MB_ICONQUESTION +
+    MB_DEFBUTTON2) = IDNO then
+  begin
+    exit;
+  end;
+
   with shopperdatamod do
   begin
     shopperfdquery.DisableControls;
@@ -625,12 +645,13 @@ begin
         iErrors := shopperfdquery.ApplyUpdates;
         shopperfdquery.Connection.Commit;
         shopperfdquery.CommitUpdates;
-      except
-        if iErrors > 0 then
+         if iErrors > 0 then
         begin
           shopperfdquery.Connection.Rollback;
-          showmessage(inttostr(iErrors));
+          showmessage('出现错误,更新失败');
         end;
+      except
+
       end;
     finally
       shopperfdquery.CachedUpdates := false;

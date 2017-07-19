@@ -109,7 +109,8 @@ type
     procedure ClearPhonetoList;
     procedure SoftRemoveWithPhone;
     procedure List(map: string);
-    function validatePhone(phone: string; const count: Integer = 0): Boolean;
+    function validatePhone(phone: string; const count: Integer = 0): Boolean;overload;
+    function validatePhone(phone:string):string;overload;
   end;
 
 const
@@ -182,6 +183,11 @@ begin
     ClearPhonetoList;
   end;
 
+end;
+
+function Tshopperdatamod.validatePhone(phone: string): string;
+begin
+ result:=shopperfdquery.Lookup('phone',phone,'create_time');
 end;
 
 procedure Tshopperdatamod.DataModuleCreate(Sender: TObject);
