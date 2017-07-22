@@ -44,11 +44,11 @@ uses ServerMethodsUnit,ServerConst, Serverdm;
 
 procedure TServerContainer1.DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
 begin
-  Log:=TServerLogThread.Create;
-  Log.AddLog('username:'+DSPrepareEventObject.UserName);
-  Log.AddLog('ip:'+DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
-  Log.AddLog('exect:'+DSPrepareEventObject.MethodAlias); //Log调用方法
-  Log.start;
+//  Log:=TServerLogThread.Create;
+//  Log.AddLog('username:'+DSPrepareEventObject.UserName);
+//  Log.AddLog('ip:'+DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
+//  Log.AddLog('exect:'+DSPrepareEventObject.MethodAlias); //Log调用方法
+//  Log.start;
 end;
 
 procedure TServerContainer1.DSServerClass1GetClass(
@@ -75,11 +75,11 @@ procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(
 begin
   { TODO : Validate the client user and password.
     If role-based authorization is needed, add role names to the UserRoles parameter  }
-  //valid := True;
-  if assigned(ServerDataModule) then
-  begin
-    valid:=ServerDataModule.verifyMember(User,Password);
-  end;
+  valid := True;
+//  if assigned(ServerDataModule) then
+//  begin
+//    valid:=ServerDataModule.verifyMember(User,Password);
+//  end;
 end;
 
 procedure TServerContainer1.DSAuthenticationManager1UserAuthorize(

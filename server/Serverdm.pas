@@ -40,6 +40,7 @@ begin
     memberFDQuery.Open();
     result:= memberFDQuery.FieldByName('count').AsInteger>0;
   finally
+    memberFDQuery.Close;
     FDConnection1.Close;
   end;
 end;

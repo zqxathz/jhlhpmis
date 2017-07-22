@@ -30,7 +30,12 @@ uses
   FireDAC.Stan.StorageBin,
   FireDAC.Comp.DataSet,
   System.Generics.Collections,
-  System.Variants;
+  System.Variants,
+  IdHashMessageDigest,
+  IdGlobal,
+  IdHash,
+  System.IOUtils,
+  System.Types;
 
 type
   TServerLog = class(TFileStream)
@@ -88,9 +93,14 @@ type
     function ShopperDataPost(AStream: TStream): string;
     function UseExpoIds: string;
     function ExpireExpoIds: string;
+    //软件更新用
+    function GetUpdatefiles: string;
       //测试用的
     function test1: integer;
   end;
+
+type
+  TMD5 = class(TIdHashMessageDigest5);
 
 const
   LogFilename = './server.log';
@@ -108,6 +118,20 @@ uses
   System.StrUtils,
   System.DateUtils,
   Alidayu;
+
+function StreamToMD5(s: TFileStream): string;
+var
+  MD5Encode: TMD5;
+  long: TIdBytes;
+begin
+  MD5Encode := TMD5.Create;
+  try
+    long := MD5Encode.NativeGetHashBytes(s, s.Size);
+    result := MD5Encode.HashToHex(long);
+  finally
+    MD5Encode.Free;
+  end;
+end;
 
 // 复制流到内存流
 function CopyStream(const AStream: TStream): TMemoryStream;
@@ -303,6 +327,56 @@ end;
 function TServerMethods.GenerateErrorMessage: string;
 begin
   //
+end;
+
+function TServerMethods.GetUpdatefiles: string;
+var
+  json:TJsonObject;
+  function Getfiles(const path:string):TJsonObject;
+  var
+   s:TStringDynArray;
+   i,j: Integer;
+   jsonarray:TJsonArray;
+   ext,version:string;
+   jsonobject:TJsonObject;
+   filesen: TFileStream;
+   str: string;
+  begin
+    Result:=TJSONObject.Create;
+    s:=TDirectory.GetFileSystemEntries(path);
+    for i := 0 to length(s)-1 do
+    begin
+      if TFileAttribute.faDirectory in TPath.GetAttributes(s[i]) then
+      begin
+        jsonobject:=Getfiles(s[i]);
+        for j := 0 to jsonobject.Count-1 do
+        begin
+          Result.AddPair(jsonobject.Pairs[j]);
+          jsonobject.Free;
+        end;
+      end
+      else
+      begin
+       ext:=TPath.GetExtension(s[i]);
+       if (ext.ToLower ='.exe') or (ext.ToLower ='.dll') or (ext.ToLower ='.bpl') then
+       begin
+         jsonarray:=TJSONArray.Create;
+
+         //filesen := TFileStream.Create(s[i], fmopenread or fmshareExclusive);
+         filesen := TFileStream.Create(s[i], fmopenread);
+         jsonarray.AddElement(TJSONString.Create(TPath.GetFileName(s[i])));
+         jsonarray.AddElement(TJSONNumber.Create(filesen.Size));
+         jsonarray.AddElement(TJSONString.Create(StreamToMD5(filesen)));
+         Result.AddPair(s[i],jsonarray);
+         jsonarray.Free;
+       end;
+      end;
+    end;
+  end;
+begin
+  json:=Getfiles('/www/wwwroot/update.jhlotus.com/');
+  Result:=json.ToJSON;
+  json.Free;
 end;
 
 function TServerMethods.CustomerData(memberid: integer = 0): TStream;
