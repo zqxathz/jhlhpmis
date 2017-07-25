@@ -4,57 +4,105 @@ File_1=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\
 File_2=TSourceModule,'D:\Develop\jhql\server\ServerLogThread.pas',0,1,7,49,21,0,0,,
 File_3=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\sys\System.pas',0,1,1,1,12,0,0,,
 File_4=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.DateUtils.pas',0,1,47,1,63,0,0,,
-File_5=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.JSON.pas',0,1,1,1,10,0,0,,
-File_6=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,520,45,537,0,0,{{1656,4}
-File_7=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Comp.Client.pas',0,1,6737,1,6756,0,0,,
-File_8=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Stan.Option.pas',0,1,56,3,75,0,0,,
-File_9=TSourceModule,'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteVDataSet.pas',0,1,1,1,1,0,0,,
-File_10=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Controls.pas',0,1,1112,38,1131,0,0,,
-File_11=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.UITypes.pas',0,1,90,34,109,0,0,,
-File_12=TTogetherDocModule,'D:\Develop\jhql\shopper\ModelSupport_shopper\default.txaPackage',0
-File_13=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Menus.pas',0,1,1,1,10,0,0,,
-File_14=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\win\Winapi.Windows.pas',0,1,39399,1,39418,0,0,,
+File_5=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.StdCtrls.pas',0,1,520,45,537,0,0,{{1656,4}
+File_6=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Comp.Client.pas',0,1,6737,1,6756,0,0,,
+File_7=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\data\firedac\FireDAC.Stan.Option.pas',0,1,56,3,75,0,0,,
+File_8=TSourceModule,'C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\firedac\FireDAC.Phys.SQLiteVDataSet.pas',0,1,1,1,1,0,0,,
+File_9=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Controls.pas',0,1,1112,38,1131,0,0,,
+File_10=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.UITypes.pas',0,1,90,34,109,0,0,,
+File_11=TTogetherDocModule,'D:\Develop\jhql\shopper\ModelSupport_shopper\default.txaPackage',0
+File_12=TSourceModule,'c:\program files (x86)\embarcadero\studio\19.0\SOURCE\VCL\Vcl.Menus.pas',0,1,1,1,10,0,0,,
 
 [Modules]
-Module0=D:\Develop\jhql\shopper\shopperdm.pas
-Module1=D:\Develop\jhql\shopper\shopper.pas
-Module2=D:\Develop\jhql\start\main.pas
-Module3=D:\Develop\jhql\customer\customerdm.pas
-Module4=D:\Develop\jhql\customer\customer.pas
-Module5=D:\Develop\jhql\clientupload\clientuploadfrm.pas
-Module6=D:\Develop\jhql\clientsyc\clientsyc.pas
-Module7=D:\Develop\jhql\common\connectionconfig.pas
-Module8=D:\Develop\jhql\clientupload\clientuploaddm.pas
-Module9=D:\Develop\jhql\clientsyc\clientsycdm.pas
-Module10=D:\Develop\jhql\server\ServerMethodsUnit.pas
+Module0=D:\Develop\jhql\clientupdate\update.dproj
+Module1=D:\Develop\jhql\clientupdate\main.pas
+Module2=D:\Develop\jhql\clientupdate\datamoudle.pas
+Module3=D:\Develop\jhql\server\ServerMethodsUnit.pas
+Module4=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.JSON.pas
+Module5=D:\Develop\jhql\server\ServerContainerUnit.pas
+Module6=D:\Develop\jhql\clientsyc\servermethods.pas
+Module7=D:\Develop\jhql\clientsyc\clientsycdm.pas
+Module8=D:\Develop\jhql\clientupload\servermethodsupload.pas
+Module9=D:\Develop\jhql\server\Serverdm.pas
+Module10=D:\Develop\jhql\shopper\shopperdm.pas
 Module11=default.htm
 Module12=D:\Develop\jhql\start\start.dproj
 Module13=D:\Develop\jhql\shopper\shopper.dproj
 Module14=D:\Develop\jhql\customer\customer.dproj
-Module15=D:\Develop\jhql\server\ServerContainerUnit.pas
-Module16=D:\Develop\jhql\connection\connectiondm.pas
-Module17=D:\Develop\jhql\server\alidayu.cfg
-Module18=D:\Develop\jhql\server\Alidayu.pas
-Module19=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas
-Module20=D:\Develop\jhql\start\login.pas
-Module21=D:\Develop\jhql\server\ServerConst.pas
-Module22=D:\Develop\jhql\clientsyc\servermethods.pas
-Module23=c:\program files (x86)\embarcadero\studio\19.0\source\data\Data.DB.pas
-Module24=D:\Develop\jhql\clientupload\servermethodsupload.pas
-Module25=D:\Develop\jhql\common\common.pas
-Module26=D:\Develop\jhql\start\logindm.pas
-Module27=D:\Develop\jhql\common\staticstr.pas
-Module28=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas
-Count=29
+Module15=D:\Develop\jhql\shopper\shopper.pas
+Module16=D:\Develop\jhql\start\main.pas
+Module17=D:\Develop\jhql\start\login.pas
+Module18=D:\Develop\jhql\customer\customerdm.pas
+Module19=D:\Develop\jhql\customer\customer.pas
+Module20=D:\Develop\jhql\clientupload\clientuploadfrm.pas
+Module21=D:\Develop\jhql\clientsyc\clientsyc.pas
+Module22=D:\Develop\jhql\common\connectionconfig.pas
+Module23=D:\Develop\jhql\clientupload\clientuploaddm.pas
+Module24=D:\Develop\jhql\connection\connectiondm.pas
+Module25=D:\Develop\jhql\server\alidayu.cfg
+Module26=D:\Develop\jhql\server\Alidayu.pas
+Module27=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas
+Module28=D:\Develop\jhql\server\ServerConst.pas
+Module29=c:\program files (x86)\embarcadero\studio\19.0\source\data\Data.DB.pas
+Module30=D:\Develop\jhql\common\common.pas
+Module31=D:\Develop\jhql\start\logindm.pas
+Module32=D:\Develop\jhql\common\staticstr.pas
+Module33=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas
+Count=34
 EditWindowCount=1
+
+[D:\Develop\jhql\clientupdate\update.dproj]
+ModuleType=TBaseProject
+
+[D:\Develop\jhql\clientupdate\main.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\clientupdate\datamoudle.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\server\ServerMethodsUnit.pas]
+ModuleType=TSourceModule
+
+[c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.JSON.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\server\ServerContainerUnit.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\clientsyc\servermethods.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\clientsyc\clientsycdm.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\clientupload\servermethodsupload.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\server\Serverdm.pas]
+ModuleType=TSourceModule
 
 [D:\Develop\jhql\shopper\shopperdm.pas]
 ModuleType=TSourceModule
+
+[default.htm]
+ModuleType=TURLModule
+
+[D:\Develop\jhql\start\start.dproj]
+ModuleType=TBaseProject
+
+[D:\Develop\jhql\shopper\shopper.dproj]
+ModuleType=TBaseProject
+
+[D:\Develop\jhql\customer\customer.dproj]
+ModuleType=TBaseProject
 
 [D:\Develop\jhql\shopper\shopper.pas]
 ModuleType=TSourceModule
 
 [D:\Develop\jhql\start\main.pas]
+ModuleType=TSourceModule
+
+[D:\Develop\jhql\start\login.pas]
 ModuleType=TSourceModule
 
 [D:\Develop\jhql\customer\customerdm.pas]
@@ -75,27 +123,6 @@ ModuleType=TSourceModule
 [D:\Develop\jhql\clientupload\clientuploaddm.pas]
 ModuleType=TSourceModule
 
-[D:\Develop\jhql\clientsyc\clientsycdm.pas]
-ModuleType=TSourceModule
-
-[D:\Develop\jhql\server\ServerMethodsUnit.pas]
-ModuleType=TSourceModule
-
-[default.htm]
-ModuleType=TURLModule
-
-[D:\Develop\jhql\start\start.dproj]
-ModuleType=TBaseProject
-
-[D:\Develop\jhql\shopper\shopper.dproj]
-ModuleType=TBaseProject
-
-[D:\Develop\jhql\customer\customer.dproj]
-ModuleType=TBaseProject
-
-[D:\Develop\jhql\server\ServerContainerUnit.pas]
-ModuleType=TSourceModule
-
 [D:\Develop\jhql\connection\connectiondm.pas]
 ModuleType=TSourceModule
 
@@ -108,19 +135,10 @@ ModuleType=TSourceModule
 [c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas]
 ModuleType=TSourceModule
 
-[D:\Develop\jhql\start\login.pas]
-ModuleType=TSourceModule
-
 [D:\Develop\jhql\server\ServerConst.pas]
 ModuleType=TSourceModule
 
-[D:\Develop\jhql\clientsyc\servermethods.pas]
-ModuleType=TSourceModule
-
 [c:\program files (x86)\embarcadero\studio\19.0\source\data\Data.DB.pas]
-ModuleType=TSourceModule
-
-[D:\Develop\jhql\clientupload\servermethodsupload.pas]
 ModuleType=TSourceModule
 
 [D:\Develop\jhql\common\common.pas]
@@ -136,8 +154,8 @@ ModuleType=TSourceModule
 ModuleType=TSourceModule
 
 [EditWindow0]
-ViewCount=29
-CurrentEditView=D:\Develop\jhql\shopper\shopperdm.pas
+ViewCount=34
+CurrentEditView=D:\Develop\jhql\clientupdate\update.dpr
 View0=0
 View1=1
 View2=2
@@ -167,6 +185,11 @@ View25=25
 View26=26
 View27=27
 View28=28
+View29=29
+View30=30
+View31=31
+View32=32
+View33=33
 PercentageSizes=1
 Create=1
 Visible=1
@@ -174,27 +197,27 @@ Docked=1
 State=0
 Left=0
 Top=0
-Width=10000
-Height=9202
+Width=8867
+Height=8346
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=10000
-ClientHeight=9202
+ClientWidth=8867
+ClientHeight=8346
 DockedToMainForm=1
 BorlandEditorCodeExplorer=BorlandEditorCodeExplorer@EditWindow0
 TopPanelSize=0
 LeftPanelSize=1895
 LeftPanelClients=PropertyInspector,DockSite3
-LeftPanelData=000008000101000000009A0E00000000000001670700000000000001000000005C0E000009000000446F636B536974653301000000009D2200001100000050726F7065727479496E73706563746F72FFFFFFFF
+LeftPanelData=000008000101000000003F0D00000000000001670700000000000001000000005C0E000009000000446F636B53697465330100000000651F00001100000050726F7065727479496E73706563746F72FFFFFFFF
 RightPanelSize=1996
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=000008000101000000009A0E00000000000001CC0700000000000001000000004412000009000000446F636B536974653201000000009D22000009000000446F636B5369746534FFFFFFFF
+RightPanelData=000008000101000000003F0D00000000000001CC0700000000000001000000004412000009000000446F636B53697465320100000000651F000009000000446F636B5369746534FFFFFFFF
 BottomPanelSize=0
 BottomPanelClients=DockSite1
 BottomPanelData=0000080001000100000009000000446F636B53697465311B5200000000000000EF05000000000000FFFFFFFF
 BottomMiddlePanelSize=1352
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel,MessageView
-BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E675669657722380000000000000248050000000000000100000000223800000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E6756696577A52D0000000000000248050000000000000100000000A52D00000F0000004D65737361676556696577466F726DFFFFFFFF
 
 [View0]
 CustomEditViewType=TWelcomePageView
@@ -220,14 +243,14 @@ TopLine=118
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=D:\Develop\jhql\clientsyc\clientsycdm.pas
+EditViewName=Borland.FormDesignerView
 
 [View3]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\clientsyc\servermethods.pas
-CursorX=3
-CursorY=167
-TopLine=165
+CursorX=23
+CursorY=13
+TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -291,15 +314,59 @@ EditViewName=D:\Develop\jhql\start\login.pas
 [View9]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\server\ServerMethodsUnit.pas
-CursorX=1
-CursorY=211
-TopLine=234
+CursorX=12
+CursorY=375
+TopLine=358
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\server\ServerMethodsUnit.pas
 
 [View10]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\clientupdate\main.pas
+CursorX=29
+CursorY=17
+TopLine=12
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\clientupdate\main.pas
+
+[View11]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\clientupdate\update.dpr
+CursorX=11
+CursorY=16
+TopLine=4
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\clientupdate\update.dpr
+
+[View12]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\clientupdate\datamoudle.pas
+CursorX=68
+CursorY=64
+TopLine=43
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Develop\jhql\clientupdate\datamoudle.pas
+
+[View13]
+CustomEditViewType=TEditView
+Module=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.JSON.pas
+CursorX=3
+CursorY=268
+TopLine=288
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.JSON.pas
+
+[View14]
 CustomEditViewType=TEditView
 Module=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas
 CursorX=5
@@ -310,7 +377,7 @@ Elisions=
 Bookmarks=
 EditViewName=c:\program files (x86)\embarcadero\studio\19.0\source\rtl\common\System.Classes.pas
 
-[View11]
+[View15]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\server\ServerConst.pas
 CursorX=1
@@ -321,18 +388,18 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\server\ServerConst.pas
 
-[View12]
+[View16]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\server\ServerContainerUnit.pas
-CursorX=71
-CursorY=76
-TopLine=59
+CursorX=68
+CursorY=101
+TopLine=77
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\server\ServerContainerUnit.pas
 
-[View13]
+[View17]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\common\common.pas
 CursorX=24
@@ -343,7 +410,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\common\common.pas
 
-[View14]
+[View18]
 CustomEditViewType=TEditView
 Module=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas
 CursorX=1
@@ -354,7 +421,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Program Files (x86)\Embarcadero\Studio\19.0\source\data\datasnap\Datasnap.DSCommonServer.pas
 
-[View15]
+[View19]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\server\Alidayu.pas
 CursorX=54
@@ -365,7 +432,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\server\Alidayu.pas
 
-[View16]
+[View20]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\server\alidayu.cfg
 CursorX=1
@@ -376,7 +443,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\server\alidayu.cfg
 
-[View17]
+[View21]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\start\start.dpr
 CursorX=60
@@ -387,7 +454,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\start\start.dpr
 
-[View18]
+[View22]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\connection\connectiondm.pas
 CursorX=13
@@ -398,7 +465,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\connection\connectiondm.pas
 
-[View19]
+[View23]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\customer\customer.pas
 CursorX=35
@@ -409,7 +476,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\customer\customer.pas
 
-[View20]
+[View24]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\start\logindm.pas
 CursorX=33
@@ -420,7 +487,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\start\logindm.pas
 
-[View21]
+[View25]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\common\staticstr.pas
 CursorX=33
@@ -431,7 +498,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\common\staticstr.pas
 
-[View22]
+[View26]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\customer\customer.dpk
 CursorX=46
@@ -442,18 +509,29 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\customer\customer.dpk
 
-[View23]
+[View27]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\shopper\shopperdm.pas
-CursorX=10
-CursorY=191
+CursorX=39
+CursorY=208
 TopLine=188
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\shopper\shopperdm.pas
 
-[View24]
+[View28]
+CustomEditViewType=TEditView
+Module=D:\Develop\jhql\server\Serverdm.pas
+CursorX=1
+CursorY=1
+TopLine=1
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=Borland.FormDesignerView
+
+[View29]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\shopper\shopper.pas
 CursorX=5
@@ -464,7 +542,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\shopper\shopper.pas
 
-[View25]
+[View30]
 CustomEditViewType=TEditView
 Module=c:\program files (x86)\embarcadero\studio\19.0\source\data\Data.DB.pas
 CursorX=30
@@ -475,7 +553,7 @@ Elisions=
 Bookmarks=
 EditViewName=c:\program files (x86)\embarcadero\studio\19.0\source\data\Data.DB.pas
 
-[View26]
+[View31]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\customer\customerdm.pas
 CursorX=36
@@ -486,7 +564,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\customer\customerdm.pas
 
-[View27]
+[View32]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\shopper\shopper.dpk
 CursorX=27
@@ -497,7 +575,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Develop\jhql\shopper\shopper.dpk
 
-[View28]
+[View33]
 CustomEditViewType=TEditView
 Module=D:\Develop\jhql\common\connectionconfig.pas
 CursorX=25
@@ -564,18 +642,16 @@ PercentageSizes=1
 Create=1
 Visible=1
 Docked=0
-State=2
-Left=1414
-Top=471
-Width=7570
+State=0
+Left=1070
+Top=385
+Width=8930
 Height=9298
 MaxLeft=-4
 MaxTop=-10
-MaxWidth=7570
-MaxHeight=9298
-ClientWidth=10000
-ClientHeight=9779
-BottomPanelSize=8861
+ClientWidth=8867
+ClientHeight=8923
+BottomPanelSize=8037
 BottomPanelClients=EditWindow0
 BottomPanelData=0000080000000000000000000000000000000000000000000000000100000000000000000C0000004564697457696E646F775F30FFFFFFFF
 
@@ -606,11 +682,11 @@ Docked=1
 State=0
 Left=0
 Top=18
-Width=6062
+Width=4930
 Height=1231
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=6062
+ClientWidth=4930
 ClientHeight=1231
 TBDockHeight=1231
 LRDockWidth=2770
@@ -626,11 +702,11 @@ State=0
 Left=0
 Top=0
 Width=1996
-Height=4173
+Height=3317
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=4173
+ClientHeight=3317
 TBDockHeight=7154
 LRDockWidth=1996
 Dockable=1
@@ -683,16 +759,16 @@ State=0
 Left=0
 Top=415
 Width=1895
-Height=5212
+Height=4356
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1895
-ClientHeight=5212
+ClientHeight=4356
 TBDockHeight=8173
 LRDockWidth=1895
 Dockable=1
 StayOnTop=0
-SplitPos=111
+SplitPos=176
 
 [ClassBrowserTool]
 PercentageSizes=1
@@ -1206,11 +1282,11 @@ State=0
 Left=0
 Top=523
 Width=1996
-Height=4173
+Height=3317
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1996
-ClientHeight=4173
+ClientHeight=3317
 TBDockHeight=8173
 LRDockWidth=1996
 Dockable=1
@@ -1220,5 +1296,5 @@ ActiveTabID=ToolForm
 TabDockClients=ToolForm,TemplateView
 
 [ActiveProject]
-ActiveProject=1
+ActiveProject=9
 

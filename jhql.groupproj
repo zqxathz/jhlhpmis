@@ -27,6 +27,9 @@
         <Projects Include="common\common.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="clientupdate\update.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -107,14 +110,23 @@
     <Target Name="common:Make">
         <MSBuild Projects="common\common.dproj" Targets="Make"/>
     </Target>
+    <Target Name="update">
+        <MSBuild Projects="clientupdate\update.dproj"/>
+    </Target>
+    <Target Name="update:Clean">
+        <MSBuild Projects="clientupdate\update.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="update:Make">
+        <MSBuild Projects="clientupdate\update.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="start;shopper;connection;customer;server;clientsyc;clientupload;common"/>
+        <CallTarget Targets="start;shopper;connection;customer;server;clientsyc;clientupload;common;update"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="start:Clean;shopper:Clean;connection:Clean;customer:Clean;server:Clean;clientsyc:Clean;clientupload:Clean;common:Clean"/>
+        <CallTarget Targets="start:Clean;shopper:Clean;connection:Clean;customer:Clean;server:Clean;clientsyc:Clean;clientupload:Clean;common:Clean;update:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="start:Make;shopper:Make;connection:Make;customer:Make;server:Make;clientsyc:Make;clientupload:Make;common:Make"/>
+        <CallTarget Targets="start:Make;shopper:Make;connection:Make;customer:Make;server:Make;clientsyc:Make;clientupload:Make;common:Make;update:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

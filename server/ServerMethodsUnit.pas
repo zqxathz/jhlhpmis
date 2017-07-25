@@ -332,7 +332,7 @@ end;
 function TServerMethods.GetUpdatefiles: string;
 var
   json:TJsonObject;
-  function Getfiles(const path:string):TJsonObject;
+  function Getfiles(const path:string;const path1:string=''):TJsonObject;
   var
    s:TStringDynArray;
    i,j: Integer;
@@ -348,7 +348,7 @@ var
     begin
       if TFileAttribute.faDirectory in TPath.GetAttributes(s[i]) then
       begin
-        jsonobject:=Getfiles(s[i]);
+        jsonobject:=Getfiles(s[i],TPath.GetFileName(s[i]));
         for j := 0 to jsonobject.Count-1 do
         begin
           Result.AddPair(jsonobject.Pairs[j]);
@@ -365,6 +365,7 @@ var
          //filesen := TFileStream.Create(s[i], fmopenread or fmshareExclusive);
          filesen := TFileStream.Create(s[i], fmopenread);
          jsonarray.AddElement(TJSONString.Create(TPath.GetFileName(s[i])));
+         jsonarray.AddElement(TJSONString.Create(path1));
          jsonarray.AddElement(TJSONNumber.Create(filesen.Size));
          jsonarray.AddElement(TJSONString.Create(StreamToMD5(filesen)));
          Result.AddPair(s[i],jsonarray);
@@ -375,6 +376,10 @@ var
   end;
 begin
   json:=Getfiles('/www/wwwroot/update.jhlotus.com/');
+  if json.Count>0 then
+    json.AddPair('result','success')
+  else
+    json.AddPair('result','error');
   Result:=json.ToJSON;
   json.Free;
 end;

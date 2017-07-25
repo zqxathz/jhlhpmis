@@ -44,11 +44,11 @@ uses ServerMethodsUnit,ServerConst, Serverdm;
 
 procedure TServerContainer1.DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
 begin
-//  Log:=TServerLogThread.Create;
-//  Log.AddLog('username:'+DSPrepareEventObject.UserName);
-//  Log.AddLog('ip:'+DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
-//  Log.AddLog('exect:'+DSPrepareEventObject.MethodAlias); //Log调用方法
-//  Log.start;
+  Log:=TServerLogThread.Create;
+  Log.AddLog('username:'+DSPrepareEventObject.UserName);
+  Log.AddLog('ip:'+DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
+  Log.AddLog('exect:'+DSPrepareEventObject.MethodAlias); //Log调用方法
+  Log.start;
 end;
 
 procedure TServerContainer1.DSServerClass1GetClass(
@@ -75,11 +75,16 @@ procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(
 begin
   { TODO : Validate the client user and password.
     If role-based authorization is needed, add role names to the UserRoles parameter  }
-  valid := True;
-//  if assigned(ServerDataModule) then
-//  begin
-//    valid:=ServerDataModule.verifyMember(User,Password);
-//  end;
+  valid := true; exit;
+  if (User.ToLower='guest') and (Password.ToLower='guest') then
+  begin
+    valid:=true;
+    exit;
+  end;
+  if assigned(ServerDataModule) then
+  begin
+    valid:=ServerDataModule.verifyMember(User,Password);
+  end;
 end;
 
 procedure TServerContainer1.DSAuthenticationManager1UserAuthorize(
@@ -90,7 +95,12 @@ begin
     Use values from EventObject such as UserName, UserRoles, AuthorizedRoles and DeniedRoles.
     Use DSAuthenticationManager1.Roles to define Authorized and Denied roles
     for particular server methods. }
-  valid := True;
+  //valid:=true; exit;
+  valid:=false;
+  if EventObject.UserName.ToLower='guest' then
+    valid:=EventObject.MethodAlias = 'TServerMethods.GetUpdatefiles'
+  else
+     valid := True;
 end;
 
 function BindPort(Aport: Integer): Boolean;

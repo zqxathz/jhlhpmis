@@ -1,6 +1,6 @@
 //
 // Created by the DataSnap proxy generator.
-// 2017/7/15 15:10:45
+// 2017/7/25 16:27:51
 //
 
 unit servermethods;
@@ -25,6 +25,8 @@ type
     FShopperDataPostCommand: TDBXCommand;
     FUseExpoIdsCommand: TDBXCommand;
     FExpireExpoIdsCommand: TDBXCommand;
+    FGetUpdatefilesCommand: TDBXCommand;
+    Ftest1Command: TDBXCommand;
   public
     constructor Create(ADBXConnection: TDBXConnection); overload;
     constructor Create(ADBXConnection: TDBXConnection; AInstanceOwner: Boolean); overload;
@@ -42,6 +44,8 @@ type
     function ShopperDataPost(AStream: TStream): string;
     function UseExpoIds: string;
     function ExpireExpoIds: string;
+    function GetUpdatefiles: string;
+    function test1: Integer;
   end;
 
 implementation
@@ -230,6 +234,32 @@ begin
   Result := FExpireExpoIdsCommand.Parameters[0].Value.GetWideString;
 end;
 
+function TServerMethodsClient.GetUpdatefiles: string;
+begin
+  if FGetUpdatefilesCommand = nil then
+  begin
+    FGetUpdatefilesCommand := FDBXConnection.CreateCommand;
+    FGetUpdatefilesCommand.CommandType := TDBXCommandTypes.DSServerMethod;
+    FGetUpdatefilesCommand.Text := 'TServerMethods.GetUpdatefiles';
+    FGetUpdatefilesCommand.Prepare;
+  end;
+  FGetUpdatefilesCommand.ExecuteUpdate;
+  Result := FGetUpdatefilesCommand.Parameters[0].Value.GetWideString;
+end;
+
+function TServerMethodsClient.test1: Integer;
+begin
+  if Ftest1Command = nil then
+  begin
+    Ftest1Command := FDBXConnection.CreateCommand;
+    Ftest1Command.CommandType := TDBXCommandTypes.DSServerMethod;
+    Ftest1Command.Text := 'TServerMethods.test1';
+    Ftest1Command.Prepare;
+  end;
+  Ftest1Command.ExecuteUpdate;
+  Result := Ftest1Command.Parameters[0].Value.GetInt32;
+end;
+
 
 constructor TServerMethodsClient.Create(ADBXConnection: TDBXConnection);
 begin
@@ -258,6 +288,8 @@ begin
   FShopperDataPostCommand.DisposeOf;
   FUseExpoIdsCommand.DisposeOf;
   FExpireExpoIdsCommand.DisposeOf;
+  FGetUpdatefilesCommand.DisposeOf;
+  Ftest1Command.DisposeOf;
   inherited;
 end;
 
