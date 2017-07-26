@@ -17,7 +17,7 @@ var
   hAppMutex: TMutex; //声明互斥变量
 
 begin
-  hAppMutex:=TMutex.Create();
+  //hAppMutex:=TMutex.Create();
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.Title := '京湖青莲展览';
@@ -25,5 +25,6 @@ begin
   Application.CreateForm(Tmainform, mainform);
   Application.CreateForm(TconnectionDataModule, connectionDataModule);
   Application.CreateForm(Tlogindatamod, logindatamod);
+
   Application.Run;
 end.

@@ -30,10 +30,14 @@ begin
           Application.Initialize;
           Application.MainFormOnTaskbar := True;
           TStyleManager.TrySetStyle('Metropolis UI Blue');
-  Application.CreateForm(TupdateForm, updateForm);
-  updateForm.updateJson := updateDataModule.UpdateJson;
+          Application.CreateForm(TupdateForm, updateForm);
+          updateForm.updateJson := updateDataModule.UpdateJson;
           if updateForm.CanShow then
-            Application.Run
+          begin
+            if ( ParamCount > 0 ) and SameText( ParamStr(1), 'free' ) then
+                  showmessage('ddd');
+            Application.Run;
+          end
           else
             Application.Terminate;
         end;
