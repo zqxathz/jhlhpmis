@@ -4,6 +4,7 @@ uses
   Vcl.Forms,
   Vcl.Themes,
   Vcl.Styles,
+  System.SyncObjs,
   main in 'main.pas' {mainform},
   login in 'login.pas' {loginframe: TFrame},
   logindm in 'logindm.pas' {logindatamod: TDataModule},
@@ -12,7 +13,11 @@ uses
 
 {$R *.res}
 
+var
+  hAppMutex: TMutex; //声明互斥变量
+
 begin
+  hAppMutex:=TMutex.Create();
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.Title := '京湖青莲展览';

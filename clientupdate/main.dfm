@@ -3,51 +3,52 @@ object updateForm: TupdateForm
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'updateForm'
-  ClientHeight = 177
+  Caption = #27491#22312#26356#26032#36719#20214
+  ClientHeight = 142
   ClientWidth = 592
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
+  Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Height = -20
+  Font.Name = #24494#36719#38597#40657
   Font.Style = []
   FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poDesktopCenter
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 27
   object Label1: TLabel
-    Left = 48
-    Top = 126
-    Width = 257
-    Height = 13
+    Left = 8
+    Top = 103
+    Width = 97
+    Height = 24
     AutoSize = False
-    Caption = 'Label1'
+    Caption = #19979#36733#25991#20214':'
   end
   object Label2: TLabel
-    Left = 48
-    Top = 145
-    Width = 257
-    Height = 13
+    Left = 486
+    Top = 103
+    Width = 94
+    Height = 24
+    Alignment = taRightJustify
     AutoSize = False
-    Caption = 'Label1'
+    Caption = '0KB/s'
   end
   object Memo1: TMemo
-    Left = 48
+    Left = 8
     Top = 8
-    Width = 489
+    Width = 576
     Height = 89
-    Lines.Strings = (
-      'Memo1')
+    ReadOnly = True
+    ScrollBars = ssVertical
     TabOrder = 0
   end
   object ProgressBar1: TProgressBar
-    Left = 48
-    Top = 103
-    Width = 489
-    Height = 17
+    Left = 104
+    Top = 104
+    Width = 377
+    Height = 24
     Smooth = True
     TabOrder = 1
   end
@@ -61,7 +62,13 @@ object updateForm: TupdateForm
     OnRequestCompleted = NetHTTPClient1RequestCompleted
     OnRequestError = NetHTTPClient1RequestError
     OnReceiveData = NetHTTPClient1ReceiveData
-    Left = 360
-    Top = 120
+    Left = 496
+    Top = 32
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 392
+    Top = 48
   end
 end

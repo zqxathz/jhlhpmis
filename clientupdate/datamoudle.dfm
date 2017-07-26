@@ -20,7 +20,9 @@ object updateDataModule: TupdateDataModule
         'Token=91d62ebb5b0d1b1b'
       'Filters={"ZLibCompression":{"CompressMoreThan":"1024"}}'
       'DSAuthenticationPassword=guest'
-      'DSAuthenticationUser=guest')
+      'DSAuthenticationUser=guest'
+      'CommunicationTimeout=5000'
+      'ConnectTimeout=5000')
     Left = 232
     Top = 176
     UniqueId = '{6E5AB97C-42DA-4247-A88A-699B39A8154A}'

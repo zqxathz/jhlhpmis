@@ -104,6 +104,8 @@ type
 
 const
   LogFilename = './server.log';
+  updateJosnFile = '/www/wwwroot/update.jhlotus.com/update.json';
+  updatePath = '/www/wwwroot/update.jhlotus.com/';
 
 var
   One: Tobject;
@@ -332,6 +334,8 @@ end;
 function TServerMethods.GetUpdatefiles: string;
 var
   json:TJsonObject;
+  jsonstream:Tmemorystream;
+  bytes:TBytes;
   function Getfiles(const path:string;const path1:string=''):TJsonObject;
   var
    s:TStringDynArray;
@@ -340,20 +344,22 @@ var
    ext,version:string;
    jsonobject:TJsonObject;
    filesen: TFileStream;
-   str: string;
+   str,path2: string;
   begin
+    path2:='';
     Result:=TJSONObject.Create;
     s:=TDirectory.GetFileSystemEntries(path);
     for i := 0 to length(s)-1 do
     begin
       if TFileAttribute.faDirectory in TPath.GetAttributes(s[i]) then
       begin
-        jsonobject:=Getfiles(s[i],TPath.GetFileName(s[i]));
+        //if path1<>'' then path2:=path1+'\';
+        jsonobject:=Getfiles(s[i],path1+TPath.GetFileName(s[i])+'\');
         for j := 0 to jsonobject.Count-1 do
         begin
           Result.AddPair(jsonobject.Pairs[j]);
-          jsonobject.Free;
         end;
+        if assigned(jsonobject) then jsonobject.Free;
       end
       else
       begin
@@ -363,25 +369,48 @@ var
          jsonarray:=TJSONArray.Create;
 
          //filesen := TFileStream.Create(s[i], fmopenread or fmshareExclusive);
-         filesen := TFileStream.Create(s[i], fmopenread);
+         filesen := TFileStream.Create(s[i], fmopenread or fmShareDenyWrite);
          jsonarray.AddElement(TJSONString.Create(TPath.GetFileName(s[i])));
          jsonarray.AddElement(TJSONString.Create(path1));
          jsonarray.AddElement(TJSONNumber.Create(filesen.Size));
          jsonarray.AddElement(TJSONString.Create(StreamToMD5(filesen)));
          Result.AddPair(s[i],jsonarray);
          jsonarray.Free;
+         filesen.Free;
+         filesen:=nil;
        end;
       end;
     end;
   end;
 begin
-  json:=Getfiles('/www/wwwroot/update.jhlotus.com/');
-  if json.Count>0 then
-    json.AddPair('result','success')
-  else
-    json.AddPair('result','error');
-  Result:=json.ToJSON;
-  json.Free;
+  if FileExists(updateJosnFile) then
+  begin
+    jsonstream:=TMemoryStream.Create();
+    jsonstream.LoadFromFile(updateJosnFile);
+    jsonstream.Position:=0;
+    SetLength(bytes,jsonstream.Size);
+    jsonstream.Read(bytes,jsonstream.Size);
+    Result:=TEnCoding.UTF8.GetString(bytes);
+    jsonstream.Free;
+  end
+  else begin
+    json:=Getfiles(updatePath);
+    if json.Count>0 then
+      json.AddPair('result','success')
+    else
+      json.AddPair('result','error');
+    Result:=json.ToJSON;
+    jsonstream:=TMemoryStream.Create();
+    try
+      bytes := TEnCoding.UTF8.GetBytes(json.ToJSON);
+      jsonstream.Write(bytes, Length(bytes));
+      jsonstream.Position:=0;
+      jsonstream.SaveToFile(updateJosnFile);
+    finally
+      jsonstream.Free;
+      json.Free;
+    end;
+  end;
 end;
 
 function TServerMethods.CustomerData(memberid: integer = 0): TStream;

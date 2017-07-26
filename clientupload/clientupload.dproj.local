@@ -23,8 +23,8 @@
     <Transaction>2017/07/05 23:02:15.000.978,=dbrtl.dcp</Transaction>
     <Transaction>2017/07/05 23:02:15.000.960,=DbxCommonDriver.dcp</Transaction>
     <Transaction>2017/07/05 23:02:15.000.997,=DataSnapCommon.dcp</Transaction>
-    <Transaction>2017/07/05 23:02:16.000.018,=DbxClientDriver.dcp</Transaction>
     <Transaction>2017/07/05 23:02:16.000.099,=IndyProtocols.dcp</Transaction>
+    <Transaction>2017/07/05 23:02:16.000.018,=DbxClientDriver.dcp</Transaction>
     <Transaction>2017/07/05 23:02:16.000.060,=IndyIPCommon.dcp</Transaction>
     <Transaction>2017/07/05 23:02:16.000.041,=CustomIPTransport.dcp</Transaction>
     <Transaction>2017/07/05 23:02:16.000.165,=dbexpress.dcp</Transaction>
