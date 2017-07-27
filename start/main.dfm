@@ -1,6 +1,7 @@
 object mainform: Tmainform
   Left = 0
   Top = 0
+  Caption = #20140#28246#38738#33714#23637#35272
   ClientHeight = 552
   ClientWidth = 868
   Color = clBtnFace
@@ -15,6 +16,7 @@ object mainform: Tmainform
   Position = poDesktopCenter
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 27
   object RzPageControl1: TRzPageControl
@@ -250,5 +252,12 @@ object mainform: Tmainform
       Caption = #20851#38381#26631#31614
       OnClick = N1Click
     end
+  end
+  object updateTimer: TTimer
+    Enabled = False
+    Interval = 1800000
+    OnTimer = updateTimerTimer
+    Left = 152
+    Top = 344
   end
 end

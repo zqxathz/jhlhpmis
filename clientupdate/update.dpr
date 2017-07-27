@@ -2,6 +2,7 @@ program update;
 
 uses
   System.SysUtils,
+  Winapi.Windows,
   Vcl.Forms,
   Vcl.Dialogs,
   System.SyncObjs,
@@ -9,12 +10,14 @@ uses
   datamoudle in 'datamoudle.pas' {updateDataModule: TDataModule},
   servermethods in '..\clientsyc\servermethods.pas',
   Vcl.Themes,
-  Vcl.Styles;
+  Vcl.Styles,
+  common in 'common.pas';
 
 {$R *.res}
 
 var
   hAppMutex: TMutex; //声明互斥变量
+  mainHandle: THandle;
 
 begin
   hAppMutex := TMutex.Create(nil,false,'{3DE1B19B-A903-4879-97FE-AB18266539AE}');
@@ -22,8 +25,8 @@ begin
   if GetLastError<>183 then
   begin
     hAppMutex.Acquire;
+    updateDataModule := TupdateDataModule.Create(nil);
     try
-      updateDataModule := TupdateDataModule.Create(nil);
       try
         if updateDataModule.GetUpdateList then
         begin
@@ -34,15 +37,28 @@ begin
           updateForm.updateJson := updateDataModule.UpdateJson;
           if updateForm.CanShow then
           begin
-            if ( ParamCount > 0 ) and SameText( ParamStr(1), 'free' ) then
-                  showmessage('ddd');
+            if ( ParamCount > 0 )  then
+            begin
+            {$IFDEF DEBUG}
+              if Application.MessageBox('检测到更新,确认后将中止程序并进行更新,请保存正在编辑的数据.',
+                '检测到更新', MB_OKCANCEL + MB_ICONINFORMATION + MB_TOPMOST)=ID_CANCEL then
+                exit;
+            {$ELSE}
+              Application.MessageBox('检测到更新,确认后将中止程序并进行更新,请保存正在编辑的数据.',
+                '检测到更新', MB_OK + MB_ICONINFORMATION + MB_TOPMOST);
+              mainHandle:=OpenProcess(PROCESS_ALL_ACCESS, FALSE,strtoint(ParamStr(1)) );
+              if mainHandle>0 then TerminateProcess(mainHandle,0);
+            {$ENDIF}
+            end;
             Application.Run;
           end
           else
             Application.Terminate;
         end;
       except
+      {$IFDEF DEBUG}
         on E:Exception do ShowMessage(e.Message);
+      {$ENDIF}
       end;
     finally
       updateDataModule.Free;

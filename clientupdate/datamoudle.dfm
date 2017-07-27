@@ -27,4 +27,15 @@ object updateDataModule: TupdateDataModule
     Top = 176
     UniqueId = '{6E5AB97C-42DA-4247-A88A-699B39A8154A}'
   end
+  object NetHTTPClient1: TNetHTTPClient
+    Asynchronous = False
+    ConnectionTimeout = 60000
+    ResponseTimeout = 60000
+    AllowCookies = True
+    HandleRedirects = True
+    UserAgent = 'Embarcadero URI Client/1.0'
+    OnAuthEvent = NetHTTPClient1AuthEvent
+    Left = 368
+    Top = 184
+  end
 end

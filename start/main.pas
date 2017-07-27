@@ -5,6 +5,7 @@ interface
 uses
   Winapi.Windows,
   Winapi.Messages,
+  Winapi.ShellApi,
   System.SysUtils,
   System.Variants,
   System.Classes,
@@ -27,7 +28,7 @@ uses
   Vcl.StdCtrls,
   customer,
   clientsyc,
-  clientuploadfrm;
+  clientuploadfrm, Vcl.ExtCtrls;
 
 type
   Tmainform = class(TForm)
@@ -45,6 +46,7 @@ type
     dxTileControl1Item4: TdxTileControlItem;
     dxTileControl1Item5: TdxTileControlItem;
     dxTileControl1Item6: TdxTileControlItem;
+    updateTimer: TTimer;
     procedure loginframe1loginbuttonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -58,6 +60,8 @@ type
     procedure dxTileControl1Item5Click(Sender: TdxTileControlItem);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure dxTileControl1Item6Click(Sender: TdxTileControlItem);
+    procedure updateTimerTimer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -299,6 +303,12 @@ begin
   height := 400;
 end;
 
+procedure Tmainform.FormShow(Sender: TObject);
+begin
+  updateTimerTimer(nil);
+  updateTimer.Enabled:=true;
+end;
+
 procedure Tmainform.loginframe1loginbuttonClick(Sender: TObject);
 begin
   try
@@ -377,6 +387,22 @@ begin
     p.Y := Y;
     p := ClientToScreen(p);
     PopupMenu1.Popup(p.X, p.Y);
+  end;
+end;
+
+procedure Tmainform.updateTimerTimer(Sender: TObject);
+var
+  updateexe:string;
+  process:long;
+begin
+  if not (Assigned(bplclientuploadFrame) and bplclientuploadframe.IsUploading) then
+  begin
+    updateexe:=ExtractFilePath(Application.ExeName)+'update.exe';
+    if FileExists(updateexe) then
+    begin
+      process:=GetCurrentProcessID;
+      ShellExecute(0,'open',pchar(updateexe) ,Pchar(inttostr(process)),nil,SW_SHOWNORMAL);
+    end;
   end;
 end;
 

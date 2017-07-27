@@ -38,6 +38,10 @@ type
     procedure NetHTTPClient1RequestError(const Sender: TObject; const AError: string);
     procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure NetHTTPClient1AuthEvent(const Sender: TObject; AnAuthTarget: TAuthTargetType;
+      const ARealm, AURL: string; var AUserName, APassword: string; var AbortAuth: Boolean;
+      var Persistence: TAuthPersistenceType);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }
     FCountsize, FCurrpos, FPrvpos: int64;
@@ -45,6 +49,7 @@ type
     ms: TMemoryStream;
     count: int64;
     thread:TThread;
+    running:boolean;
     procedure Getfile;
     procedure copyFiles;
     procedure threadOnTerminate(Sender: TObject);
@@ -60,11 +65,10 @@ type
 var
   updateForm: TupdateForm;
 
-const
-  TempPath = 'updatetemp\';
-  UpdateUrl = 'http://update.jhlotus.com/';
 
 implementation
+
+uses common;
 
 {$R *.dfm}
 
@@ -97,10 +101,6 @@ begin
   begin
     if updateJson.Pairs[i].JsonString.Value.ToLower <> 'result' then
     begin
-//        if TJsonArray(updateJson.Pairs[i].JsonValue).Items[1].Value<>'' then
-//           cpath:=TJsonArray(updateJson.Pairs[i].JsonValue).Items[1].Value+'/'
-//        else
-//           cpath:='';
       cpath := TJsonArray(updateJson.Pairs[i].JsonValue).Items[1].Value;
       filename := ExtractFilePath(Application.Exename) + cpath + TJsonArray(updateJson.Pairs[i].JsonValue).Items[0].Value;
       if FileExists(filename) then
@@ -108,7 +108,6 @@ begin
         fs := TFileStream.Create(filename, fmopenread);
         filemd5 := StreamToMD5(fs);
         fs.Free;
-
         if TJsonArray(updateJson.Pairs[i].JsonValue).Items[3].Value = filemd5 then
         begin
           jsonname := updateJson.Pairs[i].JsonString.Value;
@@ -122,22 +121,34 @@ begin
     end;
   end;
   Result := FCountsize > 0;
+end;
 
-  //ExtractFilePath(Application.Exename)+TempPath
+procedure TupdateForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  CanClose:=false;
+  if running then
+  begin
+    if Application.MessageBox('更新正在进行中,是否要退出更新?', '询问', MB_OKCANCEL +
+      MB_ICONWARNING + MB_DEFBUTTON2 + MB_TOPMOST) = IDOK then CanClose:=True;
+  end
+  else
+  begin
+    CanClose:=True;
+  end;
 end;
 
 procedure TupdateForm.FormShow(Sender: TObject);
 begin
-  Memo1.Lines.Text := updateJson.ToJSON;
-  //label1.Caption := (inttostr(Fcountsize));
-  //ProgressBar1.Max:=FCountsize;
   Timer1.Enabled := true;
+  Memo1.Lines.Text:='开始更新';
+  running:=true;
   Getfile;
 end;
 
 procedure TupdateForm.threadOnTerminate(Sender: TObject);
 begin
   Application.MessageBox('更新完成,点击确定重启软件.', '提示', MB_OK + MB_ICONINFORMATION +MB_TOPMOST);
+  running:=false;
   shellexecute(Handle, 'open', PChar('start.exe'), nil, nil, SW_SHOW);
   Close;
 end;
@@ -147,7 +158,7 @@ var
   i: integer;
   sourcefilename, destfilename, destdirectory: string;
 begin
-
+  running:=true;
   for i := 0 to updateJson.Count - 1 do
   begin
     if updateJson.Pairs[i].JsonString.Value.ToLower = 'result' then
@@ -162,7 +173,22 @@ begin
       destdirectory := ExtractFilePath(Application.ExeName) + TJsonArray(updateJson.Pairs[i].JsonValue).Items[1].Value;
       if not TDirectory.Exists(destdirectory) then
         TDirectory.CreateDirectory(destdirectory);
-      Tfile.Copy(sourcefilename, destfilename, true);
+      try
+        Tfile.Copy(sourcefilename, destfilename, true);
+      except
+        try
+          if FileExists(destfilename+'.tmp') then
+            if DeleteFile(destfilename+'.tmp') then
+              RenameFile(destfilename,destfilename+'.tmp')
+            else
+              Memo1.Lines.Add('删除临时文件出错:'+destfilename+'.tmp')
+          else
+            RenameFile(destfilename,destfilename+'.tmp');
+          Tfile.Copy(sourcefilename, destfilename, true);
+        except
+          Memo1.Lines.Add('复制文件出错:'+destfilename);
+        end;
+      end;
     end;
   end;
 end;
@@ -185,10 +211,6 @@ begin
     exit;
   end;
 
-//  if TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[1].Value <> '' then
-//    path := TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[1].Value + '/'
-//  else
-//    path := '';
   path := TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[1].Value;
   filename := ExtractFilePath(Application.Exename) + TempPath + path + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[0].Value;
   if FileExists(filename) then
@@ -200,15 +222,28 @@ begin
     begin
       FCurrpos := FCurrpos + strtoint(TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[2].Value);
       ProgressBar1.Position := round(FCurrpos / Fcountsize * 100);
+      Memo1.Lines.Add('下载文件'+inttostr(Findex+1)+'/'+inttostr(updateJson.Count-1)+':'
+                   + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[0].Value);
       inc(FIndex);
       Getfile;
       exit;
     end;
   end;
   path := path.Replace('\', '/');
-  Memo1.Lines.Add(UpdateUrl + path + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[0].Value);
+  //Memo1.Lines.Add(UpdateUrl + path + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[0].Value);
+  Memo1.Lines.Add('下载文件'+inttostr(Findex+1)+'/'+inttostr(updateJson.Count-1)+':'
+                   + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[0].Value);
+  SendMessage(memo1.Handle,WM_VSCROLL,SB_BOTTOM,0);;
   ms := TMemoryStream.Create;
   NetHTTPClient1.Get(UpdateUrl + path + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[0].Value, ms);
+end;
+
+procedure TupdateForm.NetHTTPClient1AuthEvent(const Sender: TObject; AnAuthTarget: TAuthTargetType;
+  const ARealm, AURL: string; var AUserName, APassword: string; var AbortAuth: Boolean;
+  var Persistence: TAuthPersistenceType);
+begin
+  AUserName:='updateuser';
+  APassword:='update';
 end;
 
 procedure TupdateForm.NetHTTPClient1ReceiveData(const Sender: TObject; AContentLength, AReadCount: Int64; var Abort: Boolean);
@@ -224,11 +259,13 @@ procedure TupdateForm.NetHTTPClient1RequestCompleted(const Sender: TObject; cons
 var
   path: string;
 begin
-  path := TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[1].Value;
-//  if not path.IsEmpty then
-//    path:=path+'\';
-
-  path := ExtractFilePath(Application.Exename) + TempPath + path;
+  if AResponse.StatusCode<>200 then
+  begin
+    Memo1.Lines.Add('无法下载文件.code:'+AResponse.StatusCode.ToString);
+    running:=false;
+    exit;
+  end;
+  path := ExtractFilePath(Application.Exename) + TempPath + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[1].Value;
   if Assigned(ms) then
   begin
     if not TDirectory.Exists(path) then
@@ -242,6 +279,7 @@ end;
 
 procedure TupdateForm.NetHTTPClient1RequestError(const Sender: TObject; const AError: string);
 begin
+  running:=false;
   Memo1.Lines.Add(AError);
 end;
 

@@ -7,6 +7,7 @@ object updateForm: TupdateForm
   ClientHeight = 142
   ClientWidth = 592
   Color = clBtnFace
+  DoubleBuffered = True
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
   Font.Height = -20
@@ -15,6 +16,7 @@ object updateForm: TupdateForm
   FormStyle = fsStayOnTop
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnCloseQuery = FormCloseQuery
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 27
@@ -40,17 +42,29 @@ object updateForm: TupdateForm
     Top = 8
     Width = 576
     Height = 89
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    BorderStyle = bsNone
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = #24494#36719#38597#40657
+    Font.Style = []
+    ParentFont = False
     ReadOnly = True
     ScrollBars = ssVertical
-    TabOrder = 0
+    TabOrder = 1
   end
   object ProgressBar1: TProgressBar
     Left = 104
     Top = 104
     Width = 377
     Height = 24
+    DoubleBuffered = False
+    ParentDoubleBuffered = False
     Smooth = True
-    TabOrder = 1
+    TabOrder = 0
+    TabStop = True
   end
   object NetHTTPClient1: TNetHTTPClient
     Asynchronous = True
@@ -59,6 +73,7 @@ object updateForm: TupdateForm
     AllowCookies = True
     HandleRedirects = True
     UserAgent = 'Embarcadero URI Client/1.0'
+    OnAuthEvent = NetHTTPClient1AuthEvent
     OnRequestCompleted = NetHTTPClient1RequestCompleted
     OnRequestError = NetHTTPClient1RequestError
     OnReceiveData = NetHTTPClient1ReceiveData

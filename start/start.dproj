@@ -140,22 +140,18 @@
         </DelphiCompile>
         <DCCReference Include="main.pas">
             <Form>mainform</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="login.pas">
             <Form>loginframe</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="logindm.pas">
             <Form>logindatamod</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="..\common\staticstr.pas"/>
         <DCCReference Include="..\connection\connectiondm.pas">
             <Form>connectionDataModule</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Release">
