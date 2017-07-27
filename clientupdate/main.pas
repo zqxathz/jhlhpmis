@@ -86,6 +86,7 @@ begin
   end;
 end;
 
+
 function TupdateForm.CanShow: boolean;
 var
   i: integer;

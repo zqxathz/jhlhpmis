@@ -20,6 +20,8 @@ var
   mainHandle: THandle;
 
 begin
+  DeleteTempfile(ExtractFilePath(Application.ExeName));
+
   hAppMutex := TMutex.Create(nil,false,'{3DE1B19B-A903-4879-97FE-AB18266539AE}');
   //if  hAppMutex.WaitFor(1)=wrTimeout then exit;
   if GetLastError<>183 then

@@ -2,11 +2,18 @@ unit ServerContainerUnit;
 
 interface
 
-uses System.SysUtils, System.Classes,
+uses
+  System.SysUtils,
+  System.Classes,
   Datasnap.DSTCPServerTransport,
-    Datasnap.DSHTTPCommon, Datasnap.DSHTTP,
-  Datasnap.DSServer, Datasnap.DSCommonServer,
-  IPPeerServer, IPPeerAPI, Datasnap.DSAuth, DbxCompressionFilter;
+  Datasnap.DSHTTPCommon,
+  Datasnap.DSHTTP,
+  Datasnap.DSServer,
+  Datasnap.DSCommonServer,
+  IPPeerServer,
+  IPPeerAPI,
+  Datasnap.DSAuth,
+  DbxCompressionFilter;
 
 type
   TServerContainer1 = class(TDataModule)
@@ -15,13 +22,9 @@ type
     DSHTTPService1: TDSHTTPService;
     DSAuthenticationManager1: TDSAuthenticationManager;
     DSServerClass1: TDSServerClass;
-    procedure DSServerClass1GetClass(DSServerClass: TDSServerClass;
-      var PersistentClass: TPersistentClass);
-    procedure DSAuthenticationManager1UserAuthorize(Sender: TObject;
-      EventObject: TDSAuthorizeEventObject; var valid: Boolean);
-    procedure DSAuthenticationManager1UserAuthenticate(Sender: TObject;
-      const Protocol, Context, User, Password: string; var valid: Boolean;
-      UserRoles: TStrings);
+    procedure DSServerClass1GetClass(DSServerClass: TDSServerClass; var PersistentClass: TPersistentClass);
+    procedure DSAuthenticationManager1UserAuthorize(Sender: TObject; EventObject: TDSAuthorizeEventObject; var valid: Boolean);
+    procedure DSAuthenticationManager1UserAuthenticate(Sender: TObject; const Protocol, Context, User, Password: string; var valid: Boolean; UserRoles: TStrings);
     procedure DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
@@ -33,74 +36,74 @@ type
 procedure RunDSServer;
 
 implementation
-uses ServerMethodsUnit,ServerConst, Serverdm;
+
+uses
+  ServerMethodsUnit,
+  ServerConst,
+  Serverdm;
 
 {%CLASSGROUP 'System.Classes.TPersistent'}
 
 
 {$R *.dfm}
 
-
-
 procedure TServerContainer1.DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
 begin
-  Log:=TServerLogThread.Create;
-  Log.AddLog('username:'+DSPrepareEventObject.UserName);
-  Log.AddLog('ip:'+DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
-  Log.AddLog('exect:'+DSPrepareEventObject.MethodAlias); //Log调用方法
+  Log := TServerLogThread.Create;
+  Log.AddLog('username:' + DSPrepareEventObject.UserName);
+  Log.AddLog('ip:' + DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
+  Log.AddLog('exect:' + DSPrepareEventObject.MethodAlias); //Log调用方法
   Log.start;
 end;
 
-procedure TServerContainer1.DSServerClass1GetClass(
-  DSServerClass: TDSServerClass; var PersistentClass: TPersistentClass);
+procedure TServerContainer1.DSServerClass1GetClass(DSServerClass: TDSServerClass; var PersistentClass: TPersistentClass);
 begin
   PersistentClass := ServerMethodsUnit.TServerMethods;
 end;
 
 procedure TServerContainer1.DataModuleCreate(Sender: TObject);
 begin
-  One:=Tobject.create;
-  ServerDataModule:=TServerDataModule.Create(nil);
+  One := Tobject.create;
+  ServerDataModule := TServerDataModule.Create(nil);
 end;
 
 procedure TServerContainer1.DataModuleDestroy(Sender: TObject);
 begin
-  if Assigned(one) then one.Free;
-  if Assigned(ServerDataModule) then ServerDataModule.free;
+  if Assigned(one) then
+    one.Free;
+  if Assigned(ServerDataModule) then
+    ServerDataModule.free;
 end;
 
-procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(
-  Sender: TObject; const Protocol, Context, User, Password: string;
-  var valid: Boolean; UserRoles: TStrings);
+procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(Sender: TObject; const Protocol, Context, User, Password: string; var valid: Boolean; UserRoles: TStrings);
 begin
   { TODO : Validate the client user and password.
     If role-based authorization is needed, add role names to the UserRoles parameter  }
-  valid := true; exit;
-  if (User.ToLower='guest') and (Password.ToLower='guest') then
+  valid := true;
+  exit;
+  if (User.ToLower = 'guest') and (Password.ToLower = 'guest') then
   begin
-    valid:=true;
+    valid := true;
     exit;
   end;
   if assigned(ServerDataModule) then
   begin
-    valid:=ServerDataModule.verifyMember(User,Password);
+    valid := ServerDataModule.verifyMember(User, Password);
   end;
 end;
 
-procedure TServerContainer1.DSAuthenticationManager1UserAuthorize(
-  Sender: TObject; EventObject: TDSAuthorizeEventObject;
-  var valid: Boolean);
+procedure TServerContainer1.DSAuthenticationManager1UserAuthorize(Sender: TObject; EventObject: TDSAuthorizeEventObject; var valid: Boolean);
 begin
   { TODO : Authorize a user to execute a method.
     Use values from EventObject such as UserName, UserRoles, AuthorizedRoles and DeniedRoles.
     Use DSAuthenticationManager1.Roles to define Authorized and Denied roles
     for particular server methods. }
   //valid:=true; exit;
-  valid:=false;
-  if EventObject.UserName.ToLower='guest' then
-    valid:=EventObject.MethodAlias = 'TServerMethods.GetUpdatefiles'
+  valid := false;
+  if EventObject.UserName.ToLower = 'guest' then
+    valid := EventObject.MethodAlias = 'TServerMethods.GetUpdatefiles'
   else
-     valid := True;
+    valid := True;
 end;
 
 function BindPort(Aport: Integer): Boolean;
@@ -110,7 +113,7 @@ begin
   Result := True;
   try
     LTestServer := PeerFactory.CreatePeer('', IIPTestServer) as IIPTestServer;
-    LTestServer.TestOpenPort(APort, nil);
+    LTestServer.TestOpenPort(Aport, nil);
   except
     Result := False;
   end;
@@ -129,14 +132,16 @@ var
   IsPortSet: Boolean;
 begin
   IsPortSet := True;
-  if not (AServer.DSServer1.Started) then
+  if not (Aserver.DSServer1.Started) then
   begin
     if CheckPort(APort.ToInteger) > 0 then
     begin
       case AProtocol of
-        DSProtocol.TCPIP: AServer.DSTCPServerTransport1.Port := APort.ToInteger;
-        DSProtocol.HTTP: AServer.DSHTTPService1.HttpPort := APort.ToInteger;
-          
+        DSProtocol.TCPIP:
+          Aserver.DSTCPServerTransport1.Port := APort.ToInteger;
+        DSProtocol.HTTP:
+          Aserver.DSHTTPService1.HttpPort := APort.ToInteger;
+
       else
         IsPortSet := False
       end;
@@ -146,7 +151,7 @@ begin
         Writeln(Format(sPortNotSet, [APort]));
     end
     else
-      Writeln(Format(sPortInUse, [Aport]));
+      Writeln(Format(sPortInUse, [APort]));
   end
   else
     Writeln(sServerRunning);
@@ -184,7 +189,7 @@ end;
 
 procedure StopServer(const AServer: TServerContainer1);
 begin
-  if AServer.DSServer1.Started  then
+  if AServer.DSServer1.Started then
   begin
     Writeln(sStoppingServer);
     AServer.DSServer1.Stop;
@@ -195,26 +200,25 @@ begin
   Write(cArrow);
 end;
 
-procedure  WriteCommands;
+procedure WriteCommands;
 begin
   Writeln(sCommands);
   Write(cArrow);
 end;
 
-procedure  WriteStatus(const AServer: TServerContainer1);
+procedure WriteStatus(const AServer: TServerContainer1);
 begin
   Writeln(sActive + AServer.DSServer1.Started.ToString(TUseBoolStrs.True));
   Writeln(sTCPIPPort + AServer.DSTCPServerTransport1.Port.ToString);
-  Writeln(sHTTPPort + AServer.DSHTTPService1.HttpPort.ToString); 
-    
+  Writeln(sHTTPPort + AServer.DSHTTPService1.HttpPort.ToString);
+
   Write(cArrow);
 end;
 
-
- procedure Test;
- begin
+procedure Test;
+begin
    //
- end;
+end;
 
 procedure RunDSServer;
 var
@@ -223,48 +227,46 @@ var
 begin
   LModule := TServerContainer1.Create(nil);
   LModule.DSServer1.Start;
-    try
-      if LModule.DSServer1.Started then
-        Writeln(sServerIsRunning);
-      WriteCommands;
-      while True do
-      begin
-        Readln(LResponse);
-        LResponse := LowerCase(LResponse);
-        if sametext(LResponse, cCommandStart) then
-          StartServer(LModule)
-        else if sametext(LResponse, cCommandStatus) then
-          WriteStatus(LModule)
-        else if sametext(LResponse, cCommandStop) then
-          StopServer(LModule)
-        else if LResponse.StartsWith(cCommandSetTCPIPPort) then
-          SetPort(LModule, LResponse.Replace(cCommandSetTCPIPPort, '').Trim, DSProtocol.TCPIP)
-        else if LResponse.StartsWith(cCommandSetHTTPPort) then
-          SetPort(LModule, LResponse.Replace(cCommandSetHTTPPort, '').Trim, DSProtocol.HTTP)
-        else if sametext(LResponse, cCommandHelp) then
-          WriteCommands
-        else if sametext(LResponse,'test') then
-          Test
-        else if sametext(LResponse, cCommandExit) then
-          if LModule.DSServer1.Started then
-          begin
-            StopServer(LModule);
-            break
-          end
-          else
-            break
-        else
+  try
+    if LModule.DSServer1.Started then
+      Writeln(sServerIsRunning);
+    WriteCommands;
+    while True do
+    begin
+      Readln(LResponse);
+      LResponse := LowerCase(LResponse);
+      if sametext(LResponse, cCommandStart) then
+        StartServer(LModule)
+      else if sametext(LResponse, cCommandStatus) then
+        WriteStatus(LModule)
+      else if sametext(LResponse, cCommandStop) then
+        StopServer(LModule)
+      else if LResponse.StartsWith(cCommandSetTCPIPPort) then
+        SetPort(LModule, LResponse.Replace(cCommandSetTCPIPPort, '').Trim, DSProtocol.TCPIP)
+      else if LResponse.StartsWith(cCommandSetHTTPPort) then
+        SetPort(LModule, LResponse.Replace(cCommandSetHTTPPort, '').Trim, DSProtocol.HTTP)
+      else if sametext(LResponse, cCommandHelp) then
+        WriteCommands
+      else if sametext(LResponse, 'test') then
+        Test
+      else if sametext(LResponse, cCommandExit) then
+        if LModule.DSServer1.Started then
         begin
-          Writeln(sInvalidCommand);
-          Write(cArrow);
-        end;
+          StopServer(LModule);
+          break
+        end
+        else
+          break
+      else
+      begin
+        Writeln(sInvalidCommand);
+        Write(cArrow);
       end;
-  finally 
+    end;
+  finally
     LModule.Free;
   end;
 end;
-
-
 
 end.
 

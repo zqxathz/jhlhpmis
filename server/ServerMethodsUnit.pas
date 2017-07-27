@@ -353,12 +353,9 @@ var
     begin
       if TFileAttribute.faDirectory in TPath.GetAttributes(s[i]) then
       begin
-        //if path1<>'' then path2:=path1+'\';
         jsonobject:=Getfiles(s[i],path1+TPath.GetFileName(s[i])+'\');
         for j := 0 to jsonobject.Count-1 do
-        begin
           Result.AddPair(jsonobject.Pairs[j]);
-        end;
         if assigned(jsonobject) then jsonobject.Free;
       end
       else
@@ -367,8 +364,6 @@ var
        if (ext.ToLower ='.exe') or (ext.ToLower ='.dll') or (ext.ToLower ='.bpl') then
        begin
          jsonarray:=TJSONArray.Create;
-
-         //filesen := TFileStream.Create(s[i], fmopenread or fmshareExclusive);
          filesen := TFileStream.Create(s[i], fmopenread or fmShareDenyWrite);
          jsonarray.AddElement(TJSONString.Create(TPath.GetFileName(s[i])));
          jsonarray.AddElement(TJSONString.Create(path1));
