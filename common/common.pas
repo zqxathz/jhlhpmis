@@ -3,10 +3,29 @@ unit common;
 interface
 uses System.SysUtils,System.DateUtils;
 
+
+type
+  TNTPUrlArray = array of string;
+
+
 function getuuid:string;
 function getmillisecond:int64;
+function getntpurl:TNTPUrlArray;
 
 implementation
+
+function getntpurl:TNTPUrlArray;
+begin
+  //SetLength(Result,8);
+  Result:=['cn.pool.ntp.org',
+           'time1.aliyun.com',
+          'time2.aliyun.com',
+          'time3.aliyun.com',
+          'time4.aliyun.com',
+          'time5.aliyun.com',
+          'time6.aliyun.com',
+          'time7.aliyun.com']
+end;
 
 function getuuid:string;
 var

@@ -48,20 +48,20 @@
     <Transaction>2017/06/23 10:50:37.000.907,=D:\Develop\jhql\start\ModelSupport_start\main\default.txvpck</Transaction>
     <Transaction>2017/06/23 12:57:57.000.257,=D:\Tools\RaizeComponentsFullSource\Source\RzTabs.pas</Transaction>
     <Transaction>2017/06/23 12:58:40.000.241,D:\Tools\RaizeComponentsFullSource\Source\RzTabs.pas=</Transaction>
-    <Transaction>2017/06/23 13:37:48.000.121,=D:\Develop\jhql\start\ModelSupport_start\staticstr\default.txvpck</Transaction>
+    <Transaction>2017/06/23 13:37:48.000.090,=D:\Develop\jhql\start\ModelSupport_start\login\default.txvpck</Transaction>
     <Transaction>2017/06/23 13:37:48.000.059,=D:\Develop\jhql\start\ModelSupport_start\shopperdm\default.txvpck</Transaction>
     <Transaction>2017/06/23 13:37:48.000.028,=D:\Develop\jhql\start\ModelSupport_start\logindm\default.txvpck</Transaction>
-    <Transaction>2017/06/23 13:37:48.000.090,=D:\Develop\jhql\start\ModelSupport_start\login\default.txvpck</Transaction>
+    <Transaction>2017/06/23 13:37:48.000.121,=D:\Develop\jhql\start\ModelSupport_start\staticstr\default.txvpck</Transaction>
     <Transaction>2017/06/23 13:40:41.000.469,D:\Develop\jhql\start\ModelSupport_start\logindm\default.txvpck=</Transaction>
     <Transaction>2017/06/23 13:40:50.000.555,D:\Develop\jhql\start\ModelSupport_start\shopperdm\default.txvpck=</Transaction>
-    <Transaction>2017/06/23 13:40:50.000.199,D:\Develop\jhql\start\ModelSupport_start\start\default.txvpck=</Transaction>
-    <Transaction>2017/06/23 13:40:50.000.152,D:\Develop\jhql\start\ModelSupport_start\main\default.txvpck=</Transaction>
     <Transaction>2017/06/23 13:40:50.000.497,=D:\Develop\jhql\start\ModelSupport_start\start\default.txvpck</Transaction>
+    <Transaction>2017/06/23 13:40:50.000.152,D:\Develop\jhql\start\ModelSupport_start\main\default.txvpck=</Transaction>
+    <Transaction>2017/06/23 13:40:50.000.199,D:\Develop\jhql\start\ModelSupport_start\start\default.txvpck=</Transaction>
     <Transaction>2017/06/23 13:40:50.000.453,D:\Develop\jhql\start\ModelSupport_start\shopper\default.txvpck=</Transaction>
     <Transaction>2017/06/23 13:40:50.000.333,D:\Develop\jhql\start\ModelSupport_start\default.txaPackage=</Transaction>
-    <Transaction>2017/06/23 13:40:50.000.395,D:\Develop\jhql\start\ModelSupport_start\staticstr\default.txvpck=</Transaction>
-    <Transaction>2017/06/23 13:40:50.000.090,D:\Develop\jhql\start\ModelSupport_start\default.txvpck=</Transaction>
     <Transaction>2017/06/23 13:40:50.000.269,D:\Develop\jhql\start\ModelSupport_start\login\default.txvpck=</Transaction>
+    <Transaction>2017/06/23 13:40:50.000.090,D:\Develop\jhql\start\ModelSupport_start\default.txvpck=</Transaction>
+    <Transaction>2017/06/23 13:40:50.000.395,D:\Develop\jhql\start\ModelSupport_start\staticstr\default.txvpck=</Transaction>
     <Transaction>2017/06/23 13:40:55.000.642,D:\Develop\jhql\start\ModelSupport_start\start\default.txvpck=</Transaction>
     <Transaction>2017/06/23 17:47:49.000.425,=D:\Develop\jhql\start\ModelSupport_start\shopper\default.txvpck</Transaction>
     <Transaction>2017/06/23 17:59:31.000.285,=D:\Develop\jhql\start\ModelSupport_start\default.txvpck</Transaction>
@@ -83,11 +83,11 @@
     <File Path="..\connection"/>
     <File Path="..\connection\connectiondm.pas"/>
     <File Path="..\connection\connectiondm.dfm"/>
+    <File Path="main.pas"/>
+    <File Path="main.dfm"/>
     <File Path="login.pas"/>
     <File Path="login.dfm"/>
     <File Path="logindm.pas"/>
     <File Path="logindm.dfm"/>
-    <File Path="main.pas"/>
-    <File Path="main.dfm"/>
   </ProjectSortOrder>
 </BorlandProject>

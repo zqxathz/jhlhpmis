@@ -3,32 +3,12 @@ unit main;
 interface
 
 uses
-  Winapi.Windows,
-  Winapi.Messages,
-  Winapi.ShellApi,
-  System.SysUtils,
-  System.Variants,
-  System.Classes,
-  Vcl.Graphics,
-  Vcl.Controls,
-  Vcl.Forms,
-  Vcl.Dialogs,
-  login,
-  Vcl.ComCtrls,
-  Vcl.Menus,
-  RzTabs,
-  cxGraphics,
-  cxControls,
-  cxLookAndFeels,
-  cxLookAndFeelPainters,
-  dxCustomTileControl,
-  cxClasses,
-  dxTileControl,
-  shopper,
-  Vcl.StdCtrls,
-  customer,
-  clientsyc,
-  clientuploadfrm, Vcl.ExtCtrls;
+  Winapi.Windows, Winapi.Messages, Winapi.ShellApi, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, login, Vcl.ComCtrls,
+  Vcl.Menus, RzTabs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, dxCustomTileControl, cxClasses, dxTileControl, shopper,
+  Vcl.StdCtrls, customer, clientsyc, clientuploadfrm, Vcl.ExtCtrls,
+  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common;
 
 type
   Tmainform = class(TForm)
@@ -47,6 +27,8 @@ type
     dxTileControl1Item5: TdxTileControlItem;
     dxTileControl1Item6: TdxTileControlItem;
     updateTimer: TTimer;
+    timesyncTimer: TTimer;
+    IdSNTP1: TIdSNTP;
     procedure loginframe1loginbuttonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -62,6 +44,7 @@ type
     procedure dxTileControl1Item6Click(Sender: TdxTileControlItem);
     procedure updateTimerTimer(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure timesyncTimerTimer(Sender: TObject);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -278,8 +261,19 @@ begin
 end;
 
 procedure Tmainform.dxTileControl1Item6Click(Sender: TdxTileControlItem);
+var
+  ntplist:TNTPUrlArray;
+  i:integer;
+  str:string;
 begin
-  showmessage(GetBuildInfo);
+   //showmessage(GetBuildInfo);
+  ntplist:=getntpurl;
+  for I := 0 to Length(ntplist)-1 do
+  begin
+    str:=str+','+ntplist[i];
+  end;
+  ShowMessage(str);
+
 end;
 
 procedure Tmainform.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -306,7 +300,7 @@ end;
 procedure Tmainform.FormShow(Sender: TObject);
 begin
   updateTimerTimer(nil);
-  updateTimer.Enabled:=true;
+  updateTimer.Enabled := true;
 end;
 
 procedure Tmainform.loginframe1loginbuttonClick(Sender: TObject);
@@ -390,18 +384,26 @@ begin
   end;
 end;
 
+procedure Tmainform.timesyncTimerTimer(Sender: TObject);
+var
+  InternetTime, LocalhostTime: TDateTime;
+begin
+  LocalhostTime := now;
+
+end;
+
 procedure Tmainform.updateTimerTimer(Sender: TObject);
 var
-  updateexe:string;
-  process:long;
+  updateexe: string;
+  process: long;
 begin
   if not (Assigned(bplclientuploadFrame) and bplclientuploadframe.IsUploading) then
   begin
-    updateexe:=ExtractFilePath(Application.ExeName)+'update.exe';
+    updateexe := ExtractFilePath(Application.ExeName) + 'update.exe';
     if FileExists(updateexe) then
     begin
-      process:=GetCurrentProcessID;
-      ShellExecute(0,'open',pchar(updateexe) ,Pchar(inttostr(process)),nil,SW_SHOWNORMAL);
+      process := GetCurrentProcessID;
+      ShellExecute(0, 'open', pchar(updateexe), Pchar(inttostr(process)), nil, SW_SHOWNORMAL);
     end;
   end;
 end;

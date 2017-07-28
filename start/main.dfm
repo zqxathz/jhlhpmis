@@ -260,4 +260,16 @@ object mainform: Tmainform
     Left = 152
     Top = 344
   end
+  object timesyncTimer: TTimer
+    Interval = 300000
+    OnTimer = timesyncTimerTimer
+    Left = 128
+    Top = 432
+  end
+  object IdSNTP1: TIdSNTP
+    Active = True
+    Port = 123
+    Left = 64
+    Top = 328
+  end
 end
