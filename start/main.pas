@@ -53,12 +53,15 @@ type
     bplclientsycframe: TclientsycFrame;
     bplclientuploadframe: TbplclientuploadFrame;
     tabX, tabY: Integer;
+    timesyncrunning:boolean;
+    procedure timesync;
   public
     { Public declarations }
   end;
 
 var
   mainform: Tmainform;
+  firstshow:boolean = true;
 
 implementation
 
@@ -261,18 +264,9 @@ begin
 end;
 
 procedure Tmainform.dxTileControl1Item6Click(Sender: TdxTileControlItem);
-var
-  ntplist:TNTPUrlArray;
-  i:integer;
-  str:string;
 begin
    //showmessage(GetBuildInfo);
-  ntplist:=getntpurl;
-  for I := 0 to Length(ntplist)-1 do
-  begin
-    str:=str+','+ntplist[i];
-  end;
-  ShowMessage(str);
+  // timesyncTimerTimer(nil);
 
 end;
 
@@ -293,14 +287,23 @@ end;
 
 procedure Tmainform.FormCreate(Sender: TObject);
 begin
+  timesyncrunning:=false;
   width := 500;
   height := 400;
+  dxTileControl1Group2.Visible:= not dxTileControl1Group2.ItemCount=0
 end;
 
 procedure Tmainform.FormShow(Sender: TObject);
 begin
-  updateTimerTimer(nil);
-  updateTimer.Enabled := true;
+  if firstshow then
+  begin
+    firstshow:=false;
+    updateTimerTimer(nil);
+    updateTimer.Enabled := true;
+    TThread.CreateAnonymousThread(timesync).Start;
+    timesyncTimer.Enabled:=true;
+  end;
+
 end;
 
 procedure Tmainform.loginframe1loginbuttonClick(Sender: TObject);
@@ -384,12 +387,61 @@ begin
   end;
 end;
 
-procedure Tmainform.timesyncTimerTimer(Sender: TObject);
+procedure Tmainform.timesync;
 var
+  ntplist:TNTPUrlArray;
+  i:integer;
   InternetTime, LocalhostTime: TDateTime;
+  systemtime: Tsystemtime;
 begin
-  LocalhostTime := now;
+    //ShowMessage(DateTimeToTimeStamp(IdSNTP1.DateTime).Date.ToString);
+    ntplist:=getntpurl;
+    InternetTime:=0;
+    for I := 0 to Length(ntplist)-1 do
+    begin
+      IdSNTP1.Host:=ntplist[i];
+      try
+        InternetTime:= IdSNTP1.DateTime;
+        if InternetTime=0 then
+          Continue
+        else
+          Break;
+      except
 
+      end;
+    end;
+  // ShowMessage(FloatToStr(InternetTime));
+    if InternetTime>0 then
+    begin
+      //showmessage(DateTimeToStr(InternetTime));
+      LocalhostTime := now;
+      if DateTimeToTimeStamp(InternetTime).Date<>DateTimeToTimeStamp(LocalhostTime).Date then
+      begin
+        timesyncrunning:=true;
+        try
+
+       //   if Application.MessageBox('检测到本地日期与正确日期不同,是否要设置正确时间?', '本地日期不正确',
+        //     MB_YESNO + MB_ICONQUESTION + MB_TOPMOST) = IDYES then
+//     if MessageBox(Handle, '检测到本地日期与正确日期不同,是否要设置正确时间?', '本地日期不正确', MB_YESNO +
+  //     MB_ICONQUESTION + MB_TOPMOST) = IDYES then
+
+           begin
+             DateTimeToSystemTime(InternetTime, systemtime);   //把Delphi的TDateTime格式转化为API的TSystemTime格式
+             if not SetLocalTime(systemtime) then   //设置系统时间
+               showmessage('设置系统时间失败,请手动设置.'+#10#13+'当前时间为:'+DateTimeToStr(InternetTime));
+           end;
+        finally
+          timesyncrunning :=false;
+        end;
+      end;
+    end;
+   // LocalhostTime := now;
+end;
+
+procedure Tmainform.timesyncTimerTimer(Sender: TObject);
+begin
+   if not timesyncrunning then
+     timesync;
 end;
 
 procedure Tmainform.updateTimerTimer(Sender: TObject);

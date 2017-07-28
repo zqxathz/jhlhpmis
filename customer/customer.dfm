@@ -15,7 +15,7 @@ object bplCustomerFrame: TbplCustomerFrame
   TabOrder = 0
   object Splitter1: TSplitter
     Left = 0
-    Top = 317
+    Top = 285
     Width = 1219
     Height = 3
     Cursor = crVSplit
@@ -27,11 +27,12 @@ object bplCustomerFrame: TbplCustomerFrame
     Left = 0
     Top = 0
     Width = 1219
-    Height = 317
+    Height = 285
     Align = alClient
     PopupMenu = PopupMenu1
     TabOrder = 0
     TabStop = False
+    ExplicitHeight = 317
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnDblClick = cxGrid1DBTableView1DblClick
       OnKeyDown = cxGrid1DBTableView1KeyDown
@@ -57,9 +58,9 @@ object bplCustomerFrame: TbplCustomerFrame
   end
   object Panel1: TPanel
     Left = 0
-    Top = 320
+    Top = 288
     Width = 1219
-    Height = 283
+    Height = 315
     Align = alBottom
     BevelOuter = bvNone
     BiDiMode = bdLeftToRight
@@ -74,7 +75,7 @@ object bplCustomerFrame: TbplCustomerFrame
     TabOrder = 1
     DesignSize = (
       1219
-      283)
+      315)
     object expocxLookupComboBox: TcxLookupComboBox
       Left = 100
       Top = 6
@@ -116,7 +117,7 @@ object bplCustomerFrame: TbplCustomerFrame
     end
     object applyButton: TButton
       Left = 967
-      Top = 242
+      Top = 254
       Width = 75
       Height = 25
       Anchors = [akLeft, akBottom]
@@ -125,8 +126,8 @@ object bplCustomerFrame: TbplCustomerFrame
       OnClick = applyButtonClick
     end
     object Button2: TButton
-      Left = 1049
-      Top = 242
+      Left = 1048
+      Top = 254
       Width = 75
       Height = 25
       Anchors = [akLeft, akBottom]
@@ -260,7 +261,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Left = 64
       Top = 205
       Width = 818
-      Height = 62
+      Height = 74
       Anchors = [akLeft, akTop, akBottom]
       TabOrder = 15
     end
@@ -390,18 +391,19 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 148
     end
     object EditmodeCheckBox: TCheckBox
-      Left = 967
-      Top = 202
+      Left = 966
+      Top = 222
       Width = 113
       Height = 26
       TabStop = False
+      Anchors = [akLeft, akBottom]
       Caption = #32534#36753#27169#24335
       TabOrder = 35
       OnClick = EditmodeCheckBoxClick
     end
     object updateButton: TButton
-      Left = 967
-      Top = 242
+      Left = 966
+      Top = 254
       Width = 75
       Height = 25
       Anchors = [akLeft, akBottom]
@@ -409,6 +411,31 @@ object bplCustomerFrame: TbplCustomerFrame
       TabOrder = 17
       Visible = False
       OnClick = applyButtonClick
+    end
+    object RzStatusBar1: TRzStatusBar
+      Left = 0
+      Top = 285
+      Width = 1219
+      Height = 30
+      BorderInner = fsNone
+      BorderOuter = fsNone
+      BorderSides = [sdLeft, sdTop, sdRight, sdBottom]
+      BorderWidth = 0
+      Font.Charset = GB2312_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = #24494#36719#38597#40657
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 36
+      ExplicitTop = 253
+      object RzClockStatus1: TRzClockStatus
+        Left = 1064
+        Top = 0
+        Width = 155
+        Height = 30
+        Align = alRight
+      end
     end
   end
   object cxEditRepository1: TcxEditRepository

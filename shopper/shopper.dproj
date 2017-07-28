@@ -152,7 +152,6 @@
         <DCCReference Include="cxExportRS25.dcp"/>
         <DCCReference Include="FireDACCommon.dcp"/>
         <DCCReference Include="RaizeComponentsVcl.dcp"/>
-        <DCCReference Include="RaizeComponentsVclDb.dcp"/>
         <DCCReference Include="connection.dcp"/>
         <DCCReference Include="shopper.pas">
             <Form>bplshopperframe</Form>
@@ -192,6 +191,12 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\Win64\shopper.rsm" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win64">
+                        <RemoteName>shopper.rsm</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\shopper.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>shopper.bpl</RemoteName>

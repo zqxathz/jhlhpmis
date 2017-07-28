@@ -116,6 +116,7 @@
         <DCC_UsePackage>connection;shopper;customer;clientsyc;clientupload;common</DCC_UsePackage>
         <DCC_UnitSearchPath>D:\Tools\RaizeComponentsFullSource\Source;D:\Develop\jhql\clientsyc;D:\Develop\jhql\clientupload;D:\Develop\jhql\connection;D:\Develop\jhql\common;D:\Develop\jhql\customer;D:\Develop\jhql\shopper;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <UsePackages>true</UsePackages>
+        <AppExecutionLevel>highestAvailable</AppExecutionLevel>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>

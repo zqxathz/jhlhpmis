@@ -42,7 +42,8 @@ requires
   dxLayoutControlRS25,
   cxGridRS25,
   FireDACCommon,
-  common;
+  common,
+  RaizeComponentsVcl;
 
 contains
   customer in 'customer.pas' {bplCustomerFrame: TFrame},

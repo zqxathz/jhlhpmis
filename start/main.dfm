@@ -198,8 +198,8 @@ object mainform: Tmainform
           OnClick = dxTileControl1Item3Click
         end
         object dxTileControl1Item4: TdxTileControlItem
-          GroupIndex = 1
-          IndexInGroup = 0
+          GroupIndex = 0
+          IndexInGroup = 3
           Style.GradientBeginColor = 12615808
           Text1.Align = oaMiddleCenter
           Text1.AssignedValues = [avColor, avFont]
@@ -217,8 +217,8 @@ object mainform: Tmainform
           OnClick = dxTileControl1Item4Click
         end
         object dxTileControl1Item5: TdxTileControlItem
-          GroupIndex = 1
-          IndexInGroup = 1
+          GroupIndex = 0
+          IndexInGroup = 4
           Style.GradientBeginColor = 16384
           Text1.Align = oaMiddleCenter
           Text1.AssignedValues = [avFont]
@@ -234,9 +234,16 @@ object mainform: Tmainform
           OnClick = dxTileControl1Item5Click
         end
         object dxTileControl1Item6: TdxTileControlItem
-          GroupIndex = 1
-          IndexInGroup = 2
-          Text1.AssignedValues = []
+          GroupIndex = 0
+          IndexInGroup = 5
+          Text1.Align = oaMiddleCenter
+          Text1.AssignedValues = [avFont]
+          Text1.Font.Charset = DEFAULT_CHARSET
+          Text1.Font.Color = clDefault
+          Text1.Font.Height = -20
+          Text1.Font.Name = 'Segoe UI'
+          Text1.Font.Style = []
+          Text1.Value = #36719#20214#35774#32622
           Text2.AssignedValues = []
           Text3.AssignedValues = []
           Text4.AssignedValues = []
@@ -257,10 +264,11 @@ object mainform: Tmainform
     Enabled = False
     Interval = 1800000
     OnTimer = updateTimerTimer
-    Left = 152
-    Top = 344
+    Left = 136
+    Top = 296
   end
   object timesyncTimer: TTimer
+    Enabled = False
     Interval = 300000
     OnTimer = timesyncTimerTimer
     Left = 128
@@ -269,6 +277,7 @@ object mainform: Tmainform
   object IdSNTP1: TIdSNTP
     Active = True
     Port = 123
+    ReceiveTimeout = 2000
     Left = 64
     Top = 328
   end

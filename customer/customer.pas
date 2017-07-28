@@ -12,7 +12,7 @@ uses
   cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, cxExtEditRepositoryItems, cxCurrencyEdit,
   cxPropertiesStore, cxEditRepositoryItems, cxDBEditRepository, System.DateUtils,
-  Vcl.Menus, common,Clipbrd;
+  Vcl.Menus, common,Clipbrd, RzStatus, RzPanel;
 
 type
   TbplCustomerFrame = class(TFrame)
@@ -81,6 +81,8 @@ type
     EditmodeCheckBox: TCheckBox;
     updateButton: TButton;
     copyitemmenu: TMenuItem;
+    RzStatusBar1: TRzStatusBar;
+    RzClockStatus1: TRzClockStatus;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(Sender: TObject);
     procedure salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(Sender: TObject);

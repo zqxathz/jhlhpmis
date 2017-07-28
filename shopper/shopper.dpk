@@ -48,7 +48,6 @@ requires
   cxExportRS25,
   FireDACCommon,
   RaizeComponentsVcl,
-  RaizeComponentsVclDb,
   connection;
 
 contains

@@ -15,10 +15,10 @@
     <Transaction>2017/06/26 10:24:44.000.970,=dxGDIPlusRS25.dcp</Transaction>
     <Transaction>2017/06/26 10:24:44.000.982,=dxThemeRS25.dcp</Transaction>
     <Transaction>2017/06/26 10:24:44.000.932,=vcldb.dcp</Transaction>
-    <Transaction>2017/06/26 10:24:44.000.945,=dxCoreRS25.dcp</Transaction>
     <Transaction>2017/06/26 10:24:44.000.919,=vclimg.dcp</Transaction>
-    <Transaction>2017/06/26 10:24:45.000.023,=cxPageControlRS25.dcp</Transaction>
+    <Transaction>2017/06/26 10:24:44.000.945,=dxCoreRS25.dcp</Transaction>
     <Transaction>2017/06/26 10:24:45.000.009,=cxEditorsRS25.dcp</Transaction>
+    <Transaction>2017/06/26 10:24:45.000.023,=cxPageControlRS25.dcp</Transaction>
     <Transaction>2017/06/26 10:24:45.000.052,=cxGridRS25.dcp</Transaction>
     <Transaction>2017/06/26 10:24:45.000.037,=dxLayoutControlRS25.dcp</Transaction>
     <Transaction>2017/06/26 10:32:20.000.584,=D:\Develop\jhql\customer\Unit1.pas</Transaction>
@@ -28,5 +28,6 @@
     <Transaction>2017/06/27 14:30:17.000.096,=firedac.dcp</Transaction>
     <Transaction>2017/07/04 23:40:59.000.239,=FireDACCommon.dcp</Transaction>
     <Transaction>2017/07/14 10:33:58.000.767,=common.dcp</Transaction>
+    <Transaction>2017/07/29 01:21:04.075,=RaizeComponentsVcl.dcp</Transaction>
   </Transactions>
 </BorlandProject>
