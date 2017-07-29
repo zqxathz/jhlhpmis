@@ -42,8 +42,6 @@ requires
   cxPageControlRS25,
   dxLayoutControlRS25,
   cxGridRS25,
-  dxSkinsCoreRS25,
-  dxSkinscxPCPainterRS25,
   XLSReadWriteIID10_2,
   cxExportRS25,
   FireDACCommon,

@@ -54,6 +54,7 @@ uses connectiondm;
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 {$R *.dfm}
 
+//时间戳转日期类型
 function UnixDateToDateTime(const USec: Longint): TDateTime;
 const
   cUnixStartDate: TDateTime = 25569.0; // 1970/01/01
@@ -61,6 +62,7 @@ begin
   Result := (USec / 86400) + cUnixStartDate;
 end;
 
+//数据模块创建
 procedure TcustomerDataModule.DataModuleCreate(Sender: TObject);
 begin
   if connectionDataModule <> nil then

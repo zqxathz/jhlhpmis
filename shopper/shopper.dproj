@@ -146,8 +146,6 @@
         <DCCReference Include="cxPageControlRS25.dcp"/>
         <DCCReference Include="dxLayoutControlRS25.dcp"/>
         <DCCReference Include="cxGridRS25.dcp"/>
-        <DCCReference Include="dxSkinsCoreRS25.dcp"/>
-        <DCCReference Include="dxSkinscxPCPainterRS25.dcp"/>
         <DCCReference Include="XLSReadWriteIID10_2.dcp"/>
         <DCCReference Include="cxExportRS25.dcp"/>
         <DCCReference Include="FireDACCommon.dcp"/>
@@ -191,9 +189,9 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\Win64\shopper.rsm" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\Win64\shopper.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64">
-                        <RemoteName>shopper.rsm</RemoteName>
+                        <RemoteName>shopper.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -203,9 +201,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\Win64\shopper.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\Win64\shopper.rsm" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win64">
-                        <RemoteName>shopper.bpl</RemoteName>
+                        <RemoteName>shopper.rsm</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

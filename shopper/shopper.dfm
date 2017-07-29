@@ -198,6 +198,7 @@ object bplshopperframe: Tbplshopperframe
         Caption = #21019#24314#26085#26399
         DataBinding.FieldName = 'createtime'
         RepositoryItem = cxEditRepository1DateItem1
+        Options.Editing = False
         VisibleForCustomization = False
         Width = 100
       end
@@ -205,6 +206,7 @@ object bplshopperframe: Tbplshopperframe
         Caption = #26356#26032#26085#26399
         DataBinding.FieldName = 'updatetime'
         RepositoryItem = cxEditRepository1DateItem1
+        Options.Editing = False
         VisibleForCustomization = False
         Width = 100
       end
@@ -411,6 +413,29 @@ object bplshopperframe: Tbplshopperframe
         Height = 30
         Align = alRight
         Alignment = taRightJustify
+      end
+      object RzProgressStatus1: TRzProgressStatus
+        Left = 896
+        Top = 0
+        Width = 152
+        Height = 30
+        Align = alRight
+        ParentShowHint = False
+        PartsComplete = 0
+        Percent = 0
+        ShowPercent = True
+        TotalParts = 0
+      end
+      object RzStatusPane3: TRzStatusPane
+        Left = 818
+        Top = 0
+        Width = 78
+        Height = 30
+        Align = alRight
+        Alignment = taRightJustify
+        AutoSize = True
+        Caption = #27491#22312#23548#20986':'
+        ExplicitLeft = 822
       end
       object updateareaallbutton: TButton
         Left = 46
@@ -730,8 +755,8 @@ object bplshopperframe: Tbplshopperframe
           'Height')
       end>
     StorageName = 'shopper.ini'
-    Left = 896
-    Top = 216
+    Left = 752
+    Top = 264
   end
   object cxStyleRepository1: TcxStyleRepository
     Scalable = True

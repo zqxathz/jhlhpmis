@@ -1,5 +1,7 @@
 program start;
 
+
+
 uses
   Vcl.Forms,
   Vcl.Themes,
@@ -30,9 +32,9 @@ begin
     Application.Title := '¾©ºþÇàÁ«Õ¹ÀÀ';
     TStyleManager.TrySetStyle('Metropolis UI Blue');
     Application.CreateForm(Tmainform, mainform);
-    Application.CreateForm(TconnectionDataModule, connectionDataModule);
-    Application.CreateForm(Tlogindatamod, logindatamod);
-    Application.Run;
+  Application.CreateForm(TconnectionDataModule, connectionDataModule);
+  Application.CreateForm(Tlogindatamod, logindatamod);
+  Application.Run;
   end
   else
   begin

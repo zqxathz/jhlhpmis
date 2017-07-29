@@ -265,7 +265,7 @@ end;
 
 procedure Tmainform.dxTileControl1Item6Click(Sender: TdxTileControlItem);
 begin
-   //showmessage(GetBuildInfo);
+   showmessage(GetBuildInfo);
   // timesyncTimerTimer(nil);
 
 end;

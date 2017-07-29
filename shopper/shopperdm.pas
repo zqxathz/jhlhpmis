@@ -270,14 +270,11 @@ begin
 
   if (shopperfdquery.FieldValues['adcode'] > 0) then
   begin
-    // areafdquery.First;
     areafdquery.DisableControls;
-
     if areafdquery.FindKey([shopperfdquery.FieldByName('adcode').AsInteger]) then
       shopperfdquery.FieldValues['area'] := areafdquery.FieldValues['p'] + areafdquery.FieldValues['c'] + areafdquery.FieldValues['a']
     else
       shopperfdquery.FieldValues['area'] := 'нч';
-
     areafdquery.EnableControls;
   end
   else

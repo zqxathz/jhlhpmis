@@ -32,7 +32,6 @@ object bplCustomerFrame: TbplCustomerFrame
     PopupMenu = PopupMenu1
     TabOrder = 0
     TabStop = False
-    ExplicitHeight = 317
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnDblClick = cxGrid1DBTableView1DblClick
       OnKeyDown = cxGrid1DBTableView1KeyDown
@@ -238,7 +237,6 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #25307#23637#20154#21592':'
-      PopupMenu = PopupMenu2
       TabOrder = 32
     end
     object StaticText15: TStaticText
@@ -417,6 +415,8 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 285
       Width = 1219
       Height = 30
+      AutoScalePanes = True
+      AutoStyle = False
       BorderInner = fsNone
       BorderOuter = fsNone
       BorderSides = [sdLeft, sdTop, sdRight, sdBottom]
@@ -428,13 +428,46 @@ object bplCustomerFrame: TbplCustomerFrame
       Font.Style = []
       ParentFont = False
       TabOrder = 36
-      ExplicitTop = 253
+      Visible = False
       object RzClockStatus1: TRzClockStatus
-        Left = 1064
+        Left = 1048
         Top = 0
-        Width = 155
+        Width = 171
         Height = 30
         Align = alRight
+        Alignment = taRightJustify
+        ExplicitHeight = 19
+      end
+      object RzProgressStatus1: TRzProgressStatus
+        Left = 864
+        Top = 0
+        Width = 184
+        Height = 30
+        Align = alRight
+        ParentShowHint = False
+        ShowHint = False
+        PartsComplete = 0
+        Percent = 0
+        ShowPercent = True
+        TotalParts = 0
+        ExplicitLeft = 784
+      end
+      object RzStatusPane1: TRzStatusPane
+        Left = 786
+        Top = 0
+        Width = 78
+        Height = 30
+        Align = alRight
+        Font.Charset = GB2312_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = #24494#36719#38597#40657
+        Font.Style = []
+        ParentFont = False
+        Alignment = taRightJustify
+        AutoSize = True
+        Caption = #27491#22312#23548#20986':'
+        ExplicitLeft = 784
       end
     end
   end
@@ -569,8 +602,8 @@ object bplCustomerFrame: TbplCustomerFrame
     end
   end
   object PopupMenu2: TPopupMenu
-    Left = 712
-    Top = 328
+    Left = 1032
+    Top = 424
     object N2: TMenuItem
       Caption = #21024#38500
     end

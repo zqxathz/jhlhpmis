@@ -62,12 +62,13 @@ uses
   XLSSheetData5,
   XLSReadWriteII5,
   Clipbrd,
+  cxExport,
   FireDAC.Phys.SQLiteWrapper;
 
 type
   TInputType = (itquick,itgife);
 
-  Tbplshopperframe = class(TFrame)
+  Tbplshopperframe = class(TFrame,IcxExportProgress)
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
     cxGrid1: TcxGrid;
@@ -167,6 +168,8 @@ type
     fetchmenu: TMenuItem;
     autowidthmenu: TMenuItem;
     RzClockStatus1: TRzClockStatus;
+    RzProgressStatus1: TRzProgressStatus;
+    RzStatusPane3: TRzStatusPane;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure updateareaallbuttonClick(Sender: TObject);
     procedure applyButtonClick(Sender: TObject);
@@ -191,6 +194,7 @@ type
     procedure CxGridToExcel(AcxGrid: TcxGrid);
     procedure Resetform;
     procedure LoadExcel;
+    procedure OnProgress(Sender: TObject; Percent: Integer);
   public
     { Public declarations }
     inputtype:TInputType;
@@ -219,9 +223,26 @@ begin
   begin
     Filter := '*.xls|*.xls';
     if Execute then
-      ExportGridToExcel(SaveDialog.FileName, AcxGrid, true, true, true, 'xls');
+      ExportGridToExcel(SaveDialog.FileName, AcxGrid, true, true, true, 'xls',Self);
   end;
   SaveDialog.Free;
+end;
+
+procedure Tbplshopperframe.OnProgress(Sender: TObject; Percent: Integer);
+begin
+  Application.ProcessMessages;
+  RzProgressStatus1.Percent:=Percent;
+  if Percent=100 then
+  begin
+    ShowMessage('导出完成');
+    RzStatusPane3.Visible:=false;
+    RzProgressStatus1.Visible:=false;
+  end;
+  if  Percent=1 then
+  begin
+    RzProgressStatus1.Visible:=true;
+    RzStatusPane3.Visible:=true;
+  end;
 end;
 
 //右键菜单删除当前记录
@@ -334,6 +355,7 @@ begin
   shopperdatamod.shopperfdquery.EnableControls;
 
 end;
+
 
 //初始化当前Frame
 procedure Tbplshopperframe.List;
@@ -564,6 +586,8 @@ begin
 //    + inifile;
   cxPropertiesStore1.Active := true;
   cxPropertiesStore1.RestoreFrom; //读取保存的一些组件数据
+  RzProgressStatus1.Visible:=False;
+  RzStatusPane3.Visible:=false;
 end;
 
 //在Grid里按Ctrl+C复制当前格子的文本内容
@@ -574,6 +598,7 @@ begin
     copyitemmenuClick(nil);
 end;
 
+//手机号字段验证
 procedure Tbplshopperframe.cxGrid1DBTableView1phonePropertiesValidate(Sender: TObject;
   var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 begin
@@ -583,8 +608,6 @@ begin
        Error:=true;
        ErrorText:='手机号码格式错误,请重新输入';
      end;
-
-
 end;
 
 //Frame释放时执行的一些操作,保存当前FRAME里一些组件的属性
@@ -638,41 +661,44 @@ procedure Tbplshopperframe.updateareaallbuttonClick(Sender: TObject);
 var
   iErrors: integer;
 begin
-  if Application.MessageBox('是否要批量更新地区信息?', '提示', MB_YESNO + MB_ICONQUESTION +
-    MB_DEFBUTTON2) = IDNO then
+  if shopperdatamod.shopperfdquery.RecordCount>0 then
   begin
-    exit;
-  end;
+    if Application.MessageBox('是否要批量更新地区信息?', '提示', MB_YESNO + MB_ICONQUESTION +
+      MB_DEFBUTTON2) = IDNO then exit;
 
-  with shopperdatamod do
-  begin
-    shopperfdquery.DisableControls;
-    shopperfdquery.CachedUpdates := true;
-    shopperfdquery.First;
-    try
+    with shopperdatamod do
+    begin
+      shopperfdquery.DisableControls;
+      shopperfdquery.CachedUpdates := true;
+      shopperfdquery.First;
       try
-        while not shopperfdquery.Eof do
-        begin
-          shopperfdquery.Edit;
-          shopperfdquery.FieldValues['adcode'] := expofdquery.FieldValues['adcode'];
-          shopperfdquery.Post;
-          shopperfdquery.Next;
-        end;
-        shopperfdquery.Connection.StartTransaction;
-        iErrors := shopperfdquery.ApplyUpdates;
-        shopperfdquery.Connection.Commit;
-        shopperfdquery.CommitUpdates;
-         if iErrors > 0 then
-        begin
-          shopperfdquery.Connection.Rollback;
-          showmessage('出现错误,更新失败');
-        end;
-      except
+        try
+          while not shopperfdquery.Eof do
+          begin
+            shopperfdquery.Edit;
+            shopperfdquery.FieldValues['adcode'] := expofdquery.FieldValues['adcode'];
+            shopperfdquery.Post;
+            shopperfdquery.Next;
+          end;
+          shopperfdquery.Connection.StartTransaction;
+          iErrors := shopperfdquery.ApplyUpdates;
+          if iErrors > 0 then
+          begin
+            shopperfdquery.Connection.Rollback;
+            showmessage('出现错误,更新失败');
+          end
+          else
+          begin
+            shopperfdquery.Connection.Commit;
+            shopperfdquery.CommitUpdates;
+          end;
+        except
 
+        end;
+      finally
+        shopperfdquery.CachedUpdates := false;
+        shopperfdquery.EnableControls;
       end;
-    finally
-      shopperfdquery.CachedUpdates := false;
-      shopperfdquery.EnableControls;
     end;
   end;
 end;
