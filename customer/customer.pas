@@ -3,19 +3,61 @@
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls,
-  cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter,
-  cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, Vcl.ExtCtrls,
-  cxGridLevel, cxClasses, cxGridCustomView, cxGridCustomTableView,
-  cxGridTableView, cxGridDBTableView, cxGrid, customerdm, cxContainer, Vcl.StdCtrls,
-  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
-  cxDBLookupComboBox, cxExtEditRepositoryItems, cxCurrencyEdit,
-  cxPropertiesStore, cxEditRepositoryItems, cxDBEditRepository, System.DateUtils,
-  Vcl.Menus, common, Clipbrd, RzStatus, RzPanel, cxExport;
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  cxGraphics,
+  cxControls,
+  cxLookAndFeels,
+  cxLookAndFeelPainters,
+  cxStyles,
+  cxCustomData,
+  cxFilter,
+  cxData,
+  cxDataStorage,
+  cxEdit,
+  cxNavigator,
+  Data.DB,
+  cxDBData,
+  Vcl.ExtCtrls,
+  cxGridLevel,
+  cxClasses,
+  cxGridCustomView,
+  cxGridCustomTableView,
+  cxGridTableView,
+  cxGridDBTableView,
+  cxGrid,
+  customerdm,
+  cxContainer,
+  Vcl.StdCtrls,
+  cxTextEdit,
+  cxMaskEdit,
+  cxDropDownEdit,
+  cxLookupEdit,
+  cxDBLookupEdit,
+  cxDBLookupComboBox,
+  cxExtEditRepositoryItems,
+  cxCurrencyEdit,
+  cxPropertiesStore,
+  cxEditRepositoryItems,
+  cxDBEditRepository,
+  System.DateUtils,
+  Vcl.Menus,
+  common,
+  Clipbrd,
+  RzStatus,
+  RzPanel,
+  cxExport,
+  FireDAC.Comp.DataSet;
 
 type
-  TbplCustomerFrame = class(TFrame,IcxExportProgress)
+  TbplCustomerFrame = class(TFrame, IcxExportProgress)
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
     cxGrid1: TcxGrid;
@@ -85,13 +127,13 @@ type
     RzClockStatus1: TRzClockStatus;
     RzProgressStatus1: TRzProgressStatus;
     RzStatusPane1: TRzStatusPane;
+    cxEditRepository1TextItem1: TcxEditRepositoryTextItem;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(Sender: TObject);
     procedure salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(Sender: TObject);
     procedure salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged(Sender: TObject);
     procedure allpaycxCurrencyEditClick(Sender: TObject);
-    procedure cxGrid1DBTableView1StylesGetContentStyle(Sender: TcxCustomGridTableView;
-      ARecord: TcxCustomGridRecord; AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
+    procedure cxGrid1DBTableView1StylesGetContentStyle(Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord; AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
     procedure cxEditRepository1PopupItem1PropertiesInitPopup(Sender: TObject);
     procedure cxEditRepository1PopupItem1PropertiesCloseUp(Sender: TObject);
     procedure applyButtonClick(Sender: TObject);
@@ -102,37 +144,37 @@ type
     procedure fetchallmenuClick(Sender: TObject);
     procedure softremovemenuClick(Sender: TObject);
     procedure toexcelmenuClick(Sender: TObject);
-    procedure salesnamecxEditRepository1ComboBoxItemPropertiesDrawItem(AControl: TcxCustomComboBox;
-      ACanvas: TcxCanvas; AIndex: Integer; const ARect: TRect; AState: TOwnerDrawState);
+    procedure salesnamecxEditRepository1ComboBoxItemPropertiesDrawItem(AControl: TcxCustomComboBox; ACanvas: TcxCanvas; AIndex: Integer; const ARect: TRect; AState: TOwnerDrawState);
     procedure salescxComboBoxEnter(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure EditmodeCheckBoxClick(Sender: TObject);
-    procedure cxGrid1DBTableView1FocusedRecordChanged(Sender: TcxCustomGridTableView;
-      APrevFocusedRecord, AFocusedRecord: TcxCustomGridRecord;
-      ANewItemRecordFocusingChanged: Boolean);
+    procedure cxGrid1DBTableView1FocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord, AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
     procedure cxGrid1DBTableView1DblClick(Sender: TObject);
-    procedure phonecxMaskEditPropertiesValidate(Sender: TObject; var DisplayValue: Variant;
-      var ErrorText: TCaption; var Error: Boolean);
+    procedure phonecxMaskEditPropertiesValidate(Sender: TObject; var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
     procedure copyitemmenuClick(Sender: TObject);
     procedure cxGrid1DBTableView1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    private
+    procedure cxEditRepository1TextItem1PropertiesValidate(Sender: TObject; var DisplayValue: Variant;
+      var ErrorText: TCaption; var Error: Boolean);
+  private
       { Private declarations }
-      columninfoMemo: TMemo;
-      procedure initGirdTableView;
-      procedure CxGridToExcel(AcxGrid: TcxGrid);
-      procedure MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-      procedure AppendUpdateData;
-      procedure OnProgress(Sender: TObject; Percent: Integer);
-    public
+    columninfoMemo: TMemo;
+    procedure initGirdTableView;
+    procedure CxGridToExcel(AcxGrid: TcxGrid);
+    procedure MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure AppendUpdateData;
+    procedure OnProgress(Sender: TObject; Percent: Integer);
+    procedure ValidateStandNumber(Sender: TObject);
+  public
       { Public declarations }
-      constructor Create(AOwner: TComponent); override;
-      destructor Destroy; override;
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
   end;
 
 implementation
 
 uses
-  cxGridExportLink, connectiondm;
+  cxGridExportLink,
+  connectiondm;
 
 {$R *.dfm}
 
@@ -149,9 +191,9 @@ begin
       if Execute then
       begin
         if FileExists(SaveDialog.FileName) then
-          if Application.MessageBox('文件已经存在,是否要覆盖?', '是否要覆盖', MB_YESNO +
-            MB_ICONWARNING + MB_TOPMOST) = IDNO then exit;
-        ExportGridToExcel(SaveDialog.FileName, AcxGrid, true, true, true, 'xls',Self);
+          if Application.MessageBox('文件已经存在,是否要覆盖?', '是否要覆盖', MB_YESNO + MB_ICONWARNING + MB_TOPMOST) = IDNO then
+            exit;
+        ExportGridToExcel(SaveDialog.FileName, AcxGrid, true, true, true, 'xls', Self);
       end;
     end;
   finally
@@ -161,17 +203,17 @@ end;
 
 procedure TbplCustomerFrame.OnProgress(Sender: TObject; Percent: Integer);
 begin
-  RzProgressStatus1.Percent:=Percent;
-  if Percent=100 then
+  RzProgressStatus1.Percent := Percent;
+  if Percent = 100 then
   begin
     ShowMessage('导出完成');
-    RzStatusPane1.Visible:=false;
-    RzProgressStatus1.Visible:=false;
+    RzStatusPane1.Visible := false;
+    RzProgressStatus1.Visible := false;
   end;
-  if  Percent=1 then
+  if Percent = 1 then
   begin
-    RzProgressStatus1.Visible:=true;
-    RzStatusPane1.Visible:=true;
+    RzProgressStatus1.Visible := true;
+    RzStatusPane1.Visible := true;
   end;
 end;
 
@@ -206,6 +248,16 @@ begin
   begin
     showmessage(required_str);
     exit;
+  end;
+
+  if Trim(standnumberEdit.Text) <> '' then
+  begin
+    if customerDataModule.customerFDQuery.Locate('standnumber', Trim(standnumberEdit.Text), [loCaseInsensitive]) then
+       if Application.MessageBox( '此展位号已经存在,是否确定要继续添加?', '展位号已存在', MB_OKCANCEL +
+         MB_ICONQUESTION + MB_DEFBUTTON2 + MB_TOPMOST) = IDCANCEL then
+       begin
+         exit;
+       end;
   end;
 
   with customerDataModule do
@@ -287,8 +339,7 @@ end;
 
 procedure TbplCustomerFrame.copyitemmenuClick(Sender: TObject);
 begin
-  Clipboard.AsText := cxGrid1DBTableView1.Controller.SelectedRows[0].DisplayTexts
-    [cxGrid1DBTableView1.Controller.FocusedColumn.Index];
+  Clipboard.AsText := cxGrid1DBTableView1.Controller.SelectedRows[0].DisplayTexts[cxGrid1DBTableView1.Controller.FocusedColumn.Index];
 end;
 
 constructor TbplCustomerFrame.Create(AOwner: TComponent);
@@ -325,32 +376,29 @@ begin
       cxEditRepository1PopupItem1.Properties.PopupControl := columninfoMemo;
     end;
   end;
-  RzProgressStatus1.Visible:=False;
-  RzStatusPane1.Visible:=false;
+  RzProgressStatus1.Visible := False;
+  RzStatusPane1.Visible := false;
   RzStatusBar1.Visible := true;
 
 end;
 
 //点击招展人员下拉框X,删除此人员 ,否则选择当前项
-procedure TbplCustomerFrame.MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState;
-  X, Y: Integer);
+procedure TbplCustomerFrame.MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
   clickItemIndex, clickX: Integer;
   Name: string;
 begin
-  name := '';
+  Name := '';
   clickItemIndex := TcxComboBoxListBox(Sender).ItemAtPos(Point(X, Y), true);
   clickX := TcxComboBoxListBox(Sender).left + TcxComboBoxListBox(Sender).Width - 25;
   if X >= clickX then
   begin
-    name := salesnamecxEditRepository1ComboBoxItem.Properties.Items.Strings[clickItemIndex];
-    if Application.MessageBox(PChar('是否要删除' + name + '?'), '提示', MB_YESNO + MB_ICONQUESTION) = IDYES
-    then
+    Name := salesnamecxEditRepository1ComboBoxItem.Properties.Items.Strings[clickItemIndex];
+    if Application.MessageBox(PChar('是否要删除' + Name + '?'), '提示', MB_YESNO + MB_ICONQUESTION) = IDYES then
     begin
       if salescxComboBox.ItemIndex = clickItemIndex then
         salescxComboBox.Text := '';
-      if customerDataModule.salesFDQuery.Locate('etypeid;name',
-        varArrayOf([customerDataModule.expoFDQuery.FieldByName('expotypeid').AsInteger, name])) then
+      if customerDataModule.salesFDQuery.Locate('etypeid;name', varArrayOf([customerDataModule.expoFDQuery.FieldByName('expotypeid').AsInteger, Name])) then
         customerDataModule.salesFDQuery.Delete;
     end;
   end
@@ -360,14 +408,12 @@ begin
   end;
 end;
 
-procedure TbplCustomerFrame.phonecxMaskEditPropertiesValidate(Sender: TObject;
-  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+procedure TbplCustomerFrame.phonecxMaskEditPropertiesValidate(Sender: TObject; var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 begin
   ErrorText := '手机号不正确';
 end;
 
-procedure TbplCustomerFrame.customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup
-  (Sender: TObject);
+procedure TbplCustomerFrame.customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(Sender: TObject);
 begin
   with customertypecxEditRepository1ComboBoxItem1 do
   begin
@@ -392,8 +438,25 @@ procedure TbplCustomerFrame.cxEditRepository1PopupItem1PropertiesInitPopup(Sende
 begin
   if Assigned(columninfoMemo) then
   begin
-    columninfoMemo.Lines.Text := customerDataModule.customerFDQuery.FieldByName
-      ('customerinfo').AsString;
+    columninfoMemo.Lines.Text := customerDataModule.customerFDQuery.FieldByName('customerinfo').AsString;
+  end;
+end;
+
+procedure TbplCustomerFrame.cxEditRepository1TextItem1PropertiesValidate(Sender: TObject; var DisplayValue: Variant;
+  var ErrorText: TCaption; var Error: Boolean);
+var
+  I: Integer;
+begin
+  Error:=false;
+  for I := 0 to cxGrid1DBTableView1.ViewData.RecordCount-1 do
+  begin
+    if cxGrid1DBTableView1.ViewData.Records[i].Values[3]=DisplayValue then
+       if Application.MessageBox( '此展位号已经存在,是否确定要继续添加?', '展位号已存在', MB_OKCANCEL +
+             MB_ICONQUESTION + MB_DEFBUTTON2 + MB_TOPMOST) = IDCANCEL then
+             begin
+               Error:=true;
+               break;
+             end;
   end;
 end;
 
@@ -412,8 +475,7 @@ begin
   EditmodeCheckBoxClick(EditmodeCheckBox);
 end;
 
-procedure TbplCustomerFrame.cxGrid1DBTableView1FocusedRecordChanged(Sender: TcxCustomGridTableView;
-  APrevFocusedRecord, AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
+procedure TbplCustomerFrame.cxGrid1DBTableView1FocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord, AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
 begin
   if not EditmodeCheckBox.Checked then
     exit;
@@ -438,15 +500,13 @@ begin
   end;
 end;
 
-procedure TbplCustomerFrame.cxGrid1DBTableView1KeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TbplCustomerFrame.cxGrid1DBTableView1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if (ssCtrl in Shift) and (Key = 67) then
     copyitemmenuClick(nil);
 end;
 
-procedure TbplCustomerFrame.cxGrid1DBTableView1StylesGetContentStyle(Sender: TcxCustomGridTableView;
-  ARecord: TcxCustomGridRecord; AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
+procedure TbplCustomerFrame.cxGrid1DBTableView1StylesGetContentStyle(Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord; AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
 begin
   if (AItem.Caption = '剩余金额') then
   begin
@@ -458,7 +518,7 @@ end;
 destructor TbplCustomerFrame.Destroy;
 begin
   if customerDataModule.customerFDQuery.State = dsEdit then
-    customerDataModule.customerFDQuery.Post;
+    customerDataModule.customerFDQuery.Cancel;
   cxPropertiesStore1.StoreTo;
   FreeAndNil(customerDataModule);
   inherited;
@@ -470,7 +530,11 @@ begin
   applyButton.Visible := not EditmodeCheckBox.Checked;
   if EditmodeCheckBox.Checked then
     cxGrid1DBTableView1FocusedRecordChanged(cxGrid1DBTableView1, nil, nil, false);
+end;
 
+procedure TbplCustomerFrame.ValidateStandNumber(Sender:TObject);
+begin
+ //
 end;
 
 procedure TbplCustomerFrame.initGirdTableView;
@@ -479,40 +543,35 @@ begin
   begin
     // cxGrid1DBTableView1.DataController.CreateAllItems(True);
 
-    with TcxGridDBTableSummaryItem
-      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
       // FieldName:='id';
       Column := cxGrid1DBTableView1.GetColumnByFieldName('id');
       Kind := skCount;
       Format := '共0条';
     end;
-    with TcxGridDBTableSummaryItem
-      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
       // FieldName:='allpay';
       Column := cxGrid1DBTableView1.GetColumnByFieldName('allpay');
       Kind := skSum;
       Format := '¥,0.00;¥-,0.00';
     end;
-    with TcxGridDBTableSummaryItem
-      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
       // FieldName:='firstpay';
       Column := cxGrid1DBTableView1.GetColumnByFieldName('firstpay');
       Kind := skSum;
       Format := '¥,0.00;¥-,0.00';
     end;
-    with TcxGridDBTableSummaryItem
-      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
       // FieldName:='nowpay';
       Column := cxGrid1DBTableView1.GetColumnByFieldName('nowpay');
       Kind := skSum;
       Format := '¥,0.00;¥-,0.00';
     end;
-    with TcxGridDBTableSummaryItem
-      (cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
+    with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
       // FieldName:='otherpay';
       Column := cxGrid1DBTableView1.GetColumnByFieldName('otherpay');
@@ -571,6 +630,9 @@ begin
       // Visible:=false;
       Caption := '展位号';
       index := 3;
+      RepositoryItem:=cxEditRepository1TextItem1;
+      //PropertiesClass:=TcxCustomTextEdit.GetPropertiesClass;
+      //Properties.OnEditValueChanged:=ValidateStandNumber;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('name') do
     begin
@@ -665,7 +727,7 @@ begin
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('update_microsecond') do
     begin
-      Visible := false;
+      //Visible := false;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('create_datetime') do
     begin
@@ -742,9 +804,7 @@ begin
 end;
 
 //重画招展人员下拉框
-procedure TbplCustomerFrame.salesnamecxEditRepository1ComboBoxItemPropertiesDrawItem
-  (AControl: TcxCustomComboBox; ACanvas: TcxCanvas; AIndex: Integer; const ARect: TRect;
-  AState: TOwnerDrawState);
+procedure TbplCustomerFrame.salesnamecxEditRepository1ComboBoxItemPropertiesDrawItem(AControl: TcxCustomComboBox; ACanvas: TcxCanvas; AIndex: Integer; const ARect: TRect; AState: TOwnerDrawState);
 var
   VRect: TRect;
 begin
@@ -757,8 +817,7 @@ begin
   end
   else
     ACanvas.Font.Color := clBlack;
-  ACanvas.TextOut(ARect.left, ARect.Top,
-    salesnamecxEditRepository1ComboBoxItem.Properties.Items.Strings[AIndex]);
+  ACanvas.TextOut(ARect.left, ARect.Top, salesnamecxEditRepository1ComboBoxItem.Properties.Items.Strings[AIndex]);
   VRect.left := ARect.Right - 25;
   VRect.Right := ARect.Right;
   ACanvas.FillRect(VRect, clWhite);
@@ -768,18 +827,15 @@ begin
   ACanvas.TextOut(ARect.Right - 20, ARect.Top, 'X');
 end;
 
-procedure TbplCustomerFrame.salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged
-  (Sender: TObject);
+procedure TbplCustomerFrame.salesnamecxEditRepository1ComboBoxItemPropertiesEditValueChanged(Sender: TObject);
 begin
   customerDataModule.addSales(TcxComboBox(Sender).Text);
   // showmessage(TcxComboBox(Sender).Text);
 end;
 
-procedure TbplCustomerFrame.salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup
-  (Sender: TObject);
+procedure TbplCustomerFrame.salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(Sender: TObject);
 begin
-  salesnamecxEditRepository1ComboBoxItem.Properties.Items.Text :=
-    customerDataModule.getSalesName.Text;
+  salesnamecxEditRepository1ComboBoxItem.Properties.Items.Text := customerDataModule.getSalesName.Text;
 end;
 
 procedure TbplCustomerFrame.softremovemenuClick(Sender: TObject);
@@ -792,6 +848,5 @@ begin
   CxGridToExcel(cxGrid1);
 end;
 
-
-
 end.
+

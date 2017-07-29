@@ -17,11 +17,11 @@
     <Transaction>2017/07/01 23:19:37.000.953,=dbexpress.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.987,=dbxcds.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.741,=CustomIPTransport.dcp</Transaction>
-    <Transaction>2017/07/01 23:19:37.000.524,=vcl.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.599,=dbrtl.dcp</Transaction>
+    <Transaction>2017/07/01 23:19:37.000.524,=vcl.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.887,=IndyIPClient.dcp</Transaction>
-    <Transaction>2017/07/01 23:19:37.000.920,=dsnap.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.681,=DataSnapCommon.dcp</Transaction>
+    <Transaction>2017/07/01 23:19:37.000.920,=dsnap.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.798,=IndySystem.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.856,=IndyCore.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.562,=DbxCommonDriver.dcp</Transaction>

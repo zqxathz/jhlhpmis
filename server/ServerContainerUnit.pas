@@ -229,7 +229,10 @@ begin
   LModule.DSServer1.Start;
   try
     if LModule.DSServer1.Started then
+    begin
       Writeln(sServerIsRunning);
+      Writeln(TThread.Current.ThreadID.ToString);
+    end;
     WriteCommands;
     while True do
     begin

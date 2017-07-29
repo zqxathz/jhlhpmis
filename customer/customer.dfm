@@ -533,6 +533,11 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.OnCloseUp = cxEditRepository1PopupItem1PropertiesCloseUp
       Properties.OnInitPopup = cxEditRepository1PopupItem1PropertiesInitPopup
     end
+    object cxEditRepository1TextItem1: TcxEditRepositoryTextItem
+      Properties.ValidateOnEnter = True
+      Properties.ValidationOptions = []
+      Properties.OnValidate = cxEditRepository1TextItem1PropertiesValidate
+    end
   end
   object cxPropertiesStore1: TcxPropertiesStore
     Components = <

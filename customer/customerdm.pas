@@ -172,6 +172,8 @@ end;
 
 procedure TcustomerDataModule.customerFDQueryBeforePost(DataSet: TDataSet);
 begin
+
+
   if DataSet.State = dsEdit then
   begin
     DataSet.FieldByName('update_microsecond').AsLargeInt :=getmillisecond;
