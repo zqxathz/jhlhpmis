@@ -1,6 +1,6 @@
 //
 // Created by the DataSnap proxy generator.
-// 2017/7/25 16:27:51
+// 2017/7/31 0:19:52
 //
 
 unit servermethods;
@@ -39,7 +39,7 @@ type
     function ExpoTypeData(username: string; password: string): TStream;
     function ShopperSourceData(username: string; password: string): TStream;
     function MemberData: TStream;
-    function CustomerData(memberid: Integer): TStream;
+    function CustomerData(username: string; password: string): TStream;
     function CustomerDataPost(AStream: TStream): string;
     function ShopperDataPost(AStream: TStream): string;
     function UseExpoIds: string;
@@ -166,7 +166,7 @@ begin
   Result := FMemberDataCommand.Parameters[0].Value.GetStream(FInstanceOwner);
 end;
 
-function TServerMethodsClient.CustomerData(memberid: Integer): TStream;
+function TServerMethodsClient.CustomerData(username: string; password: string): TStream;
 begin
   if FCustomerDataCommand = nil then
   begin
@@ -175,9 +175,10 @@ begin
     FCustomerDataCommand.Text := 'TServerMethods.CustomerData';
     FCustomerDataCommand.Prepare;
   end;
-  FCustomerDataCommand.Parameters[0].Value.SetInt32(memberid);
+  FCustomerDataCommand.Parameters[0].Value.SetWideString(username);
+  FCustomerDataCommand.Parameters[1].Value.SetWideString(password);
   FCustomerDataCommand.ExecuteUpdate;
-  Result := FCustomerDataCommand.Parameters[1].Value.GetStream(FInstanceOwner);
+  Result := FCustomerDataCommand.Parameters[2].Value.GetStream(FInstanceOwner);
 end;
 
 function TServerMethodsClient.CustomerDataPost(AStream: TStream): string;

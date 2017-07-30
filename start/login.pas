@@ -63,6 +63,7 @@ begin
     end;
   finally
     clientsycDataModule.Free;
+    clientsycDataModule:=nil;
   end;
 end;
 

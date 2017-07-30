@@ -365,7 +365,7 @@ object bplshopperframe: Tbplshopperframe
     end
     object RzStatusBar1: TRzStatusBar
       Left = 0
-      Top = 176
+      Top = 165
       Width = 1220
       Height = 30
       AutoStyle = False
@@ -381,6 +381,7 @@ object bplshopperframe: Tbplshopperframe
       ParentFont = False
       TabOrder = 18
       Visible = False
+      ExplicitTop = 176
       object RzStatusPane1: TRzStatusPane
         AlignWithMargins = True
         Left = 3

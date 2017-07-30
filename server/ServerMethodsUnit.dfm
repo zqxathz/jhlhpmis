@@ -158,15 +158,41 @@ object ServerMethods: TServerMethods
       
         'JOIN jhlh_pmis_expo on jhlh_pmis_expo.id = jhlh_pmis_customers.e' +
         'id and jhlh_pmis_expo.clientvisable=1'
-      'where jhlh_pmis_customers.create_member=:memberid')
+      '!where')
     Left = 872
     Top = 400
+    MacroData = <
+      item
+        Value = Null
+        Name = 'WHERE'
+      end>
+  end
+  object getMemberGroupFDQuery: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'SELECT'
+      
+        #9'jhlh_admin_member.id,jhlh_admin_member.groupid,jhlh_admin_membe' +
+        'r.userid,jhlh_admin_member.username,jhlh_admin_member.`password`' +
+        ', jhlh_admin_group.asname'
+      'FROM'
+      #9'jhlh_admin_member'
+      
+        'JOIN jhlh_admin_group ON jhlh_admin_member.groupid = jhlh_admin_' +
+        'group.ID'
+      
+        'WHERE jhlh_admin_member.username=:username and jhlh_admin_member' +
+        '.`password`=:password')
+    Left = 872
+    Top = 464
     ParamData = <
       item
-        Name = 'MEMBERID'
-        DataType = ftInteger
+        Name = 'USERNAME'
         ParamType = ptInput
-        Value = Null
+      end
+      item
+        Name = 'PASSWORD'
+        ParamType = ptInput
       end>
   end
 end

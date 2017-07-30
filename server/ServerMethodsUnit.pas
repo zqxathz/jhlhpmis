@@ -70,6 +70,7 @@ type
     CustomerRemoveFDCommand: TFDCommand;
     expireExpoFDQuery: TFDQuery;
     getcustomerFDQuery: TFDQuery;
+    getMemberGroupFDQuery: TFDQuery;
     procedure customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
   private
       { Private declarations }
@@ -87,7 +88,7 @@ type
     function ExpoTypeData(username: string; password: string): TStream;
     function ShopperSourceData(username: string; password: string): TStream;
     function MemberData: TStream;
-    function CustomerData(memberid: integer = 0): TStream;
+    function CustomerData(username:string;password:string): TStream;
       // 上传数据到服务器的方法
     function CustomerDataPost(AStream: TStream): string;
     function ShopperDataPost(AStream: TStream): string;
@@ -331,6 +332,7 @@ begin
   //
 end;
 
+//获取更新文件列表,JSON格式
 function TServerMethods.GetUpdatefiles: string;
 var
   json:TJsonObject;
@@ -408,25 +410,40 @@ begin
   end;
 end;
 
-function TServerMethods.CustomerData(memberid: integer = 0): TStream;
+function TServerMethods.CustomerData(username:string;password:string): TStream;
 begin
   Result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
+      getMemberGroupFDQuery.Close;
+      getMemberGroupFDQuery.ParamByName('username').AsString:=username;
+      getMemberGroupFDQuery.ParamByName('password').AsString:=password;
+      getMemberGroupFDQuery.Open;
+
+      if getMemberGroupFDQuery.RecordCount=0 then
+      begin
+        Result.Free;
+        exit;
+      end;
+      getMemberGroupFDQuery.First;
+
       getcustomerFDQuery.Close;
-      getcustomerFDQuery.Params.Items[0].AsInteger := memberid;
+      if getMemberGroupFDQuery.FieldByName('asname').AsString<>'admins' then
+        getcustomerFDQuery.MacroByName('where').AsRaw:=' where jhlh_pmis_customers.create_member='+getMemberGroupFDQuery.FieldByName('id').AsString;
       getcustomerFDQuery.Open;
       getcustomerFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
       Result.Position := 0;
     except
       on E: Exception do
       begin
-        writeln(E.Message);
+        //writeln(E.Message);
         Result.Free;
+        raise E;
       end;
     end;
   finally
+    getMemberGroupFDQuery.Close;
     getcustomerFDQuery.Close;
     FDConnection1.Close;
   end;
@@ -445,7 +462,7 @@ begin
     except
       on E: Exception do
       begin
-        writeln(E.Message);
+        //writeln(E.Message);
         Result.Free;
       end;
     end;
@@ -468,7 +485,7 @@ begin
     except
       on E: Exception do
       begin
-        writeln(E.Message);
+        //writeln(E.Message);
         Result.Free;
       end;
     end;
@@ -497,7 +514,7 @@ begin
     except
       on E: Exception do
       begin
-        writeln(E.Message);
+        //writeln(E.Message);
         Result.Free;
       end;
     end;
@@ -520,7 +537,7 @@ begin
     except
       on E: Exception do
       begin
-        writeln(E.Message);
+        //writeln(E.Message);
         Result.Free;
       end;
     end;
@@ -543,7 +560,7 @@ begin
     except
       on E: Exception do
       begin
-        writeln(E.Message);
+        //writeln(E.Message);
         Result.Free;
       end;
     end;
@@ -566,7 +583,7 @@ begin
     except
       on E: Exception do
       begin
-        writeln(E.Message);
+        //writeln(E.Message);
         Result.Free;
       end;
     end;

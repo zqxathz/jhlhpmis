@@ -28,9 +28,11 @@ package common;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl;
+  rtl,
+  vcl;
 
 contains
-  common in 'common.pas';
+  common in 'common.pas',
+  bplframe in 'bplframe.pas' {Frame1: TFrame};
 
 end.

@@ -197,8 +197,7 @@ begin
 
   try
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
-    stream := TServerMethodsClient(server).CustomerData(clientuser.Userid);
-    stream.Position := 0;
+    stream := TServerMethodsClient(server).CustomerData(clientuser.Username,clientuser.Password);
   except
     SQLConnection1.Close;
     server.free;
@@ -209,13 +208,27 @@ begin
     exit;
   end;
 
+  if Assigned(FOnExec) then
+   FOnExec('开始更新客户数据');
+
+
+  if (stream=nil) or (stream.Size=0) then
+  begin
+    SQLConnection1.Close;
+    server.Free;
+    if Assigned(FOnExec) then
+      FOnExec('提示:没有获取到任何客户数据');
+    exit;
+  end;
+
+  stream.Position := 0;
+
   lstream := TMemoryStream.Create;
   try
     lstream := CopyStream(stream);
+    ShowMessage(lstream.Size.ToString);
     lstream.Position := 0;
 
-    if Assigned(FOnExec) then
-      FOnExec('开始更新客户数据');
 
     memtable := TFDMemTable.Create(nil);
     memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
@@ -229,6 +242,9 @@ begin
     customertypeFDQuery.UpdateOptions.KeyFields := 'update_microsecond';
     customerFDQuery.Connection.StartTransaction;
     ierror := customerFDQuery.ApplyUpdates;
+    removecustomerFDCommand.Execute;
+    removecustomerFDCommand.NextRecordSet;
+    removecustomerFDCommand.Execute;
     if ierror > 0 then
     begin
       customerFDQuery.Connection.Rollback;
@@ -757,14 +773,14 @@ end;
 procedure TclientsycDataModule.RemoveCustomerData;
 begin
   if Assigned(FOnExec) then
-    FOnExec('开始清理本地顾客数据');
+    FOnExec('开始清理本地客户数据');
   removecustomerFDCommand.Execute();
   removecustomerFDCommand.NextRecordSet;
   removecustomerFDCommand.Execute();
   removecustomerFDCommand.NextRecordSet;
   removecustomerFDCommand.Execute();
   if Assigned(FOnExec) then
-    FOnExec('本地顾客数据清理完成');
+    FOnExec('本地客户数据清理完成');
 end;
 
 function TclientsycDataModule.test: string;

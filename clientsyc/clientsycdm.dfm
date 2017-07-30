@@ -101,10 +101,6 @@ object clientsycDataModule: TclientsycDataModule
         '(select maxid from (select max(update_microsecond) as maxid from' +
         ' jhlh_pmis_customers group by uuid) b);'
       
-        'delete from jhlh_pmis_customers where id not in (select maxid fr' +
-        'om (select max(id) as maxid from jhlh_pmis_customers group by up' +
-        'date_microsecond) b);'
-      
         'delete from jhlh_pmis_customers where eid not in (select id from' +
         ' jhlh_pmis_expo where jhlh_pmis_expo.status=1 or jhlh_pmis_expo.' +
         'trash=0);')

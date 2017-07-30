@@ -46,7 +46,8 @@ requires
   cxExportRS25,
   FireDACCommon,
   RaizeComponentsVcl,
-  connection;
+  connection,
+  common;
 
 contains
   shopper in 'shopper.pas' {bplshopperframe: TFrame},

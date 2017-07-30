@@ -79,8 +79,6 @@ procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(Sender: TOb
 begin
   { TODO : Validate the client user and password.
     If role-based authorization is needed, add role names to the UserRoles parameter  }
-  valid := true;
-  exit;
   if (User.ToLower = 'guest') and (Password.ToLower = 'guest') then
   begin
     valid := true;
@@ -89,6 +87,7 @@ begin
   if assigned(ServerDataModule) then
   begin
     valid := ServerDataModule.verifyMember(User, Password);
+    Writeln(User+','+Password);
   end;
 end;
 

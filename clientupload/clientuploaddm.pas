@@ -67,8 +67,7 @@ begin
     if customerFDQuery.State in dsEditModes then
       customerFDQuery.Post;
   end
-  else
-    exit;
+  else  exit;
   if customerFDQuery.RecordCount = 0 then
   begin
     if Assigned(FOnExec) then

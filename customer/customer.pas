@@ -54,10 +54,11 @@ uses
   RzStatus,
   RzPanel,
   cxExport,
-  FireDAC.Comp.DataSet;
+  FireDAC.Comp.DataSet,
+  bplFrame;
 
 type
-  TbplCustomerFrame = class(TFrame, IcxExportProgress)
+  TbplCustomerFrame = class(TBplFrame, IcxExportProgress)
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
     cxGrid1: TcxGrid;
@@ -771,9 +772,13 @@ var
   s: string;
   i: Integer;
   idfooter: TcxDataSummaryItem;
+  create_member_str:string;
 begin
+  create_member_str:='';
+  if clientuser.Username<>'admin' then
+    create_member_str:=' and create_member='+clientuser.Userid.ToString;
 
-  s := 'and eid=' + customerDataModule.expoFDQuery.FieldByName('id').AsString;
+  s := 'and eid=' + customerDataModule.expoFDQuery.FieldByName('id').AsString +create_member_str;
   customerDataModule.customerOpen(s);
   customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(nil);
   salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(nil);

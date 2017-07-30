@@ -63,12 +63,13 @@ uses
   XLSReadWriteII5,
   Clipbrd,
   cxExport,
-  FireDAC.Phys.SQLiteWrapper;
+  FireDAC.Phys.SQLiteWrapper,
+  bplframe;
 
 type
   TInputType = (itquick,itgife);
 
-  Tbplshopperframe = class(TFrame,IcxExportProgress)
+  Tbplshopperframe = class(TBplFrame,IcxExportProgress)
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
     cxGrid1: TcxGrid;

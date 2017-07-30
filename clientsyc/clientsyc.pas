@@ -62,8 +62,8 @@ begin
   if not clientsycDataModule.SyncError then
     clientsycDataModule.GetCustomerData;        //客户数据
 
-  if not clientsycDataModule.SyncError then  //删除已经不存在本地的展会记录的相关客户数据
-    clientsycDataModule.RemoveCustomerData;
+  //if not clientsycDataModule.SyncError then  //删除已经不存在本地的展会记录的相关客户数据
+   // clientsycDataModule.RemoveCustomerData;
 
   if not clientsycDataModule.SyncError then
     Memo1.Lines.Add('同步数据完成')
