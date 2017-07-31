@@ -45,6 +45,7 @@ type
     procedure updateTimerTimer(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure timesyncTimerTimer(Sender: TObject);
+    procedure loginframe1syncmemberButtonClick(Sender: TObject);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -325,6 +326,11 @@ begin
   // cxPageControl1.Show;
   // windowstate:=wsNormal;
   // self.BringToFront;
+end;
+
+procedure Tmainform.loginframe1syncmemberButtonClick(Sender: TObject);
+begin
+  loginframe1.syncmemberButtonClick(Sender);
 end;
 
 procedure Tmainform.N1Click(Sender: TObject);

@@ -22,8 +22,8 @@ object clientsycDataModule: TclientsycDataModule
       'ConnectTimeout=5000'
       'CommunicationTimeout=5000'
       'CommunicationIPVersion=IP_IPv4'
-      'DSAuthenticationPassword=111'
-      'DSAuthenticationUser=111')
+      'DSAuthenticationPassword=admin'
+      'DSAuthenticationUser=admin')
     Left = 336
     Top = 104
     UniqueId = '{E47C037B-B7E9-48D8-9E96-81BB9D31ED96}'

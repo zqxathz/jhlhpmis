@@ -125,9 +125,20 @@ object ServerMethods: TServerMethods
     ResourceOptions.StoreMergeData = dmDataAppend
     ResourceOptions.StoreMergeMeta = mmAdd
     SQL.Strings = (
-      'select * from jhlh_admin_member where locked=0')
+      
+        'select jhlh_admin_member.*,jhlh_admin_group.name as groupname fr' +
+        'om jhlh_admin_member '
+      
+        'join jhlh_admin_group on jhlh_admin_member.groupid=jhlh_admin_gr' +
+        'oup.id'
+      'where locked=0 !groupname')
     Left = 392
     Top = 400
+    MacroData = <
+      item
+        Value = Null
+        Name = 'GROUPNAME'
+      end>
   end
   object CustomerRemoveFDCommand: TFDCommand
     Connection = FDConnection1
@@ -182,16 +193,12 @@ object ServerMethods: TServerMethods
         'group.ID'
       
         'WHERE jhlh_admin_member.username=:username and jhlh_admin_member' +
-        '.`password`=:password')
+        '.locked=0')
     Left = 872
     Top = 464
     ParamData = <
       item
         Name = 'USERNAME'
-        ParamType = ptInput
-      end
-      item
-        Name = 'PASSWORD'
         ParamType = ptInput
       end>
   end

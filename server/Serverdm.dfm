@@ -25,7 +25,7 @@ object ServerDataModule: TServerDataModule
         'oup.id'
       
         'where jhlh_admin_member.username=:username and jhlh_admin_member' +
-        '.`password`=:password')
+        '.`password`=:password and jhlh_admin_member.locked=0')
     Left = 344
     Top = 272
     ParamData = <
@@ -41,7 +41,9 @@ object ServerDataModule: TServerDataModule
   object methodFDQuery: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
-      'select * from jhlh_admin_method where methodalias=:methodalias')
+      
+        'select * from jhlh_admin_method where methodalias=:methodalias a' +
+        'nd status=1')
     Left = 232
     Top = 272
     ParamData = <
@@ -53,7 +55,7 @@ object ServerDataModule: TServerDataModule
   object groupFDQuery: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
-      'select * from jhlh_admin_group where name =:name')
+      'select * from jhlh_admin_group where name =:name and status=1')
     Left = 440
     Top = 280
     ParamData = <
@@ -61,5 +63,10 @@ object ServerDataModule: TServerDataModule
         Name = 'NAME'
         ParamType = ptInput
       end>
+  end
+  object FDQuery: TFDQuery
+    Connection = FDConnection1
+    Left = 112
+    Top = 256
   end
 end

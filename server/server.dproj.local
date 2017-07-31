@@ -30,5 +30,16 @@
   </Transactions>
 	<ActiveMobileDevice>
 		<NoProfile iOSSimulator="iPhone5" Android="mytest"/>
-	</ActiveMobileDevice>
+	</ActiveMobileDevice>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="alidayu.cfg"/>
+    <File Path="Alidayu.pas"/>
+    <File Path="Data.DBXClientResStrs.pas"/>
+    <File Path="ServerConst.pas"/>
+    <File Path="ServerContainerUnit.pas"/>
+    <File Path="ServerContainerUnit.dfm"/>
+    <File Path="Serverdm.pas"/>
+    <File Path="Serverdm.dfm"/>
+    <File Path="ServerMethodsUnit.pas"/>
+    <File Path="ServerMethodsUnit.dfm"/>
+  </ProjectSortOrder>
 </BorlandProject>

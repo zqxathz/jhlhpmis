@@ -89,7 +89,7 @@ type
     function ExpoTypeData(username: string; password: string): TStream;
     function ShopperSourceData(username: string; password: string): TStream;
     function MemberData: TStream;
-    function CustomerData(username:string;password:string): TStream;
+    function CustomerData: TStream;
       // 上传数据到服务器的方法
     function CustomerDataPost(AStream: TStream): string;
     function ShopperDataPost(AStream: TStream): string;
@@ -413,27 +413,25 @@ begin
   end;
 end;
 
-function TServerMethods.CustomerData(username:string;password:string): TStream;
+function TServerMethods.CustomerData: TStream;
+var
+  memberid:integer;
 begin
   Result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
-      getMemberGroupFDQuery.Close;
-      getMemberGroupFDQuery.ParamByName('username').AsString:=username;
-      getMemberGroupFDQuery.ParamByName('password').AsString:=password;
-      getMemberGroupFDQuery.Open;
-
-      if getMemberGroupFDQuery.RecordCount=0 then
+      if TDSSessionManager.GetThreadSession.UserRoles.IndexOf('admins')=-1 then
       begin
-        Result.Free;
-        exit;
+        getMemberGroupFDQuery.Close;
+        getMemberGroupFDQuery.ParamByName('username').AsString:=TDSSessionManager.GetThreadSession.UserName;
+        getMemberGroupFDQuery.Open;
+        if getMemberGroupFDQuery.RecordCount>0 then
+          getcustomerFDQuery.MacroByName('where').AsRaw:=' where jhlh_pmis_customers.create_member='
+                                                         +getMemberGroupFDQuery.FieldByName('id').AsString
+        else
+          getcustomerFDQuery.MacroByName('where').AsRaw:=' where jhlh_pmis_customers.create_member=0';
       end;
-      getMemberGroupFDQuery.First;
-
-      getcustomerFDQuery.Close;
-      if getMemberGroupFDQuery.FieldByName('name').AsString<>'admins' then
-        getcustomerFDQuery.MacroByName('where').AsRaw:=' where jhlh_pmis_customers.create_member='+getMemberGroupFDQuery.FieldByName('id').AsString;
       getcustomerFDQuery.Open;
       getcustomerFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
       Result.Position := 0;
@@ -454,12 +452,16 @@ end;
 
 function TServerMethods.MemberData: TStream;
 begin
-  Writeln(TDSSessionManager.GetThreadSession.UserName);
   Result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
       memberFDQuery.Close;
+      if TDSSessionManager.GetThreadSession.UserRoles.IndexOf('admins')=-1 then
+      begin
+        writeln(TDSSessionManager.GetThreadSession.UserRoles.Text);
+        memberFDQuery.MacroByName('groupname').AsRaw:='and where jhlh_admin_group.name<>"admins"';
+      end;
       memberFDQuery.Open;
       memberFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
       Result.Position := 0;
@@ -468,6 +470,7 @@ begin
       begin
         //writeln(E.Message);
         Result.Free;
+        raise;
       end;
     end;
   finally

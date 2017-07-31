@@ -14,6 +14,7 @@ type
     memberFDQuery: TFDQuery;
     methodFDQuery: TFDQuery;
     groupFDQuery: TFDQuery;
+    FDQuery: TFDQuery;
   private
     { Private declarations }
   public
@@ -63,6 +64,7 @@ begin
       groupFDQuery.Close;
       groupFDQuery.ParamByName('name').AsString:=list.Strings[i];
       groupFDQuery.Open;
+      //groupFDQuery.FieldByName('authmethod').AsString
       methodids:= groupFDQuery.FieldByName('authmethod').AsString;
       ids:=methodids.Split([',']);
       for j := 0 to length(ids)-1 do

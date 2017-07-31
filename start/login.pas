@@ -34,6 +34,7 @@ procedure Tloginframe.loginbuttonClick(Sender: TObject);
 begin
   logindatamod.Username:=usernameedit.Text;
   logindatamod.Password:=passwordedit.Text;
+  if Assigned(clientuser) then FreeAndNil(clientuser);
   clientuser:=TClientUser.create;
   try
     try
@@ -49,13 +50,21 @@ end;
 
 procedure Tloginframe.syncmemberButtonClick(Sender: TObject);
 begin
+  if Assigned(clientuser) then FreeAndNil(clientuser);
+  clientuser:=TClientUser.create;
+  clientuser.Username:=usernameedit.Text;
+  clientuser.Password:=passwordedit.Text;
+
   clientsycDataModule:=TclientsycDataModule.Create(self);
   try
     clientsycDataModule.GetMemberData;
     if clientsycDataModule.SyncError then
     begin
       Beep;
-      ShowMessage('同步失败,请检查网络');
+      if clientsycDataModule.ErrorMsg.Contains('拒绝') then
+        ShowMessage('用户名或者密码错误')
+      else
+        ShowMessage('同步失败,请检查网络,错误原因:'+clientsycDataModule.ErrorMsg);
     end
     else
     begin
@@ -64,6 +73,7 @@ begin
   finally
     clientsycDataModule.Free;
     clientsycDataModule:=nil;
+    FreeAndNil(clientuser);
   end;
 end;
 

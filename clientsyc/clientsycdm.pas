@@ -135,8 +135,8 @@ begin
 
   if not Assigned(clientuser) then
   begin
-    SQLConnection1.Params.Values['DSAuthenticationPassword'] := 'admin';
-    SQLConnection1.Params.Values['DSAuthenticationUser'] := 'admin';
+    SQLConnection1.Params.Values['DSAuthenticationPassword'] := 'guest';
+    SQLConnection1.Params.Values['DSAuthenticationUser'] := 'guest';
   end
   else begin
     SQLConnection1.Params.Values['DSAuthenticationPassword'] := clientuser.Password;
@@ -149,8 +149,8 @@ begin
     begin
       FCantConnection := true;
       ErrorMsg := E.Message;
+      //raise  Exception.Create(TDBXError(E).ErrorCode.ToString+','+ E.Message);
       exit;
-     //raise  Exception.Create(E.Message);
     end;
   end;
 
@@ -201,7 +201,7 @@ begin
 
   try
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
-    stream := TServerMethodsClient(server).CustomerData(clientuser.Username,clientuser.Password);
+    stream := TServerMethodsClient(server).CustomerData;
   except
     on E: Exception do
     begin
@@ -240,7 +240,6 @@ begin
   lstream := TMemoryStream.Create;
   try
     lstream := CopyStream(stream);
-    ShowMessage(lstream.Size.ToString);
     lstream.Position := 0;
 
 
@@ -706,7 +705,9 @@ begin
     begin
       FSyncError := true;
       if Assigned(FOnExec) then
-        FOnExec('错误:远程连接发生异常,同步中止!' + #13#10 + E.Message);
+        FOnExec('错误:远程连接发生异常,同步中止!' + #13#10 + E.Message)
+      else
+       raise Exception.Create(E.Message);
       exit;
     end;
   end;
@@ -731,7 +732,11 @@ begin
         end;
       end;
       if Assigned(FOnExec) then
-        FOnExec(errormsg);
+        FOnExec(errormsg)
+      else
+      begin
+        FSyncError:=true;
+      end;
       exit;
     end;
   end;
@@ -757,7 +762,7 @@ begin
       memberFDQuery.Connection.Rollback;
       FSyncError := true;
       if Assigned(FOnExec) then
-        FOnExec('错误系统用户更新到本地时出现异常');
+        FOnExec('错误:系统用户更新到本地时出现异常');
     end
     else
     begin

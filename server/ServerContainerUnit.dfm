@@ -6,7 +6,6 @@ object ServerContainer1: TServerContainer1
   Width = 415
   object DSServer1: TDSServer
     OnPrepare = DSServer1Prepare
-    AutoStart = False
     Left = 96
     Top = 11
   end
@@ -20,6 +19,7 @@ object ServerContainer1: TServerContainer1
           'CompressMoreThan=1024')
       end>
     AuthenticationManager = DSAuthenticationManager1
+    KeepAliveEnablement = kaEnabled
     Left = 96
     Top = 73
   end

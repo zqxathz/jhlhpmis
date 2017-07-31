@@ -13,7 +13,8 @@ uses
   IPPeerServer,
   IPPeerAPI,
   Datasnap.DSAuth,
-  DbxCompressionFilter;
+  DbxCompressionFilter,
+  System.JSON;
 
 type
   TServerContainer1 = class(TDataModule)
@@ -62,9 +63,15 @@ begin
 end;
 
 procedure TServerContainer1.DataModuleCreate(Sender: TObject);
+var
+  ds:DSAdmin;
+  list:TJSONArray;
 begin
   One := Tobject.create;
   ServerDataModule := TServerDataModule.Create(nil);
+  list:=TJSONArray.Create;
+  DSServer1.GetServerMethods('',list);
+  Writeln(list.ToString);
 end;
 
 procedure TServerContainer1.DataModuleDestroy(Sender: TObject);
@@ -237,7 +244,7 @@ var
   LResponse: string;
 begin
   LModule := TServerContainer1.Create(nil);
-  LModule.DSServer1.Start;
+  //LModule.DSServer1.Start;
   try
     if LModule.DSServer1.Started then
     begin
