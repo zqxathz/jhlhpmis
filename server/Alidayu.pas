@@ -123,6 +123,7 @@ var
   list:TStringList;
   app_key,app_secret,rec_num,sms_free_sign_name,sms_template_code,sms_param:string;
 begin
+  Result:=false;
   list:=TStringList.Create;
   list:=LoadParams;
   try

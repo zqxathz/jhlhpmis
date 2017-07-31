@@ -1,22 +1,22 @@
 object bplCustomerFrame: TbplCustomerFrame
   Left = 0
   Top = 0
-  Width = 1219
-  Height = 603
+  ClientHeight = 564
+  ClientWidth = 1203
+  Color = clBtnFace
   DoubleBuffered = True
   Font.Charset = GB2312_CHARSET
   Font.Color = clWindowText
   Font.Height = -20
   Font.Name = #24494#36719#38597#40657
   Font.Style = []
-  ParentBackground = False
-  ParentDoubleBuffered = False
-  ParentFont = False
-  TabOrder = 0
+  OldCreateOrder = True
+  PixelsPerInch = 96
+  TextHeight = 27
   object Splitter1: TSplitter
     Left = 0
-    Top = 285
-    Width = 1219
+    Top = 246
+    Width = 1203
     Height = 3
     Cursor = crVSplit
     Align = alBottom
@@ -26,12 +26,14 @@ object bplCustomerFrame: TbplCustomerFrame
   object cxGrid1: TcxGrid
     Left = 0
     Top = 0
-    Width = 1219
-    Height = 285
+    Width = 1203
+    Height = 246
     Align = alClient
     PopupMenu = PopupMenu1
     TabOrder = 0
     TabStop = False
+    ExplicitWidth = 1219
+    ExplicitHeight = 285
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnDblClick = cxGrid1DBTableView1DblClick
       OnKeyDown = cxGrid1DBTableView1KeyDown
@@ -57,8 +59,8 @@ object bplCustomerFrame: TbplCustomerFrame
   end
   object Panel1: TPanel
     Left = 0
-    Top = 288
-    Width = 1219
+    Top = 249
+    Width = 1203
     Height = 315
     Align = alBottom
     BevelOuter = bvNone
@@ -72,8 +74,10 @@ object bplCustomerFrame: TbplCustomerFrame
     ParentDoubleBuffered = False
     ShowCaption = False
     TabOrder = 1
+    ExplicitTop = 288
+    ExplicitWidth = 1219
     DesignSize = (
-      1219
+      1203
       315)
     object expocxLookupComboBox: TcxLookupComboBox
       Left = 100
@@ -413,7 +417,7 @@ object bplCustomerFrame: TbplCustomerFrame
     object RzStatusBar1: TRzStatusBar
       Left = 0
       Top = 285
-      Width = 1219
+      Width = 1203
       Height = 30
       AutoScalePanes = True
       AutoStyle = False
@@ -429,6 +433,7 @@ object bplCustomerFrame: TbplCustomerFrame
       ParentFont = False
       TabOrder = 36
       Visible = False
+      ExplicitWidth = 1219
       object RzClockStatus1: TRzClockStatus
         Left = 1048
         Top = 0

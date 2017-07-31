@@ -182,6 +182,10 @@ var
 begin
   server := nil;
   stream := nil;
+
+  if Assigned(FOnExec) then
+   FOnExec('开始更新客户数据');
+
   if not SQLConnection1.Connected then
   try
     SQLConnection1.Open;
@@ -199,17 +203,27 @@ begin
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
     stream := TServerMethodsClient(server).CustomerData(clientuser.Username,clientuser.Password);
   except
-    SQLConnection1.Close;
-    server.free;
-    stream.Free;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:获取远程数据发生异常,同步中止!');
-    exit;
+    on E: Exception do
+    begin
+      SQLConnection1.Close;
+      server.free;
+      stream.Free;
+      FSyncError := true;
+      errormsg:='错误:获取远程数据发生异常,同步中止!';
+      if E is TDBXError then
+      begin
+        if (E as TDBXError).ErrorCode=113 then
+        begin
+          FSyncError:=false;
+          errormsg:='错误:当前用户未被授权调用该数据';
+        end;
+      end;
+      if Assigned(FOnExec) then
+        FOnExec(errormsg);
+      exit;
+    end;
   end;
 
-  if Assigned(FOnExec) then
-   FOnExec('开始更新客户数据');
 
 
   if (stream=nil) or (stream.Size=0) then
@@ -280,9 +294,15 @@ var
   lstream: TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
+  errormsg:string;
 begin
   server := nil;
   stream := nil;
+  lstream:=nil;
+
+  if Assigned(FOnExec) then
+      FOnExec('开始更新客户类型');
+
   if not SQLConnection1.Connected then
   try
     SQLConnection1.Open;
@@ -300,13 +320,25 @@ begin
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
     stream := TServerMethodsClient(server).CustomertypeData('', '');
   except
-    SQLConnection1.Close;
-    server.free;
-    stream.Free;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:获取远程数据发生异常,同步中止!');
-    exit;
+    on E: Exception do
+    begin
+      SQLConnection1.Close;
+      server.free;
+      stream.Free;
+      FSyncError := true;
+      errormsg:='错误:获取远程数据发生异常,同步中止!';
+      if E is TDBXError then
+      begin
+        if (E as TDBXError).ErrorCode=113 then
+        begin
+          FSyncError:=false;
+          errormsg:='错误:当前用户未被授权调用该数据';
+        end;
+      end;
+      if Assigned(FOnExec) then
+        FOnExec(errormsg);
+      exit;
+    end;
   end;
 
   stream.Position := 0;
@@ -314,9 +346,6 @@ begin
   try
     lstream:=CopyStream(stream);
     lstream.Position:=0;
-
-    if Assigned(FOnExec) then
-      FOnExec('开始更新客户类型');
 
     memtable := TFDMemTable.Create(nil);
     memtable.LoadFromStream(lstream, TFDStorageFormat.sfBinary);
@@ -359,10 +388,14 @@ var
   memtable: TFDMemTable;
   i, ierror: Integer;
   fieldname: string;
+  errormsg:string;
 begin
   server := nil;
   stream := nil;
   lstream:=nil;
+
+  if Assigned(FOnExec) then
+    FOnExec('开始更新展会信息');
 
   if not SQLConnection1.Connected then
   try
@@ -381,21 +414,32 @@ begin
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
     stream := TServerMethodsClient(server).ExpoData('', '');
   except
-    SQLConnection1.Close;
-    server.free;
-    stream.Free;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:获取远程数据发生异常,同步中止!');
-    exit;
+    on E: Exception do
+    begin
+      SQLConnection1.Close;
+      server.free;
+      stream.Free;
+      FSyncError := true;
+      errormsg:='错误:获取远程数据发生异常,同步中止!';
+      if E is TDBXError then
+      begin
+        if (E as TDBXError).ErrorCode=113 then
+        begin
+          FSyncError:=false;
+          errormsg:='错误:当前用户未被授权调用该数据';
+        end;
+      end;
+      if Assigned(FOnExec) then
+        FOnExec(errormsg);
+      exit;
+    end;
   end;
+
   stream.Position := 0;
   expoFDQuery.Close;
   expoFDQuery.UpdateOptions.UpdateTableName := 'jhlh_pmis_expo';
   expoFDQuery.Open;
 
-  if Assigned(FOnExec) then
-    FOnExec('开始更新展会信息');
 
   lstream:=TMemoryStream.Create;
   try
@@ -455,10 +499,15 @@ var
   lstream:TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
+  errormsg:string;
 begin
   server := nil;
   stream := nil;
   lstream:=nil;
+
+  if Assigned(FOnExec) then
+    FOnExec('开始更新支付方式');
+
   if not SQLConnection1.Connected then
   try
     SQLConnection1.Open;
@@ -476,18 +525,27 @@ begin
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
     stream := TServerMethodsClient(server).PaytypeData('', '');
   except
-    SQLConnection1.Close;
-    server.free;
-    stream.Free;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:获取远程数据发生异常,同步中止!');
-    exit;
+     on E: Exception do
+    begin
+      SQLConnection1.Close;
+      server.free;
+      stream.Free;
+      FSyncError := true;
+      errormsg:='错误:获取远程数据发生异常,同步中止!';
+      if E is TDBXError then
+      begin
+        if (E as TDBXError).ErrorCode=113 then
+        begin
+          FSyncError:=false;
+          errormsg:='错误:当前用户未被授权调用该数据';
+        end;
+      end;
+      if Assigned(FOnExec) then
+        FOnExec(errormsg);
+      exit;
+    end;
   end;
   stream.Position := 0;
-
-  if Assigned(FOnExec) then
-    FOnExec('开始更新支付方式');
 
   lstream:=TMemoryStream.Create;
   try
@@ -534,10 +592,14 @@ var
   lstream:TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
+  errormsg:string;
 begin
   server := nil;
   stream := nil;
   lstream:=nil;
+
+  if Assigned(FOnExec) then
+    FOnExec('开始同步数据');
 
   if not SQLConnection1.Connected then
   try
@@ -553,24 +615,34 @@ begin
   end;
 
   if Assigned(FOnExec) then
-    FOnExec('开始同步数据');
+    FOnExec('开始更新展会类型');
 
   try
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
     stream := TServerMethodsClient(server).ExpoTypeData('', '');
   except
-    SQLConnection1.Close;
-    server.free;
-    stream.Free;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:获取远程数据发生异常,同步中止!');
-    exit;
+    on E: Exception do
+    begin
+      SQLConnection1.Close;
+      server.free;
+      stream.Free;
+      FSyncError := true;
+      errormsg:='错误:获取远程数据发生异常,同步中止!';
+      if E is TDBXError then
+      begin
+        if (E as TDBXError).ErrorCode=113 then
+        begin
+          FSyncError:=false;
+          errormsg:='错误:当前用户未被授权调用该数据';
+        end;
+      end;
+      if Assigned(FOnExec) then
+        FOnExec(errormsg);
+      exit;
+    end;
   end;
   stream.Position := 0;
 
-  if Assigned(FOnExec) then
-    FOnExec('开始更新展会类型');
 
   lstream:=TMemoryStream.Create;
   try
@@ -617,10 +689,15 @@ var
   lstream:TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
+  errormsg:string;
 begin
   server := nil;
   stream := nil;
   lstream:=nil;
+
+  if Assigned(FOnExec) then
+    FOnExec('开始更新系统用户');
+
   if not SQLConnection1.Connected then
   try
     SQLConnection1.Open;
@@ -638,18 +715,27 @@ begin
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
     stream := TServerMethodsClient(server).MemberData;
   except
-    SQLConnection1.Close;
-    server.free;
-    stream.Free;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:获取远程数据发生异常,同步中止!');
-    exit;
+    on E: Exception do
+    begin
+      SQLConnection1.Close;
+      server.free;
+      stream.Free;
+      FSyncError := true;
+      errormsg:='错误:获取远程数据发生异常,同步中止!';
+      if E is TDBXError then
+      begin
+        if (E as TDBXError).ErrorCode=113 then
+        begin
+          FSyncError:=false;
+          errormsg:='错误:当前用户未被授权调用该数据';
+        end;
+      end;
+      if Assigned(FOnExec) then
+        FOnExec(errormsg);
+      exit;
+    end;
   end;
   stream.Position := 0;
-
-  if Assigned(FOnExec) then
-    FOnExec('开始更新系统用户');
 
   lstream:=TMemoryStream.Create;
   try
@@ -695,9 +781,14 @@ var
   lstream:TMemoryStream;
   memtable: TFDMemTable;
   ierror: Integer;
+  errormsg:string;
 begin
   server := nil;
   stream := nil;
+
+  if Assigned(FOnExec) then
+    FOnExec('开始更新顾客来源');
+
   if not SQLConnection1.Connected then
   try
     SQLConnection1.Open;
@@ -715,18 +806,28 @@ begin
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
     stream := TServerMethodsClient(server).ShopperSourceData('', '');
   except
-    SQLConnection1.Close;
-    server.free;
-    stream.Free;
-    FSyncError := true;
-    if Assigned(FOnExec) then
-      FOnExec('错误:获取远程数据发生异常,同步中止!');
-    exit;
+    on E: Exception do
+    begin
+      SQLConnection1.Close;
+      server.free;
+      stream.Free;
+      FSyncError := true;
+      errormsg:='错误:获取远程数据发生异常,同步中止!';
+      if E is TDBXError then
+      begin
+        if (E as TDBXError).ErrorCode=113 then
+        begin
+          FSyncError:=false;
+          errormsg:='错误:当前用户未被授权调用该数据';
+        end;
+      end;
+      if Assigned(FOnExec) then
+        FOnExec(errormsg);
+      exit;
+    end;
   end;
-  stream.Position := 0;
 
-  if Assigned(FOnExec) then
-    FOnExec('开始更新顾客来源');
+  stream.Position := 0;
 
   lstream:=TMemoryStream.Create;
   try

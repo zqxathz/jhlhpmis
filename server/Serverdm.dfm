@@ -16,8 +16,16 @@ object ServerDataModule: TServerDataModule
     Connection = FDConnection1
     SQL.Strings = (
       
-        'select count(id) as count from jhlh_admin_member where username=' +
-        ':username and password=:password')
+        'select jhlh_admin_member.id,jhlh_admin_member.groupid,jhlh_admin' +
+        '_member.username,jhlh_admin_member.`password`,jhlh_admin_group.i' +
+        'd,jhlh_admin_group.name'
+      'from jhlh_admin_member '
+      
+        'join jhlh_admin_group on jhlh_admin_member.groupid=jhlh_admin_gr' +
+        'oup.id'
+      
+        'where jhlh_admin_member.username=:username and jhlh_admin_member' +
+        '.`password`=:password')
     Left = 344
     Top = 272
     ParamData = <
@@ -27,6 +35,30 @@ object ServerDataModule: TServerDataModule
       end
       item
         Name = 'PASSWORD'
+        ParamType = ptInput
+      end>
+  end
+  object methodFDQuery: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select * from jhlh_admin_method where methodalias=:methodalias')
+    Left = 232
+    Top = 272
+    ParamData = <
+      item
+        Name = 'METHODALIAS'
+        ParamType = ptInput
+      end>
+  end
+  object groupFDQuery: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select * from jhlh_admin_group where name =:name')
+    Left = 440
+    Top = 280
+    ParamData = <
+      item
+        Name = 'NAME'
         ParamType = ptInput
       end>
   end

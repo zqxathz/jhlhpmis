@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2017/06/14 11:31:08.000.466,D:\Develop\jhql\jhql.groupproj=C:\Users\Vine\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj</Transaction>
+    <Transaction>2017/06/14 11:31:08.000.466,C:\Users\Vine\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj=D:\Develop\jhql\jhql.groupproj</Transaction>
   </Transactions>
 	<Default.Personality>
-		<Projects ActiveProject="D:\Develop\jhql\server\server.dproj"/>
+		<Projects ActiveProject="D:\Develop\jhql\clientsyc\clientsyc.dproj"/>
 	</Default.Personality>
 </BorlandProject>

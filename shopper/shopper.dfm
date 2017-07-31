@@ -1,19 +1,21 @@
 object bplshopperframe: Tbplshopperframe
   Left = 0
   Top = 0
-  Width = 1220
-  Height = 606
+  ClientHeight = 567
+  ClientWidth = 1204
+  Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
   Font.Height = -20
   Font.Name = #24494#36719#38597#40657
   Font.Style = []
-  ParentFont = False
-  TabOrder = 0
+  OldCreateOrder = True
+  PixelsPerInch = 96
+  TextHeight = 27
   object Splitter1: TSplitter
     Left = 0
-    Top = 397
-    Width = 1220
+    Top = 358
+    Width = 1204
     Height = 3
     Cursor = crVSplit
     Align = alBottom
@@ -23,13 +25,15 @@ object bplshopperframe: Tbplshopperframe
   object cxGrid1: TcxGrid
     Left = 0
     Top = 0
-    Width = 1220
-    Height = 397
+    Width = 1204
+    Height = 358
     Align = alClient
     PopupMenu = PopupMenu1
     TabOrder = 0
     TabStop = False
     LookAndFeel.SkinName = ''
+    ExplicitWidth = 1220
+    ExplicitHeight = 397
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnKeyDown = cxGrid1DBTableView1KeyDown
       Navigator.Buttons.CustomButtons = <>
@@ -258,8 +262,8 @@ object bplshopperframe: Tbplshopperframe
   end
   object Panel1: TPanel
     Left = 0
-    Top = 400
-    Width = 1220
+    Top = 361
+    Width = 1204
     Height = 206
     Align = alBottom
     BevelOuter = bvNone
@@ -267,6 +271,8 @@ object bplshopperframe: Tbplshopperframe
     DoubleBuffered = True
     ParentDoubleBuffered = False
     TabOrder = 1
+    ExplicitTop = 400
+    ExplicitWidth = 1220
     object expocxLookupComboBox: TcxLookupComboBox
       Left = 100
       Top = 6
@@ -365,7 +371,7 @@ object bplshopperframe: Tbplshopperframe
     end
     object RzStatusBar1: TRzStatusBar
       Left = 0
-      Top = 165
+      Top = 154
       Width = 1220
       Height = 30
       AutoStyle = False

@@ -9,6 +9,7 @@ uses
   DataSnap.DSProviderDataModuleAdapter,
   DataSnap.DSServer,
   DataSnap.DSAuth,
+  Datasnap.DSSession,
   FireDAC.Stan.Intf,
   FireDAC.Stan.Option,
   FireDAC.Stan.Error,
@@ -167,11 +168,12 @@ var
   count: int64;
   starttime, endtime: TDateTime;
   Dayu: TAlidayu;
-  send_message: string;
+  //send_message: string;
 begin
   if AStream.Size = 0 then
     exit;
 
+  LErrors:=0;
   log := TServerLogThread.Create;
 
   Log.AddLog('Start append shopper data');
@@ -247,6 +249,7 @@ begin
   if AStream.Size = 0 then
     exit;
 
+  LErrors :=0;
   Result := '';
 
   log := TServerLogThread.Create;
@@ -346,7 +349,7 @@ var
    ext,version:string;
    jsonobject:TJsonObject;
    filesen: TFileStream;
-   str,path2: string;
+   path2: string;
   begin
     path2:='';
     Result:=TJSONObject.Create;
@@ -429,7 +432,7 @@ begin
       getMemberGroupFDQuery.First;
 
       getcustomerFDQuery.Close;
-      if getMemberGroupFDQuery.FieldByName('asname').AsString<>'admins' then
+      if getMemberGroupFDQuery.FieldByName('name').AsString<>'admins' then
         getcustomerFDQuery.MacroByName('where').AsRaw:=' where jhlh_pmis_customers.create_member='+getMemberGroupFDQuery.FieldByName('id').AsString;
       getcustomerFDQuery.Open;
       getcustomerFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
@@ -451,6 +454,7 @@ end;
 
 function TServerMethods.MemberData: TStream;
 begin
+  Writeln(TDSSessionManager.GetThreadSession.UserName);
   Result := TMemoryStream.Create;
   try
     try
@@ -596,6 +600,7 @@ end;
 
 function TServerMethods.test1: integer;
 begin
+  Result:=0;
   {$IFDEF DEBUG}
   {$ENDIF}
 end;

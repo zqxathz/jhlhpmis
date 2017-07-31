@@ -75,10 +75,14 @@ begin
     ServerDataModule.free;
 end;
 
-procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(Sender: TObject; const Protocol, Context, User, Password: string; var valid: Boolean; UserRoles: TStrings);
+procedure TServerContainer1.DSAuthenticationManager1UserAuthenticate(Sender: TObject; const Protocol,
+ Context, User, Password: string; var valid: Boolean; UserRoles: TStrings);
+var
+  group_asname:string;
 begin
   { TODO : Validate the client user and password.
     If role-based authorization is needed, add role names to the UserRoles parameter  }
+  valid:=false;
   if (User.ToLower = 'guest') and (Password.ToLower = 'guest') then
   begin
     valid := true;
@@ -86,8 +90,14 @@ begin
   end;
   if assigned(ServerDataModule) then
   begin
-    valid := ServerDataModule.verifyMember(User, Password);
-    Writeln(User+','+Password);
+    group_asname:=ServerDataModule.verifyMember(User, Password);
+    if group_asname <> '' then
+    begin
+      UserRoles.Add(group_asname);
+      valid:=true;
+    end
+    else
+      valid:=false;
   end;
 end;
 
@@ -101,8 +111,10 @@ begin
   valid := false;
   if EventObject.UserName.ToLower = 'guest' then
     valid := EventObject.MethodAlias = 'TServerMethods.GetUpdatefiles'
+  else if EventObject.UserName.ToLower = 'admin' then
+    valid:=true
   else
-    valid := True;
+    valid := ServerDataModule.getMethodauthids(EventObject.MethodAlias,EventObject.UserRoles);
 end;
 
 function BindPort(Aport: Integer): Boolean;
