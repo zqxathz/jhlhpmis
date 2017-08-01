@@ -10,7 +10,6 @@ uses
   System.Classes,
   Vcl.Graphics,
   Vcl.Controls,
-  Vcl.Forms,
   Vcl.Dialogs,
   cxGraphics,
   cxControls,
@@ -58,7 +57,7 @@ uses
   bplFrame;
 
 type
-  TbplCustomerFrame = class(TBplFrame, IcxExportProgress)
+  TbplCustomerFrame = class(TFrame, IcxExportProgress)
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
     cxGrid1: TcxGrid;
@@ -175,7 +174,8 @@ implementation
 
 uses
   cxGridExportLink,
-  connectiondm;
+  connectiondm,
+  vcl.forms;
 
 {$R *.dfm}
 

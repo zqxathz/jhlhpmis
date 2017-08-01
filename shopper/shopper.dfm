@@ -1,39 +1,37 @@
 object bplshopperframe: Tbplshopperframe
   Left = 0
   Top = 0
-  ClientHeight = 567
-  ClientWidth = 1204
-  Color = clBtnFace
-  Font.Charset = ANSI_CHARSET
+  Width = 1182
+  Height = 611
+  Font.Charset = GB2312_CHARSET
   Font.Color = clWindowText
   Font.Height = -20
   Font.Name = #24494#36719#38597#40657
   Font.Style = []
-  OldCreateOrder = True
-  PixelsPerInch = 96
-  TextHeight = 27
+  ParentFont = False
+  TabOrder = 0
   object Splitter1: TSplitter
     Left = 0
-    Top = 358
-    Width = 1204
-    Height = 3
+    Top = 366
+    Width = 1182
+    Height = 4
     Cursor = crVSplit
     Align = alBottom
-    ExplicitTop = 390
-    ExplicitWidth = 1086
+    OnCanResize = Splitter1CanResize
+    OnMoved = Splitter1Moved
+    ExplicitTop = 408
   end
   object cxGrid1: TcxGrid
     Left = 0
     Top = 0
-    Width = 1204
-    Height = 358
+    Width = 1182
+    Height = 366
     Align = alClient
     PopupMenu = PopupMenu1
     TabOrder = 0
     TabStop = False
     LookAndFeel.SkinName = ''
-    ExplicitWidth = 1220
-    ExplicitHeight = 397
+    ExplicitHeight = 402
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnKeyDown = cxGrid1DBTableView1KeyDown
       Navigator.Buttons.CustomButtons = <>
@@ -260,19 +258,121 @@ object bplshopperframe: Tbplshopperframe
       GridView = cxGrid1DBTableView1
     end
   end
+  object RzStatusBar1: TRzStatusBar
+    Left = 0
+    Top = 581
+    Width = 1182
+    Height = 30
+    AutoStyle = False
+    BorderInner = fsNone
+    BorderOuter = fsNone
+    BorderSides = [sdLeft, sdTop, sdRight, sdBottom]
+    BorderWidth = 0
+    DoubleBuffered = True
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = #24494#36719#38597#40657
+    Font.Style = []
+    ParentDoubleBuffered = False
+    ParentFont = False
+    TabOrder = 1
+    object RzStatusPane1: TRzStatusPane
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 40
+      Height = 24
+      Align = alLeft
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = #24494#36719#38597#40657
+      Font.Style = []
+      ParentFont = False
+      AutoSize = True
+      Caption = #22320#21306
+    end
+    object RzStatusPane2: TRzStatusPane
+      Left = 231
+      Top = 0
+      Width = 40
+      Height = 30
+      Align = alLeft
+      AutoSize = True
+      Caption = ''
+    end
+    object RzClockStatus1: TRzClockStatus
+      Left = 1010
+      Top = 0
+      Width = 172
+      Height = 30
+      Align = alRight
+      Alignment = taRightJustify
+      ExplicitLeft = 1048
+    end
+    object RzProgressStatus1: TRzProgressStatus
+      Left = 858
+      Top = 0
+      Width = 152
+      Height = 30
+      Align = alRight
+      ParentShowHint = False
+      PartsComplete = 0
+      Percent = 0
+      ShowPercent = True
+      TotalParts = 0
+      ExplicitLeft = 896
+    end
+    object RzStatusPane3: TRzStatusPane
+      Left = 780
+      Top = 0
+      Width = 78
+      Height = 30
+      Align = alRight
+      Alignment = taRightJustify
+      AutoSize = True
+      Caption = #27491#22312#23548#20986':'
+      ExplicitLeft = 822
+    end
+    object updateareaallbutton: TButton
+      Left = 46
+      Top = 0
+      Width = 185
+      Height = 30
+      Align = alLeft
+      Caption = #23558#24403#21069#22478#24066#26356#26032#21040#25152#26377#35760#24405
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = #24494#36719#38597#40657
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      TabStop = False
+      OnClick = updateareaallbuttonClick
+    end
+  end
   object Panel1: TPanel
     Left = 0
-    Top = 361
-    Width = 1204
-    Height = 206
+    Top = 370
+    Width = 1182
+    Height = 211
     Align = alBottom
     BevelOuter = bvNone
-    Constraints.MinHeight = 200
+    Constraints.MinHeight = 211
+    DockSite = True
     DoubleBuffered = True
     ParentDoubleBuffered = False
-    TabOrder = 1
-    ExplicitTop = 400
-    ExplicitWidth = 1220
+    TabOrder = 2
+    ExplicitTop = 369
+    object Label1: TLabel
+      Left = 9
+      Top = 175
+      Width = 85
+      Height = 27
+      Caption = #36141#20080#21830#21697':'
+    end
     object expocxLookupComboBox: TcxLookupComboBox
       Left = 100
       Top = 6
@@ -318,7 +418,7 @@ object bplshopperframe: Tbplshopperframe
     end
     object applyButton: TButton
       Left = 945
-      Top = 128
+      Top = 170
       Width = 105
       Height = 35
       Caption = #28155#21152
@@ -369,106 +469,13 @@ object bplshopperframe: Tbplshopperframe
       Caption = #25163#26426#21495#30721':'
       TabOrder = 17
     end
-    object RzStatusBar1: TRzStatusBar
-      Left = 0
-      Top = 154
-      Width = 1220
-      Height = 30
-      AutoStyle = False
-      BorderInner = fsNone
-      BorderOuter = fsNone
-      BorderSides = [sdLeft, sdTop, sdRight, sdBottom]
-      BorderWidth = 0
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = #24494#36719#38597#40657
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 18
-      Visible = False
-      ExplicitTop = 176
-      object RzStatusPane1: TRzStatusPane
-        AlignWithMargins = True
-        Left = 3
-        Top = 3
-        Width = 40
-        Height = 24
-        Align = alLeft
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -15
-        Font.Name = #24494#36719#38597#40657
-        Font.Style = []
-        ParentFont = False
-        AutoSize = True
-        Caption = #22320#21306
-      end
-      object RzStatusPane2: TRzStatusPane
-        Left = 231
-        Top = 0
-        Width = 40
-        Height = 30
-        Align = alLeft
-        AutoSize = True
-        Caption = ''
-      end
-      object RzClockStatus1: TRzClockStatus
-        Left = 1048
-        Top = 0
-        Width = 172
-        Height = 30
-        Align = alRight
-        Alignment = taRightJustify
-      end
-      object RzProgressStatus1: TRzProgressStatus
-        Left = 896
-        Top = 0
-        Width = 152
-        Height = 30
-        Align = alRight
-        ParentShowHint = False
-        PartsComplete = 0
-        Percent = 0
-        ShowPercent = True
-        TotalParts = 0
-      end
-      object RzStatusPane3: TRzStatusPane
-        Left = 818
-        Top = 0
-        Width = 78
-        Height = 30
-        Align = alRight
-        Alignment = taRightJustify
-        AutoSize = True
-        Caption = #27491#22312#23548#20986':'
-        ExplicitLeft = 822
-      end
-      object updateareaallbutton: TButton
-        Left = 46
-        Top = 0
-        Width = 185
-        Height = 30
-        Align = alLeft
-        Caption = #23558#24403#21069#22478#24066#26356#26032#21040#25152#26377#35760#24405
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = #24494#36719#38597#40657
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 0
-        TabStop = False
-        OnClick = updateareaallbuttonClick
-      end
-    end
     object StaticText4: TStaticText
       Left = 290
       Top = 50
       Width = 49
       Height = 31
       Caption = #22995#21517':'
-      TabOrder = 19
+      TabOrder = 18
     end
     object nameedit: TEdit
       Left = 345
@@ -483,7 +490,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 49
       Height = 31
       Caption = #24615#21035':'
-      TabOrder = 20
+      TabOrder = 19
     end
     object sexcxLookupComboBox: TcxLookupComboBox
       Left = 539
@@ -514,7 +521,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 49
       Height = 31
       Caption = #24494#20449':'
-      TabOrder = 21
+      TabOrder = 20
     end
     object StaticText7: TStaticText
       Left = 844
@@ -522,7 +529,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 49
       Height = 31
       Caption = #37038#31665':'
-      TabOrder = 22
+      TabOrder = 21
     end
     object emailEdit: TEdit
       Left = 896
@@ -537,7 +544,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #36523#20221#35777#21495':'
-      TabOrder = 23
+      TabOrder = 22
     end
     object passportEdit: TEdit
       Left = 100
@@ -552,7 +559,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 49
       Height = 31
       Caption = #29983#26085':'
-      TabOrder = 24
+      TabOrder = 23
     end
     object birtydaycxDateEdit: TcxDateEdit
       Left = 395
@@ -579,7 +586,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #36807#26399#26085#26399':'
-      TabOrder = 25
+      TabOrder = 24
     end
     object pastcxDateEdit: TcxDateEdit
       Left = 716
@@ -596,7 +603,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #26368#21518#28040#36153':'
-      TabOrder = 26
+      TabOrder = 25
     end
     object lastshopcxDateEdit: TcxDateEdit
       Left = 946
@@ -608,28 +615,35 @@ object bplshopperframe: Tbplshopperframe
     end
     object StaticText12: TStaticText
       Left = 9
-      Top = 128
+      Top = 131
       Width = 89
       Height = 31
       Caption = #35814#32454#22320#22336':'
-      TabOrder = 27
+      TabOrder = 26
     end
     object addrEdit: TEdit
       Left = 100
       Top = 128
-      Width = 816
+      Width = 1062
       Height = 35
       TabOrder = 11
     end
     object restButton: TButton
       Left = 1056
-      Top = 128
+      Top = 170
       Width = 106
       Height = 35
       Caption = #37325#32622
       TabOrder = 13
       TabStop = False
       OnClick = restButtonClick
+    end
+    object Edit1: TEdit
+      Left = 100
+      Top = 170
+      Width = 829
+      Height = 35
+      TabOrder = 27
     end
   end
   object shopperds: TDataSource

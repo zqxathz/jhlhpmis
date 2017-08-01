@@ -1,22 +1,19 @@
 object bplCustomerFrame: TbplCustomerFrame
   Left = 0
   Top = 0
-  ClientHeight = 564
-  ClientWidth = 1203
-  Color = clBtnFace
-  DoubleBuffered = True
-  Font.Charset = GB2312_CHARSET
+  Width = 1150
+  Height = 580
+  Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
   Font.Height = -20
   Font.Name = #24494#36719#38597#40657
   Font.Style = []
-  OldCreateOrder = True
-  PixelsPerInch = 96
-  TextHeight = 27
+  ParentFont = False
+  TabOrder = 0
   object Splitter1: TSplitter
     Left = 0
-    Top = 246
-    Width = 1203
+    Top = 262
+    Width = 1150
     Height = 3
     Cursor = crVSplit
     Align = alBottom
@@ -26,14 +23,14 @@ object bplCustomerFrame: TbplCustomerFrame
   object cxGrid1: TcxGrid
     Left = 0
     Top = 0
-    Width = 1203
-    Height = 246
+    Width = 1150
+    Height = 262
     Align = alClient
     PopupMenu = PopupMenu1
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 1219
-    ExplicitHeight = 285
+    ExplicitWidth = 320
+    ExplicitHeight = 259
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnDblClick = cxGrid1DBTableView1DblClick
       OnKeyDown = cxGrid1DBTableView1KeyDown
@@ -59,8 +56,8 @@ object bplCustomerFrame: TbplCustomerFrame
   end
   object Panel1: TPanel
     Left = 0
-    Top = 249
-    Width = 1203
+    Top = 265
+    Width = 1150
     Height = 315
     Align = alBottom
     BevelOuter = bvNone
@@ -74,10 +71,10 @@ object bplCustomerFrame: TbplCustomerFrame
     ParentDoubleBuffered = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitTop = 288
-    ExplicitWidth = 1219
+    ExplicitTop = -75
+    ExplicitWidth = 320
     DesignSize = (
-      1203
+      1150
       315)
     object expocxLookupComboBox: TcxLookupComboBox
       Left = 100
@@ -417,7 +414,7 @@ object bplCustomerFrame: TbplCustomerFrame
     object RzStatusBar1: TRzStatusBar
       Left = 0
       Top = 285
-      Width = 1203
+      Width = 1150
       Height = 30
       AutoScalePanes = True
       AutoStyle = False
@@ -433,20 +430,20 @@ object bplCustomerFrame: TbplCustomerFrame
       ParentFont = False
       TabOrder = 36
       Visible = False
-      ExplicitWidth = 1219
+      ExplicitWidth = 320
       object RzClockStatus1: TRzClockStatus
-        Left = 1048
+        Left = -1221
         Top = 0
-        Width = 171
+        Width = 2371
         Height = 30
         Align = alRight
         Alignment = taRightJustify
-        ExplicitHeight = 19
+        ExplicitLeft = -1219
       end
       object RzProgressStatus1: TRzProgressStatus
-        Left = 864
+        Left = -3728
         Top = 0
-        Width = 184
+        Width = 2507
         Height = 30
         Align = alRight
         ParentShowHint = False
@@ -455,12 +452,12 @@ object bplCustomerFrame: TbplCustomerFrame
         Percent = 0
         ShowPercent = True
         TotalParts = 0
-        ExplicitLeft = 784
+        ExplicitLeft = -3724
       end
       object RzStatusPane1: TRzStatusPane
-        Left = 786
+        Left = -4011
         Top = 0
-        Width = 78
+        Width = 283
         Height = 30
         Align = alRight
         Font.Charset = GB2312_CHARSET
@@ -472,7 +469,7 @@ object bplCustomerFrame: TbplCustomerFrame
         Alignment = taRightJustify
         AutoSize = True
         Caption = #27491#22312#23548#20986':'
-        ExplicitLeft = 784
+        ExplicitLeft = -4043
       end
     end
   end

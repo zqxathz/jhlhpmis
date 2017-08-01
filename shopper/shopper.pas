@@ -10,7 +10,6 @@ uses
   System.Classes,
   Vcl.Graphics,
   Vcl.Controls,
-  Vcl.Forms,
   Vcl.Dialogs,
   cxGraphics,
   cxControls,
@@ -64,12 +63,13 @@ uses
   Clipbrd,
   cxExport,
   FireDAC.Phys.SQLiteWrapper,
-  bplframe;
+  bplframe,
+  Vcl.Forms;
 
 type
   TInputType = (itquick,itgife);
 
-  Tbplshopperframe = class(TBplFrame,IcxExportProgress)
+  Tbplshopperframe = class(TFrame,IcxExportProgress)
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
     cxGrid1: TcxGrid;
@@ -127,15 +127,12 @@ type
     cxGrid1DBTableView2adcode: TcxGridDBColumn;
     expods: TDataSource;
     expocxLookupComboBox: TcxLookupComboBox;
-    updateareaallbutton: TButton;
     phonecxMaskEdit: TcxMaskEdit;
     applyButton: TButton;
     shoppersourcecxLookupComboBox: TcxLookupComboBox;
     StaticText1: TStaticText;
     StaticText2: TStaticText;
     StaticText3: TStaticText;
-    RzStatusBar1: TRzStatusBar;
-    RzStatusPane1: TRzStatusPane;
     PopupMenu1: TPopupMenu;
     deletemenu: TMenuItem;
     N1: TMenuItem;
@@ -163,14 +160,19 @@ type
     restButton: TButton;
     XLSReadWriteII51: TXLSReadWriteII5;
     fromexcelmenu: TMenuItem;
-    RzStatusPane2: TRzStatusPane;
     refreshmenu: TMenuItem;
     copyitemmenu: TMenuItem;
     fetchmenu: TMenuItem;
     autowidthmenu: TMenuItem;
+    RzStatusBar1: TRzStatusBar;
+    RzStatusPane1: TRzStatusPane;
+    RzStatusPane2: TRzStatusPane;
     RzClockStatus1: TRzClockStatus;
     RzProgressStatus1: TRzProgressStatus;
     RzStatusPane3: TRzStatusPane;
+    updateareaallbutton: TButton;
+    Label1: TLabel;
+    Edit1: TEdit;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure updateareaallbuttonClick(Sender: TObject);
     procedure applyButtonClick(Sender: TObject);
@@ -190,6 +192,8 @@ type
       var ErrorText: TCaption; var Error: Boolean);
     procedure fetchmenuClick(Sender: TObject);
     procedure autowidthmenuClick(Sender: TObject);
+    procedure Splitter1Moved(Sender: TObject);
+    procedure Splitter1CanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
   private
     { Private declarations }
     procedure CxGridToExcel(AcxGrid: TcxGrid);
@@ -287,74 +291,76 @@ begin
   XLSReadWriteII51.Read;
   shopperdatamod.shopperfdquery.DisableControls;
   shopperdatamod.shopperfdquery.CachedUpdates := true;
-  for i := XLSReadWriteII51.Sheets[0].FirstRow + 1 to XLSReadWriteII51.Sheets[0]
-    .LastRow do
-  begin
-    shopperdatamod.shopperfdquery.Append;
-    with shopperdatamod.shopperfdquery do
+  try
+    for i := XLSReadWriteII51.Sheets[0].FirstRow + 1 to XLSReadWriteII51.Sheets[0]
+      .LastRow do
     begin
-      FieldValues['eid'] := shopperdatamod.expofdquery.FieldValues['id'];
-      FieldValues['gid'] := 0;
-      FieldValues['sid'] := shopperdatamod.shoppersourcefdquery.
-        FieldValues['id'];
-      FieldValues['name'] := XLSReadWriteII51.Sheets[0].asstring[1, i];
-      sexint := 0;
-      if XLSReadWriteII51.Sheets[0].asstring[2, i] = '先生' then
-        sexint := 1
-      else if XLSReadWriteII51.Sheets[0].asstring[2, i] = '女士' then
-        sexint := 2;
-      FieldValues['sex'] := sexint;
-      FieldValues['weixin'] := '';
-      FieldValues['phone'] := XLSReadWriteII51.Sheets[0].asstring[3, i];
-      FieldValues['email'] := '';
-      FieldValues['passport'] := '';
-      FieldValues['adcode'] := shopperdatamod.expofdquery.FieldValues['adcode'];
-      FieldValues['addr'] := '';
-      FieldValues['expiry_time'] := 0;
+      shopperdatamod.shopperfdquery.Append;
+      with shopperdatamod.shopperfdquery do
+      begin
+        FieldValues['eid'] := shopperdatamod.expofdquery.FieldValues['id'];
+        FieldValues['gid'] := 0;
+        FieldValues['sid'] := shopperdatamod.shoppersourcefdquery.FieldValues['id'];
+        FieldValues['name'] := XLSReadWriteII51.Sheets[0].asstring[1, i];
+        sexint := 0;
+        if XLSReadWriteII51.Sheets[0].asstring[2, i] = '先生' then
+          sexint := 1
+        else
+          if XLSReadWriteII51.Sheets[0].asstring[2, i] = '女士' then
+            sexint := 2;
 
-      // ShowMessage(XLSReadWriteII51.Sheets[0].AsString[5,i]);
+        FieldValues['sex'] := sexint;
+        FieldValues['weixin'] := '';
+        FieldValues['phone'] := XLSReadWriteII51.Sheets[0].asstring[3, i];
+        FieldValues['email'] := '';
+        FieldValues['passport'] := '';
+        FieldValues['adcode'] := shopperdatamod.expofdquery.FieldValues['adcode'];
+        FieldValues['addr'] := '';
+        FieldValues['expiry_time'] := 0;
 
-      FieldValues['create_time'] :=
-        DateTimeToUnix(VarToDateTime(XLSReadWriteII51.Sheets[0]
-        .asstring[5, i]));
-      FieldValues['update_time'] :=
-        DateTimeToUnix(VarToDateTime(XLSReadWriteII51.Sheets[0]
-        .asstring[5, i]));
-      FieldValues['birthday_time'] := 0;
-      FieldValues['chinese_birthday'] := 0;
-      FieldValues['lastshop_time'] := 0;
-      FieldValues['trash'] := 0;
-      FieldValues['status'] := 1;
-      FieldValues['createtime'] :=
-        VarToDateTime(XLSReadWriteII51.Sheets[0].asstring[5, i]);
-      FieldValues['updatetime'] :=
-        VarToDateTime(XLSReadWriteII51.Sheets[0].asstring[5, i]);
-      FieldValues['area'] := RzStatusPane1.Caption;
+        // ShowMessage(XLSReadWriteII51.Sheets[0].AsString[5,i]);
+
+        FieldValues['create_time'] :=
+          DateTimeToUnix(VarToDateTime(XLSReadWriteII51.Sheets[0]
+          .asstring[5, i]));
+        FieldValues['update_time'] :=
+          DateTimeToUnix(VarToDateTime(XLSReadWriteII51.Sheets[0]
+          .asstring[5, i]));
+        FieldValues['birthday_time'] := 0;
+        FieldValues['chinese_birthday'] := 0;
+        FieldValues['lastshop_time'] := 0;
+        FieldValues['trash'] := 0;
+        FieldValues['status'] := 1;
+        FieldValues['createtime'] :=
+          VarToDateTime(XLSReadWriteII51.Sheets[0].asstring[5, i]);
+        FieldValues['updatetime'] :=
+          VarToDateTime(XLSReadWriteII51.Sheets[0].asstring[5, i]);
+        FieldValues['area'] := RzStatusPane1.Caption;
+      end;
+      shopperdatamod.shopperfdquery.Post;
     end;
-    shopperdatamod.shopperfdquery.Post;
+    shopperdatamod.shopperfdquery.OnUpdateRecord:=shopperdatamod.shopperfdqueryUpdateRecord;
+
+
+    shopperdatamod.shopperfdquery.Connection.StartTransaction;
+
+    ierror:=shopperdatamod.shopperfdquery.ApplyUpdates;
+    if ierror=0 then
+    begin
+      shopperdatamod.shopperfdquery.Connection.Commit;
+      shopperdatamod.shopperfdquery.CommitUpdates;
+    end
+    else
+    begin
+      shopperdatamod.shopperfdquery.Connection.Rollback;
+      showmessage('写入到数据库失败,EXCEL的内容必须符合格式');
+    end;
+  finally
+    shopperdatamod.shopperfdquery.CachedUpdates := false;
+    shopperdatamod.shopperfdquery.OnUpdateRecord:=nil;
+    shopperdatamod.shopperfdquery.Refresh;
+    shopperdatamod.shopperfdquery.EnableControls;
   end;
-  shopperdatamod.shopperfdquery.OnUpdateRecord:=shopperdatamod.shopperfdqueryUpdateRecord;
-
-
-  shopperdatamod.shopperfdquery.Connection.StartTransaction;
-
-  ierror:=shopperdatamod.shopperfdquery.ApplyUpdates;
-  if ierror=0 then
-  begin
-    shopperdatamod.shopperfdquery.Connection.Commit;
-    shopperdatamod.shopperfdquery.CommitUpdates;
-  end
-  else
-  begin
-    shopperdatamod.shopperfdquery.Connection.Rollback;
-    showmessage('写入到数据库失败,EXCEL的内容必须符合格式');
-  end;
-
-  shopperdatamod.shopperfdquery.CachedUpdates := false;
-  shopperdatamod.shopperfdquery.OnUpdateRecord:=nil;
-  shopperdatamod.shopperfdquery.Refresh;
-  shopperdatamod.shopperfdquery.EnableControls;
-
 end;
 
 
@@ -417,6 +423,17 @@ begin
   Resetform;
 end;
 
+procedure Tbplshopperframe.Splitter1CanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
+begin
+  Accept:=NewSize>210;
+end;
+
+ //防止PANEL跑到StatusBar下面去
+procedure Tbplshopperframe.Splitter1Moved(Sender: TObject);
+begin
+  RzStatusBar1.Top:=9999;
+end;
+
 //右键弹出菜单导出到EXCEL
 procedure Tbplshopperframe.toexcelmenuClick(Sender: TObject);
 begin
@@ -454,13 +471,13 @@ begin
   //验证手机号是否正确
   ierror := false;
   phone := phonecxMaskEdit.Text;
-  phonecxMaskEdit.Properties.ValidateDisplayValue(phone, Caption, ierror,
-    phonecxMaskEdit);
+  phonecxMaskEdit.Properties.ValidateDisplayValue(phone, Caption, ierror, phonecxMaskEdit);
   if ierror then
   begin
     showmessage('请输入正确的手机号');
     exit;
   end;
+
   if inputtype=itgife then
   begin
     validatedate:=shopperdatamod.validatePhone(phone);
@@ -589,6 +606,7 @@ begin
   cxPropertiesStore1.RestoreFrom; //读取保存的一些组件数据
   RzProgressStatus1.Visible:=False;
   RzStatusPane3.Visible:=false;
+  RzStatusBar1.Top:=9999; //防止PANEL跑到StatusBar下面去
 end;
 
 //在Grid里按Ctrl+C复制当前格子的文本内容

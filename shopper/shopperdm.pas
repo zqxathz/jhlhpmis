@@ -161,10 +161,11 @@ begin
     exit;
   try
     s := string.Join(',', PhoneList.ToStringArray);
-    // 直接从STRINGLIST到数组再到STRING,一步完成
+    // 直接从STRINGLIST到数组再组合成STRING
 
     softremoveFDCommand.Connection := connectionDataModule.mainFDConnection;
     softremoveFDCommand.MacroByName('Phone').AsRaw := s;
+    softremoveFDCommand.ParamByName('eid').Value := expofdquery.FieldByName('id').Value;
     // 使用FireDAC的Macro功能,生成SQL
 
     { 因为SQL太长,保存到TXT文件进行查看,是否正确生成
@@ -236,7 +237,7 @@ end;
 
 procedure Tshopperdatamod.shopperfdqueryAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
 begin
-  SoftRemoveWithPhone;
+  if AErrors=0 then SoftRemoveWithPhone;
 end;
 
 procedure Tshopperdatamod.shopperfdqueryAfterGetRecord(DataSet: TFDDataSet);
@@ -368,6 +369,7 @@ begin
     oTab.Free;
     updateshopperFDCommand.Params.Items[0].Value := phone;
     updateshopperFDCommand.Params.Items[1].Value := id;
+    updateshopperFDCommand.Params.Items[2].Value := expofdquery.FieldByName('id').Value;
     updateshopperFDCommand.OpenOrExecute;
 
     Result := false;

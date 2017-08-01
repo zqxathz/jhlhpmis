@@ -7,6 +7,7 @@ object shopperdatamod: Tshopperdatamod
     BeforeOpen = shopperfdqueryBeforeOpen
     AfterOpen = shopperfdqueryAfterOpen
     BeforePost = shopperfdqueryBeforePost
+    OnUpdateRecord = shopperfdqueryUpdateRecord
     AfterApplyUpdates = shopperfdqueryAfterApplyUpdates
     AfterGetRecord = shopperfdqueryAfterGetRecord
     FetchOptions.AssignedValues = [evCursorKind]
@@ -221,7 +222,7 @@ object shopperdatamod: Tshopperdatamod
     Left = 408
     Top = 64
     Content = {
-      414442530F0021380D010000FF00010001FF02FF0304001A0000007300650078
+      414442530F004F370D010000FF00010001FF02FF0304001A0000007300650078
       00660064006D0065006D007400610062006C00650005000A0000005400610062
       006C006500060000000000070000080032000000090000FF0AFF0B0400040000
       0069006400050004000000690064000C00010000000E000D000F000110000111
@@ -282,8 +283,8 @@ object shopperdatamod: Tshopperdatamod
       'LEFT JOIN area c ON b.padcode = c.adcode'
       'WHERE'
       #9'a.level = 3')
-    Left = 192
-    Top = 160
+    Left = 216
+    Top = 176
     object areafdqueryp: TWideStringField
       FieldName = 'p'
       Origin = 'name'
@@ -406,14 +407,14 @@ object shopperdatamod: Tshopperdatamod
         Name = 'PHONE'
         ParamType = ptInput
       end>
-    Left = 208
-    Top = 240
+    Left = 224
+    Top = 248
   end
   object updateshopperFDCommand: TFDCommand
     CommandKind = skUpdate
     CommandText.Strings = (
       'update jhlh_pmis_shopper set trash=1'
-      'where phone=:phone and id<>:id and trash=0')
+      'where phone=:phone and id<>:id and eid=:eid and trash=0')
     ParamData = <
       item
         Name = 'PHONE'
@@ -421,6 +422,10 @@ object shopperdatamod: Tshopperdatamod
       end
       item
         Name = 'ID'
+        ParamType = ptInput
+      end
+      item
+        Name = 'EID'
         ParamType = ptInput
       end>
     Left = 88
@@ -433,17 +438,22 @@ object shopperdatamod: Tshopperdatamod
     CommandKind = skUpdate
     CommandText.Strings = (
       'update jhlh_pmis_shopper set trash=1'
-      'where phone in (!phone) and trash=0 and'
+      'where phone in (!phone) and eid=:eid and trash=0 and'
       'id not in '
       '(select max(id) from jhlh_pmis_shopper '
       'group by phone having count(*)>1)')
     OnError = softremoveFDCommandError
+    ParamData = <
+      item
+        Name = 'EID'
+        ParamType = ptInput
+      end>
     MacroData = <
       item
         Value = Null
         Name = 'PHONE'
       end>
-    Left = 344
+    Left = 320
     Top = 248
   end
 end
