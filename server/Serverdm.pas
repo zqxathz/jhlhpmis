@@ -15,6 +15,7 @@ type
     methodFDQuery: TFDQuery;
     groupFDQuery: TFDQuery;
     FDQuery: TFDQuery;
+    FDManager1: TFDManager;
   private
     { Private declarations }
   public

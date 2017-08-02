@@ -36,11 +36,6 @@
     <Transaction>2017/07/04 23:40:22.000.476,=FireDACCommon.dcp</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="clientsyc.pas"/>
-    <File Path="clientsyc.dfm"/>
-    <File Path="clientsycdm.pas"/>
-    <File Path="clientsycdm.dfm"/>
-    <File Path="servermethods.pas"/>
     <File Path="connection.dcp"/>
     <File Path="CustomIPTransport.dcp"/>
     <File Path="DataSnapClient.dcp"/>
@@ -60,5 +55,10 @@
     <File Path="rtl.dcp"/>
     <File Path="vcl.dcp"/>
     <File Path="vcldb.dcp"/>
+    <File Path="clientsyc.pas"/>
+    <File Path="clientsyc.dfm"/>
+    <File Path="clientsycdm.pas"/>
+    <File Path="clientsycdm.dfm"/>
+    <File Path="servermethods.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

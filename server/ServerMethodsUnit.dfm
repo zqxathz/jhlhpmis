@@ -4,11 +4,7 @@ object ServerMethods: TServerMethods
   Width = 984
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'User_Name=jhlh'
-      'Password=EnEyMYkBTR'
-      'Database=jhlh'
-      'CharacterSet=utf8'
-      'DriverID=MySQL')
+      'ConnectionDef=JHLH_MySQL')
     Left = 384
     Top = 168
   end

@@ -3,73 +3,24 @@ unit shopper;
 interface
 
 uses
-  Winapi.Windows,
-  Winapi.Messages,
-  System.SysUtils,
-  System.Variants,
-  System.Classes,
-  Vcl.Graphics,
-  Vcl.Controls,
-  Vcl.Dialogs,
-  cxGraphics,
-  cxControls,
-  cxLookAndFeels,
-  cxLookAndFeelPainters,
-  cxStyles,
-  cxCustomData,
-  cxFilter,
-  cxData,
-  cxDataStorage,
-  cxEdit,
-  dxSkinsCore,
-  cxNavigator,
-  Data.DB,
-  cxDBData,
-  cxDBLookupComboBox,
-  cxGridLevel,
-  cxGridCustomTableView,
-  cxGridTableView,
-  cxGridDBTableView,
-  cxClasses,
-  cxGridCustomView,
-  cxGrid,
-  cxDropDownEdit,
-  cxPropertiesStore,
-  Vcl.ExtCtrls,
-  cxMaskEdit,
-  cxCalendar,
-  cxEditRepositoryItems,
-  cxCheckBox,
-  cxButtonEdit,
-  cxCalc,
-  cxDBExtLookupComboBox,
-  shopperdm,
-  cxContainer,
-  cxTextEdit,
-  cxLookupEdit,
-  cxDBLookupEdit,
-  Vcl.StdCtrls,
-  System.DateUtils,
-  cxGridExportLink,
-  cxLabel,
-  RzPanel,
-  RzStatus,
-  Vcl.Menus,
-  Vcl.ComCtrls,
-  dxCore,
-  cxDateUtils,
-  XLSSheetData5,
-  XLSReadWriteII5,
-  Clipbrd,
-  cxExport,
-  FireDAC.Phys.SQLiteWrapper,
-  bplframe,
-  Vcl.Forms;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Dialogs, cxGraphics,
+  cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData,
+  cxFilter, cxData, cxDataStorage, cxEdit, dxSkinsCore, cxNavigator, Data.DB,
+  cxDBData, cxDBLookupComboBox, cxGridLevel, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
+  cxDropDownEdit, cxPropertiesStore, Vcl.ExtCtrls, cxMaskEdit, cxCalendar,
+  cxEditRepositoryItems, cxCheckBox, cxButtonEdit, cxCalc,
+  cxDBExtLookupComboBox, shopperdm, cxContainer, cxTextEdit, cxLookupEdit,
+  cxDBLookupEdit, Vcl.StdCtrls, System.DateUtils, cxGridExportLink, cxLabel,
+  RzPanel, RzStatus, Vcl.Menus, Vcl.ComCtrls, dxCore, cxDateUtils,
+  XLSSheetData5, XLSReadWriteII5, Clipbrd, cxExport, FireDAC.Phys.SQLiteWrapper,
+  bplframe, Vcl.Forms;
 
 type
-  TInputType = (itquick,itgife);
+  TInputType = (itquick, itgife);
 
-  Tbplshopperframe = class(TFrame,IcxExportProgress)
+  Tbplshopperframe = class(TFrame, IcxExportProgress)
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
     cxGrid1: TcxGrid;
@@ -188,12 +139,13 @@ type
     procedure cxGrid1DBTableView1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure restButtonClick(Sender: TObject);
-    procedure cxGrid1DBTableView1phonePropertiesValidate(Sender: TObject; var DisplayValue: Variant;
-      var ErrorText: TCaption; var Error: Boolean);
+    procedure cxGrid1DBTableView1phonePropertiesValidate(Sender: TObject;
+      var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
     procedure fetchmenuClick(Sender: TObject);
     procedure autowidthmenuClick(Sender: TObject);
     procedure Splitter1Moved(Sender: TObject);
-    procedure Splitter1CanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
+    procedure Splitter1CanResize(Sender: TObject; var NewSize: Integer;
+      var Accept: Boolean);
   private
     { Private declarations }
     procedure CxGridToExcel(AcxGrid: TcxGrid);
@@ -202,7 +154,7 @@ type
     procedure OnProgress(Sender: TObject; Percent: Integer);
   public
     { Public declarations }
-    inputtype:TInputType;
+    inputtype: TInputType;
     procedure List;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -213,12 +165,12 @@ var
 
 implementation
 
-
 {$R *.dfm}
 
-uses confirmappend;
+uses
+  confirmappend;
 
-//将当前GRID数据导出到EXCEL文件
+// 将当前GRID数据导出到EXCEL文件
 procedure Tbplshopperframe.CxGridToExcel(AcxGrid: TcxGrid);
 var
   SaveDialog: TSaveDialog;
@@ -228,7 +180,8 @@ begin
   begin
     Filter := '*.xls|*.xls';
     if Execute then
-      ExportGridToExcel(SaveDialog.FileName, AcxGrid, true, true, true, 'xls',Self);
+      ExportGridToExcel(SaveDialog.FileName, AcxGrid, true, true, true,
+        'xls', Self);
   end;
   SaveDialog.Free;
 end;
@@ -236,45 +189,44 @@ end;
 procedure Tbplshopperframe.OnProgress(Sender: TObject; Percent: Integer);
 begin
   Application.ProcessMessages;
-  RzProgressStatus1.Percent:=Percent;
-  if Percent=100 then
+  RzProgressStatus1.Percent := Percent;
+  if Percent = 100 then
   begin
     ShowMessage('导出完成');
-    RzStatusPane3.Visible:=false;
-    RzProgressStatus1.Visible:=false;
+    RzStatusPane3.Visible := false;
+    RzProgressStatus1.Visible := false;
   end;
-  if  Percent=1 then
+  if Percent = 1 then
   begin
-    RzProgressStatus1.Visible:=true;
-    RzStatusPane3.Visible:=true;
+    RzProgressStatus1.Visible := true;
+    RzStatusPane3.Visible := true;
   end;
 end;
 
-//右键菜单删除当前记录
+// 右键菜单删除当前记录
 procedure Tbplshopperframe.deletemenuClick(Sender: TObject);
 begin
-   case MessageBox(0, '是否要删除当前记录?', '警告', MB_OKCANCEL + MB_ICONWARNING +
+  case MessageBox(0, '是否要删除当前记录?', '警告', MB_OKCANCEL + MB_ICONWARNING +
     MB_DEFBUTTON2) of
     IDOK:
-        with shopperdatamod.shopperfdquery do
-        begin
-          Edit;
-          FieldValues['trash'] := 1;
-          Post;
-          RefreshRecord;
-        end;
-    IDCANCEL: exit;
+      with shopperdatamod.shopperfdquery do
+      begin
+        Edit;
+        FieldValues['trash'] := 1;
+        Post;
+        RefreshRecord;
+      end;
+    IDCANCEL:
+      exit;
   end;
-
 
 end;
 
-
-//导入EXCEL文件到数据库
+// 导入EXCEL文件到数据库
 procedure Tbplshopperframe.LoadExcel;
 var
   OpenDialog: TOpenDialog;
-  i, sexint,ierror: integer;
+  i, sexint, ierror: Integer;
 begin
   OpenDialog := TOpenDialog.Create(nil);
   with OpenDialog do
@@ -282,7 +234,8 @@ begin
     Filter := '*.xls|*.xls|*.xlsx|*.xlsx';
     if Execute then
       XLSReadWriteII51.FileName := OpenDialog.FileName
-    else begin
+    else
+    begin
       Free;
       exit;
     end;
@@ -292,29 +245,30 @@ begin
   shopperdatamod.shopperfdquery.DisableControls;
   shopperdatamod.shopperfdquery.CachedUpdates := true;
   try
-    for i := XLSReadWriteII51.Sheets[0].FirstRow + 1 to XLSReadWriteII51.Sheets[0]
-      .LastRow do
+    for i := XLSReadWriteII51.Sheets[0].FirstRow + 1 to XLSReadWriteII51.Sheets
+      [0].LastRow do
     begin
       shopperdatamod.shopperfdquery.Append;
       with shopperdatamod.shopperfdquery do
       begin
         FieldValues['eid'] := shopperdatamod.expofdquery.FieldValues['id'];
         FieldValues['gid'] := 0;
-        FieldValues['sid'] := shopperdatamod.shoppersourcefdquery.FieldValues['id'];
+        FieldValues['sid'] := shopperdatamod.shoppersourcefdquery.
+          FieldValues['id'];
         FieldValues['name'] := XLSReadWriteII51.Sheets[0].asstring[1, i];
         sexint := 0;
         if XLSReadWriteII51.Sheets[0].asstring[2, i] = '先生' then
           sexint := 1
-        else
-          if XLSReadWriteII51.Sheets[0].asstring[2, i] = '女士' then
-            sexint := 2;
+        else if XLSReadWriteII51.Sheets[0].asstring[2, i] = '女士' then
+          sexint := 2;
 
         FieldValues['sex'] := sexint;
         FieldValues['weixin'] := '';
         FieldValues['phone'] := XLSReadWriteII51.Sheets[0].asstring[3, i];
         FieldValues['email'] := '';
         FieldValues['passport'] := '';
-        FieldValues['adcode'] := shopperdatamod.expofdquery.FieldValues['adcode'];
+        FieldValues['adcode'] := shopperdatamod.expofdquery.FieldValues
+          ['adcode'];
         FieldValues['addr'] := '';
         FieldValues['expiry_time'] := 0;
 
@@ -339,13 +293,13 @@ begin
       end;
       shopperdatamod.shopperfdquery.Post;
     end;
-    shopperdatamod.shopperfdquery.OnUpdateRecord:=shopperdatamod.shopperfdqueryUpdateRecord;
-
+    shopperdatamod.shopperfdquery.OnUpdateRecord :=
+      shopperdatamod.shopperfdqueryUpdateRecord;
 
     shopperdatamod.shopperfdquery.Connection.StartTransaction;
 
-    ierror:=shopperdatamod.shopperfdquery.ApplyUpdates;
-    if ierror=0 then
+    ierror := shopperdatamod.shopperfdquery.ApplyUpdates;
+    if ierror = 0 then
     begin
       shopperdatamod.shopperfdquery.Connection.Commit;
       shopperdatamod.shopperfdquery.CommitUpdates;
@@ -353,18 +307,17 @@ begin
     else
     begin
       shopperdatamod.shopperfdquery.Connection.Rollback;
-      showmessage('写入到数据库失败,EXCEL的内容必须符合格式');
+      ShowMessage('写入到数据库失败,EXCEL的内容必须符合格式');
     end;
   finally
     shopperdatamod.shopperfdquery.CachedUpdates := false;
-    shopperdatamod.shopperfdquery.OnUpdateRecord:=nil;
+    shopperdatamod.shopperfdquery.OnUpdateRecord := nil;
     shopperdatamod.shopperfdquery.Refresh;
     shopperdatamod.shopperfdquery.EnableControls;
   end;
 end;
 
-
-//初始化当前Frame
+// 初始化当前Frame
 procedure Tbplshopperframe.List;
 begin
   expocxLookupComboBox.ItemIndex := 0;
@@ -373,7 +326,7 @@ begin
   RzStatusBar1.Visible := true;
 end;
 
-//PHONE编辑框中回车提交数据
+// PHONE编辑框中回车提交数据
 procedure Tbplshopperframe.phonecxMaskEditKeyPress(Sender: TObject;
   var Key: Char);
 begin
@@ -385,7 +338,7 @@ begin
   end;
 end;
 
-//手机号输入自动验证失败后弹出的文字
+// 手机号输入自动验证失败后弹出的文字
 procedure Tbplshopperframe.phonecxMaskEditPropertiesValidate(Sender: TObject;
   var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 begin
@@ -411,90 +364,95 @@ begin
   passportEdit.Text := '';
   birtydaycxDateEdit.Clear;
   pastcxDateEdit.Clear;
-  //lastshopcxDateEdit.Text := '';
+  // lastshopcxDateEdit.Text := '';
   lastshopcxDateEdit.Clear;
   addrEdit.Text := '';
   chinesebdCheckBox.Checked := false;
 end;
 
-//重置当前输入的按钮事件
+// 重置当前输入的按钮事件
 procedure Tbplshopperframe.restButtonClick(Sender: TObject);
 begin
   Resetform;
 end;
 
-procedure Tbplshopperframe.Splitter1CanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
+procedure Tbplshopperframe.Splitter1CanResize(Sender: TObject;
+  var NewSize: Integer; var Accept: Boolean);
 begin
-  Accept:=NewSize>210;
+  Accept := NewSize > 210;
 end;
 
- //防止PANEL跑到StatusBar下面去
+// 防止PANEL跑到StatusBar下面去
 procedure Tbplshopperframe.Splitter1Moved(Sender: TObject);
 begin
-  RzStatusBar1.Top:=9999;
+  RzStatusBar1.Top := 9999;
 end;
 
-//右键弹出菜单导出到EXCEL
+// 右键弹出菜单导出到EXCEL
 procedure Tbplshopperframe.toexcelmenuClick(Sender: TObject);
 begin
   CxGridToExcel(cxGrid1);
 end;
 
-//右键弹出菜单显示所有记录
+// 右键弹出菜单显示所有记录
 procedure Tbplshopperframe.allrecordmenuClick(Sender: TObject);
 var
   sqlstr: string;
 begin
-  //sqlstr := format(SHOPPER_SQL, [' group by phone order by id']);
+  // sqlstr := format(SHOPPER_SQL, [' group by phone order by id']);
   sqlstr := format(SHOPPER_SQL, ['']);
   shopperdatamod.shopperfdquery.Close;
   shopperdatamod.shopperfdquery.Open(sqlstr);
   shopperdatamod.areafdquery.First;
 end;
 
-//加入一条新数据
+// 加入一条新数据
 procedure Tbplshopperframe.applyButtonClick(Sender: TObject);
 var
-  ipoint: integer;
+  ipoint: Integer;
   phone: Variant;
   ierror: Boolean;
   Caption: TCaption;
-  chinesebd: integer;
-  validatedate:string;
+  chinesebd: Integer;
+  validatedate: string;
 begin
   if Trim(phonecxMaskEdit.Text) = '' then
   begin
-    showmessage('必须输入手机号码');
+    ShowMessage('必须输入手机号码');
     exit;
   end;
 
-  //验证手机号是否正确
+  // 验证手机号是否正确
   ierror := false;
   phone := phonecxMaskEdit.Text;
-  phonecxMaskEdit.Properties.ValidateDisplayValue(phone, Caption, ierror, phonecxMaskEdit);
+  phonecxMaskEdit.Properties.ValidateDisplayValue(phone, Caption, ierror,
+    phonecxMaskEdit);
   if ierror then
   begin
-    showmessage('请输入正确的手机号');
+    ShowMessage('请输入正确的手机号');
     exit;
   end;
 
-  if inputtype=itgife then
+  if inputtype = itgife then
   begin
-    validatedate:=shopperdatamod.validatePhone(phone);
+    validatedate := shopperdatamod.validatePhone(phone);
     if not validatedate.IsEmpty then
     begin
       Beep;
-      confirmappendForm:=TconfirmappendForm.Create(self);
+      confirmappendForm := TconfirmappendForm.Create(Self);
       try
-        confirmappendForm.Label1.Caption:=format(confirmappendForm.Label1.Caption,[phone]);
-        confirmappendForm.Label2.Caption:=format(confirmappendForm.Label2.Caption,[validatedate]);
-        if confirmappendForm.ShowModal = mrCancel then exit;
+        confirmappendForm.Label1.Caption :=
+          format(confirmappendForm.Label1.Caption, [phone]);
+        confirmappendForm.Label2.Caption :=
+          format(confirmappendForm.Label2.Caption, [validatedate]);
+        if confirmappendForm.ShowModal = mrCancel then
+          exit;
       finally
         confirmappendForm.Free;
       end;
     end;
   end;
-  //对Dataset添加数据
+  // 对Dataset添加数据
   try
     try
       with shopperdatamod do
@@ -558,9 +516,10 @@ begin
         end;
         shopperfdquery.Post;
 
-        {检测库中是否已经有这个手机号,如果有全部软删除,
-        只保留当前输入的为可用}
-        if not validatePhone(Trim(phonecxMaskEdit.Text),shopperfdquery.FieldByName('id').AsInteger, 1) then
+        { 检测库中是否已经有这个手机号,如果有全部软删除,
+          只保留当前输入的为可用 }
+        if not validatePhone(Trim(phonecxMaskEdit.Text),
+          shopperfdquery.FieldByName('id').AsInteger, 1) then
           shopperfdquery.Refresh;
       end;
       Resetform;
@@ -569,7 +528,7 @@ begin
       begin
         shopperdatamod.shopperfdquery.Cancel;
         if E.ErrorCode = 2067 then
-          showmessage(inttostr(E.ErrorCode))
+          ShowMessage(inttostr(E.ErrorCode))
         else
           raise;
       end;
@@ -584,14 +543,14 @@ begin
   cxGrid1DBTableView1.ApplyBestFit();
 end;
 
-//右键弹出菜单复制当前选中字段到剪贴板
+// 右键弹出菜单复制当前选中字段到剪贴板
 procedure Tbplshopperframe.copyitemmenuClick(Sender: TObject);
 begin
   Clipboard.AsText := cxGrid1DBTableView1.Controller.SelectedRows[0]
     .DisplayTexts[cxGrid1DBTableView1.Controller.FocusedColumn.Index];
 end;
 
-//FRAME创建
+// FRAME创建
 constructor Tbplshopperframe.Create(AOwner: TComponent);
 begin
   inherited;
@@ -600,16 +559,16 @@ begin
     shopperdatamod := Tshopperdatamod.Create(nil);
     shopperds.DataSet := shopperdatamod.shopperfdquery;
   end;
-//  cxPropertiesStore1.StorageName := ExtractFilePath(Application.Exename)
-//    + inifile;
+  // cxPropertiesStore1.StorageName := ExtractFilePath(Application.Exename)
+  // + inifile;
   cxPropertiesStore1.Active := true;
-  cxPropertiesStore1.RestoreFrom; //读取保存的一些组件数据
-  RzProgressStatus1.Visible:=False;
-  RzStatusPane3.Visible:=false;
-  RzStatusBar1.Top:=9999; //防止PANEL跑到StatusBar下面去
+  cxPropertiesStore1.RestoreFrom; // 读取保存的一些组件数据
+  RzProgressStatus1.Visible := false;
+  RzStatusPane3.Visible := false;
+  RzStatusBar1.Top := 9999; // 防止PANEL跑到StatusBar下面去
 end;
 
-//在Grid里按Ctrl+C复制当前格子的文本内容
+// 在Grid里按Ctrl+C复制当前格子的文本内容
 procedure Tbplshopperframe.cxGrid1DBTableView1KeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
@@ -617,19 +576,20 @@ begin
     copyitemmenuClick(nil);
 end;
 
-//手机号字段验证
-procedure Tbplshopperframe.cxGrid1DBTableView1phonePropertiesValidate(Sender: TObject;
-  var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
+// 手机号字段验证
+procedure Tbplshopperframe.cxGrid1DBTableView1phonePropertiesValidate
+  (Sender: TObject; var DisplayValue: Variant; var ErrorText: TCaption;
+  var Error: Boolean);
 begin
-   if VarIsStr(DisplayValue) then
-     if (Length(DisplayValue)>11) or (String(DisplayValue)[1]<>'1') then
-     begin
-       Error:=true;
-       ErrorText:='手机号码格式错误,请重新输入';
-     end;
+  if VarIsStr(DisplayValue) then
+    if (Length(DisplayValue) > 11) or (string(DisplayValue)[1] <> '1') then
+    begin
+      Error := true;
+      ErrorText := '手机号码格式错误,请重新输入';
+    end;
 end;
 
-//Frame释放时执行的一些操作,保存当前FRAME里一些组件的属性
+// Frame释放时执行的一些操作,保存当前FRAME里一些组件的属性
 destructor Tbplshopperframe.Destroy;
 begin
   cxPropertiesStore1.StoreTo(true);
@@ -637,7 +597,7 @@ begin
   inherited;
 end;
 
-//展会ComboBox改变时,根据展会拉取数据
+// 展会ComboBox改变时,根据展会拉取数据
 procedure Tbplshopperframe.expocxLookupComboBoxPropertiesChange
   (Sender: TObject);
 var
@@ -664,7 +624,7 @@ begin
   shopperdatamod.areafdquery.EnableControls;
 end;
 
-//右键弹出菜单导入EXCEL
+// 右键弹出菜单导入EXCEL
 procedure Tbplshopperframe.fetchmenuClick(Sender: TObject);
 begin
   expocxLookupComboBoxPropertiesChange(nil);
@@ -675,15 +635,16 @@ begin
   LoadExcel;
 end;
 
-//将当前展会的AREACODE更新到当前所有记录
+// 将当前展会的AREACODE更新到当前所有记录
 procedure Tbplshopperframe.updateareaallbuttonClick(Sender: TObject);
 var
-  iErrors: integer;
+  iErrors: Integer;
 begin
-  if shopperdatamod.shopperfdquery.RecordCount>0 then
+  if shopperdatamod.shopperfdquery.RecordCount > 0 then
   begin
     if Application.MessageBox('是否要批量更新地区信息?', '提示', MB_YESNO + MB_ICONQUESTION +
-      MB_DEFBUTTON2) = IDNO then exit;
+      MB_DEFBUTTON2) = IDNO then
+      exit;
 
     with shopperdatamod do
     begin
@@ -695,7 +656,8 @@ begin
           while not shopperfdquery.Eof do
           begin
             shopperfdquery.Edit;
-            shopperfdquery.FieldValues['adcode'] := expofdquery.FieldValues['adcode'];
+            shopperfdquery.FieldValues['adcode'] := expofdquery.FieldValues
+              ['adcode'];
             shopperfdquery.Post;
             shopperfdquery.Next;
           end;
@@ -704,7 +666,7 @@ begin
           if iErrors > 0 then
           begin
             shopperfdquery.Connection.Rollback;
-            showmessage('出现错误,更新失败');
+            ShowMessage('出现错误,更新失败');
           end
           else
           begin

@@ -4,11 +4,7 @@ object ServerDataModule: TServerDataModule
   Width = 653
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'User_Name=jhlh'
-      'Password=EnEyMYkBTR'
-      'Database=jhlh'
-      'CharacterSet=utf8'
-      'DriverID=MySQL')
+      'ConnectionDef=JHLH_MySQL')
     Left = 336
     Top = 192
   end
@@ -68,5 +64,14 @@ object ServerDataModule: TServerDataModule
     Connection = FDConnection1
     Left = 112
     Top = 256
+  end
+  object FDManager1: TFDManager
+    ConnectionDefFileName = 'connection.ini'
+    FormatOptions.AssignedValues = [fvMapRules]
+    FormatOptions.OwnMapRules = True
+    FormatOptions.MapRules = <>
+    Active = True
+    Left = 336
+    Top = 136
   end
 end

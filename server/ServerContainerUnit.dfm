@@ -25,7 +25,6 @@ object ServerContainer1: TServerContainer1
   end
   object DSHTTPService1: TDSHTTPService
     HttpPort = 8082
-    Active = True
     Server = DSServer1
     Filters = <
       item

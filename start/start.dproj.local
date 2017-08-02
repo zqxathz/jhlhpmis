@@ -85,11 +85,11 @@
     <File Path="..\connection"/>
     <File Path="..\connection\connectiondm.pas"/>
     <File Path="..\connection\connectiondm.dfm"/>
-    <File Path="main.pas"/>
-    <File Path="main.dfm"/>
     <File Path="login.pas"/>
     <File Path="login.dfm"/>
     <File Path="logindm.pas"/>
     <File Path="logindm.dfm"/>
+    <File Path="main.pas"/>
+    <File Path="main.dfm"/>
   </ProjectSortOrder>
 </BorlandProject>

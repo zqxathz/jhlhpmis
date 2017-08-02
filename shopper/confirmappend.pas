@@ -15,10 +15,10 @@ type
     Button2: TButton;
     procedure CheckBox1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+    private
+      { Private declarations }
+    public
+      { Public declarations }
   end;
 
 var
@@ -30,7 +30,7 @@ implementation
 
 procedure TconfirmappendForm.CheckBox1Click(Sender: TObject);
 begin
-  Button1.Enabled:=CheckBox1.Checked;
+  Button1.Enabled := CheckBox1.Checked;
 end;
 
 procedure TconfirmappendForm.FormShow(Sender: TObject);

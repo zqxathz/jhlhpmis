@@ -49,6 +49,15 @@
             <Overwrite>True</Overwrite>
             <Required>True</Required>
         </DeployFile>
+        <DeployFile Include="connection.ini" Condition="'$(Config)'=='Release'">
+            <RemoteDir>server\</RemoteDir>
+            <RemoteName>connection.ini</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
     </ItemGroup>
     <ItemGroup Condition="'$(Platform)'=='OSX32'"/>
     <ItemGroup Condition="'$(Platform)'=='Android'"/>

@@ -31,7 +31,6 @@ object bplshopperframe: Tbplshopperframe
     TabOrder = 0
     TabStop = False
     LookAndFeel.SkinName = ''
-    ExplicitHeight = 402
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnKeyDown = cxGrid1DBTableView1KeyDown
       Navigator.Buttons.CustomButtons = <>
@@ -365,7 +364,6 @@ object bplshopperframe: Tbplshopperframe
     DoubleBuffered = True
     ParentDoubleBuffered = False
     TabOrder = 2
-    ExplicitTop = 369
     object Label1: TLabel
       Left = 9
       Top = 175
