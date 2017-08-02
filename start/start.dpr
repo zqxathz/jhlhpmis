@@ -23,6 +23,7 @@ var
   RvHandle :hWnd;
 
 begin
+  ReportMemoryLeaksOnShutdown := DebugHook<>0;
   hAppMutex := TMutex.Create(nil,false,'{FF3C45DC-0348-4E16-A861-F1AD8E693075}');
   //if  hAppMutex.WaitFor(1)=wrTimeout then exit;
   if GetLastError<>183 then

@@ -18,6 +18,7 @@ type
     FDTransaction1: TFDTransaction;
     setshopperautoincFDCommand: TFDCommand;
     procedure DataModuleCreate(Sender: TObject);
+    procedure SQLConnection1BeforeConnect(Sender: TObject);
     private
       { Private declarations }
       FOnExec: TGetStrProc; // 事件:用来输出相关执行信息到主界面
@@ -202,6 +203,11 @@ begin
   end;
   if Assigned(FOnExec) then
     FOnExec('顾客数据上传成功');
+end;
+
+procedure TclientuploadDataModule.SQLConnection1BeforeConnect(Sender: TObject);
+begin
+  SQLConnection1.Params.Add('version=1');
 end;
 
 function TclientuploadDataModule.test: boolean;

@@ -114,7 +114,7 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_UsePackage>connection;shopper;customer;clientsyc;clientupload;common</DCC_UsePackage>
-        <DCC_UnitSearchPath>D:\Tools\RaizeComponentsFullSource\Source;D:\Develop\jhql\clientsyc;D:\Develop\jhql\clientupload;D:\Develop\jhql\connection;D:\Develop\jhql\common;D:\Develop\jhql\customer;D:\Develop\jhql\shopper;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>D:\Tools\RaizeComponentsFullSource\Source;D:\Develop\jhql\clientsyc;D:\Develop\jhql\clientupload;D:\Develop\jhql\connection;D:\Develop\jhql\common;D:\Develop\jhql\customer;D:\Develop\jhql\shopper;C:\Program Files (x86)\CnPack\CnWizards\PSDeclEx;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <UsePackages>true</UsePackages>
         <AppExecutionLevel>highestAvailable</AppExecutionLevel>
     </PropertyGroup>

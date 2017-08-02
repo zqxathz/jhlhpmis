@@ -12,6 +12,7 @@ uses
   Data.DBXClientResStrs in 'Data.DBXClientResStrs.pas';
 
 begin
+  //ReportMemoryLeaksOnShutdown := true;
   try
     RunDSServer;
   except

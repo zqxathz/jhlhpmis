@@ -459,7 +459,6 @@ begin
       memberFDQuery.Close;
       if TDSSessionManager.GetThreadSession.UserRoles.IndexOf('admins')=-1 then
       begin
-        writeln(TDSSessionManager.GetThreadSession.UserRoles.Text);
         memberFDQuery.MacroByName('groupname').AsRaw:='and where jhlh_admin_group.name<>"admins"';
       end;
       memberFDQuery.Open;
@@ -693,7 +692,8 @@ end;
 constructor TServerLogThread.Create;
 begin
   FLogList := TStringList.Create;
-  Create(True);
+  FreeOnTerminate := true;
+  inherited Create(True);
 end;
 
 destructor TServerLogThread.Destroy;
@@ -709,7 +709,6 @@ var
   I: Integer;
 begin
   //inherited;
-  FreeOnTerminate := true;
   system.TMonitor.Enter(One);
   try
     if FLogList.Count = 0 then

@@ -57,6 +57,12 @@ begin
 
   clientsycDataModule:=TclientsycDataModule.Create(self);
   try
+    if clientsycDataModule.CantConnection then
+    begin
+      Beep;
+      ShowMessage(clientsycDataModule.ErrorMsg);
+      exit;
+    end;
     clientsycDataModule.GetMemberData;
     if clientsycDataModule.SyncError then
     begin

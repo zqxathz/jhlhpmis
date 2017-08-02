@@ -44,6 +44,7 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
+    procedure SQLConnection1BeforeConnect(Sender: TObject);
   private
     { Private declarations }
     FCantConnection: boolean;
@@ -132,7 +133,6 @@ begin
   FOnExec := nil;
   FSyncError := false;
   FCantConnection := false;
-
   if not Assigned(clientuser) then
   begin
     SQLConnection1.Params.Values['DSAuthenticationPassword'] := 'guest';
@@ -143,7 +143,7 @@ begin
     SQLConnection1.Params.Values['DSAuthenticationUser'] := clientuser.Username;
   end;
   try
-    SQLConnection1.Open;
+    SQLConnection1.Connected:=true;
   except
     on E: Exception do
     begin
@@ -683,7 +683,7 @@ end;
 //获取系统用户数据
 procedure TclientsycDataModule.GetMemberData;
 var
-  server: TObject;
+  server: TServerMethodsClient;
   stream: TStream;
   lstream:TMemoryStream;
   memtable: TFDMemTable;
@@ -714,7 +714,8 @@ begin
 
   try
     server := TServerMethodsClient.Create(SQLConnection1.DBXConnection);
-    stream := TServerMethodsClient(server).MemberData;
+    server.ClearResources;
+    stream := server.MemberData;
   except
     on E: Exception do
     begin
@@ -887,6 +888,11 @@ begin
   removecustomerFDCommand.Execute();
   if Assigned(FOnExec) then
     FOnExec('本地客户数据清理完成');
+end;
+
+procedure TclientsycDataModule.SQLConnection1BeforeConnect(Sender: TObject);
+begin
+  SQLConnection1.Params.Add('version=1');
 end;
 
 function TclientsycDataModule.test: string;

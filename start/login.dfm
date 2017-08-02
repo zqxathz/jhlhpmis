@@ -86,7 +86,6 @@ object loginframe: Tloginframe
       ParentBackground = False
       ShowCaption = False
       TabOrder = 2
-      ExplicitLeft = 3
       object loginbutton: TButton
         Left = 1
         Top = 1

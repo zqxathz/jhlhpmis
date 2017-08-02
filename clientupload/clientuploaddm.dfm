@@ -20,6 +20,7 @@ object clientuploadDataModule: TclientuploadDataModule
       'Filters={"ZLibCompression":{"CompressMoreThan":"1024"}}'
       'DSAuthenticationPassword=111'
       'DSAuthenticationUser=111')
+    BeforeConnect = SQLConnection1BeforeConnect
     Left = 376
     Top = 232
     UniqueId = '{25A7D595-54B4-4CF8-8413-7F57E17F0D5D}'

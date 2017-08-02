@@ -27,6 +27,7 @@
     <Transaction>2017/07/17 23:02:02.000.648,D:\Develop\jhql\server\Serverdm.pas=D:\Develop\jhql\server\Unit1.pas</Transaction>
     <Transaction>2017/07/17 23:02:02.000.648,D:\Develop\jhql\server\Serverdm.dfm=D:\Develop\jhql\server\Unit1.dfm</Transaction>
     <Transaction>2017/07/18 01:50:16.000.679,=D:\Develop\jhql\server\Data.DBXClientResStrs.pas</Transaction>
+    <Transaction>2017/08/03 01:13:29.479,=D:\Develop\jhql\server\connection.ini</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
 		<NoProfile iOSSimulator="iPhone5" Android="mytest"/>
@@ -42,5 +43,6 @@
     <File Path="Serverdm.dfm"/>
     <File Path="ServerMethodsUnit.pas"/>
     <File Path="ServerMethodsUnit.dfm"/>
+    <File Path="connection.ini"/>
   </ProjectSortOrder>
 </BorlandProject>

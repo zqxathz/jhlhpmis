@@ -26,9 +26,10 @@ type
     procedure DSServerClass1GetClass(DSServerClass: TDSServerClass; var PersistentClass: TPersistentClass);
     procedure DSAuthenticationManager1UserAuthorize(Sender: TObject; EventObject: TDSAuthorizeEventObject; var valid: Boolean);
     procedure DSAuthenticationManager1UserAuthenticate(Sender: TObject; const Protocol, Context, User, Password: string; var valid: Boolean; UserRoles: TStrings);
-    procedure DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
+    procedure DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
+    procedure DSServer1Connect(DSConnectEventObject: TDSConnectEventObject);
   private
     { Private declarations }
   public
@@ -48,13 +49,30 @@ uses
 
 {$R *.dfm}
 
+procedure TServerContainer1.DSServer1Connect(DSConnectEventObject: TDSConnectEventObject);
+var
+  version:string;
+begin
+  version := DSConnectEventObject.ConnectProperties.Values['version'];
+  if version='' then
+      raise Exception.Create('拒绝此客户端版本,请更新程序')
+  else
+  begin
+     if strtoint(version)<1 then
+        raise Exception.Create('客户端版本太低,请更新程序');
+  end;
+end;
+
 procedure TServerContainer1.DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
 begin
-  Log := TServerLogThread.Create;
-  Log.AddLog('username:' + DSPrepareEventObject.UserName);
-  Log.AddLog('ip:' + DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
-  Log.AddLog('exect:' + DSPrepareEventObject.MethodAlias); //Log调用方法
-  Log.start;
+  if DSPrepareEventObject.MethodAlias.Contains('TServerMethods') then
+  begin
+    Log := TServerLogThread.Create;
+    Log.AddLog('username:' + DSPrepareEventObject.UserName);
+    Log.AddLog('ip:' + DSPrepareEventObject.ServerConnectionHandler.Channel.ChannelInfo.ClientInfo.IpAddress);
+    Log.AddLog('exect:' + DSPrepareEventObject.MethodAlias); //Log调用方法
+    Log.start;
+  end;
 end;
 
 procedure TServerContainer1.DSServerClass1GetClass(DSServerClass: TDSServerClass; var PersistentClass: TPersistentClass);
@@ -64,7 +82,6 @@ end;
 
 procedure TServerContainer1.DataModuleCreate(Sender: TObject);
 var
-  ds:DSAdmin;
   list:TJSONArray;
 begin
   One := Tobject.create;
@@ -72,6 +89,7 @@ begin
   list:=TJSONArray.Create;
   DSServer1.GetServerMethods('',list);
   Writeln(list.ToString);
+  list.free;
 end;
 
 procedure TServerContainer1.DataModuleDestroy(Sender: TObject);

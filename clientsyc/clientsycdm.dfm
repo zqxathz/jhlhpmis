@@ -24,6 +24,7 @@ object clientsycDataModule: TclientsycDataModule
       'CommunicationIPVersion=IP_IPv4'
       'DSAuthenticationPassword=admin'
       'DSAuthenticationUser=admin')
+    BeforeConnect = SQLConnection1BeforeConnect
     Left = 336
     Top = 104
     UniqueId = '{E47C037B-B7E9-48D8-9E96-81BB9D31ED96}'

@@ -111,6 +111,7 @@
         </DCCReference>
         <DCCReference Include="Data.DBXClientResStrs.pas"/>
         <None Include="alidayu.cfg"/>
+        <None Include="connection.ini"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -157,9 +158,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="connection.ini" Configuration="Release" Class="File">
+                <DeployFile LocalName="connection.ini" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Linux64">
-                        <RemoteName>connection.ini</RemoteName>
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
