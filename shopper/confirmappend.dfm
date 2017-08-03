@@ -23,7 +23,7 @@ object confirmappendForm: TconfirmappendForm
     Height = 27
     Alignment = taCenter
     AutoSize = False
-    Caption = '%s '#27492#25163#26426#21495#22312#26412#27425#23637#20250#24050#32463#39046#21462#36807
+    Caption = '%s '#27492#25163#26426#21495#22312#26412#27425#23637#20250#24050#32463#21442#19982#36807#27963#21160
   end
   object Label2: TLabel
     Left = 88
@@ -32,14 +32,14 @@ object confirmappendForm: TconfirmappendForm
     Height = 27
     Alignment = taCenter
     AutoSize = False
-    Caption = #39046#21462#26085#26399#20026':%s'
+    Caption = #21442#19982#26085#26399#20026':%s'
   end
   object CheckBox1: TCheckBox
     Left = 152
     Top = 82
     Width = 201
     Height = 25
-    Caption = #26159#21542#35201#32487#32493#39046#21462'?'
+    Caption = #26159#21542#35201#20877#27425#21442#19982'?'
     TabOrder = 0
     OnClick = CheckBox1Click
   end

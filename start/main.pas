@@ -76,7 +76,8 @@ var
   dummy: dword;
   v1, v2, v3, v4: word;
 begin
-  verinfosize := getfileversioninfosize(pchar(paramstr(0)), dummy);
+
+  verinfosize := getfileversioninfosize(pchar(Paramstr(0)), dummy);
   if verinfosize = 0 then
   begin
     dummy := getlasterror;
@@ -119,7 +120,7 @@ begin
   begin
     bplshopperframe := Tbplshopperframe.Create(menutabsheet);
     bplshopperframe.Name := 'shopperinputer';
-    bplshopperframe.inputtype := itquick;
+    bplshopperframe.inputtype := itnormal;
     bplshopperframe.Align := alClient;
   end;
 

@@ -89,6 +89,8 @@ object bplshopperframe: Tbplshopperframe
         Caption = #39038#23458#26469#28304
         DataBinding.FieldName = 'sid'
         PropertiesClassName = 'TcxLookupComboBoxProperties'
+        Properties.DropDownListStyle = lsFixedList
+        Properties.ImmediatePost = True
         Properties.KeyFieldNames = 'id'
         Properties.ListColumns = <
           item
@@ -96,6 +98,8 @@ object bplshopperframe: Tbplshopperframe
           end>
         Properties.ListOptions.ShowHeader = False
         Properties.ListSource = shoppersoureceds
+        Properties.OnCloseUp = shoppersourcecxLookupComboBoxPropertiesCloseUp
+        Properties.OnPopup = shoppersourcecxLookupComboBoxPropertiesPopup
         Width = 89
       end
       object cxGrid1DBTableView1name: TcxGridDBColumn
@@ -314,6 +318,7 @@ object bplshopperframe: Tbplshopperframe
       Height = 30
       Align = alRight
       ParentShowHint = False
+      Visible = False
       PartsComplete = 0
       Percent = 0
       ShowPercent = True
@@ -326,6 +331,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 78
       Height = 30
       Align = alRight
+      Visible = False
       Alignment = taRightJustify
       AutoSize = True
       Caption = #27491#22312#23548#20986':'
@@ -439,6 +445,8 @@ object bplshopperframe: Tbplshopperframe
       Properties.ListOptions.SyncMode = True
       Properties.ListSource = shoppersoureceds
       Properties.OnChange = shoppersourcecxLookupComboBoxPropertiesChange
+      Properties.OnCloseUp = shoppersourcecxLookupComboBoxPropertiesCloseUp
+      Properties.OnPopup = shoppersourcecxLookupComboBoxPropertiesPopup
       TabOrder = 15
       Width = 209
     end
@@ -635,7 +643,7 @@ object bplshopperframe: Tbplshopperframe
       TabStop = False
       OnClick = restButtonClick
     end
-    object Edit1: TEdit
+    object goodsEdit: TEdit
       Left = 100
       Top = 170
       Width = 653

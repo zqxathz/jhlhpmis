@@ -123,7 +123,7 @@ type
     RzStatusPane3: TRzStatusPane;
     updateareaallbutton: TButton;
     Label1: TLabel;
-    Edit1: TEdit;
+    goodsEdit: TEdit;
     cxGrid1DBTableView1goods: TcxGridDBColumn;
     cxGrid1DBTableView1mod: TcxGridDBColumn;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
@@ -149,8 +149,11 @@ type
     procedure Splitter1CanResize(Sender: TObject; var NewSize: Integer;
       var Accept: Boolean);
     procedure shoppersourcecxLookupComboBoxPropertiesChange(Sender: TObject);
+    procedure shoppersourcecxLookupComboBoxPropertiesPopup(Sender: TObject);
+    procedure shoppersourcecxLookupComboBoxPropertiesCloseUp(Sender: TObject);
   private
     { Private declarations }
+    Recordmod:integer;
     procedure CxGridToExcel(AcxGrid: TcxGrid);
     procedure Resetform;
     procedure LoadExcel;
@@ -248,68 +251,72 @@ begin
   shopperdatamod.shopperfdquery.DisableControls;
   shopperdatamod.shopperfdquery.CachedUpdates := true;
   try
-    for i := XLSReadWriteII51.Sheets[0].FirstRow + 1 to XLSReadWriteII51.Sheets
-      [0].LastRow do
-    begin
-      shopperdatamod.shopperfdquery.Append;
-      with shopperdatamod.shopperfdquery do
+    try
+      for i := XLSReadWriteII51.Sheets[0].FirstRow + 1 to XLSReadWriteII51.Sheets
+        [0].LastRow do
       begin
-        FieldValues['eid'] := shopperdatamod.expofdquery.FieldValues['id'];
-        FieldValues['gid'] := 0;
-        FieldValues['sid'] := shopperdatamod.shoppersourcefdquery.
-          FieldValues['id'];
-        FieldValues['name'] := XLSReadWriteII51.Sheets[0].asstring[1, i];
-        sexint := 0;
-        if XLSReadWriteII51.Sheets[0].asstring[2, i] = '先生' then
-          sexint := 1
-        else if XLSReadWriteII51.Sheets[0].asstring[2, i] = '女士' then
-          sexint := 2;
+        shopperdatamod.shopperfdquery.Append;
+        with shopperdatamod.shopperfdquery do
+        begin
+          FieldValues['eid'] := shopperdatamod.expofdquery.FieldValues['id'];
+          FieldValues['gid'] := 0;
+          FieldValues['sid'] := shopperdatamod.shoppersourcefdquery.
+            FieldValues['id'];
+          FieldValues['name'] := XLSReadWriteII51.Sheets[0].asstring[1, i];
+          sexint := 0;
+          if XLSReadWriteII51.Sheets[0].asstring[2, i] = '先生' then
+            sexint := 1
+          else if XLSReadWriteII51.Sheets[0].asstring[2, i] = '女士' then
+            sexint := 2;
 
-        FieldValues['sex'] := sexint;
-        FieldValues['weixin'] := '';
-        FieldValues['phone'] := XLSReadWriteII51.Sheets[0].asstring[3, i];
-        FieldValues['email'] := '';
-        FieldValues['passport'] := '';
-        FieldValues['adcode'] := shopperdatamod.expofdquery.FieldValues
-          ['adcode'];
-        FieldValues['addr'] := '';
-        FieldValues['expiry_time'] := 0;
+          FieldValues['sex'] := sexint;
+          FieldValues['weixin'] := '';
+          FieldValues['phone'] := XLSReadWriteII51.Sheets[0].asstring[3, i];
+          FieldValues['email'] := '';
+          FieldValues['passport'] := '';
+          FieldValues['adcode'] := shopperdatamod.expofdquery.FieldValues
+            ['adcode'];
+          FieldValues['addr'] := '';
+          FieldValues['expiry_time'] := 0;
 
-        // ShowMessage(XLSReadWriteII51.Sheets[0].AsString[5,i]);
+          // ShowMessage(XLSReadWriteII51.Sheets[0].AsString[5,i]);
 
-        FieldValues['create_time'] :=
-          DateTimeToUnix(VarToDateTime(XLSReadWriteII51.Sheets[0]
-          .asstring[5, i]));
-        FieldValues['update_time'] :=
-          DateTimeToUnix(VarToDateTime(XLSReadWriteII51.Sheets[0]
-          .asstring[5, i]));
-        FieldValues['birthday_time'] := 0;
-        FieldValues['chinese_birthday'] := 0;
-        FieldValues['lastshop_time'] := 0;
-        FieldValues['trash'] := 0;
-        FieldValues['status'] := 1;
-        FieldValues['createtime'] :=
-          VarToDateTime(XLSReadWriteII51.Sheets[0].asstring[5, i]);
-        FieldValues['updatetime'] :=
-          VarToDateTime(XLSReadWriteII51.Sheets[0].asstring[5, i]);
-        FieldValues['area'] := RzStatusPane1.Caption;
+          FieldValues['create_time'] :=
+            DateTimeToUnix(VarToDateTime(XLSReadWriteII51.Sheets[0]
+            .asstring[5, i]));
+          FieldValues['update_time'] :=
+            DateTimeToUnix(VarToDateTime(XLSReadWriteII51.Sheets[0]
+            .asstring[5, i]));
+          FieldValues['birthday_time'] := 0;
+          FieldValues['chinese_birthday'] := 0;
+          FieldValues['lastshop_time'] := 0;
+          FieldValues['trash'] := 0;
+          FieldValues['status'] := 1;
+          FieldValues['createtime'] :=
+            VarToDateTime(XLSReadWriteII51.Sheets[0].asstring[5, i]);
+          FieldValues['updatetime'] :=
+            VarToDateTime(XLSReadWriteII51.Sheets[0].asstring[5, i]);
+          FieldValues['area'] := RzStatusPane1.Caption;
+        end;
+        shopperdatamod.shopperfdquery.Post;
       end;
-      shopperdatamod.shopperfdquery.Post;
-    end;
-    shopperdatamod.shopperfdquery.OnUpdateRecord :=
-      shopperdatamod.shopperfdqueryUpdateRecord;
+      shopperdatamod.shopperfdquery.OnUpdateRecord :=
+        shopperdatamod.shopperfdqueryUpdateRecord;
 
-    shopperdatamod.shopperfdquery.Connection.StartTransaction;
+      shopperdatamod.shopperfdquery.Connection.StartTransaction;
 
-    ierror := shopperdatamod.shopperfdquery.ApplyUpdates;
-    if ierror = 0 then
-    begin
-      shopperdatamod.shopperfdquery.Connection.Commit;
-      shopperdatamod.shopperfdquery.CommitUpdates;
-    end
-    else
-    begin
-      shopperdatamod.shopperfdquery.Connection.Rollback;
+      ierror := shopperdatamod.shopperfdquery.ApplyUpdates;
+      if ierror = 0 then
+      begin
+        shopperdatamod.shopperfdquery.Connection.Commit;
+        shopperdatamod.shopperfdquery.CommitUpdates;
+      end
+      else
+      begin
+        shopperdatamod.shopperfdquery.Connection.Rollback;
+        ShowMessage('写入到数据库失败,EXCEL的内容必须符合格式');
+      end;
+    except
       ShowMessage('写入到数据库失败,EXCEL的内容必须符合格式');
     end;
   finally
@@ -326,7 +333,6 @@ begin
   expocxLookupComboBox.ItemIndex := 0;
   shoppersourcecxLookupComboBox.ItemIndex := 0;
   sexcxLookupComboBox.ItemIndex := 0;
-  RzStatusBar1.Visible := true;
 end;
 
 // PHONE编辑框中回车提交数据
@@ -358,18 +364,19 @@ end;
 // 重置当前所有输入组件,并把光标放在手机号编辑框
 procedure Tbplshopperframe.Resetform;
 begin
-  phonecxMaskEdit.Text := '';
+  phonecxMaskEdit.Clear;
   phonecxMaskEdit.SetFocus;
-  nameedit.Text := '';
+  nameedit.Clear;
   sexcxLookupComboBox.ItemIndex := 0;
-  weixinedit.Text := '';
-  emailEdit.Text := '';
-  passportEdit.Text := '';
+  weixinedit.Clear;
+  emailEdit.Clear;
+  passportEdit.Clear;
   birtydaycxDateEdit.Clear;
   pastcxDateEdit.Clear;
   // lastshopcxDateEdit.Text := '';
   lastshopcxDateEdit.Clear;
-  addrEdit.Text := '';
+  addrEdit.Clear;
+  goodsEdit.Clear;
   chinesebdCheckBox.Checked := false;
 end;
 
@@ -381,7 +388,23 @@ end;
 
 procedure Tbplshopperframe.shoppersourcecxLookupComboBoxPropertiesChange(Sender: TObject);
 begin
-  showmessage(shopperdatamod.shoppersourcefdquery.FieldByName('mod').AsString);
+  //showmessage(shopperdatamod.shoppersourcefdquery.FieldByName('mod').AsString);
+  Recordmod:=0;
+  Recordmod:=1;
+end;
+
+procedure Tbplshopperframe.shoppersourcecxLookupComboBoxPropertiesCloseUp(Sender: TObject);
+begin
+  shopperdatamod.shoppersourcefdquery.Filtered:=false;
+  cxGrid1DBTableView1sid.Properties.LockUpdate(false);
+  shoppersourcecxLookupComboBox.Properties.LockUpdate(false);
+end;
+
+procedure Tbplshopperframe.shoppersourcecxLookupComboBoxPropertiesPopup(Sender: TObject);
+begin
+   cxGrid1DBTableView1sid.Properties.LockUpdate(true);
+   shoppersourcecxLookupComboBox.Properties.LockUpdate(true);
+   shopperdatamod.shoppersourcefdquery.Filtered:=true;
 end;
 
 procedure Tbplshopperframe.Splitter1CanResize(Sender: TObject;
@@ -587,8 +610,8 @@ begin
   cxPropertiesStore1.Active := true;
   cxPropertiesStore1.RestoreFrom; // 读取保存的一些组件数据
   RzProgressStatus1.Visible := false;
-  RzStatusPane3.Visible := false;
   RzStatusBar1.Top := 9999; // 防止PANEL跑到StatusBar下面去
+  Recordmod:=0;
 end;
 
 // 在Grid里按Ctrl+C复制当前格子的文本内容

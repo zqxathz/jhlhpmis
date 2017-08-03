@@ -55,7 +55,6 @@ var
   n:integer;
 begin
   errormsg:='';
-
   version := DSConnectEventObject.ConnectProperties.Values['version'];
   if (version='') or (not trystrtoint(version,n)) then
     errormsg:='客户端版本不兼容,请检查程序'

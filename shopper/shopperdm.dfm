@@ -176,11 +176,12 @@ object shopperdatamod: Tshopperdatamod
     end
   end
   object shoppersourcefdquery: TFDQuery
+    Filter = 'status=1'
     FetchOptions.AssignedValues = [evUnidirectional, evCursorKind, evLiveWindowParanoic, evLiveWindowFastFirst]
     SQL.Strings = (
       
-        'select * from jhlh_pmis_shopper_sourcetype where status=1 order ' +
-        'by jhlh_pmis_shopper_sourcetype.sort')
+        'select * from jhlh_pmis_shopper_sourcetype order by jhlh_pmis_sh' +
+        'opper_sourcetype.sort')
     Left = 96
     Top = 96
     object shoppersourcefdqueryid: TIntegerField
@@ -233,7 +234,7 @@ object shopperdatamod: Tshopperdatamod
     Left = 408
     Top = 64
     Content = {
-      414442530F0056590D010000FF00010001FF02FF0304001A0000007300650078
+      414442530F00754A0D010000FF00010001FF02FF0304001A0000007300650078
       00660064006D0065006D007400610062006C00650005000A0000005400610062
       006C006500060000000000070000080032000000090000FF0AFF0B0400040000
       0069006400050004000000690064000C00010000000E000D000F000110000111
@@ -425,7 +426,9 @@ object shopperdatamod: Tshopperdatamod
     CommandKind = skUpdate
     CommandText.Strings = (
       'update jhlh_pmis_shopper set trash=1'
-      'where phone=:phone and id<>:id and eid=:eid and trash=0')
+      
+        'where phone=:phone and id<>:id and eid=:eid and trash=0 and mod=' +
+        '0')
     ParamData = <
       item
         Name = 'PHONE'
@@ -440,7 +443,7 @@ object shopperdatamod: Tshopperdatamod
         ParamType = ptInput
       end>
     Left = 88
-    Top = 248
+    Top = 240
   end
   object softremoveFDCommand: TFDCommand
     UpdateOptions.AssignedValues = [uvLockMode]
