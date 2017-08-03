@@ -51,16 +51,20 @@ uses
 
 procedure TServerContainer1.DSServer1Connect(DSConnectEventObject: TDSConnectEventObject);
 var
-  version:string;
+  version,errormsg:string;
+  n:integer;
 begin
+  errormsg:='';
+
   version := DSConnectEventObject.ConnectProperties.Values['version'];
-  if version='' then
-      raise Exception.Create('拒绝此客户端版本,请更新程序')
+  if (version='') or (not trystrtoint(version,n)) then
+    errormsg:='客户端版本不兼容,请检查程序'
   else
-  begin
-     if strtoint(version)<1 then
-        raise Exception.Create('客户端版本太低,请更新程序');
-  end;
+  if strtoint(version)<1 then
+    errormsg:='客户端版本太低,请更新程序';
+  if not errormsg.IsEmpty then
+    raise Exception.Create(errormsg);
+
 end;
 
 procedure TServerContainer1.DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);

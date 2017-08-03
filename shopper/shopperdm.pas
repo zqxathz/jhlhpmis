@@ -86,6 +86,9 @@ type
     validateFdCommand: TFDCommand;
     updateshopperFDCommand: TFDCommand;
     softremoveFDCommand: TFDCommand;
+    shopperfdquerymod: TIntegerField;
+    shopperfdquerygoods: TWideStringField;
+    shoppersourcefdquerymod: TWideStringField;
     procedure shopperfdqueryAfterGetRecord(DataSet: TFDDataSet);
     procedure shopperfdquerycreatetimeChange(Sender: TField);
     procedure shopperfdqueryexpirytimeChange(Sender: TField);
@@ -188,6 +191,7 @@ begin
     softremoveFDCommand.Connection := nil;
     ClearPhonetoList;
   end;
+  Application.Terminate
 
 end;
 

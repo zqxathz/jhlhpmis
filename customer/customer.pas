@@ -452,7 +452,7 @@ begin
   for I := 0 to cxGrid1DBTableView1.ViewData.RecordCount-1 do
   begin
     if cxGrid1DBTableView1.ViewData.Records[i].Values[3]=DisplayValue then
-       if Application.MessageBox( '此展位号已经存在,是否确定要继续添加?', '展位号已存在', MB_OKCANCEL +
+       if Application.MessageBox( '此展位号已经存在,是否确定要修改?', '展位号已存在', MB_OKCANCEL +
              MB_ICONQUESTION + MB_DEFBUTTON2 + MB_TOPMOST) = IDCANCEL then
              begin
                Error:=true;

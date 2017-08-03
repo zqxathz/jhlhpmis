@@ -168,11 +168,19 @@ object shopperdatamod: Tshopperdatamod
       FieldKind = fkInternalCalc
       FieldName = 'area'
     end
+    object shopperfdquerygoods: TWideStringField
+      FieldName = 'goods'
+    end
+    object shopperfdquerymod: TIntegerField
+      FieldName = 'mod'
+    end
   end
   object shoppersourcefdquery: TFDQuery
     FetchOptions.AssignedValues = [evUnidirectional, evCursorKind, evLiveWindowParanoic, evLiveWindowFastFirst]
     SQL.Strings = (
-      'select * from jhlh_pmis_shopper_sourcetype where status=1')
+      
+        'select * from jhlh_pmis_shopper_sourcetype where status=1 order ' +
+        'by jhlh_pmis_shopper_sourcetype.sort')
     Left = 96
     Top = 96
     object shoppersourcefdqueryid: TIntegerField
@@ -195,6 +203,9 @@ object shopperdatamod: Tshopperdatamod
       FieldName = 'status'
       Origin = 'status'
       Required = True
+    end
+    object shoppersourcefdquerymod: TWideStringField
+      FieldName = 'mod'
     end
   end
   object sexfdmemtable: TFDMemTable
@@ -222,7 +233,7 @@ object shopperdatamod: Tshopperdatamod
     Left = 408
     Top = 64
     Content = {
-      414442530F00BF390D010000FF00010001FF02FF0304001A0000007300650078
+      414442530F0056590D010000FF00010001FF02FF0304001A0000007300650078
       00660064006D0065006D007400610062006C00650005000A0000005400610062
       006C006500060000000000070000080032000000090000FF0AFF0B0400040000
       0069006400050004000000690064000C00010000000E000D000F000110000111

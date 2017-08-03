@@ -50,6 +50,8 @@ object bplshopperframe: Tbplshopperframe
       OptionsBehavior.CopyRecordsToClipboard = False
       OptionsBehavior.ImmediateEditor = False
       OptionsBehavior.CopyPreviewToClipboard = False
+      OptionsCustomize.ColumnHiding = True
+      OptionsCustomize.ColumnsQuickCustomization = True
       OptionsData.Deleting = False
       OptionsData.DeletingConfirmation = False
       OptionsView.CellAutoHeight = True
@@ -78,6 +80,11 @@ object bplshopperframe: Tbplshopperframe
         Visible = False
         VisibleForCustomization = False
       end
+      object cxGrid1DBTableView1cardcode: TcxGridDBColumn
+        DataBinding.FieldName = 'cardcode'
+        Visible = False
+        VisibleForCustomization = False
+      end
       object cxGrid1DBTableView1sid: TcxGridDBColumn
         Caption = #39038#23458#26469#28304
         DataBinding.FieldName = 'sid'
@@ -89,18 +96,11 @@ object bplshopperframe: Tbplshopperframe
           end>
         Properties.ListOptions.ShowHeader = False
         Properties.ListSource = shoppersoureceds
-        VisibleForCustomization = False
         Width = 89
-      end
-      object cxGrid1DBTableView1cardcode: TcxGridDBColumn
-        DataBinding.FieldName = 'cardcode'
-        Visible = False
-        VisibleForCustomization = False
       end
       object cxGrid1DBTableView1name: TcxGridDBColumn
         Caption = #22995#21517
         DataBinding.FieldName = 'name'
-        VisibleForCustomization = False
         Width = 73
       end
       object cxGrid1DBTableView1sex: TcxGridDBColumn
@@ -115,13 +115,11 @@ object bplshopperframe: Tbplshopperframe
           end>
         Properties.ListOptions.ShowHeader = False
         Properties.ListSource = sexds
-        VisibleForCustomization = False
         Width = 56
       end
       object cxGrid1DBTableView1weixin: TcxGridDBColumn
         Caption = #24494#20449#21495
         DataBinding.FieldName = 'weixin'
-        VisibleForCustomization = False
         Width = 106
       end
       object cxGrid1DBTableView1phone: TcxGridDBColumn
@@ -132,25 +130,21 @@ object bplshopperframe: Tbplshopperframe
         Properties.EditMask = '\d+'
         Properties.MaxLength = 0
         Properties.OnValidate = cxGrid1DBTableView1phonePropertiesValidate
-        VisibleForCustomization = False
         Width = 109
       end
       object cxGrid1DBTableView1email: TcxGridDBColumn
         Caption = #30005#23376#37038#31665
         DataBinding.FieldName = 'email'
-        VisibleForCustomization = False
         Width = 159
       end
       object cxGrid1DBTableView1passport: TcxGridDBColumn
         Caption = #36523#20221#35777
         DataBinding.FieldName = 'passport'
-        VisibleForCustomization = False
       end
       object cxGrid1DBTableView1birthday_time: TcxGridDBColumn
         Caption = #29983#26085
         DataBinding.FieldName = 'birthdaytime'
         RepositoryItem = cxEditRepository1DateItem1
-        VisibleForCustomization = False
         Width = 100
       end
       object cxGrid1DBTableView1chinese_birthday: TcxGridDBColumn
@@ -159,7 +153,6 @@ object bplshopperframe: Tbplshopperframe
         PropertiesClassName = 'TcxCheckBoxProperties'
         Properties.ValueChecked = 1
         Properties.ValueUnchecked = 0
-        VisibleForCustomization = False
         Width = 61
       end
       object cxGrid1DBTableView1adcode: TcxGridDBColumn
@@ -171,28 +164,29 @@ object bplshopperframe: Tbplshopperframe
             Default = True
             Kind = bkEllipsis
           end>
-        VisibleForCustomization = False
         VisibleForEditForm = bTrue
         Width = 140
       end
       object cxGrid1DBTableView1addr: TcxGridDBColumn
         Caption = #35814#32454#22320#22336
         DataBinding.FieldName = 'addr'
-        VisibleForCustomization = False
         Width = 162
       end
       object cxGrid1DBTableView1expiry_time: TcxGridDBColumn
         Caption = #36807#26399#26085#26399
         DataBinding.FieldName = 'expirytime'
         RepositoryItem = cxEditRepository1DateItem1
-        VisibleForCustomization = False
         Width = 100
+      end
+      object cxGrid1DBTableView1goods: TcxGridDBColumn
+        Caption = #36141#20080#21830#21697
+        DataBinding.FieldName = 'goods'
+        Width = 230
       end
       object cxGrid1DBTableView1lastshop_time: TcxGridDBColumn
         Caption = #26368#21518#28040#36153#26085#26399
         DataBinding.FieldName = 'lastshoptime'
         RepositoryItem = cxEditRepository1DateItem2
-        VisibleForCustomization = False
         Width = 132
       end
       object cxGrid1DBTableView1create_time: TcxGridDBColumn
@@ -200,7 +194,6 @@ object bplshopperframe: Tbplshopperframe
         DataBinding.FieldName = 'createtime'
         RepositoryItem = cxEditRepository1DateItem1
         Options.Editing = False
-        VisibleForCustomization = False
         Width = 100
       end
       object cxGrid1DBTableView1update_time: TcxGridDBColumn
@@ -208,7 +201,6 @@ object bplshopperframe: Tbplshopperframe
         DataBinding.FieldName = 'updatetime'
         RepositoryItem = cxEditRepository1DateItem1
         Options.Editing = False
-        VisibleForCustomization = False
         Width = 100
       end
       object cxGrid1DBTableView1trash: TcxGridDBColumn
@@ -218,6 +210,11 @@ object bplshopperframe: Tbplshopperframe
       end
       object cxGrid1DBTableView1status: TcxGridDBColumn
         DataBinding.FieldName = 'status'
+        Visible = False
+        VisibleForCustomization = False
+      end
+      object cxGrid1DBTableView1mod: TcxGridDBColumn
+        DataBinding.FieldName = 'mod'
         Visible = False
         VisibleForCustomization = False
       end
@@ -370,6 +367,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 85
       Height = 27
       Caption = #36141#20080#21830#21697':'
+      Visible = False
     end
     object expocxLookupComboBox: TcxLookupComboBox
       Left = 100
@@ -420,7 +418,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 105
       Height = 35
       Caption = #28155#21152
-      TabOrder = 12
+      TabOrder = 13
       OnClick = applyButtonClick
     end
     object shoppersourcecxLookupComboBox: TcxLookupComboBox
@@ -440,7 +438,8 @@ object bplshopperframe: Tbplshopperframe
       Properties.ListOptions.ShowHeader = False
       Properties.ListOptions.SyncMode = True
       Properties.ListSource = shoppersoureceds
-      TabOrder = 14
+      Properties.OnChange = shoppersourcecxLookupComboBoxPropertiesChange
+      TabOrder = 15
       Width = 209
     end
     object StaticText1: TStaticText
@@ -449,7 +448,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #36873#25321#23637#20250':'
-      TabOrder = 15
+      TabOrder = 16
     end
     object StaticText2: TStaticText
       Left = 862
@@ -457,7 +456,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #39038#23458#26469#28304':'
-      TabOrder = 16
+      TabOrder = 17
     end
     object StaticText3: TStaticText
       Left = 9
@@ -465,7 +464,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #25163#26426#21495#30721':'
-      TabOrder = 17
+      TabOrder = 18
     end
     object StaticText4: TStaticText
       Left = 290
@@ -473,7 +472,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 49
       Height = 31
       Caption = #22995#21517':'
-      TabOrder = 18
+      TabOrder = 19
     end
     object nameedit: TEdit
       Left = 345
@@ -488,7 +487,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 49
       Height = 31
       Caption = #24615#21035':'
-      TabOrder = 19
+      TabOrder = 20
     end
     object sexcxLookupComboBox: TcxLookupComboBox
       Left = 539
@@ -519,7 +518,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 49
       Height = 31
       Caption = #24494#20449':'
-      TabOrder = 20
+      TabOrder = 21
     end
     object StaticText7: TStaticText
       Left = 844
@@ -527,7 +526,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 49
       Height = 31
       Caption = #37038#31665':'
-      TabOrder = 21
+      TabOrder = 22
     end
     object emailEdit: TEdit
       Left = 896
@@ -542,7 +541,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #36523#20221#35777#21495':'
-      TabOrder = 22
+      TabOrder = 23
     end
     object passportEdit: TEdit
       Left = 100
@@ -557,7 +556,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 49
       Height = 31
       Caption = #29983#26085':'
-      TabOrder = 23
+      TabOrder = 24
     end
     object birtydaycxDateEdit: TcxDateEdit
       Left = 395
@@ -584,7 +583,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #36807#26399#26085#26399':'
-      TabOrder = 24
+      TabOrder = 25
     end
     object pastcxDateEdit: TcxDateEdit
       Left = 716
@@ -601,7 +600,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #26368#21518#28040#36153':'
-      TabOrder = 25
+      TabOrder = 26
     end
     object lastshopcxDateEdit: TcxDateEdit
       Left = 946
@@ -617,7 +616,7 @@ object bplshopperframe: Tbplshopperframe
       Width = 89
       Height = 31
       Caption = #35814#32454#22320#22336':'
-      TabOrder = 26
+      TabOrder = 27
     end
     object addrEdit: TEdit
       Left = 100
@@ -632,16 +631,17 @@ object bplshopperframe: Tbplshopperframe
       Width = 106
       Height = 35
       Caption = #37325#32622
-      TabOrder = 13
+      TabOrder = 14
       TabStop = False
       OnClick = restButtonClick
     end
     object Edit1: TEdit
       Left = 100
       Top = 170
-      Width = 829
+      Width = 653
       Height = 35
-      TabOrder = 27
+      TabOrder = 12
+      Visible = False
     end
   end
   object shopperds: TDataSource

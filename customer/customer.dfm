@@ -29,8 +29,6 @@ object bplCustomerFrame: TbplCustomerFrame
     PopupMenu = PopupMenu1
     TabOrder = 0
     TabStop = False
-    ExplicitWidth = 320
-    ExplicitHeight = 259
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnDblClick = cxGrid1DBTableView1DblClick
       OnKeyDown = cxGrid1DBTableView1KeyDown
@@ -71,8 +69,6 @@ object bplCustomerFrame: TbplCustomerFrame
     ParentDoubleBuffered = False
     ShowCaption = False
     TabOrder = 1
-    ExplicitTop = -75
-    ExplicitWidth = 320
     DesignSize = (
       1150
       315)
@@ -430,7 +426,6 @@ object bplCustomerFrame: TbplCustomerFrame
       ParentFont = False
       TabOrder = 36
       Visible = False
-      ExplicitWidth = 320
       object RzClockStatus1: TRzClockStatus
         Left = -1221
         Top = 0
@@ -455,9 +450,9 @@ object bplCustomerFrame: TbplCustomerFrame
         ExplicitLeft = -3724
       end
       object RzStatusPane1: TRzStatusPane
-        Left = -4011
+        Left = -3806
         Top = 0
-        Width = 283
+        Width = 78
         Height = 30
         Align = alRight
         Font.Charset = GB2312_CHARSET
@@ -469,7 +464,7 @@ object bplCustomerFrame: TbplCustomerFrame
         Alignment = taRightJustify
         AutoSize = True
         Caption = #27491#22312#23548#20986':'
-        ExplicitLeft = -4043
+        ExplicitLeft = -4011
       end
     end
   end

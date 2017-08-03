@@ -18,7 +18,7 @@ uses
   bplframe, Vcl.Forms;
 
 type
-  TInputType = (itquick, itgife);
+  TInputType = (itnormal, itgife);
 
   Tbplshopperframe = class(TFrame, IcxExportProgress)
     cxGrid1DBTableView1: TcxGridDBTableView;
@@ -124,6 +124,8 @@ type
     updateareaallbutton: TButton;
     Label1: TLabel;
     Edit1: TEdit;
+    cxGrid1DBTableView1goods: TcxGridDBColumn;
+    cxGrid1DBTableView1mod: TcxGridDBColumn;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure updateareaallbuttonClick(Sender: TObject);
     procedure applyButtonClick(Sender: TObject);
@@ -146,6 +148,7 @@ type
     procedure Splitter1Moved(Sender: TObject);
     procedure Splitter1CanResize(Sender: TObject; var NewSize: Integer;
       var Accept: Boolean);
+    procedure shoppersourcecxLookupComboBoxPropertiesChange(Sender: TObject);
   private
     { Private declarations }
     procedure CxGridToExcel(AcxGrid: TcxGrid);
@@ -376,6 +379,11 @@ begin
   Resetform;
 end;
 
+procedure Tbplshopperframe.shoppersourcecxLookupComboBoxPropertiesChange(Sender: TObject);
+begin
+  showmessage(shopperdatamod.shoppersourcefdquery.FieldByName('mod').AsString);
+end;
+
 procedure Tbplshopperframe.Splitter1CanResize(Sender: TObject;
   var NewSize: Integer; var Accept: Boolean);
 begin
@@ -415,6 +423,93 @@ var
   Caption: TCaption;
   chinesebd: Integer;
   validatedate: string;
+  procedure AppendData(updatetype:integer=0);
+  begin
+    // 对Dataset添加数据
+      try
+        try
+          with shopperdatamod do
+          begin
+            shopperfdquery.DisableControls;
+            shopperfdquery.Append;
+            with shopperfdquery do
+            begin
+              FieldValues['eid'] := expofdquery.FieldValues['id'];
+              FieldValues['gid'] := 1;
+              FieldValues['sid'] := shoppersourcefdquery.FieldValues['id'];
+              FieldValues['name'] := Trim(nameedit.Text);
+              FieldValues['sex'] := sexcxLookupComboBox.ItemIndex;
+              FieldValues['weixin'] := Trim(weixinedit.Text);
+              FieldValues['phone'] := Trim(phonecxMaskEdit.Text);
+              FieldValues['email'] := Trim(emailEdit.Text);
+              FieldValues['passport'] := Trim(passportEdit.Text);
+              FieldValues['adcode'] := expofdquery.FieldValues['adcode'];
+              FieldValues['addr'] := Trim(addrEdit.Text);
+              FieldValues['create_time'] := DateTimeToUnix(IncHour(Now, -8));
+              FieldValues['update_time'] := DateTimeToUnix(IncHour(Now, -8));
+
+              if birtydaycxDateEdit.Text = '' then
+                FieldValues['birthday_time'] := 0
+              else
+              begin
+                FieldValues['birthday_time'] :=
+                  DateTimeToUnix(birtydaycxDateEdit.Date);
+                FieldValues['birthdaytime'] := birtydaycxDateEdit.Date;
+              end;
+
+              if chinesebdCheckBox.Checked then
+                chinesebd := 1
+              else
+                chinesebd := 0;
+
+              FieldValues['chinese_birthday'] := chinesebd;
+
+              if lastshopcxDateEdit.Text = '' then
+                FieldValues['lastshop_time'] := 0
+              else
+              begin
+                FieldValues['lastshop_time'] :=
+                  DateTimeToUnix(lastshopcxDateEdit.Date);
+                FieldValues['lastshoptime'] := lastshopcxDateEdit.Date;
+              end;
+
+              if pastcxDateEdit.Text = '' then
+                FieldValues['expiry_time'] := 0
+              else
+              begin
+                FieldValues['expiry_time'] := DateTimeToUnix(pastcxDateEdit.Date);
+                FieldValues['expirytime'] := pastcxDateEdit.Date;
+              end;
+
+              FieldValues['trash'] := 0;
+              FieldValues['status'] := 1;
+              FieldValues['createtime'] := Now();
+              FieldValues['updatetime'] := Now();
+              FieldValues['area'] := RzStatusPane1.Caption;
+            end;
+            shopperfdquery.Post;
+
+            { 检测库中是否已经有这个手机号,如果有全部软删除,
+              只保留当前输入的为可用 }
+            if not validatePhone(Trim(phonecxMaskEdit.Text),
+              shopperfdquery.FieldByName('id').AsInteger, 1) then
+              shopperfdquery.Refresh;
+          end;
+          Resetform;
+        except
+          on E: ESQLiteNativeException do
+          begin
+            shopperdatamod.shopperfdquery.Cancel;
+            if E.ErrorCode = 2067 then
+              ShowMessage(inttostr(E.ErrorCode))
+            else
+              raise;
+          end;
+        end;
+      finally
+        shopperdatamod.shopperfdquery.EnableControls;
+      end;
+  end;
 begin
   if Trim(phonecxMaskEdit.Text) = '' then
   begin
@@ -431,6 +526,17 @@ begin
   begin
     ShowMessage('请输入正确的手机号');
     exit;
+  end;
+
+  if (inputtype = itnormal) or (inputtype=itgife) then
+  begin
+    if shopperdatamod.shopperfdquery.Locate('phone,mod',VarArrayOf([phone,0])) then
+    begin
+      if inputtype=itnormal then
+      begin
+
+      end;
+    end;
   end;
 
   if inputtype = itgife then
@@ -452,90 +558,7 @@ begin
       end;
     end;
   end;
-  // 对Dataset添加数据
-  try
-    try
-      with shopperdatamod do
-      begin
-        shopperfdquery.DisableControls;
-        shopperfdquery.Append;
-        with shopperfdquery do
-        begin
-          FieldValues['eid'] := expofdquery.FieldValues['id'];
-          FieldValues['gid'] := 1;
-          FieldValues['sid'] := shoppersourcefdquery.FieldValues['id'];
-          FieldValues['name'] := Trim(nameedit.Text);
-          FieldValues['sex'] := sexcxLookupComboBox.ItemIndex;
-          FieldValues['weixin'] := Trim(weixinedit.Text);
-          FieldValues['phone'] := Trim(phonecxMaskEdit.Text);
-          FieldValues['email'] := Trim(emailEdit.Text);
-          FieldValues['passport'] := Trim(passportEdit.Text);
-          FieldValues['adcode'] := expofdquery.FieldValues['adcode'];
-          FieldValues['addr'] := Trim(addrEdit.Text);
-          FieldValues['create_time'] := DateTimeToUnix(IncHour(Now, -8));
-          FieldValues['update_time'] := DateTimeToUnix(IncHour(Now, -8));
 
-          if birtydaycxDateEdit.Text = '' then
-            FieldValues['birthday_time'] := 0
-          else
-          begin
-            FieldValues['birthday_time'] :=
-              DateTimeToUnix(birtydaycxDateEdit.Date);
-            FieldValues['birthdaytime'] := birtydaycxDateEdit.Date;
-          end;
-
-          if chinesebdCheckBox.Checked then
-            chinesebd := 1
-          else
-            chinesebd := 0;
-
-          FieldValues['chinese_birthday'] := chinesebd;
-
-          if lastshopcxDateEdit.Text = '' then
-            FieldValues['lastshop_time'] := 0
-          else
-          begin
-            FieldValues['lastshop_time'] :=
-              DateTimeToUnix(lastshopcxDateEdit.Date);
-            FieldValues['lastshoptime'] := lastshopcxDateEdit.Date;
-          end;
-
-          if pastcxDateEdit.Text = '' then
-            FieldValues['expiry_time'] := 0
-          else
-          begin
-            FieldValues['expiry_time'] := DateTimeToUnix(pastcxDateEdit.Date);
-            FieldValues['expirytime'] := pastcxDateEdit.Date;
-          end;
-
-          FieldValues['trash'] := 0;
-          FieldValues['status'] := 1;
-          FieldValues['createtime'] := Now();
-          FieldValues['updatetime'] := Now();
-          FieldValues['area'] := RzStatusPane1.Caption;
-        end;
-        shopperfdquery.Post;
-
-        { 检测库中是否已经有这个手机号,如果有全部软删除,
-          只保留当前输入的为可用 }
-        if not validatePhone(Trim(phonecxMaskEdit.Text),
-          shopperfdquery.FieldByName('id').AsInteger, 1) then
-          shopperfdquery.Refresh;
-      end;
-      Resetform;
-    except
-      on E: ESQLiteNativeException do
-      begin
-        shopperdatamod.shopperfdquery.Cancel;
-        if E.ErrorCode = 2067 then
-          ShowMessage(inttostr(E.ErrorCode))
-        else
-          raise;
-      end;
-    end;
-  finally
-    shopperdatamod.shopperfdquery.EnableControls;
-  end;
 end;
 
 procedure Tbplshopperframe.autowidthmenuClick(Sender: TObject);

@@ -13,6 +13,7 @@ object ServerContainer1: TServerContainer1
   object DSTCPServerTransport1: TDSTCPServerTransport
     PoolSize = 0
     Server = DSServer1
+    BufferKBSize = 1
     Filters = <
       item
         FilterId = 'ZLibCompression'
