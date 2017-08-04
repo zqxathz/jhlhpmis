@@ -67,6 +67,7 @@ object bplshopperframe: Tbplshopperframe
         HeaderAlignmentHorz = taCenter
         Options.Editing = False
         Options.Filtering = False
+        Options.Moving = False
         VisibleForCustomization = False
         Width = 51
       end
@@ -85,6 +86,17 @@ object bplshopperframe: Tbplshopperframe
         Visible = False
         VisibleForCustomization = False
       end
+      object cxGrid1DBTableView1phone: TcxGridDBColumn
+        Caption = #25163#26426#21495
+        DataBinding.FieldName = 'phone'
+        PropertiesClassName = 'TcxMaskEditProperties'
+        Properties.MaskKind = emkRegExprEx
+        Properties.EditMask = '([1])\d+'
+        Properties.MaxLength = 0
+        Properties.OnValidate = cxGrid1DBTableView1phonePropertiesValidate
+        Options.Moving = False
+        Width = 123
+      end
       object cxGrid1DBTableView1sid: TcxGridDBColumn
         Caption = #39038#23458#26469#28304
         DataBinding.FieldName = 'sid'
@@ -99,6 +111,7 @@ object bplshopperframe: Tbplshopperframe
         Properties.ListOptions.ShowHeader = False
         Properties.ListSource = shoppersoureceds
         Properties.OnCloseUp = shoppersourcecxLookupComboBoxPropertiesCloseUp
+        Properties.OnEditValueChanged = cxGrid1DBTableView1sidPropertiesEditValueChanged
         Properties.OnPopup = shoppersourcecxLookupComboBoxPropertiesPopup
         Width = 89
       end
@@ -125,16 +138,6 @@ object bplshopperframe: Tbplshopperframe
         Caption = #24494#20449#21495
         DataBinding.FieldName = 'weixin'
         Width = 106
-      end
-      object cxGrid1DBTableView1phone: TcxGridDBColumn
-        Caption = #25163#26426#21495
-        DataBinding.FieldName = 'phone'
-        PropertiesClassName = 'TcxMaskEditProperties'
-        Properties.MaskKind = emkRegExprEx
-        Properties.EditMask = '\d+'
-        Properties.MaxLength = 0
-        Properties.OnValidate = cxGrid1DBTableView1phonePropertiesValidate
-        Width = 109
       end
       object cxGrid1DBTableView1email: TcxGridDBColumn
         Caption = #30005#23376#37038#31665
@@ -219,7 +222,6 @@ object bplshopperframe: Tbplshopperframe
       end
       object cxGrid1DBTableView1mod: TcxGridDBColumn
         DataBinding.FieldName = 'mod'
-        Visible = False
         VisibleForCustomization = False
       end
     end

@@ -4,20 +4,22 @@ program server;
 
 uses
   System.SysUtils,
-  ServerMethodsUnit in 'ServerMethodsUnit.pas' {ServerMethods: TDSServerModule},
   ServerConst in 'ServerConst.pas',
-  ServerContainerUnit in 'ServerContainerUnit.pas' {ServerContainer1: TDataModule},
+  ServerMethodsUnit
+  in 'ServerMethodsUnit.pas' {ServerMethods: TDSServerModule} ,
+  ServerContainerUnit
+    in 'ServerContainerUnit.pas' {ServerContainer1: TDataModule} ,
   Alidayu in 'Alidayu.pas',
-  Serverdm in 'Serverdm.pas' {ServerDataModule: TDataModule},
+  Serverdm in 'Serverdm.pas' {ServerDataModule: TDataModule} ,
   Data.DBXClientResStrs in 'Data.DBXClientResStrs.pas';
 
 begin
-  //ReportMemoryLeaksOnShutdown := true;
+  // ReportMemoryLeaksOnShutdown := true;
   try
     RunDSServer;
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
   end
-end.
 
+end.

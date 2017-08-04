@@ -8,7 +8,7 @@ uses
   Vcl.Menus, RzTabs, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCustomTileControl, cxClasses, dxTileControl, shopper,
   Vcl.StdCtrls, customer, clientsyc, clientuploadfrm, Vcl.ExtCtrls,
-  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common;
+  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common,cxGrid;
 
 type
   Tmainform = class(TForm)
@@ -46,6 +46,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure timesyncTimerTimer(Sender: TObject);
     procedure loginframe1syncmemberButtonClick(Sender: TObject);
+    procedure RzPageControl1Changing(Sender: TObject; NewIndex: Integer; var AllowChange: Boolean);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -351,6 +352,25 @@ procedure Tmainform.RzPageControl1Change(Sender: TObject);
 begin
   RzPageControl1.ShowCloseButton := RzPageControl1.ActivePageIndex > 0;
   RzPageControl1.ShowCloseButtonOnActiveTab := RzPageControl1.ActivePageIndex > 0;
+end;
+
+procedure Tmainform.RzPageControl1Changing(Sender: TObject; NewIndex: Integer; var AllowChange: Boolean);
+var
+  grid:TObject;
+begin
+  if RzPageControl1.ActivePageIndex>0 then
+  begin
+
+    grid:=RzPageControl1.ActivePage.Controls[0].FindComponent('cxGrid1');
+    AllowChange:=true;
+    if grid<>nil then
+    begin
+      if TCxgrid(grid).ActiveView.DataController.IsEditing then
+        AllowChange:=false
+      else
+        AllowChange:=true;
+    end;
+  end;
 end;
 
 procedure Tmainform.RzPageControl1Close(Sender: TObject; var AllowClose: Boolean);

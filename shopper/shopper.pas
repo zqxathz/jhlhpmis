@@ -151,6 +151,7 @@ type
     procedure shoppersourcecxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure shoppersourcecxLookupComboBoxPropertiesPopup(Sender: TObject);
     procedure shoppersourcecxLookupComboBoxPropertiesCloseUp(Sender: TObject);
+    procedure cxGrid1DBTableView1sidPropertiesEditValueChanged(Sender: TObject);
   private
     { Private declarations }
     Recordmod:integer;
@@ -387,10 +388,27 @@ begin
 end;
 
 procedure Tbplshopperframe.shoppersourcecxLookupComboBoxPropertiesChange(Sender: TObject);
+var
+  str:string;
 begin
-  //showmessage(shopperdatamod.shoppersourcefdquery.FieldByName('mod').AsString);
+  //showmessage();
   Recordmod:=0;
-  Recordmod:=1;
+  if shopperdatamod.shoppersourcefdquery.FieldByName('mod').AsString='normal' then
+    Recordmod:=0;
+  if shopperdatamod.shoppersourcefdquery.FieldByName('mod').AsString='repeat' then
+    Recordmod:=1;
+  str:=shopperdatamod.shoppersourcefdquery.FieldByName('title').AsString;
+  if str.Contains('拍卖') or str.Contains('购物') then
+  begin
+    Label1.Visible:=true;
+    goodsEdit.Visible:=true;
+  end
+  else
+  begin
+    Label1.Visible:=false;
+    goodsEdit.Visible:=false;
+  end;
+
 end;
 
 procedure Tbplshopperframe.shoppersourcecxLookupComboBoxPropertiesCloseUp(Sender: TObject);
@@ -509,10 +527,12 @@ var
               FieldValues['createtime'] := Now();
               FieldValues['updatetime'] := Now();
               FieldValues['area'] := RzStatusPane1.Caption;
+              FieldValues['goods'] := Trim(goodsEdit.Text);
+              FieldValues['mod'] := Recordmod;
             end;
             shopperfdquery.Post;
 
-            { 检测库中是否已经有这个手机号,如果有全部软删除,
+            { 检测当前展会中是否已经有这个手机号,如果有全部软删除,
               只保留当前输入的为可用 }
             if not validatePhone(Trim(phonecxMaskEdit.Text),
               shopperfdquery.FieldByName('id').AsInteger, 1) then
@@ -626,16 +646,48 @@ end;
 procedure Tbplshopperframe.cxGrid1DBTableView1phonePropertiesValidate
   (Sender: TObject; var DisplayValue: Variant; var ErrorText: TCaption;
   var Error: Boolean);
+var
+  i,col_index:integer;
 begin
   if VarIsStr(DisplayValue) then
     if (Length(DisplayValue) > 11) or (string(DisplayValue)[1] <> '1') then
     begin
       Error := true;
       ErrorText := '手机号码格式错误,请重新输入';
+      exit;
     end;
+  col_index:=cxGrid1DBTableView1.GetColumnByFieldName('phone').Index;
+  for I := 0 to cxGrid1DBTableView1.ViewData.RecordCount-1 do
+  begin
+     if not cxGrid1DBTableView1.ViewData.Records[i].Focused then
+     begin
+      if cxGrid1DBTableView1.ViewData.Records[i].Values[col_index] = DisplayValue then
+      begin
+        Error:=true;
+        ErrorText := '手机号码重复';
+        break;
+      end;
+     end;
+  end;
 end;
 
-// Frame释放时执行的一些操作,保存当前FRAME里一些组件的属性
+//顾客来源变动时,自动修改当前记录的MOD字段
+procedure Tbplshopperframe.cxGrid1DBTableView1sidPropertiesEditValueChanged(Sender: TObject);
+var
+  modvalue:Variant;
+  col_index:integer;
+begin
+  modvalue:=shopperdatamod.shoppersourcefdquery.Lookup('title',TcxLookupComboBox(Sender).Text,'mod');
+  if not VarIsNull(modvalue) then
+  begin
+    if modvalue='normal' then
+      shopperdatamod.shopperfdquery.FieldByName('mod').NewValue:=0
+    else if modvalue='repeat' then
+       shopperdatamod.shopperfdquery.FieldByName('mod').NewValue:=1;
+  end;
+end;
+
+//Frame释放时执行的一些操作,保存当前FRAME里一些组件的属性
 destructor Tbplshopperframe.Destroy;
 begin
   cxPropertiesStore1.StoreTo(true);

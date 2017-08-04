@@ -314,6 +314,7 @@ begin
   begin
     DataSet.FieldValues['update_time'] := DateTimeToUnix(IncHour(now(), 0));
     DataSet.FieldValues['updatetime'] := now;
+    //showmessage('ddd');
   end;
 end;
 
@@ -377,20 +378,23 @@ var
 begin
   Result := true;
   validateFdCommand.Params.Items[0].Value := phone;
+  validateFdCommand.Params.Items[1].Value:= expofdquery.FieldByName('id').Value;
   oTab := validateFdCommand.Define;
   validateFdCommand.OpenOrExecute;
   validateFdCommand.Fetch(oTab);
+  try
+    if oTab.Rows.count > count then
+    begin
+      validateFdCommand.Close;
+      updateshopperFDCommand.Params.Items[0].Value := phone;
+      updateshopperFDCommand.Params.Items[1].Value := id;
+      updateshopperFDCommand.Params.Items[2].Value := expofdquery.FieldByName('id').Value;
+      updateshopperFDCommand.OpenOrExecute;
 
-  if oTab.Rows.count > count then
-  begin
-    validateFdCommand.Close;
+      Result := false;
+    end;
+  finally
     oTab.Free;
-    updateshopperFDCommand.Params.Items[0].Value := phone;
-    updateshopperFDCommand.Params.Items[1].Value := id;
-    updateshopperFDCommand.Params.Items[2].Value := expofdquery.FieldByName('id').Value;
-    updateshopperFDCommand.OpenOrExecute;
-
-    Result := false;
   end;
 end;
 

@@ -3,39 +3,15 @@ unit ServerMethodsUnit;
 interface
 
 uses
-  System.SysUtils,
-  System.Classes,
-  System.Json,
-  DataSnap.DSProviderDataModuleAdapter,
-  DataSnap.DSServer,
-  DataSnap.DSAuth,
-  Datasnap.DSSession,
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
-  FireDAC.Stan.Error,
-  FireDAC.UI.Intf,
-  FireDAC.Phys.Intf,
-  FireDAC.Stan.Def,
-  FireDAC.Stan.Pool,
-  FireDAC.Stan.Async,
-  FireDAC.Phys,
-  FireDAC.Phys.MySQL,
-  FireDAC.Phys.MySQLDef,
-  FireDAC.ConsoleUI.Wait,
-  Data.DB,
-  FireDAC.Comp.Client,
-  FireDAC.Stan.Param,
-  FireDAC.DatS,
-  FireDAC.DApt.Intf,
-  FireDAC.DApt,
-  FireDAC.Stan.StorageBin,
-  FireDAC.Comp.DataSet,
-  System.Generics.Collections,
-  System.Variants,
-  IdHashMessageDigest,
-  IdGlobal,
-  IdHash,
-  System.IOUtils,
+  System.SysUtils, System.Classes, System.Json,
+  DataSnap.DSProviderDataModuleAdapter, DataSnap.DSServer, DataSnap.DSAuth,
+  DataSnap.DSSession, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
+  FireDAC.Phys.MySQLDef, FireDAC.ConsoleUI.Wait, Data.DB, FireDAC.Comp.Client,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  FireDAC.Stan.StorageBin, FireDAC.Comp.DataSet, System.Generics.Collections,
+  System.Variants, IdHashMessageDigest, IdGlobal, IdHash, System.IOUtils,
   System.Types;
 
 type
@@ -72,17 +48,19 @@ type
     expireExpoFDQuery: TFDQuery;
     getcustomerFDQuery: TFDQuery;
     getMemberGroupFDQuery: TFDQuery;
-    procedure customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
+    procedure customerFDQueryUpdateError(ASender: TDataSet;
+      AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+      var AAction: TFDErrorAction);
   private
-      { Private declarations }
+    { Private declarations }
     FErrorsList: TJSONObject;
     function GenerateErrorMessage: string;
   public
-      { Public declarations }
-      // Delhpi自己生成的例子方法
+    { Public declarations }
+    // Delhpi自己生成的例子方法
     function EchoString(Value: string): string;
     function ReverseString(Value: string): string;
-      // 获取服务器数据的方法
+    // 获取服务器数据的方法
     function ExpoData(username: string; password: string): TStream;
     function CustomertypeData(username: string; password: string): TStream;
     function PaytypeData(username: string; password: string): TStream;
@@ -90,14 +68,14 @@ type
     function ShopperSourceData(username: string; password: string): TStream;
     function MemberData: TStream;
     function CustomerData: TStream;
-      // 上传数据到服务器的方法
+    // 上传数据到服务器的方法
     function CustomerDataPost(AStream: TStream): string;
     function ShopperDataPost(AStream: TStream): string;
     function UseExpoIds: string;
     function ExpireExpoIds: string;
-    //软件更新用
+    // 软件更新用
     function GetUpdatefiles: string;
-      //测试用的
+    // 测试用的
     function test1: integer;
   end;
 
@@ -119,9 +97,7 @@ implementation
 {$R *.dfm}
 
 uses
-  System.StrUtils,
-  System.DateUtils,
-  Alidayu;
+  System.StrUtils, System.DateUtils, Alidayu;
 
 function StreamToMD5(s: TFileStream): string;
 var
@@ -143,18 +119,18 @@ var
   LBuffer: TBytes;
   LCount: integer;
 begin
-  Result := TMemoryStream.Create;
+  result := TMemoryStream.Create;
   try
     SetLength(LBuffer, 1024 * 32);
     while True do
     begin
       LCount := AStream.Read(LBuffer, Length(LBuffer));
-      Result.Write(LBuffer, LCount);
+      result.Write(LBuffer, LCount);
       if LCount < Length(LBuffer) then
         break;
     end;
   except
-    Result.Free;
+    result.Free;
     writeln('copystream error');
     raise;
   end;
@@ -168,24 +144,24 @@ var
   count: int64;
   starttime, endtime: TDateTime;
   Dayu: TAlidayu;
-  //send_message: string;
+  // send_message: string;
 begin
   if AStream.Size = 0 then
     exit;
 
-  LErrors:=0;
+  LErrors := 0;
   log := TServerLogThread.Create;
 
-  Log.AddLog('Start append shopper data');
+  log.AddLog('Start append shopper data');
 
   FErrorsList := TJSONObject.Create;
   LMemStream := CopyStream(AStream);
-  Log.AddLog('stream size:' + LMemStream.Size.ToString); // LOG 流的大小
+  log.AddLog('stream size:' + LMemStream.Size.ToString); // LOG 流的大小
   LMemStream.Position := 0;
   try
     shopperFDQuery.Close;
     shopperFDQuery.LoadFromStream(LMemStream, TFDStorageFormat.sfBinary);
-    Log.AddLog('record count:' + shopperFDQuery.RecordCount.ToString);
+    log.AddLog('record count:' + shopperFDQuery.RecordCount.ToString);
     // LOG 本次更新的记录数
 
     starttime := now();
@@ -196,7 +172,7 @@ begin
     else
     begin
       try
-        //ShopperRemoveFDCommand.Execute;
+        // ShopperRemoveFDCommand.Execute;
         FDConnection1.Commit;
       except
         FDConnection1.Rollback;
@@ -206,19 +182,19 @@ begin
     endtime := now();
     count := MilliSecondsBetween(endtime, starttime);
 
-    Log.AddLog('time count:' + count.ToString); // LOG插入数据用时
+    log.AddLog('time count:' + count.ToString); // LOG插入数据用时
   finally
     customerFDQuery.Close;
     LMemStream.Free;
     FDConnection1.Close;
     if LErrors <> 0 then
     begin
-      Result := FErrorsList.ToJSON; // 返回出错数据
-      Log.AddLog('error message:' + Result); // Log出错数据
+      result := FErrorsList.ToJSON; // 返回出错数据
+      log.AddLog('error message:' + result); // Log出错数据
     end;
-    Log.AddLog('------------------------');
+    log.AddLog('------------------------');
     FErrorsList.Free; // 释放Josn对象
-    //FreeAndNil(Log); // 关闭Log文件
+    // FreeAndNil(Log); // 关闭Log文件
     log.Start;
   end;
   // 通过阿里大于发送短信给管理员
@@ -249,21 +225,21 @@ begin
   if AStream.Size = 0 then
     exit;
 
-  LErrors :=0;
-  Result := '';
+  LErrors := 0;
+  result := '';
 
   log := TServerLogThread.Create;
 
-  Log.AddLog('Start append customer data');
+  log.AddLog('Start append customer data');
   FErrorsList := TJSONObject.Create; // 创建一个JsonObject用来更新出错记录的数据
   LMemStream := CopyStream(AStream); // 将Stream转换成内存流
-  Log.AddLog('stream size:' + LMemStream.Size.ToString); // LOG 流的大小
+  log.AddLog('stream size:' + LMemStream.Size.ToString); // LOG 流的大小
   LMemStream.Position := 0;
   try
     customerFDQuery.Close;
     customerFDQuery.LoadFromStream(LMemStream, TFDStorageFormat.sfBinary);
     // Query组件加载流
-    Log.AddLog('record count:' + customerFDQuery.RecordCount.ToString);
+    log.AddLog('record count:' + customerFDQuery.RecordCount.ToString);
     // LOG 本次更新的记录数
     starttime := now(); // 当前时间
     FDConnection1.StartTransaction; // 开始事务
@@ -282,20 +258,20 @@ begin
     end;
     endtime := now(); // 当前时间
     count := MilliSecondsBetween(endtime, starttime); // 计算插入数据耗时
-    Log.AddLog('time count:' + count.ToString); // LOG插入数据用时
+    log.AddLog('time count:' + count.ToString); // LOG插入数据用时
   finally
     customerFDQuery.Close; // 关闭Query组件
     LMemStream.Free; // 释放内存流
     FDConnection1.Close; // 关闭数据库连接
     if LErrors > 0 then // 出错返回错误数据
     begin
-      Result := FErrorsList.ToJSON;
-      Log.AddLog('error message:' + Result); // Log出错数据
+      result := FErrorsList.ToJSON;
+      log.AddLog('error message:' + result); // Log出错数据
     end;
-    Log.AddLog('------------------------'); // Log文件分割线
+    log.AddLog('------------------------'); // Log文件分割线
     FErrorsList.Free; // 释放Josn对象
-    //FreeAndNil(Log); // 关闭Log文件
-    Log.Start;
+    // FreeAndNil(Log); // 关闭Log文件
+    log.Start;
   end;
   // 通过阿里大于发送短信给管理员
   Dayu := TAlidayu.Create;
@@ -306,7 +282,9 @@ begin
   end;
 end;
 
-procedure TServerMethods.customerFDQueryUpdateError(ASender: TDataSet; AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest; var AAction: TFDErrorAction);
+procedure TServerMethods.customerFDQueryUpdateError(ASender: TDataSet;
+  AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
+  var AAction: TFDErrorAction);
 var
   LDataStr: string;
 begin
@@ -316,7 +294,8 @@ begin
       try
         if not VarIsNull(ARow.GetData('id')) then
           LDataStr := ARow.GetData('id');
-        FErrorsList.AddPair(AException.Message + ',' + AException.FDCode.ToString, LDataStr);
+        FErrorsList.AddPair(AException.Message + ',' +
+          AException.FDCode.ToString, LDataStr);
       except
 
       end;
@@ -335,111 +314,119 @@ begin
   //
 end;
 
-//获取更新文件列表,JSON格式
+// 获取更新文件列表,JSON格式
 function TServerMethods.GetUpdatefiles: string;
 var
-  json:TJsonObject;
-  jsonstream:Tmemorystream;
-  bytes:TBytes;
-  function Getfiles(const path:string;const path1:string=''):TJsonObject;
+  Json: TJSONObject;
+  jsonstream: TMemoryStream;
+  bytes: TBytes;
+  function Getfiles(const path: string; const path1: string = ''): TJSONObject;
   var
-   s:TStringDynArray;
-   i,j: Integer;
-   jsonarray:TJsonArray;
-   ext,version:string;
-   jsonobject:TJsonObject;
-   filesen: TFileStream;
-   path2: string;
+    s: TStringDynArray;
+    i, j: integer;
+    jsonarray: TJsonArray;
+    ext, version: string;
+    jsonobject: TJSONObject;
+    filesen: TFileStream;
+    path2: string;
   begin
-    path2:='';
-    Result:=TJSONObject.Create;
-    s:=TDirectory.GetFileSystemEntries(path);
-    for i := 0 to length(s)-1 do
+    path2 := '';
+    result := TJSONObject.Create;
+    s := TDirectory.GetFileSystemEntries(path);
+    for i := 0 to Length(s) - 1 do
     begin
       if TFileAttribute.faDirectory in TPath.GetAttributes(s[i]) then
       begin
-        jsonobject:=Getfiles(s[i],path1+TPath.GetFileName(s[i])+'\');
-        for j := 0 to jsonobject.Count-1 do
-          Result.AddPair(jsonobject.Pairs[j]);
-        if assigned(jsonobject) then jsonobject.Free;
+        jsonobject := Getfiles(s[i], path1 + TPath.GetFileName(s[i]) + '\');
+        for j := 0 to jsonobject.count - 1 do
+          result.AddPair(jsonobject.Pairs[j]);
+        if assigned(jsonobject) then
+          jsonobject.Free;
       end
       else
       begin
-       ext:=TPath.GetExtension(s[i]);
-       if (ext.ToLower ='.exe') or (ext.ToLower ='.dll') or (ext.ToLower ='.bpl') then
-       begin
-         jsonarray:=TJSONArray.Create;
-         filesen := TFileStream.Create(s[i], fmopenread or fmShareDenyWrite);
-         jsonarray.AddElement(TJSONString.Create(TPath.GetFileName(s[i])));
-         jsonarray.AddElement(TJSONString.Create(path1));
-         jsonarray.AddElement(TJSONNumber.Create(filesen.Size));
-         jsonarray.AddElement(TJSONString.Create(StreamToMD5(filesen)));
-         Result.AddPair(s[i],jsonarray);
-         jsonarray.Free;
-         filesen.Free;
-         filesen:=nil;
-       end;
+        ext := TPath.GetExtension(s[i]);
+        if (ext.ToLower = '.exe') or (ext.ToLower = '.dll') or
+          (ext.ToLower = '.bpl') then
+        begin
+          jsonarray := TJsonArray.Create;
+          filesen := TFileStream.Create(s[i], fmopenread or fmShareDenyWrite);
+          jsonarray.AddElement(TJSONString.Create(TPath.GetFileName(s[i])));
+          jsonarray.AddElement(TJSONString.Create(path1));
+          jsonarray.AddElement(TJSONNumber.Create(filesen.Size));
+          jsonarray.AddElement(TJSONString.Create(StreamToMD5(filesen)));
+          result.AddPair(s[i], jsonarray);
+          jsonarray.Free;
+          filesen.Free;
+          filesen := nil;
+        end;
       end;
     end;
   end;
+
 begin
   if FileExists(updateJosnFile) then
   begin
-    jsonstream:=TMemoryStream.Create();
+    jsonstream := TMemoryStream.Create();
     jsonstream.LoadFromFile(updateJosnFile);
-    jsonstream.Position:=0;
-    SetLength(bytes,jsonstream.Size);
-    jsonstream.Read(bytes,jsonstream.Size);
-    Result:=TEnCoding.UTF8.GetString(bytes);
+    jsonstream.Position := 0;
+    SetLength(bytes, jsonstream.Size);
+    jsonstream.Read(bytes, jsonstream.Size);
+    result := TEnCoding.UTF8.GetString(bytes);
     jsonstream.Free;
   end
-  else begin
-    json:=Getfiles(updatePath);
-    if json.Count>0 then
-      json.AddPair('result','success')
+  else
+  begin
+    Json := Getfiles(updatePath);
+    if Json.count > 0 then
+      Json.AddPair('result', 'success')
     else
-      json.AddPair('result','error');
-    Result:=json.ToJSON;
-    jsonstream:=TMemoryStream.Create();
+      Json.AddPair('result', 'error');
+    result := Json.ToJSON;
+    jsonstream := TMemoryStream.Create();
     try
-      bytes := TEnCoding.UTF8.GetBytes(json.ToJSON);
+      bytes := TEnCoding.UTF8.GetBytes(Json.ToJSON);
       jsonstream.Write(bytes, Length(bytes));
-      jsonstream.Position:=0;
+      jsonstream.Position := 0;
       jsonstream.SaveToFile(updateJosnFile);
     finally
       jsonstream.Free;
-      json.Free;
+      Json.Free;
     end;
   end;
 end;
 
 function TServerMethods.CustomerData: TStream;
 var
-  memberid:integer;
+  memberid: integer;
 begin
-  Result := TMemoryStream.Create;
+  result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
-      if TDSSessionManager.GetThreadSession.UserRoles.IndexOf('admins')=-1 then
+      if TDSSessionManager.GetThreadSession.UserRoles.IndexOf('admins') = -1
+      then
       begin
         getMemberGroupFDQuery.Close;
-        getMemberGroupFDQuery.ParamByName('username').AsString:=TDSSessionManager.GetThreadSession.UserName;
+        getMemberGroupFDQuery.ParamByName('username').AsString :=
+          TDSSessionManager.GetThreadSession.username;
         getMemberGroupFDQuery.Open;
-        if getMemberGroupFDQuery.RecordCount>0 then
-          getcustomerFDQuery.MacroByName('where').AsRaw:=' where jhlh_pmis_customers.create_member='
-                                                         +getMemberGroupFDQuery.FieldByName('id').AsString
+        if getMemberGroupFDQuery.RecordCount > 0 then
+          getcustomerFDQuery.MacroByName('where').AsRaw :=
+            ' where jhlh_pmis_customers.create_member=' +
+            getMemberGroupFDQuery.FieldByName('id').AsString
         else
-          getcustomerFDQuery.MacroByName('where').AsRaw:=' where jhlh_pmis_customers.create_member=0';
+          getcustomerFDQuery.MacroByName('where').AsRaw :=
+            ' where jhlh_pmis_customers.create_member=0';
       end;
       getcustomerFDQuery.Open;
-      getcustomerFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
-      Result.Position := 0;
+      getcustomerFDQuery.SaveToStream(result, TFDStorageFormat.sfBinary);
+      result.Position := 0;
     except
       on E: Exception do
       begin
-        //writeln(E.Message);
-        Result.Free;
+        // writeln(E.Message);
+        result.Free;
         raise E;
       end;
     end;
@@ -452,23 +439,25 @@ end;
 
 function TServerMethods.MemberData: TStream;
 begin
-  Result := TMemoryStream.Create;
+  result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
       memberFDQuery.Close;
-      if TDSSessionManager.GetThreadSession.UserRoles.IndexOf('admins')=-1 then
+      if TDSSessionManager.GetThreadSession.UserRoles.IndexOf('admins') = -1
+      then
       begin
-        memberFDQuery.MacroByName('groupname').AsRaw:='and where jhlh_admin_group.name<>"admins"';
+        memberFDQuery.MacroByName('groupname').AsRaw :=
+          'and where jhlh_admin_group.name<>"admins"';
       end;
       memberFDQuery.Open;
-      memberFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
-      Result.Position := 0;
+      memberFDQuery.SaveToStream(result, TFDStorageFormat.sfBinary);
+      result.Position := 0;
     except
       on E: Exception do
       begin
-        //writeln(E.Message);
-        Result.Free;
+        // writeln(E.Message);
+        result.Free;
         raise;
       end;
     end;
@@ -480,19 +469,19 @@ end;
 
 function TServerMethods.CustomertypeData(username, password: string): TStream;
 begin
-  Result := TMemoryStream.Create;
+  result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
       customertypeFDQuery.Close;
       customertypeFDQuery.Open;
-      customertypeFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
-      Result.Position := 0;
+      customertypeFDQuery.SaveToStream(result, TFDStorageFormat.sfBinary);
+      result.Position := 0;
     except
       on E: Exception do
       begin
-        //writeln(E.Message);
-        Result.Free;
+        // writeln(E.Message);
+        result.Free;
       end;
     end;
   finally
@@ -504,24 +493,24 @@ end;
 function TServerMethods.EchoString(Value: string): string;
 begin
   exit;
-  Result := Value;
+  result := Value;
 end;
 
 function TServerMethods.ExpoData(username, password: string): TStream;
 begin
-  Result := TMemoryStream.Create;
+  result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
       expoFDQuery.Close;
       expoFDQuery.Open;
-      expoFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
-      Result.Position := 0;
+      expoFDQuery.SaveToStream(result, TFDStorageFormat.sfBinary);
+      result.Position := 0;
     except
       on E: Exception do
       begin
-        //writeln(E.Message);
-        Result.Free;
+        // writeln(E.Message);
+        result.Free;
       end;
     end;
   finally
@@ -532,19 +521,19 @@ end;
 
 function TServerMethods.ExpoTypeData(username, password: string): TStream;
 begin
-  Result := TMemoryStream.Create;
+  result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
       expotypeFDQuery.Close;
       expotypeFDQuery.Open;
-      expotypeFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
-      Result.Position := 0;
+      expotypeFDQuery.SaveToStream(result, TFDStorageFormat.sfBinary);
+      result.Position := 0;
     except
       on E: Exception do
       begin
-        //writeln(E.Message);
-        Result.Free;
+        // writeln(E.Message);
+        result.Free;
       end;
     end;
   finally
@@ -555,19 +544,19 @@ end;
 
 function TServerMethods.PaytypeData(username, password: string): TStream;
 begin
-  Result := TMemoryStream.Create;
+  result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
       paytypeFDQuery.Close;
       paytypeFDQuery.Open;
-      paytypeFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
-      Result.Position := 0;
+      paytypeFDQuery.SaveToStream(result, TFDStorageFormat.sfBinary);
+      result.Position := 0;
     except
       on E: Exception do
       begin
-        //writeln(E.Message);
-        Result.Free;
+        // writeln(E.Message);
+        result.Free;
       end;
     end;
   finally
@@ -578,19 +567,19 @@ end;
 
 function TServerMethods.ShopperSourceData(username, password: string): TStream;
 begin
-  Result := TMemoryStream.Create;
+  result := TMemoryStream.Create;
   try
     try
       FDConnection1.Open;
       shoppersourceFDQuery.Close;
       shoppersourceFDQuery.Open;
-      shoppersourceFDQuery.SaveToStream(Result, TFDStorageFormat.sfBinary);
-      Result.Position := 0;
+      shoppersourceFDQuery.SaveToStream(result, TFDStorageFormat.sfBinary);
+      result.Position := 0;
     except
       on E: Exception do
       begin
-        //writeln(E.Message);
-        Result.Free;
+        // writeln(E.Message);
+        result.Free;
       end;
     end;
   finally
@@ -602,14 +591,14 @@ end;
 
 function TServerMethods.test1: integer;
 begin
-  Result:=0;
-  {$IFDEF DEBUG}
-  {$ENDIF}
+  result := 0;
+{$IFDEF DEBUG}
+{$ENDIF}
 end;
 
 function TServerMethods.UseExpoIds: string;
 begin
-  Result := '';
+  result := '';
   FDConnection1.Open;
   expoFDQuery.Open;
   try
@@ -618,7 +607,7 @@ begin
       expoFDQuery.First;
       while not expoFDQuery.Eof do
       begin
-        Result := Result + ',' + expoFDQuery.FieldByName('id').AsString;
+        result := result + ',' + expoFDQuery.FieldByName('id').AsString;
         expoFDQuery.Next;
       end;
       delete(result, 1, 1);
@@ -631,7 +620,7 @@ end;
 
 function TServerMethods.ExpireExpoIds: string;
 begin
-  Result := '';
+  result := '';
   FDConnection1.Open;
   expireExpoFDQuery.Open;
   try
@@ -640,7 +629,7 @@ begin
       expireExpoFDQuery.First;
       while not expireExpoFDQuery.Eof do
       begin
-        Result := Result + ',' + expireExpoFDQuery.FieldByName('id').AsString;
+        result := result + ',' + expireExpoFDQuery.FieldByName('id').AsString;
         expireExpoFDQuery.Next;
       end;
       delete(result, 1, 1);
@@ -654,7 +643,7 @@ end;
 function TServerMethods.ReverseString(Value: string): string;
 begin
   exit;
-  Result := System.StrUtils.ReverseString(Value);
+  result := System.StrUtils.ReverseString(Value);
 end;
 
 { TServerLog }
@@ -683,7 +672,7 @@ end;
 
 procedure TServerLogThread.AddLog(msg: string);
 begin
-  if Assigned(FLogList) then
+  if assigned(FLogList) then
   begin
     FLogList.Add(msg);
   end;
@@ -692,42 +681,41 @@ end;
 constructor TServerLogThread.Create;
 begin
   FLogList := TStringList.Create;
-  FreeOnTerminate := true;
+  FreeOnTerminate := True;
   inherited Create(True);
 end;
 
 destructor TServerLogThread.Destroy;
 begin
-  if Assigned(FLogList) then
+  if assigned(FLogList) then
     FLogList.Free;
   inherited;
 end;
 
 procedure TServerLogThread.Execute;
 var
-  Log: TServerLog;
-  I: Integer;
+  log: TServerLog;
+  i: integer;
 begin
-  //inherited;
-  system.TMonitor.Enter(One);
+  // inherited;
+  System.TMonitor.Enter(One);
   try
-    if FLogList.Count = 0 then
+    if FLogList.count = 0 then
       exit;
     if not FileExists(LogFilename) then // 创建或者打开LOG文件
-      Log := TServerLog.Create(LogFilename, fmCreate)
+      log := TServerLog.Create(LogFilename, fmCreate)
     else
-      Log := TServerLog.Create(LogFilename, fmOpenWrite);
+      log := TServerLog.Create(LogFilename, fmOpenWrite);
 
-    for I := 0 to FLogList.Count - 1 do
+    for i := 0 to FLogList.count - 1 do
     begin
-      Log.SaveLog(FLogList.Strings[I]);
+      log.SaveLog(FLogList.Strings[i]);
     end;
   finally
     FLogList.Clear;
-    FreeAndNil(Log);
-    system.TMonitor.Exit(One);
+    FreeAndNil(log);
+    System.TMonitor.exit(One);
   end;
 end;
 
 end.
-
