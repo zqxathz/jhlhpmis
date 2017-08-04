@@ -152,6 +152,9 @@ type
     procedure shoppersourcecxLookupComboBoxPropertiesPopup(Sender: TObject);
     procedure shoppersourcecxLookupComboBoxPropertiesCloseUp(Sender: TObject);
     procedure cxGrid1DBTableView1sidPropertiesEditValueChanged(Sender: TObject);
+    procedure cxGrid1DBTableView1Editing(Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem;
+      var AAllow: Boolean);
+
   private
     { Private declarations }
     Recordmod:integer;
@@ -212,16 +215,33 @@ end;
 
 // 右键菜单删除当前记录
 procedure Tbplshopperframe.deletemenuClick(Sender: TObject);
+var
+  ipoint:Int64;
+  phone:string;
 begin
+
   case MessageBox(0, '是否要删除当前记录?', '警告', MB_OKCANCEL + MB_ICONWARNING +
     MB_DEFBUTTON2) of
     IDOK:
       with shopperdatamod.shopperfdquery do
       begin
+        phone:=FieldValues['phone'];
         Edit;
+        FieldValues['status']:=0;
         FieldValues['trash'] := 1;
         Post;
         RefreshRecord;
+        ipoint:=FieldByName('id').AsLargeInt;
+        DisableControls;
+        try
+          shopperdatamod.recoverdelFDCommand.ParamByName('phone').Value:=phone;
+          shopperdatamod.recoverdelFDCommand.ParamByName('eid').Value:=shopperdatamod.expofdquery.FieldByName('ID').AsInteger;
+          shopperdatamod.recoverdelFDCommand.Execute;
+          shopperdatamod.shopperfdquery.Refresh;
+        finally
+          Locate('id',ipoint);
+          EnableControls;
+        end;
       end;
     IDCANCEL:
       exit;
@@ -298,6 +318,7 @@ begin
           FieldValues['updatetime'] :=
             VarToDateTime(XLSReadWriteII51.Sheets[0].asstring[5, i]);
           FieldValues['area'] := RzStatusPane1.Caption;
+          FieldValues['mod']  := Recordmod;
         end;
         shopperdatamod.shopperfdquery.Post;
       end;
@@ -353,7 +374,6 @@ procedure Tbplshopperframe.phonecxMaskEditPropertiesValidate(Sender: TObject;
   var DisplayValue: Variant; var ErrorText: TCaption; var Error: Boolean);
 begin
   ErrorText := '请输入正确的手机号!';
-
 end;
 
 // 刷新当前数据
@@ -393,12 +413,13 @@ var
 begin
   //showmessage();
   Recordmod:=0;
-  if shopperdatamod.shoppersourcefdquery.FieldByName('mod').AsString='normal' then
+  str:=shopperdatamod.shoppersourcefdquery.FieldByName('mod').AsString;
+  if str.Contains('normal') then
     Recordmod:=0;
-  if shopperdatamod.shoppersourcefdquery.FieldByName('mod').AsString='repeat' then
+  if str.Contains('repeat') then
     Recordmod:=1;
-  str:=shopperdatamod.shoppersourcefdquery.FieldByName('title').AsString;
-  if str.Contains('拍卖') or str.Contains('购物') then
+
+  if str.Contains('shop') then
   begin
     Label1.Visible:=true;
     goodsEdit.Visible:=true;
@@ -556,6 +577,7 @@ var
 begin
   if Trim(phonecxMaskEdit.Text) = '' then
   begin
+    Beep;
     ShowMessage('必须输入手机号码');
     exit;
   end;
@@ -567,20 +589,21 @@ begin
     phonecxMaskEdit);
   if ierror then
   begin
+    Beep;
     ShowMessage('请输入正确的手机号');
     exit;
   end;
 
-  if (inputtype = itnormal) or (inputtype=itgife) then
-  begin
-    if shopperdatamod.shopperfdquery.Locate('phone,mod',VarArrayOf([phone,0])) then
-    begin
-      if inputtype=itnormal then
-      begin
-
-      end;
-    end;
-  end;
+//  if (inputtype = itnormal) or (inputtype=itgife) then
+//  begin
+//    if shopperdatamod.shopperfdquery.Locate('phone,mod',VarArrayOf([phone,0])) then
+//    begin
+//      if inputtype=itnormal then
+//      begin
+//
+//      end;
+//    end;
+//  end;
 
   if inputtype = itgife then
   begin
@@ -601,13 +624,15 @@ begin
       end;
     end;
   end;
-
+  AppendData;
 end;
 
 procedure Tbplshopperframe.autowidthmenuClick(Sender: TObject);
 begin
   cxGrid1DBTableView1.ApplyBestFit();
 end;
+
+
 
 // 右键弹出菜单复制当前选中字段到剪贴板
 procedure Tbplshopperframe.copyitemmenuClick(Sender: TObject);
@@ -635,6 +660,15 @@ begin
 end;
 
 // 在Grid里按Ctrl+C复制当前格子的文本内容
+procedure Tbplshopperframe.cxGrid1DBTableView1Editing(Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem;
+  var AAllow: Boolean);
+begin
+  if AItem.Caption='手机号' then
+  begin
+    AAllow:=shopperdatamod.shopperfdquery.FieldByName('mod').AsInteger>0;
+  end;
+end;
+
 procedure Tbplshopperframe.cxGrid1DBTableView1KeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
@@ -664,7 +698,7 @@ begin
       if cxGrid1DBTableView1.ViewData.Records[i].Values[col_index] = DisplayValue then
       begin
         Error:=true;
-        ErrorText := '手机号码重复';
+        ErrorText := '手机号码重复,表格中编辑不允许号码重复';
         break;
       end;
      end;
@@ -674,15 +708,15 @@ end;
 //顾客来源变动时,自动修改当前记录的MOD字段
 procedure Tbplshopperframe.cxGrid1DBTableView1sidPropertiesEditValueChanged(Sender: TObject);
 var
-  modvalue:Variant;
+  modvalue:string;
   col_index:integer;
 begin
   modvalue:=shopperdatamod.shoppersourcefdquery.Lookup('title',TcxLookupComboBox(Sender).Text,'mod');
   if not VarIsNull(modvalue) then
   begin
-    if modvalue='normal' then
+    if modvalue.Contains('normal') then
       shopperdatamod.shopperfdquery.FieldByName('mod').NewValue:=0
-    else if modvalue='repeat' then
+    else if modvalue.Contains('repeat') then
        shopperdatamod.shopperfdquery.FieldByName('mod').NewValue:=1;
   end;
 end;
@@ -690,6 +724,7 @@ end;
 //Frame释放时执行的一些操作,保存当前FRAME里一些组件的属性
 destructor Tbplshopperframe.Destroy;
 begin
+
   cxPropertiesStore1.StoreTo(true);
   // FreeAndNil(shopperdatamod);
   inherited;

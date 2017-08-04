@@ -112,11 +112,12 @@ object mainform: Tmainform
     OnChanging = RzPageControl1Changing
     OnClose = RzPageControl1Close
     OnMouseDown = RzPageControl1MouseDown
-    ExplicitLeft = -2
-    ExplicitTop = -2
     FixedDimension = 32
     object TabSheet1: TRzTabSheet
       Caption = ' '#39318#39029' '
+      DesignSize = (
+        860
+        509)
       object dxTileControl1: TdxTileControl
         Left = 0
         Top = 0
@@ -131,9 +132,11 @@ object mainform: Tmainform
         OptionsView.GroupLayout = glVertical
         OptionsView.ItemHeight = 150
         OptionsView.ItemWidth = 150
+        Style.GradientBeginColor = clWindowFrame
         Style.Stretch = smTile
         TabOrder = 0
         Transparent = True
+        ExplicitLeft = -1
         object dxTileControl1Group1: TdxTileControlGroup
           Index = 0
         end
@@ -154,7 +157,7 @@ object mainform: Tmainform
           Text1.Font.Name = 'Segoe UI'
           Text1.Font.Style = []
           Text1.Font.Quality = fqClearType
-          Text1.Value = #39038#23458#20449#24687#36755#20837
+          Text1.Value = #39038#23458#25209#37327#36755#20837
           Text1.WordWrap = True
           Text2.AssignedValues = [avFont]
           Text2.Font.Charset = DEFAULT_CHARSET
@@ -163,7 +166,9 @@ object mainform: Tmainform
           Text2.Font.Name = 'Segoe UI'
           Text2.Font.Style = []
           Text3.AssignedValues = []
+          Text4.Align = oaBottomCenter
           Text4.AssignedValues = []
+          Text4.Value = #36755#20837#26102#19981#25552#31034#20449#24687
           OnClick = dxTileControl1Item1Click
         end
         object dxTileControl1Item2: TdxTileControlItem
@@ -177,10 +182,12 @@ object mainform: Tmainform
           Text1.Font.Name = 'Segoe UI'
           Text1.Font.Style = []
           Text1.Font.Quality = fqClearType
-          Text1.Value = #23637#20250#31036#21697#21457#25918
+          Text1.Value = #39038#23458#30331#35760
           Text2.AssignedValues = []
           Text3.AssignedValues = []
+          Text4.Align = oaBottomCenter
           Text4.AssignedValues = []
+          Text4.Value = #36755#20837#26102#20250#25552#31034#20449#24687
           OnClick = dxTileControl1Item2Click
         end
         object dxTileControl1Item3: TdxTileControlItem
@@ -254,6 +261,23 @@ object mainform: Tmainform
           Text4.AssignedValues = []
           OnClick = dxTileControl1Item6Click
         end
+      end
+      object StaticText1: TStaticText
+        Left = 760
+        Top = 478
+        Width = 84
+        Height = 31
+        Cursor = crHandPoint
+        Anchors = [akRight, akBottom]
+        Caption = #20851#20110#36719#20214
+        Font.Charset = GB2312_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -20
+        Font.Name = #24494#36719#38597#40657
+        Font.Style = [fsUnderline]
+        ParentFont = False
+        TabOrder = 1
+        OnClick = StaticText1Click
       end
     end
   end

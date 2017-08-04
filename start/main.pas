@@ -8,7 +8,7 @@ uses
   Vcl.Menus, RzTabs, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCustomTileControl, cxClasses, dxTileControl, shopper,
   Vcl.StdCtrls, customer, clientsyc, clientuploadfrm, Vcl.ExtCtrls,
-  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common,cxGrid;
+  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common,cxGrid, cxContainer, cxEdit, cxLabel;
 
 type
   Tmainform = class(TForm)
@@ -29,6 +29,7 @@ type
     updateTimer: TTimer;
     timesyncTimer: TTimer;
     IdSNTP1: TIdSNTP;
+    StaticText1: TStaticText;
     procedure loginframe1loginbuttonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -47,6 +48,7 @@ type
     procedure timesyncTimerTimer(Sender: TObject);
     procedure loginframe1syncmemberButtonClick(Sender: TObject);
     procedure RzPageControl1Changing(Sender: TObject; NewIndex: Integer; var AllowChange: Boolean);
+    procedure StaticText1Click(Sender: TObject);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -114,7 +116,7 @@ begin
   end;
 
   menutabsheet := TRzTabSheet.Create(RzPageControl1);
-  menutabsheet.Caption := ' 顾客信息输入 ';
+  menutabsheet.Caption := ' '+ dxTileControl1Item1.Text1.Value.Replace(#13,'') +' ';
   menutabsheet.Tag := 1;
   menutabsheet.PageControl := RzPageControl1;
   // if bplshopperframe = nil then
@@ -145,7 +147,7 @@ begin
     end;
   end;
   menutabsheet := TRzTabSheet.Create(RzPageControl1);
-  menutabsheet.Caption := ' 礼品发放 ';
+   menutabsheet.Caption := ' '+ dxTileControl1Item2.Text1.Value.Replace(#13,'') +' ';
   menutabsheet.Tag := 2;
   menutabsheet.PageControl := RzPageControl1;
   // if bplshopperframe = nil then
@@ -178,7 +180,7 @@ begin
   end;
 
   menutabsheet := TRzTabSheet.Create(RzPageControl1);
-  menutabsheet.Caption := ' 参展商登记 ';
+  menutabsheet.Caption := ' '+ dxTileControl1Item3.Text1.Value.Replace(#13,'') +' ';
   menutabsheet.Tag := 3;
   menutabsheet.PageControl := RzPageControl1;
   // if bplshopperframe = nil then
@@ -322,6 +324,8 @@ begin
   loginframe1.hide;
   width := 1280;
   height := 750;
+  Constraints.MinWidth:=800;
+  Constraints.MinHeight:=600;
   self.Position := poDesktopCenter;
   show;
   RzPageControl1.show;
@@ -412,6 +416,11 @@ begin
     p := ClientToScreen(p);
     PopupMenu1.Popup(p.X, p.Y);
   end;
+end;
+
+procedure Tmainform.StaticText1Click(Sender: TObject);
+begin
+  showmessage(GetBuildInfo);
 end;
 
 procedure Tmainform.timesync;

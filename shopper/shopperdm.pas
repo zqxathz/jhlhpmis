@@ -89,6 +89,7 @@ type
     shopperfdquerymod: TIntegerField;
     shopperfdquerygoods: TWideStringField;
     shoppersourcefdquerymod: TWideStringField;
+    recoverdelFDCommand: TFDCommand;
     procedure shopperfdqueryAfterGetRecord(DataSet: TFDDataSet);
     procedure shopperfdquerycreatetimeChange(Sender: TField);
     procedure shopperfdqueryexpirytimeChange(Sender: TField);
@@ -200,7 +201,7 @@ var
   Value: Variant;
 begin
   Result := '';
-  Value := shopperfdquery.Lookup('phone', phone, 'create_time');
+  Value := shopperfdquery.Lookup('phone;sid', VarArrayof([phone,shoppersourcefdquery.FieldByName('id').AsInteger]), 'create_time');
   if Vartype(Value) = varInteger then
     Result := formatdatetime('yyyyƒÍmm‘¬dd»’', UnixDateToDateTime(Value));
 end;
@@ -224,6 +225,7 @@ begin
   expofdquery.Connection := connectionDataModule.mainFDConnection;
   validateFdCommand.Connection := connectionDataModule.mainFDConnection;
   updateshopperFDCommand.Connection := connectionDataModule.mainFDConnection;
+  recoverdelFDCommand.Connection:=connectionDataModule.mainFDConnection;
 
   FDEventAlerter1.Active := true;
 
@@ -378,7 +380,7 @@ var
 begin
   Result := true;
   validateFdCommand.Params.Items[0].Value := phone;
-  validateFdCommand.Params.Items[1].Value:= expofdquery.FieldByName('id').Value;
+  validateFdCommand.Params.Items[1].AsInteger:= expofdquery.FieldByName('id').Value;
   oTab := validateFdCommand.Define;
   validateFdCommand.OpenOrExecute;
   validateFdCommand.Fetch(oTab);
@@ -387,8 +389,8 @@ begin
     begin
       validateFdCommand.Close;
       updateshopperFDCommand.Params.Items[0].Value := phone;
-      updateshopperFDCommand.Params.Items[1].Value := id;
-      updateshopperFDCommand.Params.Items[2].Value := expofdquery.FieldByName('id').Value;
+      updateshopperFDCommand.Params.Items[1].AsInteger := id;
+      updateshopperFDCommand.Params.Items[2].AsInteger := expofdquery.FieldByName('id').AsInteger;
       updateshopperFDCommand.OpenOrExecute;
 
       Result := false;

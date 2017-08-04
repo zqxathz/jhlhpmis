@@ -234,7 +234,7 @@ object shopperdatamod: Tshopperdatamod
     Left = 408
     Top = 64
     Content = {
-      414442530F00D6470D010000FF00010001FF02FF0304001A0000007300650078
+      414442530F0073480D010000FF00010001FF02FF0304001A0000007300650078
       00660064006D0065006D007400610062006C00650005000A0000005400610062
       006C006500060000000000070000080032000000090000FF0AFF0B0400040000
       0069006400050004000000690064000C00010000000E000D000F000110000111
@@ -473,5 +473,25 @@ object shopperdatamod: Tshopperdatamod
       end>
     Left = 320
     Top = 248
+  end
+  object recoverdelFDCommand: TFDCommand
+    CommandKind = skUpdate
+    CommandText.Strings = (
+      'update jhlh_pmis_shopper set trash=0'
+      
+        'where id = (select id from  jhlh_pmis_shopper  where phone=:phon' +
+        'e and eid=:eid and trash=1 and status=1 and mod=0 order by id de' +
+        'sc limit 1)')
+    ParamData = <
+      item
+        Name = 'PHONE'
+        ParamType = ptInput
+      end
+      item
+        Name = 'EID'
+        ParamType = ptInput
+      end>
+    Left = 200
+    Top = 280
   end
 end

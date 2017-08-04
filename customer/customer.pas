@@ -239,6 +239,12 @@ begin
   if trim(standnumberEdit.Text) = '' then
     required_str := required_str + '展位号未填写' + #13#10;
 
+  if allpaycxCurrencyEdit.Value=0 then
+     required_str := required_str + '总金额不能为0' + #13#10;
+
+  if Trim(salescxComboBox.Text) = ''  then
+   required_str := required_str + '招展人员必须填写' + #13#10;
+
   // if trim(nameEdit.Text)='' then
   // required_str:=required_str+'姓名未填写'+#13#10;
   //
@@ -247,6 +253,7 @@ begin
 
   if required_str <> '' then
   begin
+    beep;
     showmessage(required_str);
     exit;
   end;

@@ -34,6 +34,7 @@ object bplshopperframe: Tbplshopperframe
     object cxGrid1DBTableView1: TcxGridDBTableView
       OnKeyDown = cxGrid1DBTableView1KeyDown
       Navigator.Buttons.CustomButtons = <>
+      OnEditing = cxGrid1DBTableView1Editing
       DataController.DataSource = shopperds
       DataController.KeyFieldNames = 'id'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -222,6 +223,7 @@ object bplshopperframe: Tbplshopperframe
       end
       object cxGrid1DBTableView1mod: TcxGridDBColumn
         DataBinding.FieldName = 'mod'
+        Visible = False
         VisibleForCustomization = False
       end
     end
@@ -406,7 +408,7 @@ object bplshopperframe: Tbplshopperframe
       Properties.ListSource = expods
       Properties.OnChange = expocxLookupComboBoxPropertiesChange
       TabOrder = 0
-      Width = 741
+      Width = 754
     end
     object phonecxMaskEdit: TcxMaskEdit
       Left = 100
