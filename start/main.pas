@@ -8,7 +8,7 @@ uses
   Vcl.Menus, RzTabs, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCustomTileControl, cxClasses, dxTileControl, shopper,
   Vcl.StdCtrls, customer, clientsyc, clientuploadfrm, Vcl.ExtCtrls,
-  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common,cxGrid, cxContainer, cxEdit, cxLabel;
+  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common,cxGrid, cxContainer, cxEdit, cxLabel,setting;
 
 type
   Tmainform = class(TForm)
@@ -56,6 +56,7 @@ type
     bplcustomerframe: TbplCustomerFrame;
     bplclientsycframe: TclientsycFrame;
     bplclientuploadframe: TbplclientuploadFrame;
+    bplsettingframe:Tbplsettingframe;
     tabX, tabY: Integer;
     timesyncrunning:boolean;
     procedure timesync;
@@ -269,10 +270,39 @@ begin
 end;
 
 procedure Tmainform.dxTileControl1Item6Click(Sender: TdxTileControlItem);
+var
+  i: Integer;
+  menutabsheet: TRzTabSheet;
 begin
-   showmessage(GetBuildInfo);
-  // timesyncTimerTimer(nil);
+  for i := 0 to RzPageControl1.PageCount - 1 do
+  begin
+    if RzPageControl1.Pages[i].Tag = 6 then
+    begin
+      RzPageControl1.ActivePageIndex := i;
+      exit;
+    end;
+  end;
 
+  menutabsheet := TRzTabSheet.Create(RzPageControl1);
+  menutabsheet.Caption := ' Èí¼þÉÏ´« ';
+  menutabsheet.Tag := 6;
+  menutabsheet.PageControl := RzPageControl1;
+  // if bplshopperframe = nil then
+  begin
+    try
+      bplsettingFrame := Tbplsettingframe.Create(menutabsheet);
+      bplsettingFrame.Name := 'setting';
+      bplsettingFrame.Align := alClient;
+
+      RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
+      bplsettingFrame.Parent := RzPageControl1.ActivePage;
+    except
+      FreeAndNil(menutabsheet);
+      if Assigned(bplsettingFrame) then
+        FreeAndNil(bplsettingFrame);
+      raise;
+    end;
+  end;
 end;
 
 procedure Tmainform.FormCloseQuery(Sender: TObject; var CanClose: Boolean);

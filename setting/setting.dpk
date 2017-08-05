@@ -1,4 +1,4 @@
-package customer;
+package setting;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
@@ -29,26 +29,16 @@ package customer;
 
 requires
   rtl,
-  connection,
-  vclimg,
-  vcldb,
+  common,
+  dbrtl,
   dxCoreRS25,
   cxLibraryRS25,
   dxGDIPlusRS25,
   dxThemeRS25,
   cxDataRS25,
-  cxEditorsRS25,
-  cxPageControlRS25,
-  dxLayoutControlRS25,
-  cxGridRS25,
-  FireDACCommon,
-  common,
-  RaizeComponentsVcl,
-  cxExportRS25;
+  cxEditorsRS25;
 
 contains
-  customer in 'customer.pas' {bplCustomerFrame: TFrame},
-  customerdm in 'customerdm.pas' {customerDataModule: TDataModule};
+  setting in 'setting.pas' {bplsettingFrame: TFrame};
 
 end.
-

@@ -136,7 +136,6 @@ object mainform: Tmainform
         Style.Stretch = smTile
         TabOrder = 0
         Transparent = True
-        ExplicitLeft = -1
         object dxTileControl1Group1: TdxTileControlGroup
           Index = 0
         end

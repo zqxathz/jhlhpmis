@@ -154,6 +154,7 @@ type
     procedure cxGrid1DBTableView1sidPropertiesEditValueChanged(Sender: TObject);
     procedure cxGrid1DBTableView1Editing(Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem;
       var AAllow: Boolean);
+    procedure cxGrid1DBTableView1ColumnPosChanged(Sender: TcxGridTableView; AColumn: TcxGridColumn);
 
   private
     { Private declarations }
@@ -643,6 +644,8 @@ end;
 
 // FRAME创建
 constructor Tbplshopperframe.Create(AOwner: TComponent);
+var
+ i:integer;
 begin
   inherited;
   if shopperdatamod = nil then
@@ -652,14 +655,25 @@ begin
   end;
   // cxPropertiesStore1.StorageName := ExtractFilePath(Application.Exename)
   // + inifile;
+
   cxPropertiesStore1.Active := true;
   cxPropertiesStore1.RestoreFrom; // 读取保存的一些组件数据
   RzProgressStatus1.Visible := false;
   RzStatusBar1.Top := 9999; // 防止PANEL跑到StatusBar下面去
   Recordmod:=0;
+
 end;
 
 // 在Grid里按Ctrl+C复制当前格子的文本内容
+procedure Tbplshopperframe.cxGrid1DBTableView1ColumnPosChanged(Sender: TcxGridTableView; AColumn: TcxGridColumn);
+var
+  index:integer;
+begin
+  index:=cxGrid1DBTableView1.GetColumnByFieldName('phone').Index;
+  if AColumn.Index<=index then
+    AColumn.Index:=index;
+end;
+
 procedure Tbplshopperframe.cxGrid1DBTableView1Editing(Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem;
   var AAllow: Boolean);
 begin

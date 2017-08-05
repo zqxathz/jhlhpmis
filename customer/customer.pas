@@ -128,6 +128,9 @@ type
     RzProgressStatus1: TRzProgressStatus;
     RzStatusPane1: TRzStatusPane;
     cxEditRepository1TextItem1: TcxEditRepositoryTextItem;
+    standsearchButton: TButton;
+    cxStyle3: TcxStyle;
+    cxStyle4: TcxStyle;
     procedure expocxLookupComboBoxPropertiesChange(Sender: TObject);
     procedure customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(Sender: TObject);
     procedure salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(Sender: TObject);
@@ -137,7 +140,6 @@ type
     procedure cxEditRepository1PopupItem1PropertiesInitPopup(Sender: TObject);
     procedure cxEditRepository1PopupItem1PropertiesCloseUp(Sender: TObject);
     procedure applyButtonClick(Sender: TObject);
-    procedure cxGrid1DBTableView1DataControllerDataChanged(Sender: TObject);
     procedure autowidthmenuClick(Sender: TObject);
     procedure refreshmenuClick(Sender: TObject);
     procedure fetchmenuClick(Sender: TObject);
@@ -155,6 +157,7 @@ type
     procedure cxGrid1DBTableView1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cxEditRepository1TextItem1PropertiesValidate(Sender: TObject; var DisplayValue: Variant;
       var ErrorText: TCaption; var Error: Boolean);
+    procedure standsearchButtonClick(Sender: TObject);
   private
       { Private declarations }
     columninfoMemo: TMemo;
@@ -164,6 +167,8 @@ type
     procedure AppendUpdateData;
     procedure OnProgress(Sender: TObject; Percent: Integer);
     procedure ValidateStandNumber(Sender: TObject);
+    procedure customerFDQueryAfterOpen(Dataset:TObject);
+    procedure customerFDQueryAfterRecords(Dataset:TObject);
   public
       { Public declarations }
     constructor Create(AOwner: TComponent); override;
@@ -358,18 +363,12 @@ begin
   if customerDataModule = nil then
   begin
     customerDataModule := TcustomerDataModule.Create(nil);
+    //customerDataModule.AfteOpen:=self.customerFDQueryAfterRecords;
+    customerDataModule.AfteOpen:=self.customerFDQueryAfterOpen;
     expocxLookupComboBox.ItemIndex := 0;
     paytypecxLookupComboBox.ItemIndex := 0;
-    for i := 0 to cxGrid1DBTableView1.ColumnCount - 1 do
-    begin
-      with cxPropertiesStore1.Components.Add do
-      begin
-        Component := cxGrid1DBTableView1.Columns[i];
-        Properties.Add('width');
-      end;
-    end;
-    initGirdTableView;
-    cxPropertiesStore1.RestoreFrom;
+    //initGirdTableView;
+    //cxPropertiesStore1.RestoreFrom;
     if not Assigned(columninfoMemo) then
     begin
       columninfoMemo := TMemo.Create(Self);
@@ -421,6 +420,27 @@ begin
   ErrorText := '手机号不正确';
 end;
 
+procedure TbplCustomerFrame.customerFDQueryAfterOpen(Dataset: TObject);
+var
+  i:integer;
+begin
+  initGirdTableView;
+  for i := 0 to cxGrid1DBTableView1.ColumnCount - 1 do
+  begin
+    with cxPropertiesStore1.Components.Add do
+    begin
+      Component := cxGrid1DBTableView1.Columns[i];
+      Properties.Add('width');
+    end;
+  end;
+ cxPropertiesStore1.RestoreFrom;
+end;
+
+procedure TbplCustomerFrame.customerFDQueryAfterRecords(Dataset: TObject);
+begin
+// cxGrid1DBTableView1.DataController.CreateAllItems(true);
+end;
+
 procedure TbplCustomerFrame.customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(Sender: TObject);
 begin
   with customertypecxEditRepository1ComboBoxItem1 do
@@ -468,15 +488,6 @@ begin
   end;
 end;
 
-procedure TbplCustomerFrame.cxGrid1DBTableView1DataControllerDataChanged(Sender: TObject);
-begin
-  if cxGrid1DBTableView1.ColumnCount = 0 then
-  begin
-
-    cxGrid1DBTableView1.DataController.CreateAllItems(true);
-  end;
-end;
-
 procedure TbplCustomerFrame.cxGrid1DBTableView1DblClick(Sender: TObject);
 begin
   EditmodeCheckBox.Checked := not EditmodeCheckBox.Checked;
@@ -516,11 +527,12 @@ end;
 
 procedure TbplCustomerFrame.cxGrid1DBTableView1StylesGetContentStyle(Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord; AItem: TcxCustomGridTableItem; var AStyle: TcxStyle);
 begin
-  if (AItem.Caption = '剩余金额') then
-  begin
-    if ARecord.Values[AItem.Index] > 0 then
-      AStyle := otherpaycxStyle;
-  end
+  if ARecord.IsData then
+    if (AItem.Caption = '剩余金额') then
+    begin
+      if ARecord.Values[AItem.Index] > 0 then
+        AStyle := otherpaycxStyle;
+    end
 end;
 
 destructor TbplCustomerFrame.Destroy;
@@ -547,9 +559,19 @@ end;
 
 procedure TbplCustomerFrame.initGirdTableView;
 begin
+  if cxGrid1DBTableView1.ColumnCount = 0 then
+  begin
+      cxGrid1DBTableView1.DataController.CreateAllItems(true);
+  end;
   if cxGrid1DBTableView1.ColumnCount > 0 then
   begin
     // cxGrid1DBTableView1.DataController.CreateAllItems(True);
+
+    with cxGrid1DBTableView1.DataController.Summary.DefaultGroupSummaryItems.Add do
+    begin
+      Kind:=skCount;
+      Format:='合计:0条';
+    end;
 
     with TcxGridDBTableSummaryItem(cxGrid1DBTableView1.DataController.Summary.FooterSummaryItems.Add) do
     begin
@@ -735,7 +757,7 @@ begin
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('update_microsecond') do
     begin
-      //Visible := false;
+      Visible := false;
     end;
     with cxGrid1DBTableView1.GetColumnByFieldName('create_datetime') do
     begin
@@ -766,7 +788,7 @@ begin
       Visible := false;
     end;
   end;
-
+  cxGrid1DBTableView1.DataController.DataSource.Enabled:=true;
 end;
 
 procedure TbplCustomerFrame.refreshmenuClick(Sender: TObject);
@@ -787,10 +809,10 @@ begin
 
   s := 'and eid=' + customerDataModule.expoFDQuery.FieldByName('id').AsString +create_member_str;
   customerDataModule.customerOpen(s);
-  customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(nil);
-  salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(nil);
-  customertypecxComboBox.Properties.Items.Text := customerDataModule.getCustomerType.Text;
-  customertypecxComboBox.ItemIndex := 0;
+ // customertypecxEditRepository1ComboBoxItem1PropertiesInitPopup(nil);
+ // salesnamecxEditRepository1ComboBoxItemPropertiesInitPopup(nil);
+ // customertypecxComboBox.Properties.Items.Text := customerDataModule.getCustomerType.Text;
+ // customertypecxComboBox.ItemIndex := 0;
 end;
 
 procedure TbplCustomerFrame.fetchallmenuClick(Sender: TObject);
@@ -853,6 +875,19 @@ end;
 procedure TbplCustomerFrame.softremovemenuClick(Sender: TObject);
 begin
   customerDataModule.softremovecurr;
+end;
+
+procedure TbplCustomerFrame.standsearchButtonClick(Sender: TObject);
+var
+  index:integer;
+begin
+  if not Trim(standnumberEdit.Text).IsEmpty then
+  begin
+    index:=cxGrid1DBTableView1.Controller.FocusedRecordIndex;
+    if index>0 then inc(index);
+    index:=cxGrid1DBTableView1.DataController.FindRecordIndexByText(index,3,Trim(standnumberEdit.Text),false,true,true);
+    cxGrid1DBTableView1.Controller.FocusedRecordIndex:=index;
+  end;
 end;
 
 procedure TbplCustomerFrame.toexcelmenuClick(Sender: TObject);

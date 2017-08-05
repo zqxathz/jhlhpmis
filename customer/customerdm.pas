@@ -33,10 +33,15 @@ type
     procedure salesFDQueryBeforePost(DataSet: TDataSet);
     procedure customerFDQueryAfterOpen(DataSet: TDataSet);
     procedure customerFDQueryBeforePost(DataSet: TDataSet);
+    procedure customerFDQueryAfterGetRecords(DataSet: TFDDataSet);
     private
       { Private declarations }
+      FAfterOpen:TNotifyEvent;
+      FAfterGetRecords:TNotifyEvent;
     public
       { Public declarations }
+      property AfteOpen:TNotifyEvent read FAfterOpen write FAfterOpen;
+      property AfterGetRecords:TNotifyEvent read FAfterGetRecords write FAfterGetRecords;
       procedure customerOpen(s: string);
       function getCustomerType: TStringList;
       function getSalesName: TStringList;
@@ -73,6 +78,7 @@ begin
     expoFDQuery.Connection := connectionDataModule.mainFDConnection;
     paytypeFDQuery.Connection := connectionDataModule.mainFDConnection;
   end;
+  self.AfteOpen:=nil;
   expoFDQuery.open;
   // customertypeFDQuery.open;
   salesFDQuery.open;
@@ -165,14 +171,21 @@ begin
   end;
 end;
 
+procedure TcustomerDataModule.customerFDQueryAfterGetRecords(DataSet: TFDDataSet);
+begin
+  if Assigned(FAfterGetRecords) then
+    FAfterGetRecords(nil);
+end;
+
 procedure TcustomerDataModule.customerFDQueryAfterOpen(DataSet: TDataSet);
 begin
-DataSet.FieldByName('id').ProviderFlags:=DataSet.FieldByName('id').ProviderFlags+[pfInKey];
+  DataSet.FieldByName('id').ProviderFlags:=DataSet.FieldByName('id').ProviderFlags+[pfInKey];
+  if Assigned(FAfterOpen) then
+        FAfterOpen(nil);
 end;
 
 procedure TcustomerDataModule.customerFDQueryBeforePost(DataSet: TDataSet);
 begin
-
 
   if DataSet.State = dsEdit then
   begin

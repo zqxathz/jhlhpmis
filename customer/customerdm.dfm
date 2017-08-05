@@ -9,6 +9,7 @@ object customerDataModule: TcustomerDataModule
     OnCalcFields = customerFDQueryCalcFields
     FieldOptions.AutoCreateMode = acCombineAlways
     FieldOptions.PositionMode = poFirst
+    AfterGetRecords = customerFDQueryAfterGetRecords
     AfterGetRecord = customerFDQueryAfterGetRecord
     FetchOptions.AssignedValues = [evMode]
     UpdateOptions.AutoIncFields = 'id'
@@ -60,6 +61,7 @@ object customerDataModule: TcustomerDataModule
   end
   object customerDataSource: TDataSource
     DataSet = customerFDQuery
+    Enabled = False
     Left = 232
     Top = 192
   end

@@ -38,7 +38,6 @@ object bplCustomerFrame: TbplCustomerFrame
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
-      DataController.OnDataChanged = cxGrid1DBTableView1DataControllerDataChanged
       OptionsBehavior.CopyRecordsToClipboard = False
       OptionsBehavior.ImmediateEditor = False
       OptionsData.Deleting = False
@@ -46,7 +45,9 @@ object bplCustomerFrame: TbplCustomerFrame
       OptionsView.Indicator = True
       Styles.ContentEven = cxStyle1
       Styles.ContentOdd = cxStyle2
+      Styles.Inactive = cxStyle4
       Styles.OnGetContentStyle = cxGrid1DBTableView1StylesGetContentStyle
+      Styles.GroupByBox = cxStyle3
     end
     object cxGrid1Level1: TcxGridLevel
       GridView = cxGrid1DBTableView1
@@ -109,7 +110,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #36873#25321#23637#20250':'
-      TabOrder = 18
+      TabOrder = 19
     end
     object applyButton: TButton
       Left = 967
@@ -118,7 +119,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Height = 25
       Anchors = [akLeft, akBottom]
       Caption = #22686#21152
-      TabOrder = 16
+      TabOrder = 17
       OnClick = applyButtonClick
     end
     object Button2: TButton
@@ -128,7 +129,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Height = 25
       Anchors = [akLeft, akBottom]
       Caption = #37325#32622
-      TabOrder = 19
+      TabOrder = 20
       TabStop = False
       OnClick = Button2Click
     end
@@ -138,23 +139,23 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 69
       Height = 31
       Caption = #23637#20301#21495':'
-      TabOrder = 20
+      TabOrder = 21
     end
     object StaticText3: TStaticText
-      Left = 400
-      Top = 51
+      Left = 431
+      Top = 52
       Width = 49
       Height = 31
       Caption = #22995#21517':'
-      TabOrder = 21
+      TabOrder = 22
     end
     object StaticText4: TStaticText
-      Left = 569
+      Left = 598
       Top = 51
       Width = 49
       Height = 31
       Caption = #25163#26426':'
-      TabOrder = 22
+      TabOrder = 23
     end
     object StaticText5: TStaticText
       Left = 822
@@ -162,7 +163,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #20844#21496':'
-      TabOrder = 23
+      TabOrder = 24
     end
     object StaticText6: TStaticText
       Left = 9
@@ -170,7 +171,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #30005#35805':'
-      TabOrder = 24
+      TabOrder = 25
     end
     object StaticText7: TStaticText
       Left = 9
@@ -178,7 +179,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #31867#22411':'
-      TabOrder = 25
+      TabOrder = 26
     end
     object StaticText8: TStaticText
       Left = 9
@@ -186,7 +187,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 69
       Height = 31
       Caption = #24635#37329#39069':'
-      TabOrder = 26
+      TabOrder = 27
     end
     object StaticText9: TStaticText
       Left = 216
@@ -194,7 +195,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #35746#37329':'
-      TabOrder = 27
+      TabOrder = 28
     end
     object StaticText10: TStaticText
       Left = 397
@@ -202,7 +203,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #29616#22330#20132#27454':'
-      TabOrder = 28
+      TabOrder = 29
     end
     object StaticText11: TStaticText
       Left = 642
@@ -210,7 +211,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #25903#20184#31867#22411':'
-      TabOrder = 29
+      TabOrder = 30
     end
     object StaticText12: TStaticText
       Left = 216
@@ -218,7 +219,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 41
       Height = 31
       Caption = 'QQ:'
-      TabOrder = 30
+      TabOrder = 31
     end
     object StaticText13: TStaticText
       Left = 431
@@ -226,7 +227,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #37038#31665':'
-      TabOrder = 31
+      TabOrder = 32
     end
     object StaticText14: TStaticText
       Left = 888
@@ -234,7 +235,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 89
       Height = 31
       Caption = #25307#23637#20154#21592':'
-      TabOrder = 32
+      TabOrder = 33
     end
     object StaticText15: TStaticText
       Left = 9
@@ -242,7 +243,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #22320#22336':'
-      TabOrder = 33
+      TabOrder = 34
     end
     object StaticText16: TStaticText
       Left = 9
@@ -250,7 +251,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 49
       Height = 31
       Caption = #22791#27880':'
-      TabOrder = 34
+      TabOrder = 35
     end
     object infoMemo: TMemo
       Left = 64
@@ -258,42 +259,42 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 818
       Height = 74
       Anchors = [akLeft, akTop, akBottom]
-      TabOrder = 15
+      TabOrder = 16
     end
     object addrEdit: TEdit
       Left = 64
       Top = 164
       Width = 818
       Height = 35
-      TabOrder = 14
+      TabOrder = 15
     end
     object standnumberEdit: TEdit
-      Left = 285
+      Left = 288
       Top = 47
       Width = 108
       Height = 35
       TabOrder = 2
     end
     object nameEdit: TEdit
-      Left = 450
+      Left = 479
       Top = 47
       Width = 114
       Height = 35
-      TabOrder = 3
+      TabOrder = 4
     end
     object companyEdit: TEdit
       Left = 877
       Top = 48
       Width = 254
       Height = 35
-      TabOrder = 5
+      TabOrder = 6
     end
     object emailEdit: TEdit
       Left = 486
       Top = 125
       Width = 396
       Height = 35
-      TabOrder = 13
+      TabOrder = 14
     end
     object allpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 84
@@ -303,7 +304,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.Nullable = False
       Properties.Nullstring = '0'
       Properties.UseNullString = True
-      TabOrder = 6
+      TabOrder = 7
       OnClick = allpaycxCurrencyEditClick
       Width = 127
     end
@@ -313,7 +314,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Width = 170
       Height = 35
       NumbersOnly = True
-      TabOrder = 12
+      TabOrder = 13
     end
     object firstpaycxCurrencyEdit: TcxCurrencyEdit
       Left = 266
@@ -321,7 +322,7 @@ object bplCustomerFrame: TbplCustomerFrame
       EditValue = 0.000000000000000000
       Properties.EditFormat = '0.00;-0.00'
       Properties.Nullable = False
-      TabOrder = 7
+      TabOrder = 8
       OnClick = allpaycxCurrencyEditClick
       Width = 127
     end
@@ -330,7 +331,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 87
       EditValue = 0.000000000000000000
       Properties.EditFormat = '0.00;-0.00'
-      TabOrder = 8
+      TabOrder = 9
       OnClick = allpaycxCurrencyEditClick
       Width = 150
     end
@@ -339,7 +340,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Top = 86
       RepositoryItem = paytypecxEditRepository1LookupComboBoxItem
       Properties.ListColumns = <>
-      TabOrder = 9
+      TabOrder = 10
       Width = 145
     end
     object telphonecxMaskEdit: TcxMaskEdit
@@ -348,18 +349,18 @@ object bplCustomerFrame: TbplCustomerFrame
       Properties.MaskKind = emkRegExpr
       Properties.EditMask = '\d{0,11}'
       Properties.MaxLength = 0
-      TabOrder = 11
+      TabOrder = 12
       Width = 147
     end
     object phonecxMaskEdit: TcxMaskEdit
-      Left = 621
+      Left = 648
       Top = 47
       Properties.MaskKind = emkRegExprEx
       Properties.EditMask = '([1])\d{10}'
       Properties.ValidationOptions = []
       Properties.OnValidate = phonecxMaskEditPropertiesValidate
-      TabOrder = 4
-      Width = 196
+      TabOrder = 5
+      Width = 172
     end
     object customertypecxComboBox: TcxComboBox
       Left = 64
@@ -381,7 +382,7 @@ object bplCustomerFrame: TbplCustomerFrame
       StyleDisabled.LookAndFeel.NativeStyle = True
       StyleFocused.LookAndFeel.NativeStyle = True
       StyleHot.LookAndFeel.NativeStyle = True
-      TabOrder = 10
+      TabOrder = 11
       OnEnter = salescxComboBoxEnter
       Width = 148
     end
@@ -393,7 +394,7 @@ object bplCustomerFrame: TbplCustomerFrame
       TabStop = False
       Anchors = [akLeft, akBottom]
       Caption = #32534#36753#27169#24335
-      TabOrder = 35
+      TabOrder = 36
       OnClick = EditmodeCheckBoxClick
     end
     object updateButton: TButton
@@ -403,7 +404,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Height = 25
       Anchors = [akLeft, akBottom]
       Caption = #26356#26032
-      TabOrder = 17
+      TabOrder = 18
       Visible = False
       OnClick = applyButtonClick
     end
@@ -424,7 +425,7 @@ object bplCustomerFrame: TbplCustomerFrame
       Font.Name = #24494#36719#38597#40657
       Font.Style = []
       ParentFont = False
-      TabOrder = 36
+      TabOrder = 37
       Visible = False
       object RzClockStatus1: TRzClockStatus
         Left = -1221
@@ -466,6 +467,15 @@ object bplCustomerFrame: TbplCustomerFrame
         Caption = #27491#22312#23548#20986':'
         ExplicitLeft = -4011
       end
+    end
+    object standsearchButton: TButton
+      Left = 396
+      Top = 48
+      Width = 27
+      Height = 33
+      Caption = #26597
+      TabOrder = 3
+      OnClick = standsearchButtonClick
     end
   end
   object cxEditRepository1: TcxEditRepository
@@ -566,6 +576,20 @@ object bplCustomerFrame: TbplCustomerFrame
       Font.Style = []
       Font.Quality = fqClearType
       TextColor = clRed
+    end
+    object cxStyle3: TcxStyle
+      AssignedValues = [svColor, svFont, svTextColor]
+      Color = 4707838
+      Font.Charset = GB2312_CHARSET
+      Font.Color = clWindow
+      Font.Height = -15
+      Font.Name = #24494#36719#38597#40657
+      Font.Style = []
+      TextColor = clBlack
+    end
+    object cxStyle4: TcxStyle
+      AssignedValues = [svColor]
+      Color = clActiveCaption
     end
   end
   object PopupMenu1: TPopupMenu

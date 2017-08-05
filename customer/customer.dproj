@@ -150,6 +150,7 @@
         <DCCReference Include="FireDACCommon.dcp"/>
         <DCCReference Include="common.dcp"/>
         <DCCReference Include="RaizeComponentsVcl.dcp"/>
+        <DCCReference Include="cxExportRS25.dcp"/>
         <DCCReference Include="customer.pas">
             <Form>bplCustomerFrame</Form>
             <DesignClass>TFrame</DesignClass>

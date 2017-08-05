@@ -37,7 +37,12 @@ object bplshopperframe: Tbplshopperframe
       OnEditing = cxGrid1DBTableView1Editing
       DataController.DataSource = shopperds
       DataController.KeyFieldNames = 'id'
-      DataController.Summary.DefaultGroupSummaryItems = <>
+      DataController.Summary.DefaultGroupSummaryItems = <
+        item
+          Format = #21512#35745':0'#26465
+          Kind = skCount
+          FieldName = 'id'
+        end>
       DataController.Summary.FooterSummaryItems = <
         item
           Format = #24635#25968':0'
@@ -59,6 +64,7 @@ object bplshopperframe: Tbplshopperframe
       OptionsView.Footer = True
       OptionsView.Indicator = True
       Styles.StyleSheet = GridTableViewStyleSheetDevExpress
+      OnColumnPosChanged = cxGrid1DBTableView1ColumnPosChanged
       object cxGrid1DBTableView1id: TcxGridDBColumn
         Caption = #32534#21495
         DataBinding.FieldName = 'id'
@@ -838,8 +844,13 @@ object bplshopperframe: Tbplshopperframe
       Color = 14872561
     end
     object cxStyle8: TcxStyle
-      AssignedValues = [svColor, svTextColor]
+      AssignedValues = [svColor, svFont, svTextColor]
       Color = 4707838
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = #24494#36719#38597#40657
+      Font.Style = []
       TextColor = clBlack
     end
     object cxStyle9: TcxStyle
@@ -849,7 +860,7 @@ object bplshopperframe: Tbplshopperframe
     end
     object cxStyle10: TcxStyle
       AssignedValues = [svColor]
-      Color = 15451300
+      Color = clActiveCaption
     end
     object cxStyle11: TcxStyle
       AssignedValues = [svColor, svTextColor]
