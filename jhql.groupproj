@@ -4,7 +4,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Projects Include="start\start.dproj">
-            <Dependencies>clientsyc\clientsyc.dproj;clientupload\clientupload.dproj;shopper\shopper.dproj;customer\customer.dproj</Dependencies>
+            <Dependencies>shopper\shopper.dproj;customer\customer.dproj;clientsyc\clientsyc.dproj;clientupload\clientupload.dproj;setting\setting.dproj</Dependencies>
         </Projects>
         <Projects Include="shopper\shopper.dproj">
             <Dependencies/>
@@ -41,13 +41,13 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="start" DependsOnTargets="clientsyc;clientupload;shopper;customer">
+    <Target Name="start" DependsOnTargets="shopper;customer;clientsyc;clientupload;setting">
         <MSBuild Projects="start\start.dproj"/>
     </Target>
-    <Target Name="start:Clean" DependsOnTargets="clientsyc:Clean;clientupload:Clean;shopper:Clean;customer:Clean">
+    <Target Name="start:Clean" DependsOnTargets="shopper:Clean;customer:Clean;clientsyc:Clean;clientupload:Clean;setting:Clean">
         <MSBuild Projects="start\start.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="start:Make" DependsOnTargets="clientsyc:Make;clientupload:Make;shopper:Make;customer:Make">
+    <Target Name="start:Make" DependsOnTargets="shopper:Make;customer:Make;clientsyc:Make;clientupload:Make;setting:Make">
         <MSBuild Projects="start\start.dproj" Targets="Make"/>
     </Target>
     <Target Name="shopper">

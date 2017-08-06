@@ -184,15 +184,25 @@ uses
 // 将当前GRID数据导出到EXCEL文件
 procedure Tbplshopperframe.CxGridToExcel(AcxGrid: TcxGrid);
 var
-  SaveDialog: TSaveDialog;
+  SaveDialog: TFileSaveDialog;// TSaveDialog;
+  extstr:string;
 begin
-  SaveDialog := TSaveDialog.Create(nil);
+  SaveDialog := TFileSaveDialog.Create(nil);
   with SaveDialog do
   begin
-    Filter := '*.xls|*.xls';
+    FileTypes.Add.FileMask:='*.xls';
+    FileTypes.Add.FileMask:='*.xlsx';
+    //Filter := '*.xls|*.xls';
+
     if Execute then
-      ExportGridToExcel(SaveDialog.FileName, AcxGrid, true, true, true,
-        'xls', Self);
+    begin
+      if FileTypeIndex=1 then
+        ExportGridToExcel(SaveDialog.FileName, AcxGrid, true, true, true,
+          'xls', Self);
+      if FileTypeIndex=2 then
+        ExportGridToXlsx(SaveDialog.FileName, AcxGrid, true, true, true,
+        'xlsx', Self);
+    end;
   end;
   SaveDialog.Free;
 end;
@@ -750,6 +760,7 @@ procedure Tbplshopperframe.expocxLookupComboBoxPropertiesChange
 var
   sqlstr: string;
 begin
+  if shopperdatamod.expofdquery.FieldByName('id').asstring='' then exit;
   sqlstr := format(SHOPPER_SQL,
     [' and eid=' + shopperdatamod.expofdquery.FieldByName('id').asstring]);
   shopperdatamod.shopperfdquery.Close;

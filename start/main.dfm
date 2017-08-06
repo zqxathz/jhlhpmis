@@ -14,6 +14,7 @@ object mainform: Tmainform
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
@@ -308,5 +309,10 @@ object mainform: Tmainform
     ReceiveTimeout = 2000
     Left = 64
     Top = 328
+  end
+  object ApplicationEvents1: TApplicationEvents
+    OnMessage = ApplicationEvents1Message
+    Left = 432
+    Top = 280
   end
 end

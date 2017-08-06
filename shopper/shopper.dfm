@@ -386,8 +386,8 @@ object bplshopperframe: Tbplshopperframe
       Visible = False
     end
     object expocxLookupComboBox: TcxLookupComboBox
-      Left = 100
-      Top = 6
+      Left = 102
+      Top = 9
       TabStop = False
       Properties.DropDownAutoSize = True
       Properties.DropDownListStyle = lsFixedList

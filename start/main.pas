@@ -8,7 +8,8 @@ uses
   Vcl.Menus, RzTabs, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxCustomTileControl, cxClasses, dxTileControl, shopper,
   Vcl.StdCtrls, customer, clientsyc, clientuploadfrm, Vcl.ExtCtrls,
-  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common,cxGrid, cxContainer, cxEdit, cxLabel,setting;
+  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common,cxGrid, cxContainer, cxEdit, cxLabel,setting,
+  Vcl.AppEvnts;
 
 type
   Tmainform = class(TForm)
@@ -30,6 +31,7 @@ type
     timesyncTimer: TTimer;
     IdSNTP1: TIdSNTP;
     StaticText1: TStaticText;
+    ApplicationEvents1: TApplicationEvents;
     procedure loginframe1loginbuttonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -49,6 +51,8 @@ type
     procedure loginframe1syncmemberButtonClick(Sender: TObject);
     procedure RzPageControl1Changing(Sender: TObject; NewIndex: Integer; var AllowChange: Boolean);
     procedure StaticText1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -60,6 +64,7 @@ type
     tabX, tabY: Integer;
     timesyncrunning:boolean;
     procedure timesync;
+    procedure FrameClose(Sender: TObject);
   public
     { Public declarations }
   end;
@@ -100,6 +105,12 @@ begin
   end;
   result := inttostr(v1) + '.' + inttostr(v2) + '.' + inttostr(v3) + '.' + inttostr(v4);
   freemem(verinfo, verinfosize);
+end;
+
+procedure Tmainform.ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
+begin
+  if (Msg.message=WM_USER + 100) then
+    RzPageControl1.CloseActiveTab;
 end;
 
 procedure Tmainform.dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -284,7 +295,7 @@ begin
   end;
 
   menutabsheet := TRzTabSheet.Create(RzPageControl1);
-  menutabsheet.Caption := ' 软件上传 ';
+  menutabsheet.Caption := ' 软件设置 ';
   menutabsheet.Tag := 6;
   menutabsheet.PageControl := RzPageControl1;
   // if bplshopperframe = nil then
@@ -296,12 +307,27 @@ begin
 
       RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
       bplsettingFrame.Parent := RzPageControl1.ActivePage;
+      bplsettingframe.OnClose:=FrameClose;
     except
       FreeAndNil(menutabsheet);
       if Assigned(bplsettingFrame) then
         FreeAndNil(bplsettingFrame);
       raise;
     end;
+  end;
+end;
+
+procedure Tmainform.FrameClose(Sender: TObject);
+begin
+  RzPageControl1.CloseActiveTab;
+end;
+
+procedure Tmainform.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if Assigned(shopperdatamod) then
+  begin
+    shopperdatamod.Free;
+    shopperdatamod:=nil;
   end;
 end;
 

@@ -21,7 +21,9 @@ type
   private
     { Private declarations }
   public
+    destructor Destroy; override;
     { Public declarations }
+
   end;
 
 implementation
@@ -29,6 +31,12 @@ implementation
 {$R *.dfm}
 
 uses connectiondm;
+
+destructor Tloginframe.Destroy;
+begin
+  if Assigned(clientuser) then FreeAndNil(clientuser);
+  inherited;
+end;
 
 procedure Tloginframe.loginbuttonClick(Sender: TObject);
 begin

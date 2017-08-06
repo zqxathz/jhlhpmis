@@ -106,6 +106,7 @@ type
     procedure shopperfdqueryAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
     procedure softremoveFDCommandError(ASender, AInitiator: TObject; var AException: Exception);
     procedure shopperfdqueryBeforePost(DataSet: TDataSet);
+    procedure DataModuleDestroy(Sender: TObject);
     private
       { Private declarations }
     public
@@ -227,11 +228,19 @@ begin
   updateshopperFDCommand.Connection := connectionDataModule.mainFDConnection;
   recoverdelFDCommand.Connection:=connectionDataModule.mainFDConnection;
 
-  FDEventAlerter1.Active := true;
+  //FDEventAlerter1.Active := true;
 
   areafdquery.Active := true;
   shoppersourcefdquery.Active := true;
   expofdquery.Active := true;
+end;
+
+procedure Tshopperdatamod.DataModuleDestroy(Sender: TObject);
+begin
+  areafdquery.Active := false;
+  shoppersourcefdquery.Active := false;
+  expofdquery.Active := false;
+  shopperfdquery.Active:=false;
 end;
 
 procedure Tshopperdatamod.FDEventAlerter1Alert(ASender: TFDCustomEventAlerter;

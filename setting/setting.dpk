@@ -32,11 +32,9 @@ requires
   common,
   dbrtl,
   dxCoreRS25,
-  cxLibraryRS25,
   dxGDIPlusRS25,
   dxThemeRS25,
-  cxDataRS25,
-  cxEditorsRS25;
+  dxNavBarRS25;
 
 contains
   setting in 'setting.pas' {bplsettingFrame: TFrame};
