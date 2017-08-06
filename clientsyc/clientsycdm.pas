@@ -27,7 +27,8 @@ uses
   System.JSON,
   System.Variants,
   Datasnap.DBClient,
-  Data.DBXTrace;
+  Data.DBXTrace,
+  setting;
 
 type
   TclientsycDataModule = class(TDataModule)
@@ -893,6 +894,8 @@ end;
 procedure TclientsycDataModule.SQLConnection1BeforeConnect(Sender: TObject);
 begin
   SQLConnection1.Params.Add('version=1');
+  SQLConnection1.Params.Values['HostName']:= TSetting.GetValue('Net','server',setting.Server);
+  SQLConnection1.Params.Values['Port']:= TSetting.GetValue('Net','port',setting.ServerPort);
 end;
 
 function TclientsycDataModule.test: string;

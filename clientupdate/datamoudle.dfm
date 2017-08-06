@@ -23,6 +23,7 @@ object updateDataModule: TupdateDataModule
       'DSAuthenticationUser=guest'
       'CommunicationTimeout=5000'
       'ConnectTimeout=5000')
+    BeforeConnect = SQLConnection1BeforeConnect
     Left = 232
     Top = 176
     UniqueId = '{6E5AB97C-42DA-4247-A88A-699B39A8154A}'

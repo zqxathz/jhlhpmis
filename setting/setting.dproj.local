@@ -6,21 +6,21 @@
     <Transaction>2017/07/08 12:23:37.000.589,=rtl.dcp</Transaction>
     <Transaction>2017/07/10 12:26:31.000.489,=rtl.dcp</Transaction>
     <Transaction>2017/08/05 20:13:42.000.524,=rtl.dcp</Transaction>
-    <Transaction>2017/08/05 20:14:09.000.959,C:\Users\Vine\Documents\Embarcadero\Studio\Projects\Package1.dproj=D:\Develop\jhql\setting\setting.dproj</Transaction>
+    <Transaction>2017/08/05 20:14:09.000.959,D:\Develop\jhql\setting\setting.dproj=C:\Users\Vine\Documents\Embarcadero\Studio\Projects\Package1.dproj</Transaction>
     <Transaction>2017/08/05 20:14:23.000.862,=D:\Develop\jhql\setting\Unit2.pas</Transaction>
-    <Transaction>2017/08/05 20:14:44.000.865,D:\Develop\jhql\setting\Unit2.pas=D:\Develop\jhql\setting\setting.pas</Transaction>
-    <Transaction>2017/08/05 20:14:44.000.865,D:\Develop\jhql\setting\Unit2.dfm=D:\Develop\jhql\setting\setting.dfm</Transaction>
+    <Transaction>2017/08/05 20:14:44.000.865,D:\Develop\jhql\setting\setting.dfm=D:\Develop\jhql\setting\Unit2.dfm</Transaction>
+    <Transaction>2017/08/05 20:14:44.000.865,D:\Develop\jhql\setting\setting.pas=D:\Develop\jhql\setting\Unit2.pas</Transaction>
     <Transaction>2017/08/05 20:15:00.000.583,=common.dcp</Transaction>
-    <Transaction>2017/08/05 20:46:46.000.413,=cxEditorsRS25.dcp</Transaction>
     <Transaction>2017/08/05 20:46:46.000.393,=dbrtl.dcp</Transaction>
-    <Transaction>2017/08/05 20:46:46.000.404,=dxGDIPlusRS25.dcp</Transaction>
-    <Transaction>2017/08/05 20:46:46.000.400,=cxLibraryRS25.dcp</Transaction>
-    <Transaction>2017/08/05 20:46:46.000.396,=dxCoreRS25.dcp</Transaction>
     <Transaction>2017/08/05 20:46:46.000.409,=cxDataRS25.dcp</Transaction>
+    <Transaction>2017/08/05 20:46:46.000.396,=dxCoreRS25.dcp</Transaction>
+    <Transaction>2017/08/05 20:46:46.000.400,=cxLibraryRS25.dcp</Transaction>
     <Transaction>2017/08/05 20:46:46.000.406,=dxThemeRS25.dcp</Transaction>
+    <Transaction>2017/08/05 20:46:46.000.404,=dxGDIPlusRS25.dcp</Transaction>
+    <Transaction>2017/08/05 20:46:46.000.413,=cxEditorsRS25.dcp</Transaction>
     <Transaction>2017/08/06 13:16:02.000.561,=dxNavBarRS25.dcp</Transaction>
     <Transaction>2017/08/06 14:43:07.000.312,=D:\Develop\jhql\setting\Unit1.pas</Transaction>
-    <Transaction>2017/08/06 14:43:25.000.091,D:\Develop\jhql\setting\Unit1.pas=D:\Develop\jhql\setting\inisetting.pas</Transaction>
+    <Transaction>2017/08/06 14:43:25.000.091,D:\Develop\jhql\setting\inisetting.pas=D:\Develop\jhql\setting\Unit1.pas</Transaction>
     <Transaction>2017/08/06 15:46:22.000.121,D:\Develop\jhql\setting\inisetting.pas=</Transaction>
   </Transactions>
 </BorlandProject>

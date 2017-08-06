@@ -46,7 +46,8 @@ requires
   dbxcds,
   connection,
   vcldb,
-  FireDACCommon;
+  FireDACCommon,
+  setting;
 
 contains
   clientsyc in 'clientsyc.pas' {clientsycFrame: TFrame},

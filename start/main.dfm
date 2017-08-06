@@ -85,7 +85,6 @@ object mainform: Tmainform
     ActivePageDefault = TabSheet1
     DblClickUndocks = False
     Align = alClient
-    BackgroundColor = clBtnFace
     BoldCurrentTab = True
     ButtonColor = clNone
     Font.Charset = ANSI_CHARSET
@@ -95,7 +94,6 @@ object mainform: Tmainform
     Font.Style = []
     FlatColor = clGray
     HotTrackColorType = htctComplement
-    ParentBackgroundColor = False
     ParentColor = False
     ParentFont = False
     ShowMenuButton = True

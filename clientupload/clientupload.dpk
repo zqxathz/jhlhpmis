@@ -46,7 +46,8 @@ requires
   dsnap,
   dbxcds,
   connection,
-  vcldb;
+  vcldb,
+  setting;
 
 contains
   clientuploaddm in 'clientuploaddm.pas' {clientuploadDataModule: TDataModule},

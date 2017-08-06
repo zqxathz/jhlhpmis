@@ -140,6 +140,7 @@
         <DCCReference Include="dbxcds.dcp"/>
         <DCCReference Include="connection.dcp"/>
         <DCCReference Include="vcldb.dcp"/>
+        <DCCReference Include="setting.dcp"/>
         <DCCReference Include="clientuploaddm.pas">
             <Form>clientuploadDataModule</Form>
             <FormType>dfm</FormType>

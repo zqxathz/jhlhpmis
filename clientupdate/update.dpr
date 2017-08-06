@@ -11,7 +11,8 @@ uses
   servermethods in '..\clientsyc\servermethods.pas',
   Vcl.Themes,
   Vcl.Styles,
-  common in 'common.pas';
+  common in 'common.pas',
+  setting in '..\setting\setting.pas' {bplsettingFrame: TFrame};
 
 {$R *.res}
 
@@ -36,7 +37,7 @@ begin
           Application.MainFormOnTaskbar := True;
           TStyleManager.TrySetStyle('Metropolis UI Blue');
           Application.CreateForm(TupdateForm, updateForm);
-          updateForm.updateJson := updateDataModule.UpdateJson;
+  updateForm.updateJson := updateDataModule.UpdateJson;
           if updateForm.CanShow then
           begin
             if ( ParamCount > 0 )  then

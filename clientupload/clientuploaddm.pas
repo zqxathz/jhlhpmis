@@ -7,7 +7,7 @@ uses
   IPPeerClient, Data.DB, Data.SqlExpr, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, VCL.Dialogs, FireDAC.Stan.StorageBin;
+  FireDAC.Comp.Client, VCL.Dialogs, FireDAC.Stan.StorageBin,setting;
 
 type
   TclientuploadDataModule = class(TDataModule)
@@ -208,6 +208,8 @@ end;
 procedure TclientuploadDataModule.SQLConnection1BeforeConnect(Sender: TObject);
 begin
   SQLConnection1.Params.Add('version=1');
+  SQLConnection1.Params.Values['HostName']:= TSetting.GetValue('Net','server',setting.Server);
+  SQLConnection1.Params.Values['Port']:= TSetting.GetValue('Net','port',setting.ServerPort);
 end;
 
 function TclientuploadDataModule.test: boolean;

@@ -49,12 +49,15 @@ var
 begin
   errormsg := '';
   version := DSConnectEventObject.ConnectProperties.Values['version'];
-  if (version = '') or (not trystrtoint(version, n)) then
-    errormsg := '客户端版本不兼容,请检查程序'
-  else if strtoint(version) < 1 then
-    errormsg := '客户端版本太低,请更新程序';
-  if not errormsg.IsEmpty then
-    raise Exception.Create(errormsg);
+  if version<>'update' then
+  begin
+    if (version = '') or (not trystrtoint(version, n)) then
+      errormsg := '客户端版本不兼容,请检查程序'
+    else if strtoint(version) < 1 then
+      errormsg := '客户端版本太低,请更新程序';
+    if not errormsg.IsEmpty then
+      raise Exception.Create(errormsg);
+  end;
 
 end;
 

@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, Data.DBXDataSnap, Data.DBXCommon, IPPeerClient, Data.DB,
   Data.SqlExpr,System.Json,Vcl.Dialogs, System.Net.URLClient, System.Net.HttpClient,
-  System.Net.HttpClientComponent;
+  System.Net.HttpClientComponent,setting;
 
 type
   TupdateDataModule = class(TDataModule)
@@ -16,6 +16,7 @@ type
     procedure NetHTTPClient1AuthEvent(const Sender: TObject; AnAuthTarget: TAuthTargetType;
       const ARealm, AURL: string; var AUserName, APassword: string; var AbortAuth: Boolean;
       var Persistence: TAuthPersistenceType);
+    procedure SQLConnection1BeforeConnect(Sender: TObject);
   private
     { Private declarations }
     FUpdateJson:TJsonObject;
@@ -56,9 +57,15 @@ var
   server:TServerMethodsClient;
   str:string;
   response:IHTTPResponse;
+  url:string;
 begin
   Result:=false;
-  response:=NetHTTPClient1.Get(UpdateUrl+'update.json');
+  url:=TSetting.GetValue('Net','updateserver',UpdateUrl);
+  if url.LastDelimiter('/')<>url.Length-1 then url:=url+'/';
+
+
+  response:=NetHTTPClient1.Get(url+'update.json');
+
   if response.StatusCode=200 then
   begin
      FUpdateJson.Parse(TEncoding.UTF8.GetBytes(response.ContentAsString),0);
@@ -90,6 +97,13 @@ procedure TupdateDataModule.NetHTTPClient1AuthEvent(const Sender: TObject;
 begin
   AUserName:='updateuser';
   APassword:='update'
+end;
+
+procedure TupdateDataModule.SQLConnection1BeforeConnect(Sender: TObject);
+begin
+  SQLConnection1.Params.Add('version=update');
+  SQLConnection1.Params.Values['HostName']:= TSetting.GetValue('Net','server',setting.Server);
+  SQLConnection1.Params.Values['Port']:= TSetting.GetValue('Net','port',setting.ServerPort);
 end;
 
 end.

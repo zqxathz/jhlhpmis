@@ -3,17 +3,22 @@ object bplsettingFrame: TbplsettingFrame
   Top = 0
   Width = 853
   Height = 496
+  BiDiMode = bdLeftToRight
+  DoubleBuffered = True
   Font.Charset = GB2312_CHARSET
   Font.Color = clWindowText
   Font.Height = -20
   Font.Name = #24494#36719#38597#40657
   Font.Style = []
+  ParentBiDiMode = False
+  ParentDoubleBuffered = False
   ParentFont = False
   TabOrder = 0
+  OnResize = FrameResize
   object dxNavBar1: TdxNavBar
     Left = 0
     Top = 0
-    Width = 201
+    Width = 257
     Height = 496
     Align = alLeft
     ActiveGroupIndex = 0
@@ -55,18 +60,27 @@ object bplsettingFrame: TbplsettingFrame
     end
   end
   object GroupBox1: TGroupBox
-    Left = 201
+    Left = 257
     Top = 0
-    Width = 652
+    Width = 596
     Height = 496
     Align = alClient
+    BiDiMode = bdLeftToRight
     Caption = #32593#32476#35774#32622
+    Ctl3D = True
+    DoubleBuffered = True
+    ParentBackground = False
+    ParentBiDiMode = False
+    ParentCtl3D = False
+    ParentDoubleBuffered = False
     TabOrder = 1
+    ExplicitLeft = 201
+    ExplicitWidth = 652
     DesignSize = (
-      652
+      596
       496)
     object Button1: TButton
-      Left = 560
+      Left = 504
       Top = 455
       Width = 75
       Height = 25
@@ -74,40 +88,45 @@ object bplsettingFrame: TbplsettingFrame
       Anchors = [akRight, akBottom]
       Cancel = True
       TabOrder = 1
+      ExplicitLeft = 560
     end
     object Button2: TButton
-      Left = 478
+      Left = 422
       Top = 455
       Width = 75
       Height = 25
       Action = OkAction
       Anchors = [akRight, akBottom]
       TabOrder = 2
+      ExplicitLeft = 478
     end
     object Button3: TButton
-      Left = 397
+      Left = 341
       Top = 455
       Width = 75
       Height = 25
       Action = ApplyAction
       Anchors = [akRight, akBottom]
       TabOrder = 3
+      ExplicitLeft = 397
     end
     object softwareScrollBox: TScrollBox
       Left = 3
       Top = 37
-      Width = 646
+      Width = 590
       Height = 412
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 4
+      ExplicitWidth = 646
     end
     object NetScrollBox: TScrollBox
       Left = 3
       Top = 37
-      Width = 646
+      Width = 590
       Height = 412
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 0
+      ExplicitWidth = 646
       object ServerLabeledEdit: TLabeledEdit
         Left = 24
         Top = 40
@@ -162,6 +181,7 @@ object bplsettingFrame: TbplsettingFrame
     end
     object ApplyAction: TAction
       Caption = #24212#29992
+      OnExecute = ApplyActionExecute
     end
     object CancelAction: TAction
       Caption = #21462#28040

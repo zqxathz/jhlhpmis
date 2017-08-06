@@ -23,7 +23,8 @@ uses
   IdHashMessageDigest,
   IdGlobal,
   IdHash,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls,
+  setting;
 
 type
   TupdateForm = class(TForm)
@@ -198,7 +199,7 @@ procedure TupdateForm.Getfile;
 var
   path, filename, filemd5: string;
   fs: TFilestream;
-
+  url:string;
 begin
   if updateJson.Pairs[FIndex].JsonString.Value.ToLower = 'result' then
   begin
@@ -236,7 +237,9 @@ begin
                    + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[0].Value);
   SendMessage(memo1.Handle,WM_VSCROLL,SB_BOTTOM,0);;
   ms := TMemoryStream.Create;
-  NetHTTPClient1.Get(UpdateUrl + path + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[0].Value, ms);
+  url:= TSetting.GetValue('Net','updateserver',UpdateUrl);
+  if url.LastDelimiter('/')<>url.Length-1 then url:=url+'/';
+  NetHTTPClient1.Get(url + path + TJsonArray(updateJson.Pairs[FIndex].JsonValue).Items[0].Value, ms);
 end;
 
 procedure TupdateForm.NetHTTPClient1AuthEvent(const Sender: TObject; AnAuthTarget: TAuthTargetType;
