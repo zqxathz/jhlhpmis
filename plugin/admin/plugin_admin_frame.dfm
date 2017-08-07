@@ -1,0 +1,99 @@
+object pluginadminFrame: TpluginadminFrame
+  Left = 0
+  Top = 0
+  Width = 874
+  Height = 577
+  DoubleBuffered = True
+  Font.Charset = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -20
+  Font.Name = #24494#36719#38597#40657
+  Font.Style = []
+  ParentDoubleBuffered = False
+  ParentFont = False
+  TabOrder = 0
+  object dxNavBar1: TdxNavBar
+    Left = 0
+    Top = 0
+    Width = 209
+    Height = 577
+    Align = alLeft
+    ActiveGroupIndex = 0
+    TabOrder = 0
+    View = 17
+    ViewStyle.ColorSchemeName = 'Black'
+    object dxNavBar1Group1: TdxNavBarGroup
+      Caption = #26435#38480#31649#29702
+      SelectedLinkIndex = -1
+      TopVisibleLinkIndex = 0
+      Links = <
+        item
+          Item = dxNavBar1Item1
+        end
+        item
+          Item = dxNavBar1Item2
+        end
+        item
+          Item = dxNavBar1Item3
+        end>
+    end
+    object dxNavBar1Group2: TdxNavBarGroup
+      Caption = #23637#20250#31649#29702
+      SelectedLinkIndex = -1
+      TopVisibleLinkIndex = 0
+      Links = <
+        item
+          Item = dxNavBar1Item7
+        end
+        item
+          Item = dxNavBar1Item4
+        end
+        item
+          Item = dxNavBar1Item5
+        end
+        item
+          Item = dxNavBar1Item6
+        end
+        item
+          Item = dxNavBar1Item8
+        end>
+    end
+    object dxNavBar1Item1: TdxNavBarItem
+      Caption = #33410#28857#31649#29702
+    end
+    object dxNavBar1Item2: TdxNavBarItem
+      Caption = #26435#38480#31649#29702
+    end
+    object dxNavBar1Item3: TdxNavBarItem
+      Caption = #29992#25143#31649#29702
+    end
+    object dxNavBar1Item4: TdxNavBarItem
+      Caption = #23637#20250#20449#24687
+    end
+    object dxNavBar1Item5: TdxNavBarItem
+      Caption = #39038#23458#26469#28304
+    end
+    object dxNavBar1Item6: TdxNavBarItem
+      Caption = #23458#25143#31867#22411
+    end
+    object dxNavBar1Item7: TdxNavBarItem
+      Caption = #23637#20250#31867#22411
+    end
+    object dxNavBar1Item8: TdxNavBarItem
+      Caption = #25903#20184#31867#22411
+    end
+  end
+  object GroupBox1: TGroupBox
+    Left = 209
+    Top = 0
+    Width = 665
+    Height = 577
+    Align = alClient
+    Caption = 'GroupBox1'
+    TabOrder = 1
+    ExplicitLeft = 215
+    ExplicitTop = 3
+    ExplicitWidth = 618
+    ExplicitHeight = 470
+  end
+end

@@ -11,6 +11,7 @@ type
    plugtitle:string;
    plugversion:string;
    plugcommit:string;
+   plugclassname:string;
   end;
 
   TGetPluginInfo = function:TPluginInfo;

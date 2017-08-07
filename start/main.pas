@@ -9,7 +9,9 @@ uses
   cxLookAndFeelPainters, dxCustomTileControl, cxClasses, dxTileControl, shopper,
   Vcl.StdCtrls, customer, clientsyc, clientuploadfrm, Vcl.ExtCtrls,
   IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common,cxGrid, cxContainer, cxEdit, cxLabel,setting,
-  Vcl.AppEvnts,plugin, System.IOUtils, System.Types;
+  Vcl.AppEvnts,plugin, System.IOUtils, System.Types, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
 
 type
   Tmainform = class(TForm)
@@ -33,6 +35,18 @@ type
     StaticText1: TStaticText;
     ApplicationEvents1: TApplicationEvents;
     LoadPluginTimer: TTimer;
+    FDMemTable1: TFDMemTable;
+    FDMemTable1id: TIntegerField;
+    FDMemTable1file: TStringField;
+    FDMemTable1handle: TIntegerField;
+    FDMemTable1name: TStringField;
+    FDMemTable1verstion: TStringField;
+    FDMemTable1title: TStringField;
+    FDMemTable1auther: TStringField;
+    FDMemTable1type: TIntegerField;
+    FDMemTable1uid: TStringField;
+    FDMemTable1classname: TStringField;
+    FDMemTable1commit: TStringField;
     procedure loginframe1loginbuttonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -67,6 +81,7 @@ type
     timesyncrunning:boolean;
     procedure timesync;
     procedure FrameClose(Sender: TObject);
+    procedure CreatePage(uid,name: string;frame:TObject);
   public
     { Public declarations }
   end;
@@ -109,10 +124,41 @@ begin
   freemem(verinfo, verinfosize);
 end;
 
+
 procedure Tmainform.ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
 begin
   if (Msg.message=WM_USER + 100) then
     RzPageControl1.CloseActiveTab;
+end;
+
+procedure Tmainform.CreatePage(uid,name:string;frame:TObject);
+var
+  i: Integer;
+  menutabsheet: TRzTabSheet;
+begin
+  for i := 0 to RzPageControl1.PageCount - 1 do
+  begin
+    if RzPageControl1.Pages[i].Name = name+uid then
+    begin
+      RzPageControl1.ActivePageIndex := i;
+      exit;
+    end;
+  end;
+
+   menutabsheet := TRzTabSheet.Create(RzPageControl1);
+   menutabsheet.Caption := name;
+   menutabsheet.name:=name+uid;
+   menutabsheet.PageControl := RzPageControl1;
+     // if bplshopperframe = nil then
+     begin
+       TCustomFrame(frame).Align := alClient;
+     end;
+
+     RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
+     // bplshopperframe.Parent := nil;
+     //bplshopperframe.List;
+     TCustomFrame(frame).Parent := RzPageControl1.ActivePage;
+
 end;
 
 procedure Tmainform.dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -333,8 +379,9 @@ var
  PluginInfo:TPluginInfo;
 begin
   LoadPluginTimer.Enabled:=false;
-  files:=TDirectory.GetFiles(ExtractFilePath(Application.ExeName),'plugin_*.bpl');
-  showmessage( Length(files).ToString);
+  //files:=TDirectory.GetFiles(ExtractFilePath(Application.ExeName),'plugin_*.bpl');
+ //showmessage( Length(files).ToString);
+  files:=['plugin_admin.bpl'];
   if Length(files)>0 then
   begin
     for i:=0 to Length(files)-1 do
@@ -347,11 +394,11 @@ begin
           if assigned(GetPluginInfo) then
           begin
              PluginInfo:=GetPluginInfo;
-             showmessage(PluginInfo.plugname);
+             CreatePage(PluginInfo.plugguid,PluginInfo.plugname,TCustomFrameClass(FindClass(PluginInfo.plugclassname)).Create(Self));
           end;
         end;
       finally
-        UnloadPackage(handle);
+        //UnloadPackage(handle);
       end;
     end;
   end;

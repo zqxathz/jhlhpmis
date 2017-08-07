@@ -29,9 +29,21 @@ package plugin_admin;
 
 requires
   rtl,
-  plugin;
+  plugin,
+  vcl,
+  vclimg,
+  dbrtl,
+  dxCoreRS25,
+  cxLibraryRS25,
+  dxGDIPlusRS25,
+  dxThemeRS25,
+  cxDataRS25,
+  cxEditorsRS25,
+  dxNavBarRS25;
 
 contains
-  plugin_admin in 'plugin_admin.pas';
+  plugin_admin in 'plugin_admin.pas',
+  plugin_admin_frame in 'plugin_admin_frame.pas' {pluginadminFrame: TFrame},
+  plugin_admin_datamod in 'plugin_admin_datamod.pas' {pluginadmindm: TDataModule};
 
 end.

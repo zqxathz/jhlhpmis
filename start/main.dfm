@@ -123,7 +123,6 @@ object mainform: Tmainform
         Width = 860
         Height = 509
         LookAndFeel.NativeStyle = True
-        OptionsBehavior.FocusItemOnCycle = False
         OptionsBehavior.ScrollMode = smDefault
         OptionsView.CenterContentHorz = True
         OptionsView.CenterContentVert = True
@@ -319,5 +318,49 @@ object mainform: Tmainform
     OnTimer = LoadPluginTimerTimer
     Left = 752
     Top = 392
+  end
+  object FDMemTable1: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 704
+    Top = 288
+    object FDMemTable1id: TIntegerField
+      FieldName = 'id'
+    end
+    object FDMemTable1file: TStringField
+      FieldName = 'file'
+    end
+    object FDMemTable1handle: TIntegerField
+      FieldName = 'handle'
+    end
+    object FDMemTable1uid: TStringField
+      FieldName = 'uid'
+    end
+    object FDMemTable1type: TIntegerField
+      FieldName = 'type'
+    end
+    object FDMemTable1name: TStringField
+      FieldName = 'name'
+    end
+    object FDMemTable1title: TStringField
+      FieldName = 'title'
+    end
+    object FDMemTable1verstion: TStringField
+      FieldName = 'verstion'
+    end
+    object FDMemTable1auther: TStringField
+      FieldName = 'auther'
+    end
+    object FDMemTable1commit: TStringField
+      FieldName = 'commit'
+    end
+    object FDMemTable1classname: TStringField
+      FieldName = 'classname'
+    end
   end
 end
