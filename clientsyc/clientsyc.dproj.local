@@ -11,19 +11,19 @@
     <Transaction>2017/07/01 23:18:18.000.680,=D:\Develop\jhql\clientsyc\clientsycdm.pas</Transaction>
     <Transaction>2017/07/01 23:18:18.000.582,=D:\Develop\jhql\clientsyc\clientsyc.pas</Transaction>
     <Transaction>2017/07/01 23:19:37.000.887,=IndyIPClient.dcp</Transaction>
-    <Transaction>2017/07/01 23:19:37.000.599,=dbrtl.dcp</Transaction>
+    <Transaction>2017/07/01 23:19:37.000.524,=vcl.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.953,=dbexpress.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.987,=dbxcds.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.772,=IndyIPCommon.dcp</Transaction>
-    <Transaction>2017/07/01 23:19:37.000.524,=vcl.dcp</Transaction>
+    <Transaction>2017/07/01 23:19:37.000.599,=dbrtl.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.741,=CustomIPTransport.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.646,=DataSnapClient.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.856,=IndyCore.dcp</Transaction>
-    <Transaction>2017/07/01 23:19:37.000.713,=DbxClientDriver.dcp</Transaction>
+    <Transaction>2017/07/01 23:19:37.000.827,=IndyProtocols.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.798,=IndySystem.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.920,=dsnap.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.562,=DbxCommonDriver.dcp</Transaction>
-    <Transaction>2017/07/01 23:19:37.000.827,=IndyProtocols.dcp</Transaction>
+    <Transaction>2017/07/01 23:19:37.000.713,=DbxClientDriver.dcp</Transaction>
     <Transaction>2017/07/01 23:19:37.000.681,=DataSnapCommon.dcp</Transaction>
     <Transaction>2017/07/02 18:45:47.000.901,=D:\Develop\jhql\clientsyc\Unit1.pas</Transaction>
     <Transaction>2017/07/02 18:46:07.000.138,D:\Develop\jhql\clientsyc\servermethods.pas=</Transaction>
@@ -34,7 +34,7 @@
     <Transaction>2017/07/02 18:52:04.000.639,=connection.dcp</Transaction>
     <Transaction>2017/07/02 19:05:17.000.512,=vcldb.dcp</Transaction>
     <Transaction>2017/07/04 23:40:22.000.476,=FireDACCommon.dcp</Transaction>
-    <Transaction>2017/08/06 23:26:02.697,=setting.dcp</Transaction>
+    <Transaction>2017/08/06 23:26:02.000.697,=setting.dcp</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="clientsyc.pas"/>

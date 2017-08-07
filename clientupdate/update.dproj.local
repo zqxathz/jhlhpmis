@@ -31,7 +31,7 @@
     <Transaction>2017/07/25 16:28:08.000.051,=D:\Develop\jhql\clientsyc\servermethods.pas</Transaction>
     <Transaction>2017/07/27 15:04:48.000.093,=D:\Develop\jhql\clientupdate\Unit1.pas</Transaction>
     <Transaction>2017/07/27 15:05:02.000.956,D:\Develop\jhql\clientupdate\common.pas=D:\Develop\jhql\clientupdate\Unit1.pas</Transaction>
-    <Transaction>2017/08/06 23:33:45.883,=D:\Develop\jhql\setting\setting.pas</Transaction>
+    <Transaction>2017/08/06 23:33:45.000.883,=D:\Develop\jhql\setting\setting.pas</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
 		<NoProfile iOSSimulator="iPhone5"/>

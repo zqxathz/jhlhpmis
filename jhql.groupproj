@@ -33,6 +33,12 @@
         <Projects Include="setting\setting.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="plugin\admin\plugin_admin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="plugin\plugin.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -131,14 +137,32 @@
     <Target Name="setting:Make">
         <MSBuild Projects="setting\setting.dproj" Targets="Make"/>
     </Target>
+    <Target Name="plugin_admin">
+        <MSBuild Projects="plugin\admin\plugin_admin.dproj"/>
+    </Target>
+    <Target Name="plugin_admin:Clean">
+        <MSBuild Projects="plugin\admin\plugin_admin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="plugin_admin:Make">
+        <MSBuild Projects="plugin\admin\plugin_admin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="plugin">
+        <MSBuild Projects="plugin\plugin.dproj"/>
+    </Target>
+    <Target Name="plugin:Clean">
+        <MSBuild Projects="plugin\plugin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="plugin:Make">
+        <MSBuild Projects="plugin\plugin.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="start;shopper;connection;customer;server;clientsyc;clientupload;common;update;setting"/>
+        <CallTarget Targets="start;shopper;connection;customer;server;clientsyc;clientupload;common;update;setting;plugin_admin;plugin"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="start:Clean;shopper:Clean;connection:Clean;customer:Clean;server:Clean;clientsyc:Clean;clientupload:Clean;common:Clean;update:Clean;setting:Clean"/>
+        <CallTarget Targets="start:Clean;shopper:Clean;connection:Clean;customer:Clean;server:Clean;clientsyc:Clean;clientupload:Clean;common:Clean;update:Clean;setting:Clean;plugin_admin:Clean;plugin:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="start:Make;shopper:Make;connection:Make;customer:Make;server:Make;clientsyc:Make;clientupload:Make;common:Make;update:Make;setting:Make"/>
+        <CallTarget Targets="start:Make;shopper:Make;connection:Make;customer:Make;server:Make;clientsyc:Make;clientupload:Make;common:Make;update:Make;setting:Make;plugin_admin:Make;plugin:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

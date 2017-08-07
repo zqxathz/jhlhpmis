@@ -28,8 +28,8 @@
     <Transaction>2017/07/05 23:02:16.000.041,=CustomIPTransport.dcp</Transaction>
     <Transaction>2017/07/05 23:02:16.000.079,=IndySystem.dcp</Transaction>
     <Transaction>2017/07/05 23:02:16.000.121,=IndyCore.dcp</Transaction>
-    <Transaction>2017/07/05 23:02:16.000.018,=DbxClientDriver.dcp</Transaction>
     <Transaction>2017/07/05 23:02:16.000.099,=IndyProtocols.dcp</Transaction>
+    <Transaction>2017/07/05 23:02:16.000.018,=DbxClientDriver.dcp</Transaction>
     <Transaction>2017/07/05 23:02:16.000.144,=IndyIPClient.dcp</Transaction>
     <Transaction>2017/07/05 23:04:50.000.780,=D:\Develop\jhql\clientupload\Unit1.pas</Transaction>
     <Transaction>2017/07/05 23:05:06.000.564,D:\Develop\jhql\clientupload\Unit1.pas=D:\Develop\jhql\clientupload\servermethods.pas</Transaction>
@@ -42,6 +42,6 @@
     <Transaction>2017/07/05 23:24:14.000.399,=connection.dcp</Transaction>
     <Transaction>2017/07/05 23:25:25.000.496,D:\Develop\jhql\clientupload\servermethods.pas=D:\Develop\jhql\clientupload\servermethodsupload.pas</Transaction>
     <Transaction>2017/07/15 10:56:45.000.764,=vcldb.dcp</Transaction>
-    <Transaction>2017/08/06 23:28:05.825,=setting.dcp</Transaction>
+    <Transaction>2017/08/06 23:28:05.000.825,=setting.dcp</Transaction>
   </Transactions>
 </BorlandProject>

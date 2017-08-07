@@ -313,4 +313,11 @@ object mainform: Tmainform
     Left = 432
     Top = 280
   end
+  object LoadPluginTimer: TTimer
+    Enabled = False
+    Interval = 500
+    OnTimer = LoadPluginTimerTimer
+    Left = 752
+    Top = 392
+  end
 end

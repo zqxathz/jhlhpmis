@@ -9,7 +9,7 @@ uses
   cxLookAndFeelPainters, dxCustomTileControl, cxClasses, dxTileControl, shopper,
   Vcl.StdCtrls, customer, clientsyc, clientuploadfrm, Vcl.ExtCtrls,
   IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, IdSNTP,common,cxGrid, cxContainer, cxEdit, cxLabel,setting,
-  Vcl.AppEvnts;
+  Vcl.AppEvnts,plugin, System.IOUtils, System.Types;
 
 type
   Tmainform = class(TForm)
@@ -32,6 +32,7 @@ type
     IdSNTP1: TIdSNTP;
     StaticText1: TStaticText;
     ApplicationEvents1: TApplicationEvents;
+    LoadPluginTimer: TTimer;
     procedure loginframe1loginbuttonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -53,6 +54,7 @@ type
     procedure StaticText1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
+    procedure LoadPluginTimerTimer(Sender: TObject);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -322,6 +324,39 @@ begin
   RzPageControl1.CloseActiveTab;
 end;
 
+procedure Tmainform.LoadPluginTimerTimer(Sender: TObject);
+var
+ files:TStringDynArray;
+ i:integer;
+ handle:THandle;
+ GetPluginInfo:TGetPluginInfo;
+ PluginInfo:TPluginInfo;
+begin
+  LoadPluginTimer.Enabled:=false;
+  files:=TDirectory.GetFiles(ExtractFilePath(Application.ExeName),'plugin_*.bpl');
+  showmessage( Length(files).ToString);
+  if Length(files)>0 then
+  begin
+    for i:=0 to Length(files)-1 do
+    begin
+      handle:=LoadPackage(files[i]);
+      try
+        if handle>0 then
+        begin
+          @GetPluginInfo := Winapi.Windows.GetProcAddress(handle,PChar('GetPluginInfo'));
+          if assigned(GetPluginInfo) then
+          begin
+             PluginInfo:=GetPluginInfo;
+             showmessage(PluginInfo.plugname);
+          end;
+        end;
+      finally
+        UnloadPackage(handle);
+      end;
+    end;
+  end;
+end;
+
 procedure Tmainform.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if Assigned(shopperdatamod) then
@@ -384,6 +419,7 @@ begin
   Constraints.MinHeight:=600;
   self.Position := poDesktopCenter;
   show;
+  LoadPluginTimer.Enabled:=true;
   RzPageControl1.show;
   // cxPageControl1.Show;
   // windowstate:=wsNormal;
