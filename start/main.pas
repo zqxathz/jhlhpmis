@@ -71,6 +71,7 @@ type
     procedure LoadPluginTimerTimer(Sender: TObject);
     procedure dxTileControl1ItemDragBegin(Sender: TdxCustomTileControl; AInfo: TdxTileControlDragItemInfo;
       var AAllow: Boolean);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -176,6 +177,19 @@ end;
 procedure Tmainform.PluginItemClick(Sender: TdxTileControlItem);
 begin
   CreatePage(Sender.Tag);
+end;
+
+procedure Tmainform.FormDestroy(Sender: TObject);
+begin
+
+ RzPageControl1.Free;
+ FDMemTable1.First;
+ while not FDMemTable1.Eof do
+ begin
+   UnloadPackage(FDMemTable1.FieldByName('handle').AsInteger);
+   FDMemTable1.Next;
+ end;
+
 end;
 
 procedure Tmainform.dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -440,6 +454,9 @@ begin
                   Text1.Align := oaMiddleCenter;
                   Text1.Value:=PluginInfo.plugtitle;
                   Text1.Font:=dxTileControl1Item1.Text1.Font;
+                  Text2.Align := oaTopLeft;
+                  Text2.Value:='²å¼þ';
+                  Text2.Font.Height:=-13;
                   Tag:= FDMemTable1.FieldByName('id').AsInteger;
                   OnClick:= PluginItemClick;
                 end;
@@ -488,6 +505,8 @@ begin
   height := 400;
   dxTileControl1Group2.Visible:= not dxTileControl1Group2.ItemCount=0
 end;
+
+
 
 procedure Tmainform.FormShow(Sender: TObject);
 begin

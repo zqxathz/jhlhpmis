@@ -26,6 +26,7 @@ type
     procedure DataModuleDestroy(Sender: TObject);
     procedure DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
     procedure DSServer1Connect(DSConnectEventObject: TDSConnectEventObject);
+    procedure DSTCPServerTransport1Disconnect(Event: TDSTCPDisconnectEventObject);
   private
     { Private declarations }
   public
@@ -81,16 +82,25 @@ begin
   PersistentClass := ServerMethodsUnit.TServerMethods;
 end;
 
+procedure TServerContainer1.DSTCPServerTransport1Disconnect(Event: TDSTCPDisconnectEventObject);
+begin
+  event.Connection.Free;
+end;
+
 procedure TServerContainer1.DataModuleCreate(Sender: TObject);
 var
   list: TJSONArray;
 begin
   One := TObject.Create;
   ServerDataModule := TServerDataModule.Create(nil);
+
   list := TJSONArray.Create;
-  DSServer1.GetServerMethods('', list);
-  Writeln(list.ToString);
-  list.free;
+  try
+    DSServer1.GetServerMethods('', list);
+    ServerDataModule.AddMethods(list);
+  finally
+    list.free;
+  end;
 end;
 
 procedure TServerContainer1.DataModuleDestroy(Sender: TObject);

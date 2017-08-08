@@ -51,19 +51,16 @@ object ServerDataModule: TServerDataModule
   object groupFDQuery: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
-      'select * from jhlh_admin_group where name =:name and status=1')
+      'select * from jhlh_admin_group where status=1')
     Left = 440
     Top = 280
-    ParamData = <
-      item
-        Name = 'NAME'
-        ParamType = ptInput
-      end>
   end
-  object FDQuery: TFDQuery
+  object addmethodFDQuery: TFDQuery
     Connection = FDConnection1
-    Left = 112
-    Top = 256
+    SQL.Strings = (
+      'select * from jhlh_admin_method')
+    Left = 96
+    Top = 272
   end
   object FDManager1: TFDManager
     ConnectionDefFileName = 'connection.ini'

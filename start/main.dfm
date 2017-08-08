@@ -17,6 +17,7 @@ object mainform: Tmainform
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 27
@@ -322,7 +323,7 @@ object mainform: Tmainform
   end
   object LoadPluginTimer: TTimer
     Enabled = False
-    Interval = 500
+    Interval = 100
     OnTimer = LoadPluginTimerTimer
     Left = 752
     Top = 392
@@ -387,6 +388,7 @@ object mainform: Tmainform
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
     UpdateOptions.AssignedValues = [uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True

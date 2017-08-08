@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.ConsoleUI.Wait, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client,System.Json;
 
 type
   TServerDataModule = class(TDataModule)
@@ -16,7 +16,7 @@ type
     memberFDQuery: TFDQuery;
     methodFDQuery: TFDQuery;
     groupFDQuery: TFDQuery;
-    FDQuery: TFDQuery;
+    addmethodFDQuery: TFDQuery;
     FDManager1: TFDManager;
   private
     { Private declarations }
@@ -24,6 +24,7 @@ type
     { Public declarations }
     function verifyMember(const username, password: string): string;
     function getMethodauthids(const method: string; list: TStrings): boolean;
+    procedure AddMethods(list:TJSONArray);
   end;
 
 var
@@ -34,6 +35,40 @@ implementation
 {%CLASSGROUP 'System.Classes.TPersistent'}
 {$R *.dfm}
 { TServerDataModule }
+
+procedure TServerDataModule.AddMethods(list: TJSONArray);
+var
+  value:TJSONValue;
+  i:integer;
+begin
+  i:=1;
+  addmethodFDQuery.Open;
+  addmethodFDQuery.Connection.StartTransaction;
+  addmethodFDQuery.ServerDeleteAll();
+  try
+    try
+
+      for value in list do
+      begin
+       // addmethodFDQuery.First;
+//        if addmethodFDQuery.Locate('methodalias',value.Value) then
+//           Continue;
+        addmethodFDQuery.Append;
+        addmethodFDQuery.FieldByName('id').Value:=i;
+        addmethodFDQuery.FieldByName('methodalias').Value:=value.Value;
+        addmethodFDQuery.FieldByName('methodtitle').Value:=value.Value;
+        addmethodFDQuery.Post;
+        inc(i);
+      end;
+      addmethodFDQuery.Connection.Commit;
+    except
+      addmethodFDQuery.Connection.Rollback;
+      raise ;
+    end;
+  finally
+    addmethodFDQuery.Close;
+  end;
+end;
 
 function TServerDataModule.getMethodauthids(const method: string;
   list: TStrings): boolean;
@@ -62,22 +97,11 @@ begin
     methodid := methodFDQuery.FieldByName('id').AsInteger;
     methodFDQuery.Close;
 
+    groupFDQuery.Open;
     for i := 0 to list.Count - 1 do
     begin
-      groupFDQuery.Close;
-      groupFDQuery.ParamByName('name').AsString := list.Strings[i];
-      groupFDQuery.Open;
-      // groupFDQuery.FieldByName('authmethod').AsString
-      methodids := groupFDQuery.FieldByName('authmethod').AsString;
-      ids := methodids.Split([',']);
-      for j := 0 to length(ids) - 1 do
-      begin
-        if methodid.ToString = ids[j] then
-        begin
-          Result := true;
-          break;
-        end;
-      end;
+      if not groupFDQuery.Locate('name',list.Strings[i]) then Continue;
+      Result := groupFDQuery.FieldByName('authmethod').AsString.Contains(method);
       if Result then
         break;
     end;

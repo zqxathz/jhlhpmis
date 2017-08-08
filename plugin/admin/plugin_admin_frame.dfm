@@ -20,12 +20,33 @@ object pluginadminFrame: TpluginadminFrame
     Align = alLeft
     ActiveGroupIndex = 0
     TabOrder = 0
-    View = 17
-    ViewStyle.ColorSchemeName = 'Black'
+    LookAndFeel.Kind = lfFlat
+    LookAndFeel.NativeStyle = False
+    View = 8
+    OptionsBehavior.Common.AllowExpandAnimation = True
+    OptionsBehavior.Common.AllowMultipleGroupExpansion = False
+    OptionsBehavior.Common.AllowSelectLinks = True
+    OptionsStyle.DefaultStyles.GroupHeader.BackColor = clBtnFace
+    OptionsStyle.DefaultStyles.GroupHeader.BackColor2 = clBtnFace
+    OptionsStyle.DefaultStyles.GroupHeader.Font.Charset = DEFAULT_CHARSET
+    OptionsStyle.DefaultStyles.GroupHeader.Font.Color = clBtnText
+    OptionsStyle.DefaultStyles.GroupHeader.Font.Height = -16
+    OptionsStyle.DefaultStyles.GroupHeader.Font.Name = #24494#36719#38597#40657
+    OptionsStyle.DefaultStyles.GroupHeader.Font.Style = [fsBold]
+    OptionsStyle.DefaultStyles.GroupHeader.AssignedValues = [savFont]
+    OptionsStyle.DefaultStyles.Item.BackColor = clWhite
+    OptionsStyle.DefaultStyles.Item.BackColor2 = clWhite
+    OptionsStyle.DefaultStyles.Item.Font.Charset = DEFAULT_CHARSET
+    OptionsStyle.DefaultStyles.Item.Font.Color = clWindowText
+    OptionsStyle.DefaultStyles.Item.Font.Height = -15
+    OptionsStyle.DefaultStyles.Item.Font.Name = #24494#36719#38597#40657
+    OptionsStyle.DefaultStyles.Item.Font.Style = []
+    OptionsStyle.DefaultStyles.Item.AssignedValues = [savFont]
     object dxNavBar1Group1: TdxNavBarGroup
       Caption = #26435#38480#31649#29702
       SelectedLinkIndex = -1
       TopVisibleLinkIndex = 0
+      OptionsGroupControl.UseControl = True
       Links = <
         item
           Item = dxNavBar1Item1
@@ -41,6 +62,7 @@ object pluginadminFrame: TpluginadminFrame
       Caption = #23637#20250#31649#29702
       SelectedLinkIndex = -1
       TopVisibleLinkIndex = 0
+      OptionsExpansion.Expanded = False
       Links = <
         item
           Item = dxNavBar1Item7
@@ -82,6 +104,16 @@ object pluginadminFrame: TpluginadminFrame
     object dxNavBar1Item8: TdxNavBarItem
       Caption = #25903#20184#31867#22411
     end
+    object dxNavBar1Group1Control: TdxNavBarGroupControl
+      Left = 13
+      Top = 37
+      Width = 183
+      Height = 41
+      Caption = 'dxNavBar1Group1Control'
+      TabOrder = 3
+      GroupIndex = 0
+      OriginalHeight = 41
+    end
   end
   object GroupBox1: TGroupBox
     Left = 209
@@ -91,9 +123,22 @@ object pluginadminFrame: TpluginadminFrame
     Align = alClient
     Caption = 'GroupBox1'
     TabOrder = 1
-    ExplicitLeft = 215
-    ExplicitTop = 3
-    ExplicitWidth = 618
-    ExplicitHeight = 470
+    object cxGrid1: TcxGrid
+      Left = 2
+      Top = 29
+      Width = 661
+      Height = 332
+      Align = alTop
+      TabOrder = 0
+      object methodcxGrid1DBTableView: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+      end
+      object cxGrid1Level1: TcxGridLevel
+        GridView = methodcxGrid1DBTableView
+      end
+    end
   end
 end

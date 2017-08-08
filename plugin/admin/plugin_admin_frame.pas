@@ -5,7 +5,9 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
-  dxNavBarCollns, cxClasses, dxNavBarBase, dxNavBar, Vcl.StdCtrls;
+  dxNavBarCollns, cxClasses, dxNavBarBase, dxNavBar, Vcl.StdCtrls, Vcl.ExtCtrls, cxStyles, cxCustomData, cxFilter,
+  cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, cxGridLevel, cxGridCustomView, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxGrid;
 
 type
   TpluginadminFrame = class(TFrame)
@@ -21,6 +23,10 @@ type
     dxNavBar1Item7: TdxNavBarItem;
     dxNavBar1Item8: TdxNavBarItem;
     GroupBox1: TGroupBox;
+    dxNavBar1Group1Control: TdxNavBarGroupControl;
+    methodcxGrid1DBTableView: TcxGridDBTableView;
+    cxGrid1Level1: TcxGridLevel;
+    cxGrid1: TcxGrid;
   private
     { Private declarations }
   public
