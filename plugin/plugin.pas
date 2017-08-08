@@ -10,6 +10,7 @@ type
    plugname:string;
    plugtitle:string;
    plugversion:string;
+   plugauther:string;
    plugcommit:string;
    plugclassname:string;
   end;

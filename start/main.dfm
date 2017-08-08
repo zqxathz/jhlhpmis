@@ -123,6 +123,8 @@ object mainform: Tmainform
         Width = 860
         Height = 509
         LookAndFeel.NativeStyle = True
+        OnItemDragBegin = dxTileControl1ItemDragBegin
+        OptionsBehavior.ItemFocusMode = tcifmOuterFrame
         OptionsBehavior.ScrollMode = smDefault
         OptionsView.CenterContentHorz = True
         OptionsView.CenterContentVert = True
@@ -141,8 +143,9 @@ object mainform: Tmainform
           Index = 1
         end
         object dxTileControl1Item1: TdxTileControlItem
+          Tag = 1
           GroupIndex = 0
-          IndexInGroup = 0
+          IndexInGroup = 1
           Style.BorderColor = 12615680
           Style.GradientBeginColor = 12615680
           Text1.Align = oaMiddleCenter
@@ -169,8 +172,9 @@ object mainform: Tmainform
           OnClick = dxTileControl1Item1Click
         end
         object dxTileControl1Item2: TdxTileControlItem
+          Tag = 1
           GroupIndex = 0
-          IndexInGroup = 1
+          IndexInGroup = 0
           Text1.Align = oaMiddleCenter
           Text1.AssignedValues = [avFont]
           Text1.Font.Charset = DEFAULT_CHARSET
@@ -188,6 +192,7 @@ object mainform: Tmainform
           OnClick = dxTileControl1Item2Click
         end
         object dxTileControl1Item3: TdxTileControlItem
+          Tag = 1
           GroupIndex = 0
           IndexInGroup = 2
           Style.BorderColor = 33023
@@ -207,6 +212,7 @@ object mainform: Tmainform
           OnClick = dxTileControl1Item3Click
         end
         object dxTileControl1Item4: TdxTileControlItem
+          Tag = 1
           GroupIndex = 0
           IndexInGroup = 3
           Style.GradientBeginColor = 12615808
@@ -226,6 +232,7 @@ object mainform: Tmainform
           OnClick = dxTileControl1Item4Click
         end
         object dxTileControl1Item5: TdxTileControlItem
+          Tag = 1
           GroupIndex = 0
           IndexInGroup = 4
           Style.GradientBeginColor = 16384
@@ -243,6 +250,7 @@ object mainform: Tmainform
           OnClick = dxTileControl1Item5Click
         end
         object dxTileControl1Item6: TdxTileControlItem
+          Tag = 1
           GroupIndex = 0
           IndexInGroup = 5
           Text1.Align = oaMiddleCenter
@@ -320,17 +328,77 @@ object mainform: Tmainform
     Top = 392
   end
   object FDMemTable1: TFDMemTable
+    Active = True
+    FieldDefs = <
+      item
+        Name = 'id'
+        Attributes = [faReadonly]
+        DataType = ftAutoInc
+      end
+      item
+        Name = 'file'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'handle'
+        DataType = ftInteger
+      end
+      item
+        Name = 'uid'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'type'
+        DataType = ftInteger
+      end
+      item
+        Name = 'name'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'title'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'version'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'auther'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'commit'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'classname'
+        DataType = ftString
+        Size = 20
+      end>
+    IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.AssignedValues = [uvRefreshMode, uvFetchGeneratorsPoint, uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
+    UpdateOptions.AutoIncFields = 'id'
+    StoreDefs = True
     Left = 704
     Top = 288
-    object FDMemTable1id: TIntegerField
+    object FDMemTable1id: TFDAutoIncField
       FieldName = 'id'
+      ReadOnly = True
+      AutoIncrementSeed = 1
+      AutoIncrementStep = 1
     end
     object FDMemTable1file: TStringField
       FieldName = 'file'
@@ -351,7 +419,7 @@ object mainform: Tmainform
       FieldName = 'title'
     end
     object FDMemTable1verstion: TStringField
-      FieldName = 'verstion'
+      FieldName = 'version'
     end
     object FDMemTable1auther: TStringField
       FieldName = 'auther'

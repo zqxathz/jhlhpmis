@@ -36,7 +36,6 @@ type
     ApplicationEvents1: TApplicationEvents;
     LoadPluginTimer: TTimer;
     FDMemTable1: TFDMemTable;
-    FDMemTable1id: TIntegerField;
     FDMemTable1file: TStringField;
     FDMemTable1handle: TIntegerField;
     FDMemTable1name: TStringField;
@@ -47,6 +46,7 @@ type
     FDMemTable1uid: TStringField;
     FDMemTable1classname: TStringField;
     FDMemTable1commit: TStringField;
+    FDMemTable1id: TFDAutoIncField;
     procedure loginframe1loginbuttonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -69,6 +69,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
     procedure LoadPluginTimerTimer(Sender: TObject);
+    procedure dxTileControl1ItemDragBegin(Sender: TdxCustomTileControl; AInfo: TdxTileControlDragItemInfo;
+      var AAllow: Boolean);
   private
     { Private declarations }
     bplshopperframe: Tbplshopperframe;
@@ -81,7 +83,8 @@ type
     timesyncrunning:boolean;
     procedure timesync;
     procedure FrameClose(Sender: TObject);
-    procedure CreatePage(uid,name: string;frame:TObject);
+    procedure CreatePage(id:integer);
+    procedure PluginItemClick(Sender: TdxTileControlItem);
   public
     { Public declarations }
   end;
@@ -131,11 +134,19 @@ begin
     RzPageControl1.CloseActiveTab;
 end;
 
-procedure Tmainform.CreatePage(uid,name:string;frame:TObject);
+procedure Tmainform.CreatePage(id:integer);
 var
   i: Integer;
+  name,uid,classname,title:string;
   menutabsheet: TRzTabSheet;
 begin
+  if not FDMemTable1.Locate('id',id) then exit;
+
+  name:= FDMemTable1.FieldByName('name').AsString;
+  uid:= FDMemTable1.FieldByName('uid').AsString;
+  title:= FDMemTable1.FieldByName('title').AsString;
+  classname:= FDMemTable1.FieldByName('classname').AsString;
+
   for i := 0 to RzPageControl1.PageCount - 1 do
   begin
     if RzPageControl1.Pages[i].Name = name+uid then
@@ -146,19 +157,25 @@ begin
   end;
 
    menutabsheet := TRzTabSheet.Create(RzPageControl1);
-   menutabsheet.Caption := name;
+   menutabsheet.Caption := title;
    menutabsheet.name:=name+uid;
    menutabsheet.PageControl := RzPageControl1;
-     // if bplshopperframe = nil then
-     begin
-       TCustomFrame(frame).Align := alClient;
-     end;
+   RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
 
-     RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
+   with TCustomFrameClass(FindClass(classname)).Create(Self) do
+   begin
+       Align := alClient;
+       Parent := RzPageControl1.ActivePage;
+   end;
+
+
      // bplshopperframe.Parent := nil;
      //bplshopperframe.List;
-     TCustomFrame(frame).Parent := RzPageControl1.ActivePage;
+end;
 
+procedure Tmainform.PluginItemClick(Sender: TdxTileControlItem);
+begin
+  CreatePage(Sender.Tag);
 end;
 
 procedure Tmainform.dxTileControl1Item1Click(Sender: TdxTileControlItem);
@@ -365,6 +382,13 @@ begin
   end;
 end;
 
+procedure Tmainform.dxTileControl1ItemDragBegin(Sender: TdxCustomTileControl; AInfo: TdxTileControlDragItemInfo;
+  var AAllow: Boolean);
+begin
+  if AInfo.SourceGroup.Index=0 then AAllow:=false;
+
+end;
+
 procedure Tmainform.FrameClose(Sender: TObject);
 begin
   RzPageControl1.CloseActiveTab;
@@ -390,11 +414,39 @@ begin
       try
         if handle>0 then
         begin
+
           @GetPluginInfo := Winapi.Windows.GetProcAddress(handle,PChar('GetPluginInfo'));
           if assigned(GetPluginInfo) then
           begin
              PluginInfo:=GetPluginInfo;
-             CreatePage(PluginInfo.plugguid,PluginInfo.plugname,TCustomFrameClass(FindClass(PluginInfo.plugclassname)).Create(Self));
+             if PluginInfo.plugtype>0 then
+             begin
+                FDMemTable1.Append;
+                FDMemTable1.FieldByName('file').Value:=files[i];
+                FDMemTable1.FieldByName('handle').AsInteger:=handle;
+                FDMemTable1.FieldByName('uid').AsString:=PluginInfo.plugguid;
+                FDMemTable1.FieldByName('type').AsInteger:=PluginInfo.plugtype;
+                FDMemTable1.FieldByName('name').AsString:=PluginInfo.plugname;
+                FDMemTable1.FieldByName('title').AsString:=PluginInfo.plugtitle;
+                FDMemTable1.FieldByName('version').AsString:=PluginInfo.plugversion;
+                FDMemTable1.FieldByName('auther').AsString:=PluginInfo.plugauther;
+                FDMemTable1.FieldByName('commit').AsString:=PluginInfo.plugcommit;
+                FDMemTable1.FieldByName('classname').AsString:=PluginInfo.plugclassname;
+                FDMemTable1.Post;
+
+                with dxTileControl1.Items.Add do
+                begin
+                  GroupIndex:=dxTileControl1Group2.Index;
+                  Text1.Align := oaMiddleCenter;
+                  Text1.Value:=PluginInfo.plugtitle;
+                  Text1.Font:=dxTileControl1Item1.Text1.Font;
+                  Tag:= FDMemTable1.FieldByName('id').AsInteger;
+                  OnClick:= PluginItemClick;
+                end;
+                dxTileControl1Group2.Visible:=(not dxTileControl1Group2.Visible) and (dxTileControl1Group2.ItemCount>0);
+             end;
+
+             //CreatePage(PluginInfo.plugguid,PluginInfo.plugname,TCustomFrameClass(FindClass(PluginInfo.plugclassname)).Create(Self));
           end;
         end;
       finally
@@ -411,6 +463,7 @@ begin
     shopperdatamod.Free;
     shopperdatamod:=nil;
   end;
+
 end;
 
 procedure Tmainform.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -490,6 +543,8 @@ begin
   end;
 
 end;
+
+
 
 procedure Tmainform.RzPageControl1Change(Sender: TObject);
 begin
@@ -634,6 +689,7 @@ begin
     end;
   end;
 end;
+
 
 end.
 
