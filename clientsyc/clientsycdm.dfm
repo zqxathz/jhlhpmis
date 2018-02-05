@@ -22,7 +22,7 @@ object clientsycDataModule: TclientsycDataModule
       'ConnectTimeout=5000'
       'CommunicationTimeout=5000'
       'CommunicationIPVersion=IP_IPv4'
-      'DSAuthenticationPassword=11'
+      'DSAuthenticationPassword=admin'
       'DSAuthenticationUser=admin')
     BeforeConnect = SQLConnection1BeforeConnect
     Left = 336

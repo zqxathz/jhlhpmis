@@ -198,4 +198,9 @@ object ServerMethods: TServerMethods
         ParamType = ptInput
       end>
   end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Console'
+    Left = 272
+    Top = 136
+  end
 end

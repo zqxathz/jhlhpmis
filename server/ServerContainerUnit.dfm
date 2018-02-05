@@ -13,7 +13,6 @@ object ServerContainer1: TServerContainer1
   object DSTCPServerTransport1: TDSTCPServerTransport
     PoolSize = 0
     Server = DSServer1
-    BufferKBSize = 1
     Filters = <
       item
         FilterId = 'ZLibCompression'
@@ -21,8 +20,6 @@ object ServerContainer1: TServerContainer1
           'CompressMoreThan=1024')
       end>
     AuthenticationManager = DSAuthenticationManager1
-    OnDisconnect = DSTCPServerTransport1Disconnect
-    KeepAliveEnablement = kaEnabled
     Left = 96
     Top = 73
   end
@@ -51,5 +48,11 @@ object ServerContainer1: TServerContainer1
     Server = DSServer1
     Left = 200
     Top = 11
+  end
+  object DSServerClass2: TDSServerClass
+    OnGetClass = DSServerClass2GetClass
+    Server = DSServer1
+    Left = 200
+    Top = 80
   end
 end

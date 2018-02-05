@@ -161,13 +161,18 @@ begin
    menutabsheet.Caption := title;
    menutabsheet.name:=name+uid;
    menutabsheet.PageControl := RzPageControl1;
-   RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
 
-   with TCustomFrameClass(FindClass(classname)).Create(Self) do
-   begin
-       Align := alClient;
-       Parent := RzPageControl1.ActivePage;
+   try
+     with TCustomFrameClass(FindClass(classname)).Create(Self) do
+     begin
+         Align := alClient;
+         Parent := menutabsheet;
+     end;
+   except
+     menutabsheet.Free;
+     raise;
    end;
+   RzPageControl1.ActivePageIndex := menutabsheet.PageIndex;
 
 
      // bplshopperframe.Parent := nil;

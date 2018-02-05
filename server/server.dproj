@@ -112,16 +112,18 @@
         </DCCReference>
         <DCCReference Include="ServerContainerUnit.pas">
             <Form>ServerContainer1</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Alidayu.pas"/>
         <DCCReference Include="Serverdm.pas">
             <Form>ServerDataModule</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Data.DBXClientResStrs.pas"/>
+        <DCCReference Include="ServerAdminUnit.pas">
+            <Form>ServerAdminMethods</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <None Include="alidayu.cfg"/>
         <None Include="connection.ini"/>
         <BuildConfiguration Include="Release">

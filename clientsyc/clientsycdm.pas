@@ -238,7 +238,7 @@ begin
 
   stream.Position := 0;
 
-  lstream := TMemoryStream.Create;
+ // lstream := TMemoryStream.Create;
   try
     lstream := CopyStream(stream);
     lstream.Position := 0;
@@ -342,7 +342,7 @@ begin
   end;
 
   stream.Position := 0;
-  lstream:=TMemoryStream.Create;
+ // lstream:=TMemoryStream.Create;
   try
     lstream:=CopyStream(stream);
     lstream.Position:=0;
@@ -441,7 +441,7 @@ begin
   expoFDQuery.Open;
 
 
-  lstream:=TMemoryStream.Create;
+  //lstream:=TMemoryStream.Create;
   try
     lstream:=CopyStream(stream);
     lstream.Position:=0;
@@ -547,7 +547,7 @@ begin
   end;
   stream.Position := 0;
 
-  lstream:=TMemoryStream.Create;
+  //lstream:=TMemoryStream.Create;
   try
     lstream:=CopyStream(stream);
     lstream.Position:=0;
@@ -644,7 +644,7 @@ begin
   stream.Position := 0;
 
 
-  lstream:=TMemoryStream.Create;
+  //lstream:=TMemoryStream.Create;
   try
     lstream:=CopyStream(stream);
     lstream.Position:=0;
@@ -744,7 +744,7 @@ begin
   end;
   stream.Position := 0;
 
-  lstream:=TMemoryStream.Create;
+ // lstream:=TMemoryStream.Create;
   try
     lstream:=CopyStream(stream);
     lstream.Position:=0;
@@ -836,7 +836,7 @@ begin
 
   stream.Position := 0;
 
-  lstream:=TMemoryStream.Create;
+  //lstream:=TMemoryStream.Create;
   try
     lstream:=CopyStream(stream);
     lstream.Position:=0;

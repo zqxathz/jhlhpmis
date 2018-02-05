@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.ConsoleUI.Wait, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client,System.Json;
+  FireDAC.Comp.Client,System.Json,System.Variants;
 
 type
   TServerDataModule = class(TDataModule)
@@ -39,26 +39,44 @@ implementation
 procedure TServerDataModule.AddMethods(list: TJSONArray);
 var
   value:TJSONValue;
-  i:integer;
+  maxid:integer;
+  hasmethod:Boolean;
 begin
-  i:=1;
   addmethodFDQuery.Open;
-  addmethodFDQuery.Connection.StartTransaction;
-  addmethodFDQuery.ServerDeleteAll();
+
+  //addmethodFDQuery.ServerDeleteAll();
   try
     try
-
+      addmethodFDQuery.Last;
+      while not addmethodFDQuery.Bof do
+      begin
+        hasmethod:=false;
+        for value in list do
+          if addmethodFDQuery.FieldByName('methodalias').AsString=value.Value then
+          begin
+            hasmethod:=true;
+            break;
+          end;
+        if not hasmethod then addmethodFDQuery.Delete;
+        addmethodFDQuery.Prior;
+      end;
+      addmethodFDQuery.AggregatesActive:=true;
+      if Varisnull(addmethodFDQuery.Aggregates.Items[0].Value) then
+        maxid:=0
+      else
+        maxid:=addmethodFDQuery.Aggregates.Items[0].Value;
+      addmethodFDQuery.Connection.StartTransaction;
       for value in list do
       begin
-       // addmethodFDQuery.First;
-//        if addmethodFDQuery.Locate('methodalias',value.Value) then
-//           Continue;
+        addmethodFDQuery.First;
+        if addmethodFDQuery.Locate('methodalias',value.Value) then
+           Continue;
+        inc(maxid);
         addmethodFDQuery.Append;
-        addmethodFDQuery.FieldByName('id').Value:=i;
+        addmethodFDQuery.FieldByName('id').Value:=maxid;
         addmethodFDQuery.FieldByName('methodalias').Value:=value.Value;
         addmethodFDQuery.FieldByName('methodtitle').Value:=value.Value;
         addmethodFDQuery.Post;
-        inc(i);
       end;
       addmethodFDQuery.Connection.Commit;
     except
@@ -66,6 +84,7 @@ begin
       raise ;
     end;
   finally
+    addmethodFDQuery.AggregatesActive:=false;
     addmethodFDQuery.Close;
   end;
 end;

@@ -56,6 +56,12 @@ object ServerDataModule: TServerDataModule
     Top = 280
   end
   object addmethodFDQuery: TFDQuery
+    Aggregates = <
+      item
+        Name = 'maxid'
+        Expression = 'max(id)'
+        Active = True
+      end>
     Connection = FDConnection1
     SQL.Strings = (
       'select * from jhlh_admin_method')

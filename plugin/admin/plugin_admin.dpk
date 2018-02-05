@@ -39,11 +39,34 @@ requires
   dxThemeRS25,
   cxDataRS25,
   cxEditorsRS25,
-  dxNavBarRS25;
+  dxNavBarRS25,
+  setting,
+  connection,
+  DbxCommonDriver,
+  DataSnapCommon,
+  DbxClientDriver,
+  CustomIPTransport,
+  IndyIPCommon,
+  IndySystem,
+  IndyProtocols,
+  IndyCore,
+  IndyIPClient,
+  dbexpress,
+  cxGridRS25,
+  DataSnapClient,
+  dsnap,
+  dbxcds,
+  VclSmp,
+  cxTreeListRS25,
+  dxBarRS25,
+  cxTreeListdxBarPopupMenuRS25,
+  common;
 
 contains
   plugin_admin in 'plugin_admin.pas',
   plugin_admin_frame in 'plugin_admin_frame.pas' {pluginadminFrame: TFrame},
-  plugin_admin_datamod in 'plugin_admin_datamod.pas' {pluginadmindm: TDataModule};
+  plugin_admin_datamod in 'plugin_admin_datamod.pas' {pluginadmindm: TDataModule},
+  plugin_admin_servermethods in 'plugin_admin_servermethods.pas',
+  plugin_admin_roleselectfrom in 'plugin_admin_roleselectfrom.pas' {roleselectForm};
 
 end.

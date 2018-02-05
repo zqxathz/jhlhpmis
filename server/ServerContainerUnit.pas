@@ -15,6 +15,7 @@ type
     DSHTTPService1: TDSHTTPService;
     DSAuthenticationManager1: TDSAuthenticationManager;
     DSServerClass1: TDSServerClass;
+    DSServerClass2: TDSServerClass;
     procedure DSServerClass1GetClass(DSServerClass: TDSServerClass;
       var PersistentClass: TPersistentClass);
     procedure DSAuthenticationManager1UserAuthorize(Sender: TObject;
@@ -26,7 +27,7 @@ type
     procedure DataModuleDestroy(Sender: TObject);
     procedure DSServer1Prepare(DSPrepareEventObject: TDSPrepareEventObject);
     procedure DSServer1Connect(DSConnectEventObject: TDSConnectEventObject);
-    procedure DSTCPServerTransport1Disconnect(Event: TDSTCPDisconnectEventObject);
+    procedure DSServerClass2GetClass(DSServerClass: TDSServerClass; var PersistentClass: TPersistentClass);
   private
     { Private declarations }
   public
@@ -37,7 +38,7 @@ procedure RunDSServer;
 implementation
 
 uses
-  ServerMethodsUnit, ServerConst, Serverdm;
+  ServerConst, Serverdm, ServerMethodsUnit, ServerAdminUnit;
 
 {%CLASSGROUP 'System.Classes.TPersistent'}
 {$R *.dfm}
@@ -59,7 +60,6 @@ begin
     if not errormsg.IsEmpty then
       raise Exception.Create(errormsg);
   end;
-
 end;
 
 procedure TServerContainer1.DSServer1Prepare(DSPrepareEventObject
@@ -74,6 +74,7 @@ begin
     Log.AddLog('exect:' + DSPrepareEventObject.MethodAlias); // Log调用方法
     Log.start;
   end;
+  DSPrepareEventObject.ServerClass:=DSServerClass2;
 end;
 
 procedure TServerContainer1.DSServerClass1GetClass(DSServerClass
@@ -82,9 +83,10 @@ begin
   PersistentClass := ServerMethodsUnit.TServerMethods;
 end;
 
-procedure TServerContainer1.DSTCPServerTransport1Disconnect(Event: TDSTCPDisconnectEventObject);
+procedure TServerContainer1.DSServerClass2GetClass(DSServerClass: TDSServerClass;
+  var PersistentClass: TPersistentClass);
 begin
-  event.Connection.Free;
+  PersistentClass := ServerAdminUnit.TServerAdminMethods;
 end;
 
 procedure TServerContainer1.DataModuleCreate(Sender: TObject);

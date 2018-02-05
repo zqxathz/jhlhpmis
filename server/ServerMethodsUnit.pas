@@ -12,7 +12,7 @@ uses
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
   FireDAC.Stan.StorageBin, FireDAC.Comp.DataSet, System.Generics.Collections,
   System.Variants, IdHashMessageDigest, IdGlobal, IdHash, System.IOUtils,
-  System.Types;
+  System.Types, FireDAC.Comp.UI;
 
 type
   TServerLog = class(TFileStream)
@@ -48,6 +48,7 @@ type
     expireExpoFDQuery: TFDQuery;
     getcustomerFDQuery: TFDQuery;
     getMemberGroupFDQuery: TFDQuery;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     procedure customerFDQueryUpdateError(ASender: TDataSet;
       AException: EFDException; ARow: TFDDatSRow; ARequest: TFDUpdateRequest;
       var AAction: TFDErrorAction);
@@ -442,10 +443,9 @@ begin
   result := TMemoryStream.Create;
   try
     try
-      FDConnection1.Open;
+     // FDConnection1.Open;
       memberFDQuery.Close;
-      if TDSSessionManager.GetThreadSession.UserRoles.IndexOf('admins') = -1
-      then
+      if TDSSessionManager.GetThreadSession.UserRoles.IndexOf('admins') = -1 then
       begin
         memberFDQuery.MacroByName('groupname').AsRaw :=
           'and where jhlh_admin_group.name<>"admins"';
